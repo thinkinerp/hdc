@@ -90,7 +90,7 @@ var equipmentTypeSeach = function(){
 	shopStateSeach();
 }
 var gotoModify = function(link){
-	location.href = ctx + "/install/gotoModify?installId=" +link;
+	location.href = ctx + "/install/gotoModify?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 }
 
 

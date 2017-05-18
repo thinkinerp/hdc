@@ -50,12 +50,30 @@
 		<!-- 项目详情 -->
 		<div class="i-itemDetail"></div>
 		<!-- 新建抄表 -->
-		<a  href="javascript:void(0)" onclick="window.location='issueDetails.html'" class="i-addTable">
+		<a  href="javascript:void(0)" onclick="gotoDetails()" class="i-addTable">
 			<div class="icon"></div>
 			<div class="text">新建</div>
 		</a>
 		
 		<script type="text/javascript">
+		
+		var gotoDetails =  function(){
+		  window.location="issueDetails.html?"  +"userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
+		};
+		var params = function() {
+            var query = {},
+            search = window.location.search.substring(1),
+            parts = search.split('&'),
+            pairs = [];
+
+            for (var i = 0, len = parts.length; i < len; i++) {
+                pairs = parts[i].split('=');
+                query[pairs[0]] = (pairs.length > 1 ? decodeURIComponent(pairs[1]) : null);
+             }
+
+            return query;
+         }();
+		
 			var me  = {
 				proName:null,	
 				shopStation:null,
@@ -81,7 +99,7 @@
 					   success:function(data){
 					   		me.upItemStyle(data);
 					   }					   
-					})
+					});
 				},
 				parName:function(){	//项目名称
 					$.ajax({	
@@ -98,10 +116,10 @@
 					   				text += data[i].proName + ','
 					   			}
 					   		}
-					   		$('#itemName')[0].dataset.select = text
-					   		me.lastName()
+					   		$('#itemName')[0].dataset.select = text;
+					   		me.lastName();
 					   }					   
-					})
+					});
 				},lastName:function(){	//上次的项目名称
 					$.ajax({	
 					   url: "http://www.onetoend.cn/hdk/project/getSome",
@@ -208,7 +226,7 @@
 					})
 				},
 				tz:function(id){
-					window.location = "issueDetails.html?problemId=" + id;
+					window.location = "issueDetails.html?problemId=" + id + "&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 				}
 			}
 			

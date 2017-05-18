@@ -269,10 +269,18 @@
                     </ul>
                 </div>
                 <div class="swiper-slide">
-                    <div class="g-fa" placeholder="请输入解决方案" style="-webkit-user-select:auto" id="jjfa" contenteditable="true"></div>
+                    <div class="g-fa" placeholder="请输入解决方案" style="-webkit-user-select:text" id="jjfa" contenteditable="true"></div>
                 </div>
                 <div class="swiper-slide">
-                    <div class="i-contenteditable" contenteditable="true" style="-webkit-user-select:text" placeholder="输入"></div>
+                    <div class="i-contenteditable" contenteditable="true" style="-webkit-user-select:text" placeholder="输入" id ="messageContext"></div>
+                    <div class="i-contenteditable-ok" id = "saveMessage">确定</div>
+                    
+                    <div class="i-itemDetail" id ="messageArea">
+                        
+                        
+                        
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -285,6 +293,77 @@
 
         <script src="js/swiper.js"></script>
         <script>
+        
+        $('#saveMessage').bind('click',function(){
+              $.ajax({                 
+                 url:'/hdk/problem/saveMessage',
+                 type:'get',
+                 dataType:'jsonp',
+                 jsonp: "callback",
+                 data:{
+                 'mesUser':params['userName']//添加批注的用户 ID，功能还未实现，暂时不用传入
+                 ,'problemId':$('#gs1').val() //问题编号
+                 ,'mesContent':$('#messageContext').html()//批注内容
+                }, 
+                 success:function(rs){
+                         if(rs.message == "success"){
+                             app.alert("保存成功",1);
+                         }else if(rs.message == "fail"){
+                             app.alert("保存失败",1);
+                         }
+                 },
+                 error:function(rs){
+                         console.log(rs);
+                 }
+                }); 
+        });
+        
+          var loadMessage = function(id){
+          $.ajax({                 
+                 url:'/hdk/problem/getMessageSome',
+                 type:'get',
+                 dataType:'jsonp',
+                 jsonp: "callback",
+                 data:{'problemId': id//问题编号
+                }, 
+                 success:function(rs){
+                             $('#messageArea').html('');
+                         $.each(rs,function(index,item){
+                             $('#messageArea').append(
+                             
+                             "          <div class='i-itemDetail-area'>" +
+            "               <div class='i-itemDetail-area-title'>" +
+            "                   <div>"+item.mesUser+"</div>" +
+            "                   <p>"+item.updatedAt+"</p>" +
+            "               </div>" +
+            "               <div class='i-itemDetail-area-content'>" +
+            "                   <div class='content-row'>" +
+            "                       <span>"+item.mesContent+"</span>" +
+            "                   </div>" +
+            "               </div>" +
+            "           </div>");
+
+                         });
+                 },
+                 error:function(rs){
+                         console.log(rs);
+                 }
+             });
+          };
+        
+                var params = function() {
+            var query = {},
+            search = window.location.search.substring(1),
+            parts = search.split('&'),
+            pairs = [];
+
+            for (var i = 0, len = parts.length; i < len; i++) {
+                pairs = parts[i].split('=');
+                query[pairs[0]] = (pairs.length > 1 ? decodeURIComponent(pairs[1]) : null);
+             }
+
+            return query;
+         }();
             var sp = {//商铺信息
                 sp1 : null, //项目名称
                 sp2 : null, //商铺名称
@@ -766,6 +845,7 @@
                     xg.zhidu('sp1');
                     xg.zhidu('sp2');
                     $("#gs1").val(data.problemId);
+                    loadMessage(data.problemId);
                     xg.zhidu('gs1');
                     $("#gs2").html(data.state);
                     xg.youzhi('gs2');

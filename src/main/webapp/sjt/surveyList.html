@@ -68,12 +68,30 @@
 			-->
 		</div>
 		<!-- 新建抄表 -->
-		<a href="javascript:void(0)" onclick="window.location='surveyDetails.html'" class="i-addTable">
+		<a href="javascript:void(0)" onclick="gotoDetails" class="i-addTable">
 			<div class="icon"></div>
 			<div class="text">新建</div>
 		</a>
 		
 		<script type="text/javascript">
+		
+		  var gotoDetails = function() {
+			window.location="surveyDetails.html?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
+		  };
+		
+		      var params = function() {
+            var query = {},
+            search = window.location.search.substring(1),
+            parts = search.split('&'),
+            pairs = [];
+
+            for (var i = 0, len = parts.length; i < len; i++) {
+                pairs = parts[i].split('=');
+                query[pairs[0]] = (pairs.length > 1 ? decodeURIComponent(pairs[1]) : null);
+             }
+
+            return query;
+         }();
 			var me = {
 				proName:null,	//项目名称
 				shopName:null,	//商铺名称
@@ -219,7 +237,7 @@
 					})
 				},
 				tz:function(id){
-					window.location = "surveyDetails.html?surId=" + id;
+					window.location = "surveyDetails.html?surId=" + id + "&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 				}
 			}
 			$(function(){

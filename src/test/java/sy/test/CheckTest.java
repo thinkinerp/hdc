@@ -17,12 +17,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSONObject;
+import com.intfocus.hdk.dao.MessageMapper;
 import com.intfocus.hdk.dao.ProblemMapper;
 import com.intfocus.hdk.dao.ProjectMapper;
 import com.intfocus.hdk.dao.SurveyMapper;
 import com.intfocus.hdk.dao.UserMapper;
 import com.intfocus.hdk.util.StaticVariableUtil;
-import com.intfocus.hdk.vo.Project;
+import com.intfocus.hdk.vo.Message;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/applicationContext.xml")
 public class CheckTest {
@@ -41,6 +42,25 @@ public class CheckTest {
     private UserMapper userMapper;
     @Resource
     private SurveyMapper surveyMapper;
+    @Resource
+    private MessageMapper messageMapper;
+    
+    @Test
+    public void testMessageMapperSelect(){
+    	
+    	Map<String, String> where = new HashMap<String,String>();
+    	where.put("problemId", "123456");
+		System.out.println(JSONObject.toJSONString(messageMapper.selectByWhere(where )));
+    }
+    @Test
+    public void testMessageMapperInsert(){
+    	Message m = new Message();
+    	
+    	m.setMesContent("");
+    	m.setMesUser("wangyifei");
+    	m.setProblemId("123456");    	
+    	messageMapper.insertSelective(m);
+    }
     
     @Test
     public void testSurveyMapperSelectByWhere(){

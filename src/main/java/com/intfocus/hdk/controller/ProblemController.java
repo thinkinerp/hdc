@@ -215,9 +215,9 @@ public class ProblemController implements ApplicationContextAware {
         	    	   messageMapper.insertSelective(message); 
         	       }catch(Exception e ){
         	    	   e.printStackTrace();
-        	    	  return  callback + "({'message':'fail'})";
+        	    	  return  callback + "({\"message\":\"fail\"})";
         	       }
-    			 return callback + "({'message':'success'})";
+    			 return callback + "({\"message\":\"success\"})";
         }
         @RequestMapping(value = "getMessageSome" , method=RequestMethod.GET)
         @ResponseBody
@@ -235,17 +235,17 @@ public class ProblemController implements ApplicationContextAware {
         		e.printStackTrace();
         		  try {
         			  if(w != null ){
-        				  w.write("{'message':'fail'}");
+        				  w.write("{\"message\":\"fail\"}");
         			  }else{
 						 w = res.getWriter();
-						 w.write("{'message':'fail'}");
+						 w.write("{\"message\":\"fail\"}");
         			  }
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
         	}
         }
-         
+        
 	@Override
 	public void setApplicationContext(ApplicationContext ctx)
 			throws BeansException {
