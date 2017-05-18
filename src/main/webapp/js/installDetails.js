@@ -6,6 +6,7 @@ loadCombobox("cashBrand", "cash_brand");
 loadCombobox("cashPort", "cash_port");
 loadCombobox("eqStyle", "equipment_type");
 loadCombobox("printerPort", "printer_port");
+loadCombobox("installStation", "install");
 var time = new Date().getTime();
 $.ajax({
   url: ctx + '/project/getSome',

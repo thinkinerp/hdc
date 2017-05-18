@@ -520,19 +520,20 @@
 						$("#subnote").css("visibility","hidden");
 					}
 				}
-			}
+			};
 			
 			function submit(){//提交
 				var obj = {
 					//调研
 					'survey.proId':shop.itemId,		//项目编号
+					'files':JSON.stringify(imgs),
 					'survey.shopId':$("#shopID").html(),	//商铺编号
 					'survey.surNetwork':qt.network,			//网络环境
 					'survey.surPower':qt.plug,				//电源插口
 					'survey.surVip':qt.vip,					//会员系统
 					'survey.surVipData':$("#vipinfo").val(),	//会员信息
 					'survey.surId':$("#dyid").val(),		  //调研编号
-					'survey.attachmentUrl':JSON.stringify(imgs),
+//					'survey.attachmentUrl':JSON.stringify(imgs),
 //					'survey.surRemarks':'',				 //备注？
 					//收银机
 					'cash.cashId':syj.id,				//收银机编号
@@ -564,12 +565,12 @@
 //					'shops.installId':'',				//安装编号？
 //					'shops.installStation':'',		//安装状态？
 //					'shops.eqId':''				//采集点编号？ 
-				}
+				};
 				$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/survey/submit",
+					   url: "/hdk/survey/submit",
 					   type: "post",
 					   data:obj,
-					   dataType:"jsonp",			
+					   dataType:"json",			
 					  // jsonpCallback:"state_null_getSome",
 					   success:function(data){
 					   		if(data.message == "success"){
@@ -578,12 +579,16 @@
 					   		}else if(data.message == "fail"){
 					   			app.alert('保存失败',1);
 					   		}
-					   }					   
-					})
+					   },
+					   error:function(rs){
+					      app.alert(rs.status,1);
+					   }				   
+					});
 			}
 			
 			function xgsubmit(){	//修改
 				var obj={
+                    'files':JSON.stringify(imgs),
 					'survey.proId':xg.data.survey.proId,	//项目编号
 					'survey.shopId':$('#shopID').html(),		//门店编号
 					'survey.surNetwork':qt.network,	//商户网络环境
@@ -620,22 +625,25 @@
 					'shops.shopSecType':$('#shopFl2').html(),	//商品次分类
 					'shops.shopName':$("#shopName").html(),	//商品简称
 					'shops.proId':xg.data.shops.proId	//项目编号
-				}
+				};
 				$.ajax({	
 					   url: "http://www.onetoend.cn/hdk/survey/modify",
 					   type: "post",
 					   data:obj,
-					   dataType:"jsonp",			
+					   dataType:"json",			
 					  // jsonpCallback:"state_null_getSome",
 					   success:function(data){
 					   		if(data.message == "success"){
 					   			app.alert('修改成功',1);			
-					   			window.location='surveyList.html'
+					   			window.location='surveyList.html';
 					   		}else if(data.message == "fail"){
 					   			app.alert('修改失败',1);
 					   		}
-					   }					   
-					})
+					   },
+                       error:function(rs){
+                           app.alert(rs.status,1);
+                       }    					   
+					});
 			}
 			
 			var xg = {
@@ -753,16 +761,16 @@
 					
 					$("#save").click(function(){ //保存按钮
 						app.alert("确定要保存吗？",2,submit)
-					})
+					});
 				}else{	//修改
 					xg.init(surId);
 					syj.init();
 					dyj.init();
 					$("#save").click(function(){ //保存按钮
-						app.alert("确定要保存吗？",2,xgsubmit)
-					})
+						app.alert("确定要保存吗？",2,xgsubmit);
+					});
 				}
-			})
+			});
 			swiper1 = new Swiper('.swiper-container1', {	//菜单区滑块
 				paginationClickable: true,
 				slidesPerView: 'auto',

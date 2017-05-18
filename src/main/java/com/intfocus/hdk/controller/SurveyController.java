@@ -57,11 +57,13 @@ public class SurveyController implements ApplicationContextAware {
     		, Survey survey , Printer printer , Cash cash , Shops shops,String callback, String files
     		,String userName ,String userNum){
     	
+    	JSONObject rsjson = new JSONObject();
 		try {
 			   if("".equalsIgnoreCase(files)){	
 					Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
 					if(!"ok".equalsIgnoreCase(result.get("message"))){
-						return result.get("message");
+						rsjson.put("message", result.get("message"));
+						return rsjson.toJSONString();
 					}
 					survey.modifyAtachement(((result.get("urls")).toString()));
 			   }
@@ -73,10 +75,12 @@ public class SurveyController implements ApplicationContextAware {
 		}catch(Exception e){
 			e.printStackTrace();
 //			return callback+"({'message':'fail'})";
-			return "{'message':'fail'}";
+		   rsjson.put("message","fail");
+			return rsjson.toJSONString();
 		}
 //		return callback+"({'message':'success'})";
-		return "{'message':'success'}";
+		rsjson.put("message","success");
+		return rsjson.toJSONString();
     	
     	
     	
@@ -123,10 +127,16 @@ public class SurveyController implements ApplicationContextAware {
     	// 取出相关的信息
     	JSONObject json = new JSONObject();
     	Map<String, String> where = new HashMap<String,String>();
+		String path = req.getSession().getServletContext().getRealPath("upload");
     	where.put("surId", surId);
 		// 调研
     	List<Survey> surveys = surveymapper.selectByWhere(where ); 
     	Survey survey1 = surveys.get(0);
+    	
+		if(null != survey1.getAttachmentUrl()&& !"".equalsIgnoreCase(survey1.getAttachmentUrl())){
+			survey1.setAttachmentUrl((survey1.getAttachmentUrl().replace(path.substring(0,path.indexOf("upload")), "/hdk/")));
+		}
+    	
     	json.put("survey", survey1);
     	// 收银机 
     	List<Printer> printers = printerMapper.selectByWhere(where ); 
@@ -159,13 +169,16 @@ public class SurveyController implements ApplicationContextAware {
     		, Survey survey , Printer printer , Cash cash , Shops shops ,String callback, String files
     		,String userName ,String userNum){
     	
+			 JSONObject rsjson = new JSONObject();
+		
 	   if("".equalsIgnoreCase(files)){	
 		Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
 		
 		
 		if(!"ok".equalsIgnoreCase(result.get("message"))){
-			return result.get("message");
-		}
+			rsjson.put("message", result.get("message"));
+			return rsjson.toJSONString();
+		} 
 		survey.setAttachmentUrl((result.get("urls")).toString());
 	   }
 		try {
@@ -186,10 +199,14 @@ public class SurveyController implements ApplicationContextAware {
 		}catch(Exception e){
 			e.printStackTrace();
 //			return callback+"({'message':'fail'})";
-			return "{'message':'fail'}";
+			
+			rsjson.put("message", "fail");
+			
+			return rsjson.toJSONString();
 		}
+		rsjson.put("message", "success");
 //		return callback+"({'message':'success'})";
-		return "{'message':'success'}";
+		return rsjson.toJSONString();
     }
 	
 	   @InitBinder("survey")    

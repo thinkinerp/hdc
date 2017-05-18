@@ -488,7 +488,7 @@
 			var files = allObjs.install['attachmentUrl'].split(',');
 			
 			for(var i = 0 ; i <files.length ; i ++){
-				imgs.push(files[i])
+				app.addImg(files[i]);
 			}
 			
 			$('.fullimg').remove();
