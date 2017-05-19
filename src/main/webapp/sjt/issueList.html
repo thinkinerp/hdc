@@ -29,14 +29,14 @@
 		<div class="i-qk">
 			<div class="i-qk-title">海鼎</div>
 			<div class="i-qk-content">
-				<p>运维：0</p>
-				<p>技术：0</p>
-				<p>商务：0</p>
+				<p id="operation"></p>
+				<p id="tech">技术：0</p>
+				<p id="business">商务：0</p>
 			</div>
 		</div>
 		<div class="i-kh">
 			<div class="i-kh-title">客户</div>
-			<div class="i-kh-content">其他：0</div>
+			<div class="i-kh-content" id="others">其他：0</div>
 		</div>
 		<!-- 2个下拉 -->
 		<div class="i-itemXl">		
@@ -152,13 +152,26 @@
 				},
 				issueClass:function(){	//问题分类汇总
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/problem/getCount",
+					   url: "/hdk/problem/getCount",
 					   data:{"proName":$('#itemName').html()},
 					   type: "get",
 					   dataType:"jsonp",
 					   jsonpCallback:"problem_getCount",
 					   success:function(data){
-					   		console.log(data);
+					       for(var i = 0 ; i < data.length ;i++){
+					       if(data[i].problemType =="运维"){
+					   		  $('#operation').html("运维：" + data[i].count);
+					   		}
+					       if(data[i].problemType =="技术"){
+					   		  $('#tech').html("技术：" + data[i].count);
+					   		}
+					       if(data[i].problemType =="商务"){
+					   		  $('#business').html("商务：" + data[i].count);
+					   		}
+					       if(data[i].problemType =="其他"){
+					   		  $('#others').html("其他：" + data[i].count);
+					   		}
+					   		}
 					   		me.staName();
 					   }					   
 					})

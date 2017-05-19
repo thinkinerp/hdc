@@ -140,20 +140,30 @@ public class SurveyController implements ApplicationContextAware {
     	json.put("survey", survey1);
     	// 收银机 
     	List<Printer> printers = printerMapper.selectByWhere(where ); 
-    	Printer printer = printers.get(0);
-    	json.put("printer", printer);
-    	
+    	if(null != printers && printers.size() > 0){
+    		Printer printer = printers.get(0);
+    		json.put("printer", printer);
+    	}else{
+    		json.put("printer", "{}");
+    	}
 
     	
     	// 打印机
     	List<Cash> cashes = cashMapper.selectByWhere(where ); 
-    	Cash cash = cashes.get(0);
-    	json.put("cash", cash);
-    	
+    	if(null != cashes && cashes.size() > 0 ){
+    		Cash cash = cashes.get(0);
+    		json.put("cash", cash);
+    	}else{
+    		json.put("cash", "{}");
+    	}
     	//门店
     	List<Shops> shops = shopsMapper.selectByWhere(where ); 
-    	Shops shop = shops.get(0);
-    	json.put("shops", shop);
+    	if(null != shops && shops.size() > 0 ){
+    		Shops shop = shops.get(0);
+    		json.put("shops", shop);
+    	}else{
+    		json.put("shops", "{}");
+    	}
     	where.clear();  	
     	Writer w = null;
 		try {
