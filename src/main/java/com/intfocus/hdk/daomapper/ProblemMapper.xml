@@ -84,6 +84,13 @@
 	    </if>
     </if>
   </select>
+  
+  
+  <select id="codeUnique" resultType="java.util.Map" parameterType="java.util.Map">
+  
+  select count(distinct ${codeField}) as count from ${tableName} where   ${codeField} = #{code}
+  
+   </select>
   <select id="getCount" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
     select problem.problem_object ,problem.problem_type,count(problem.problem_id) as count
     from problem     inner join project on project.pro_id = problem.pro_id

@@ -59,19 +59,21 @@ public class SurveyController implements ApplicationContextAware {
     	
     	JSONObject rsjson = new JSONObject();
 		try {
-			   if("".equalsIgnoreCase(files)){	
+			   if(!"".equalsIgnoreCase(files)){	
 					Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
 					if(!"ok".equalsIgnoreCase(result.get("message"))){
 						rsjson.put("message", result.get("message"));
 						return rsjson.toJSONString();
 					}
-					survey.modifyAtachement(((result.get("urls")).toString()));
+					survey.modifyAtachement(result.get("urls"));
 			   }
 
-				surveymapper.updateByPrimaryKeyWithBLOBs(survey);
+				surveymapper.updateByPrimaryKeySelective(survey);
 				printerMapper.updateByPrimaryKeySelective(printer);
 				cashMapper.updateByPrimaryKeySelective(cash);
 				shopsMapper.updateByPrimaryKeySelective(shops);
+				rsjson.put("message","success");
+				return rsjson.toJSONString();
 		}catch(Exception e){
 			e.printStackTrace();
 //			return callback+"({'message':'fail'})";
@@ -79,8 +81,7 @@ public class SurveyController implements ApplicationContextAware {
 			return rsjson.toJSONString();
 		}
 //		return callback+"({'message':'success'})";
-		rsjson.put("message","success");
-		return rsjson.toJSONString();
+
     	
     	
     	
@@ -131,8 +132,10 @@ public class SurveyController implements ApplicationContextAware {
     	where.put("surId", surId);
 		// 调研
     	List<Survey> surveys = surveymapper.selectByWhere(where ); 
-    	Survey survey1 = surveys.get(0);
-    	
+    	Survey survey1 = null ;
+    	if(null != surveys &&  surveys.size() > 0 ){
+			 survey1 = surveys.get(0);
+    	}
 		if(null != survey1.getAttachmentUrl()&& !"".equalsIgnoreCase(survey1.getAttachmentUrl())){
 			survey1.setAttachmentUrl((survey1.getAttachmentUrl().replace(path.substring(0,path.indexOf("upload")), "/hdk/")));
 		}

@@ -13,7 +13,7 @@
     <result column="sur_vip_data" property="surVipData" jdbcType="VARCHAR" />
     <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
     <result column="created_at" property="createdAt" jdbcType="VARCHAR" />
-    <result column="attachment_url" property="attachmentUrl" jdbcType="VARCHAR" />
+    <result column="attachement_url" property="attachmentUrl" jdbcType="VARCHAR" />
     <result column="sur_id" property="surId" jdbcType="VARCHAR" />
     <result column="updated_at" property="updatedAt" jdbcType="VARCHAR" />
   </resultMap>
@@ -199,6 +199,9 @@
       <if test="surRemarks != null" >
         sur_remarks,
       </if>
+      <if test="attachmentUrl != null" >
+        attachement_url,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -234,6 +237,9 @@
       <if test="surRemarks != null" >
         #{surRemarks,jdbcType=LONGVARCHAR},
       </if>
+      <if test="attachmentUrl != null" >
+        #{attachmentUrl,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.intfocus.hdk.vo.Survey" >
@@ -261,13 +267,16 @@
         sur_vip_data = #{surVipData,jdbcType=VARCHAR},
       </if>
       <if test="createdAt != null" >
-        created_at = #{createdAt,jdbcType=TIMESTAMP},
+        created_at = #{createdAt,jdbcType=VARCHAR},
       </if>
       <if test="updatedAt != null" >
-        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+        updated_at = #{updatedAt,jdbcType=VARCHAR},
       </if>
       <if test="surRemarks != null" >
         sur_remarks = #{surRemarks,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="attachmentUrl != null" >
+        attachement_url = #{attachmentUrl,jdbcType=VARCHAR},
       </if>
     </set>
     where sur_id = #{surId,jdbcType=INTEGER}

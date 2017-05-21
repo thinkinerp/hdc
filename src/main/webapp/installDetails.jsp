@@ -73,7 +73,7 @@
 							<div class="g-importList-title">安装编号：</div>
 							<div class="g-importList-content">
 								<div class="i-import">
-									<input id ="installCode" type="text" placeholder="请输入" />
+									<input onblur="checkCode(this)" id ="installCode" type="text" placeholder="请输入" />
 								</div>
 							</div>
 						</li>
@@ -180,7 +180,7 @@
 							<div class="g-importList-title">收银机编号</div>
 							<div class="g-importList-content">
 								<div class="i-import">
-									<input onblur="javascript:setCashidOnInstall()" id="cashId" type="text" placeholder="请输入" />
+									<input onblur="javascript:setCashidOnInstall(this)" id="cashId" type="text" placeholder="请输入" />
 								</div>
 							</div>
 						</li>
@@ -236,7 +236,7 @@
 				    		<div class="g-importList-title">打印机编号</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-import">
-									<input id ="priId" onblur = "javascrip:setpriIdOnInstall()"type="text" placeholder="请输入" />
+									<input id ="priId" onblur = "javascrip:setpriIdOnInstall(this)"type="text" placeholder="请输入" />
 								</div>
 				    		</div>
 				    	</li>
@@ -266,7 +266,7 @@
 				    		<div class="g-importList-title">采集点编号</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-import">
-									<input id = "eqId" onblur="javascript:seteqIdOnInstall()" type="text" placeholder="请输入" />
+									<input id = "eqId" onblur="javascript:seteqIdOnInstall(this)" type="text" placeholder="请输入" />
 								</div>
 				    		</div>
 				    	</li>

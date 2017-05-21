@@ -46,7 +46,8 @@ public class Install {
     		if(null == this.attachmentUrl){
     			this.attachmentUrl = picUrls;
     		}else{
-    			this.attachmentUrl = "," + picUrls;
+    			this.attachmentUrl = picUrls;
+//    			this.attachmentUrl = "," + picUrls;
     		}
     	}
     }

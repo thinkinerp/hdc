@@ -67,7 +67,7 @@ public class Problem {
     		if(null == this.problemEnclosure){
     			this.problemEnclosure = picUrls;
     		}else{
-    			this.problemEnclosure = "," + picUrls;
+    			this.problemEnclosure =  picUrls;
     		}
     	}
     }

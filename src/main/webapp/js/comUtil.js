@@ -1,6 +1,52 @@
 /**
  * 加载下拉框选项和默认值
  */
+function onlyEnglishAndDecimal(field){
+	var a = /^[0-9a-zA-Z]*$/g;
+	
+	return a.test(field);
+} 
+var checkCode = function(obj){
+	if(!onlyEnglishAndDecimal($(obj).val())){
+		app.alert("编码:" + $(obj).val() +",只能有数字和英文字母组成",1);
+	}
+}
+function codeUnique(config){
+	var dtd = $.Deferred(); 
+	
+	if('' == config.code ){
+		alert(config.which+":"+config.code + ",不能为空");
+		return dtd.promise();
+	}
+	if(!onlyEnglishAndDecimal(config.code)){
+		alert("编码:" + config.code +",只能有数字和英文字母组成");
+		return dtd.promise();
+		
+	}
+				$.ajax({	
+					   url: "/hdk/problem/codeUnique",
+					   data:{
+					   	      tableName:config.tableName
+					         ,codeField:config.codeField
+					         ,code:config.code
+					   },
+					   type: "get",
+					   dataType:"jsonp",
+					   jsonp:"callback",
+					   success:function(data){
+						   var i = data[0];
+						   if(i.count > 0 ){
+							   alert(config.which+":"+config.code+"重复，请重新编码",1);
+						   }else{
+							   dtd.resolve();
+						   }
+					   },
+					   error:function(rs){
+					   	console.log(rs);
+					   }				   
+				});
+				return dtd.promise();
+}
 
  function loadCombobox(id , table){
 	 var time = (new Date().getTime());

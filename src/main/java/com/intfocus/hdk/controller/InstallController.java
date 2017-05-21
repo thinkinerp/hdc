@@ -80,6 +80,7 @@ public class InstallController implements ApplicationContextAware {
     	
     	log.info("userName:"+userName+"userNum:"+userNum);
     	Map<String,String> rs = null ;
+    	JSONObject result = new JSONObject();
     	try{
 	    	if(null != files && !"".equalsIgnoreCase(files)){
 	    		rs = new HashMap<String,String>();
@@ -101,10 +102,13 @@ public class InstallController implements ApplicationContextAware {
 	    	printerMapper.insertSelective(printer);
 	    	cashMapper.insertSelective(cash);
 	    	equipmentMapper.insertSelective(equipment);
-	    	return "{'message':'success'}";
+	    	result.put("message", "success");
+	    	return result.toJSONString() ;
 	  }catch(Exception e){
 		  e.printStackTrace();
-		  return "{'message':'fail'}";
+		  result.put("message", "fail");
+		  
+		  return result.toJSONString();
 	  }
 	  
     }

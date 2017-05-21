@@ -20,7 +20,7 @@
 			var ctx = '${ctx}';
 </script>
 <body>
-					<div class="i-addImg">
+<!-- 					<div class="i-addImg">
 						<div class="img" id="imgShow">
 							<div onclick="fullImg(0)"></div>
 							<div onclick="fullImg(1)"></div> 
@@ -28,9 +28,21 @@
 						<div class="add"><input name ="fileImg" multiple="multiple" type="file" id="fileImg" onchange="getImgUrl();"/></div>
 					</div>
 					<br/>
-					<button id ='save'>save</button>
+					<button id ='save'>save</button> -->
 <script type="text/javascript">
- 		var imgs = [];
+
+
+codeUnique({
+	          tableName:"problem"
+	         ,codeField:"problem_id"
+	         ,code:"1233455"
+	         , which:"问题编码"
+	         ,callback:function(){
+	        	 alert("ok");
+	         }
+});
+
+ 	/* 	var imgs = [];
     	function getImgUrl(){	//本地图片浏览 base64
 			var file = document.getElementById("fileImg").files;
 
@@ -72,6 +84,6 @@
     			}
     			
     		});
-    	});
+    	}); */
 </script>
 </html>

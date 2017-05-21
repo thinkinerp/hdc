@@ -45,6 +45,16 @@ public class CheckTest {
     @Resource
     private MessageMapper messageMapper;
     
+    
+    @Test
+    public void testProblemMapperCodeUnique(){
+    	Map<String, String> where = new HashMap<String,String>();
+    	where.put("code", "1233455");
+    	where.put("tableName", "problem");
+    	where.put("codeField", "problem_id");
+		System.out.println(JSONObject.toJSONString(pblm.codeUnique(where )));
+    }
+    
     @Test
     public void testMessageMapperSelect(){
     	

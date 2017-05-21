@@ -41,10 +41,11 @@ public class Survey {
     public  void modifyAtachement(String picUrls){
     	
     	if(null != picUrls){
-    		if(null == this.attachmentUrl){
+    		if(null == this.attachmentUrl || "".equalsIgnoreCase(this.attachmentUrl)){
     			this.attachmentUrl = picUrls;
     		}else{
-    			this.attachmentUrl = "," + picUrls;
+    			this.attachmentUrl = picUrls;
+    		
     		}
     	}
     }

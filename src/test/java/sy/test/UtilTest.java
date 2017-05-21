@@ -15,7 +15,9 @@ public class UtilTest {
 	}
 	@Test
 	public void apacheUitljoinTest(){
-		//List<String> urls = new ArrayList<String>();
-		System.out.println(ComUtil.savePicture(null, ""));
+		List<String> urls = new ArrayList<String>();
+//		System.out.println(ComUtil.savePicture("", ""));
+		urls.add("dsdfas");
+		System.out.println(org.apache.commons.lang.StringUtils.join(urls.toArray(),","));
 	}
 }

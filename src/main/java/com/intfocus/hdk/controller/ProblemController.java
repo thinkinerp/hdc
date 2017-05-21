@@ -245,7 +245,18 @@ public class ProblemController implements ApplicationContextAware {
 				}
         	}
         }
-        
+     @RequestMapping(value="codeUnique",method=RequestMethod.GET)
+     @ResponseBody
+     public String codeUnique(HttpServletResponse res , HttpServletRequest req ,HttpSession session
+     		,String tableName,String codeField ,String callback,String code){
+    	 Map<String,String> where = new HashMap<String,String>();
+    	 
+    	 where.put("tableName",tableName);
+    	 where.put("codeField",codeField);
+    	 where.put("code",code);
+    	 
+    	 return callback+"(" +JSONObject.toJSONString(problemMapper.codeUnique(where))+")"; 
+     }
 	@Override
 	public void setApplicationContext(ApplicationContext ctx)
 			throws BeansException {

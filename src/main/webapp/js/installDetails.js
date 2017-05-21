@@ -6,7 +6,8 @@ loadCombobox("cashBrand", "cash_brand");
 loadCombobox("cashPort", "cash_port");
 loadCombobox("eqStyle", "equipment_type");
 loadCombobox("printerPort", "printer_port");
-loadCombobox("installStation", "install");
+loadCombobox("installState", "install");
+
 var time = new Date().getTime();
 $.ajax({
   url: ctx + '/project/getSome',
@@ -95,6 +96,10 @@ Window.selected = function() {
   });
 }
 Window.shopSelected = function() {
+	if(""==$('#shopName').html()){
+		
+		return;
+	}
   $.ajax({
     url: ctx + '/shops/selectForCombobox',
     type: 'get',
@@ -197,17 +202,20 @@ function loadPrinterAndCasher(surId) {
 }
 
 
-function setCashidOnInstall() {
+function setCashidOnInstall(obj) {
+	checkCode(obj);
   $('#cashCode').html($('#cashId').val());
 }
 
 
-function setpriIdOnInstall() {
+function setpriIdOnInstall(obj) {
+	checkCode(obj);
   $('#printCode').html($('#priId').val());
 
 }
 
-function seteqIdOnInstall() {
+function seteqIdOnInstall(obj) {
+	checkCode(obj);
   $('#equipmentCode').html($('#eqId').val());
 
 }
@@ -312,6 +320,33 @@ var submit = function() {
 
 
   } else {
+	  
+	 $.when(codeUnique({
+		 tableName:"install"
+								         ,codeField:"install_id"
+								         ,code:$('#installCode').val()
+								         , which:"安装编码"
+	 				} )
+			      ,codeUnique({
+			 		 tableName:"cash"
+				         ,codeField:"cash_id"
+				         ,code:$('#cashId').val()
+				         , which:"收银机编号"
+		} )
+			      ,codeUnique({
+			 		 tableName:"printer"
+				         ,codeField:"printer_id"
+				         ,code:$('#priId').val()
+				         , which:"打印机编号"
+		} )
+			      ,codeUnique({
+			 		 tableName:"equipment"
+				         ,codeField:"eq_id"
+				         ,code:$('#eqId').val()
+				         , which:"采集点编码"
+		} ))
+	 .done(function(){ 
+
     $.ajax({
       url: ctx + '/install/submit', //用于文件上传的服务器端请求地址
       dataType: 'json', //返回值类型 一般设置为json
@@ -390,7 +425,12 @@ var submit = function() {
         console.log(status);
 
       }
+      //ajax end
     });
+   //done end 
+	 }).fail(function(){alert("网路原因未请求成功")});
+	 
+	 
   }
 }
 

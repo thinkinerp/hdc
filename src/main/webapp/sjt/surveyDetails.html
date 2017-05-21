@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="css/swiper.css">
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 		<script src="js/global.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/hdk/js/comUtil.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 
 	<body>
@@ -579,24 +580,45 @@
 //					'shops.installStation':'',		//安装状态？
 //					'shops.eqId':''				//采集点编号？ 
 				};
-				$.ajax({	
-					   url: "/hdk/survey/submit",
-					   type: "post",
-					   data:obj,
-					   dataType:"json",			
-					  // jsonpCallback:"state_null_getSome",
-					   success:function(data){
-					   		if(data.message == "success"){
-					   			app.alert('保存成功',1);			
-					   			window.location='surveyList.html'
-					   		}else if(data.message == "fail"){
-					   			app.alert('保存失败',1);
-					   		}
-					   },
-					   error:function(rs){
-					      app.alert(rs.status,1);
-					   }				   
-					});
+				
+				$.when(codeUnique({
+                                           tableName:"survey"
+                                         ,codeField:"sur_id"
+                                         ,code:$('#dyid').val()
+                                         , which:"调研编码"
+                    } ),
+                    codeUnique({
+                                           tableName:"cash"
+                                         ,codeField:"cash_id"
+                                         ,code:$('#syjId').val()
+                                         , which:"收银机编码"
+                    } ),
+                    codeUnique({
+                                           tableName:"printer"
+                                         ,codeField:"printer_id"
+                                         ,code:$('#dyjId').val()
+                                         , which:"打印机编码"
+                    } )
+                    ).done(function(){
+        				$.ajax({	
+        					   url: "/hdk/survey/submit",
+        					   type: "post",
+        					   data:obj,
+        					   dataType:"json",			
+        					  // jsonpCallback:"state_null_getSome",
+        					   success:function(data){
+        					   		if(data.message == "success"){
+        					   			app.alert('保存成功',1);			
+        					   			window.location='surveyList.html';
+        					   		}else if(data.message == "fail"){
+        					   			app.alert('保存失败',1);
+        					   		}
+        					   },
+        					   error:function(rs){
+        					      app.alert(rs.status,1);
+        					   }				   
+        					});
+					}).fail(function(){alert("网路问题，请重试");});//done end
 			}
 			
 			function xgsubmit(){	//修改
@@ -641,6 +663,7 @@
 				};
 				$.ajax({	
 					   url: "http://www.onetoend.cn/hdk/survey/modify",
+					   //url: "http://localhost:8080/hdk/survey/modify",
 					   type: "post",
 					   data:obj,
 					   dataType:"json",			
@@ -669,6 +692,7 @@
 				getData:function(){
 					$.ajax({	
 					   url: "http://www.onetoend.cn/hdk/survey/gotoModify",
+					   // url: "http://localhost:8080/hdk/survey/gotoModify",
 					   type: "get",
 					   data:{"surId":xg.surId},
 					   dataType:"jsonp",			
@@ -683,7 +707,7 @@
 					//调研概述
 					$("#dyid").val(xg.surId);
 					xg.zhidu("dyid");
-					$("#shopID").html(data.shops.proId);					
+					$("#shopID").html(data.shops.shopId);					
 					$("#shouyinid").html(data.cash.cashId);
 					$("#dayingid").html(data.printer.printerId);
 					//商铺信息
@@ -743,6 +767,7 @@
 						$('#qt7').addClass('on');
 						qt.note = "是";
 						$("#subnote").css("visibility","inherit");
+						$('#vipinfo').val(data.survey.surVipData);
 					}else if(data.survey.surVipData == null){
 						$('#qt8').addClass('on');
 						qt.note = "否";

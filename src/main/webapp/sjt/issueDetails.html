@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="css/swiper.css">
         <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
         <script src="js/global.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/hdk/js/comUtil.js" type="text/javascript" charset="utf-8"></script>
     </head>
 
     <body>
@@ -308,6 +309,7 @@
                  success:function(rs){
                          if(rs.message == "success"){
                              app.alert("保存成功",1);
+                             loadMessage($('#gs1').val());
                          }else if(rs.message == "fail"){
                              app.alert("保存失败",1);
                          }
@@ -734,20 +736,32 @@
                     ,
                     'problem.problemPlan' : $('#jjfa').html()	//解决方案
                 };
-                $.ajax({
-                    url : "http://www.onetoend.cn/hdk/problem/submit",
-                    type : "post",
-                    data : obj,
-                    dataType : "json",
-                    success : function(data) {
-                        if (data.message == "success") {
-                            app.alert('保存成功', 1)
-                            window.location = 'issueList.html'
-                        } else if (data.message == "fail") {
-                            app.alert('保存失败', 1);
+                
+                $.when(
+                             codeUnique({
+                            tableName:"problem"
+                            ,codeField:"problem_id"
+                            ,code:$('#gs1').val()
+                            , which:"问题编码"
+                    } )
+                ).done(function(){
+                    alert(1);
+                    reutrn ;
+                    $.ajax({
+                        url : "http://www.onetoend.cn/hdk/problem/submit",
+                        type : "post",
+                        data : obj,
+                        dataType : "json",
+                        success : function(data) {
+                            if (data.message == "success") {
+                                app.alert('保存成功', 1)
+                                window.location = 'issueList.html'
+                            } else if (data.message == "fail") {
+                                app.alert('保存失败', 1);
+                            }
                         }
-                    }
-                })
+                    });
+                });
             };
 
             function submit2() {//修改保存
