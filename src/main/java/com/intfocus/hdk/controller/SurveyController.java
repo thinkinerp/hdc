@@ -25,12 +25,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.intfocus.hdk.dao.CashMapper;
+import com.intfocus.hdk.dao.Operation_historyMapper;
 import com.intfocus.hdk.dao.PrinterMapper;
 import com.intfocus.hdk.dao.ProjectMapper;
 import com.intfocus.hdk.dao.ShopsMapper;
 import com.intfocus.hdk.dao.SurveyMapper;
 import com.intfocus.hdk.util.ComUtil;
 import com.intfocus.hdk.vo.Cash;
+import com.intfocus.hdk.vo.Operation_history;
 import com.intfocus.hdk.vo.Printer;
 import com.intfocus.hdk.vo.Shops;
 import com.intfocus.hdk.vo.Survey;
@@ -50,6 +52,9 @@ public class SurveyController implements ApplicationContextAware {
     private PrinterMapper printerMapper ;
     @Resource
     private CashMapper cashMapper ;
+    
+    @Resource
+    private Operation_historyMapper ohm ;
     
     @RequestMapping(value = "modify" , method=RequestMethod.POST)
     @ResponseBody
@@ -73,6 +78,11 @@ public class SurveyController implements ApplicationContextAware {
 				cashMapper.updateByPrimaryKeySelective(cash);
 				shopsMapper.updateByPrimaryKeySelective(shops);
 				rsjson.put("message","success");
+		    	Operation_history record = new Operation_history();
+		    	record.setUserId(userNum);
+		    	record.setFormType("调研");
+		    	record.setAction("修改调研编号为："+survey.getSurId());
+				ohm.insertSelective(record );
 				return rsjson.toJSONString();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -219,6 +229,11 @@ public class SurveyController implements ApplicationContextAware {
 		}
 		rsjson.put("message", "success");
 //		return callback+"({'message':'success'})";
+    	Operation_history record = new Operation_history();
+    	record.setUserId(userNum);
+    	record.setFormType("调研");
+    	record.setAction("新建调研编号为："+survey.getSurId());
+		ohm.insertSelective(record );
 		return rsjson.toJSONString();
     }
 	

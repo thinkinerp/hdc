@@ -26,6 +26,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.intfocus.hdk.dao.CashMapper;
 import com.intfocus.hdk.dao.EquipmentMapper;
 import com.intfocus.hdk.dao.MessageMapper;
+import com.intfocus.hdk.dao.Operation_historyMapper;
 import com.intfocus.hdk.dao.PrinterMapper;
 import com.intfocus.hdk.dao.ProblemMapper;
 import com.intfocus.hdk.dao.ProjectMapper;
@@ -33,6 +34,7 @@ import com.intfocus.hdk.dao.ShopsMapper;
 import com.intfocus.hdk.util.ComUtil;
 import com.intfocus.hdk.vo.Equipment;
 import com.intfocus.hdk.vo.Message;
+import com.intfocus.hdk.vo.Operation_history;
 import com.intfocus.hdk.vo.Problem;
 
 @Controller
@@ -57,6 +59,8 @@ public class ProblemController implements ApplicationContextAware {
     private ShopsMapper shopsMapper;
     @Resource
     private MessageMapper messageMapper ; 
+    @Resource
+    private Operation_historyMapper ohm ; 
     
     @RequestMapping(value = "getEquipmentList " , method=RequestMethod.GET)
     @ResponseBody     
@@ -98,6 +102,11 @@ public class ProblemController implements ApplicationContextAware {
     		}
     		problemMapper.insertSelective(problem);
     		rs.put("message", "success");
+	    	Operation_history record = new Operation_history();
+	    	record.setUserId(userNum);
+	    	record.setFormType("问题");
+	    	record.setAction("新建问题编号为："+problem.getProblemId());
+			ohm.insertSelective(record );
 	    	return rs.toJSONString();
 	  }catch(Exception e){
 		  e.printStackTrace();
@@ -122,6 +131,13 @@ public class ProblemController implements ApplicationContextAware {
 				problem.modifyAtachement((result.get("urls")));
     		}
     		problemMapper.updateByPrimaryKeySelective(problem);
+    		
+	    	Operation_history record = new Operation_history();
+	    	record.setUserId(userNum);
+	    	record.setFormType("问题");
+	    	record.setAction("修改问题编号为："+problem.getProblemId());
+			ohm.insertSelective(record );
+    		
     		rs.put("message", "success");
     		return rs.toJSONString();
     	}catch(Exception e){

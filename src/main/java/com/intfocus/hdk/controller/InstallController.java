@@ -31,6 +31,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.intfocus.hdk.dao.CashMapper;
 import com.intfocus.hdk.dao.EquipmentMapper;
 import com.intfocus.hdk.dao.InstallMapper;
+import com.intfocus.hdk.dao.Operation_historyMapper;
 import com.intfocus.hdk.dao.PrinterMapper;
 import com.intfocus.hdk.dao.ProjectMapper;
 import com.intfocus.hdk.dao.ShopsMapper;
@@ -38,6 +39,7 @@ import com.intfocus.hdk.util.ComUtil;
 import com.intfocus.hdk.vo.Cash;
 import com.intfocus.hdk.vo.Equipment;
 import com.intfocus.hdk.vo.Install;
+import com.intfocus.hdk.vo.Operation_history;
 import com.intfocus.hdk.vo.Printer;
 import com.intfocus.hdk.vo.Project;
 import com.intfocus.hdk.vo.Shops;
@@ -58,6 +60,9 @@ public class InstallController implements ApplicationContextAware {
     private EquipmentMapper equipmentMapper;
     @Resource
     private ProjectMapper projectMapper;
+    
+    @Resource
+    private Operation_historyMapper ohm ;
     
     @Resource
     private ShopsMapper shopsMapper;
@@ -102,6 +107,14 @@ public class InstallController implements ApplicationContextAware {
 	    	printerMapper.insertSelective(printer);
 	    	cashMapper.insertSelective(cash);
 	    	equipmentMapper.insertSelective(equipment);
+	    	
+	    	Operation_history record = new Operation_history();
+	    	
+	    	record.setUserId(userNum);
+	    	record.setFormType("安装");
+	    	record.setAction("新建安装编号为："+install.getInstallId());
+			ohm.insertSelective(record );
+	    	
 	    	result.put("message", "success");
 	    	return result.toJSONString() ;
 	  }catch(Exception e){
@@ -220,6 +233,13 @@ public class InstallController implements ApplicationContextAware {
 			cashMapper.updateByPrimaryKeySelective(cash);
 			equipmentMapper.updateByPrimaryKeySelective(equipmengt);
 
+	    	Operation_history record = new Operation_history();
+	    	
+	    	record.setUserId(userNum);
+	    	record.setFormType("安装");
+	    	record.setAction("修改安装编号为："+install.getInstallId());
+			ohm.insertSelective(record );
+			
     	}catch(Exception e){
 			e.printStackTrace();
 			return "fail" ;
