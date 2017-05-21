@@ -28,7 +28,7 @@ var shopStateSeach = function(){
 	 $.ajax({ 
 	 		url:ctx + '/shops/getSome',
 	 		type:'get',
-	 		jsonpCallback:"shops_getSome",
+	 		//jsonpCallback:"shops_getSome",
 	 		jsonp: "callback",
 			data:{
 				"proId":$('#itemName').html(),
@@ -58,7 +58,7 @@ var shopStateSeach = function(){
 	 				$('.i-itemDetail-area').append(
 	 						"				<div class='i-itemDetail-area-title'>" +
 	 						"					<div>"+item.shopName+"("+item.shopPosition+")</div>" +
-	 						(undefined == item.installId ? "" : "					<p><a href = 'javascript:void(0)' onClick='gotoModify("+item.installId+")' target='_self'>详情</a></p>")
+	 						(undefined == item.installId ? "" : "					<p><a href = 'javascript:void(0)' onClick='gotoModify(\""+item.installId+"\")' target='_self'>详情</a></p>")
 	 						 +
 	 						"				</div>" +
 	 						"				<div class='i-itemDetail-area-content'>" +
@@ -82,6 +82,7 @@ var shopStateSeach = function(){
 	 			});
 	 		},
 	  		error:function(rs){
+	  			console.log(rs);
 	 		}
 	  });	
 }

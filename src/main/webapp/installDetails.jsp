@@ -356,7 +356,7 @@
 							<div onclick="app.fullImg(0)"></div>
 							<div onclick="app.fullImg(1)"></div> 
 						</div>
-						<div class="add"><input name ="fileImg" multiple="multiple" type="file" id="fileImg" onchange="app.getImgUrl();"/></div>
+						<div class="add"><input name ="fileImg" multiple="multiple" type="file" id="files" onchange="app.getImgUrl();"/></div>
 					</div>
 				</div>
 				<!-- 安装详情7(附件) -->
@@ -490,7 +490,7 @@
 			for(var i = 0 ; i <files.length ; i ++){
 				app.addImg(files[i]);
 			}
-			
+			imgs =[];
 			$('.fullimg').remove();
 		}
 		

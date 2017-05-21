@@ -143,9 +143,10 @@
 									"					<p>"+rs[0].updatedAt+"</p>" +
 									"				</div>"
 							);
-				  			shopStateSeach();
+							shopStateSeach();
 				 		},
 				  		error:function(rs){
+				  			console.log(rs);
 				 		}
 				  });			 
 				 
@@ -205,7 +206,8 @@
 					 		}
 					  });
 				};
-				shopStateSeach();
+
+			/*  	shopStateSeach();*/
 				/*
 				 *	弹窗的使用方法  代码在global.js  app.alert
 				*/

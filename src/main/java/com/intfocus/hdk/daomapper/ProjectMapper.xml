@@ -51,6 +51,9 @@
     		<if test="null != proManagerPro  and '' != proManagerPro">
 				and pro_manager_pro = #{proManagerPro,jdbcType=VARCHAR}
 			</if>	
+    		<if test="null != proId  and '' !=  proId">
+				and pro_id = #{ proId,jdbcType=VARCHAR}
+			</if>	
     </where>    
     
     <if test="null != page and ''!= page">
