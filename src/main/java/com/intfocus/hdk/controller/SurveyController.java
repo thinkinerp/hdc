@@ -170,7 +170,7 @@ public class SurveyController implements ApplicationContextAware {
     		json.put("cash", "{}");
     	}
     	//门店
-    	List<Shops> shops = shopsMapper.selectByWhere(where ); 
+    	List<Shops> shops = shopsMapper.selectForCombobox(where ); 
     	if(null != shops && shops.size() > 0 ){
     		Shops shop = shops.get(0);
     		json.put("shops", shop);

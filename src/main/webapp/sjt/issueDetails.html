@@ -433,10 +433,10 @@
                     $('#asddas').addClass('on')
                     $('#asddas').html('未选择');
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/shops/selectForCombobox",
+                        url : "/hdk/shops/selectForCombobox",
                         type : "get",
                         data : {
-                            "proName" : sp.sp1
+                            "proId" : sp.sp1
                         },
                         dataType : "jsonp",
                         jsonpCallback : "shops_selectForCombobox",
@@ -745,10 +745,9 @@
                             , which:"问题编码"
                     } )
                 ).done(function(){
-                    alert(1);
-                    reutrn ;
+
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/problem/submit",
+                        url : "/hdk/problem/submit",
                         type : "post",
                         data : obj,
                         dataType : "json",
@@ -767,7 +766,7 @@
             function submit2() {//修改保存
 
                 var obj = {
-                    'problem.id' : xg.data.eqId//问题表自增id
+                    'problem.id' : xg.data.id//问题表自增id
                     ,
                     'problem.problemId' : $('#gs1').val()//问题编号
                     ,
@@ -806,9 +805,9 @@
                     'problem.problemTable' : gs.gs7String//标签
                     ,
                     'problem.problemPlan' : $('#jjfa').html()	//解决方案
-                }
+                };
                 $.ajax({
-                   url : "http://www.onetoend.cn/hdk/problem/modify",
+                   url : "/hdk/problem/modify",
                     //url : "/hdk/problem/modify",
                     type : "post",
                     data : obj,
@@ -824,7 +823,7 @@
                     error:function(rs){
                       console.log(rs);  
                     }
-                })
+                });
             }
 
             var xg = {
@@ -891,6 +890,7 @@
                         for (var i = 0; i < data.problemEnclosure.length; i++) {
                             app.addImg(data.problemEnclosure[i]);
                         }
+                        imgs = [];
                     }
 
                     if (data.problemTable != '' && data.problemTable != null && data.problemTable != undefined) {

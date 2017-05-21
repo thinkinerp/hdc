@@ -343,9 +343,9 @@
 				initShopName:function(){ //初始化商店名称
 					
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/shops/selectForCombobox",
+					   url: "/hdk/shops/selectForCombobox",
 					   type: "get",
-					   data:{"proName":shop.itemName},
+					   data:{"proId":shop.itemName},
 					   dataType:"jsonp",
 					   jsonpCallback:"shops_selectForCombobox",
 					   success:function(data){
@@ -662,7 +662,7 @@
 					'shops.proId':xg.data.shops.proId	//项目编号
 				};
 				$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/survey/modify",
+					   url: "/hdk/survey/modify",
 					   //url: "http://localhost:8080/hdk/survey/modify",
 					   type: "post",
 					   data:obj,
@@ -691,7 +691,7 @@
 				},
 				getData:function(){
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/survey/gotoModify",
+					   url: "/hdk/survey/gotoModify",
 					   // url: "http://localhost:8080/hdk/survey/gotoModify",
 					   type: "get",
 					   data:{"surId":xg.surId},
@@ -778,6 +778,7 @@
 						for(var i = 0; i<data.survey.attachmentUrl.length; i++){
 							app.addImg(data.survey.attachmentUrl[i]);
 						}
+						imgs = [];
 					}
 				},
 				zhidu:function(id){
