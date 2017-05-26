@@ -164,7 +164,9 @@
 						data:{
 							"proName": $('#itemName').html()
 						},
-						dataType:'json',
+						dataType:'jsonp',
+						type:'get',
+						jsonp:'callback',
 						success:function(rs){
 							shopStateSeach();
 						},

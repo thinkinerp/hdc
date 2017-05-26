@@ -69,10 +69,13 @@ public class ProjectController implements ApplicationContextAware {
      
     @RequestMapping(value = "setLast" , method=RequestMethod.GET)
     @ResponseBody
-    public Integer setLast(HttpServletResponse res , HttpServletRequest req ,HttpSession session
-            , Project project){
+    public String setLast(HttpServletResponse res , HttpServletRequest req ,HttpSession session
+            , Project project , String callback){
     	
     	Project p =  null;
+    	
+    	JSONObject rs = new JSONObject();
+    	
     	try{
     	Map<String ,String> where = new HashMap<String,String>();
     	where.put("proName", project.getProName());
@@ -86,10 +89,12 @@ public class ProjectController implements ApplicationContextAware {
 			projectmapper.updateByPrimaryKeySelective(p);
 		}	
 		}catch(Exception e){
+			rs.put("message", "fail");
 			e.printStackTrace();
-			return 0 ;
+			return rs.toJSONString() ;
 		}
-    	return 1;
+    	rs.put("message", "success");
+    	return rs.toJSONString();
     }
     
     @RequestMapping(value = "getSome" , method=RequestMethod.GET)

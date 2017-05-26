@@ -167,6 +167,19 @@
 					})
 				},
 				selectItem:function(){	//选择项目
+				        $.ajax({
+                        url:"/hdk/project/setLast",
+                        data:{
+                            "proName": $('#itemName').html()
+                        },
+                        dataType:'jsonp',
+                        type:'get',
+                        jsonp:'callback',
+                        success:function(rs){
+                        },
+                        error:function(rs){
+                        }
+                    });
 					$.ajax({	
 					   url: "/hdk/project/getSome",
 					   data:{"proName":$('#itemName').html()},
@@ -178,7 +191,7 @@
 					   		//me.list();
 					   		me.surveyState();
 					   }					   
-					})
+					});
 				},
 				upItemStyle:function(data){	//更改显示项目信息
 			

@@ -90,6 +90,23 @@
 					me.list();
 				},
 				selectItem:function(){	//选择项目
+				    
+				    
+				      $.ajax({
+                        url: "/hdk/project/setLast",
+                        type:"get",
+                        data:{
+                            "proName": $('#itemName').html()
+                        },
+                        dataType:'jsonp',
+                        jsonp:"callback",
+                        success:function(rs){
+                            
+                        },
+                        error:function(rs){
+                        }
+                });
+				    
 					$.ajax({	
 					   url: "/hdk/project/getSome",
 					   data:{"proName":$('#itemName').html()},
