@@ -222,7 +222,14 @@ public class InstallController implements ApplicationContextAware {
     	    			return "{'message':'"+rs.get("message")+"'}";
     	    		}
     	    	}
-    		install.modifyAtachement(rs.get("urls"));
+    	   
+    	    Map<String, String> where = new HashMap<String, String>();
+    	    where.put("installId", install.getInstallId());
+			List<Install> installs = installmapper.selectByWhere(where );
+    	    if(0 < installs.size()){
+    	    	install.setAttachment_url(installs.get(0).getAttachmentUrl());
+    	    }
+    		install.modifyAtachement(files , rs.get("urls"));
 			installmapper.updateByPrimaryKeySelective(install);
 			printerMapper.updateByPrimaryKeySelective(printer);
 			cashMapper.updateByPrimaryKeySelective(cash);

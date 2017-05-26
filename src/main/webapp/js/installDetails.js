@@ -292,7 +292,7 @@ var submit = function() {
       beforeSend:ajaxLoading(),
       complete:ajaxLoadEnd(),
       data: {
-    	  files:(JSON.stringify(imgs) != JSON.stringify(files)?(JSON.stringify(dellExist(imgs,files))):""),	
+    	  files:(JSON.stringify(imgs) != JSON.stringify(files)?(JSON.stringify(imgs,files)):""),	
         'install.installId': $("#installCode").val(),
         'install.id': allObjs.install.id,
         'install.installStation': $('#installStation').html(),

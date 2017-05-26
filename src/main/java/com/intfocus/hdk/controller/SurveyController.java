@@ -56,14 +56,22 @@ public class SurveyController implements ApplicationContextAware {
     		, Survey survey , Printer printer , Cash cash , Shops shops,String callback, String files
     		,String userName ,String userNum){
     	JSONObject rs = new JSONObject();
+    	String path = "" ;
 		try {
-			   if("".equalsIgnoreCase(files)){	
-					Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
+			   if(!"".equalsIgnoreCase(files) && null != files){	
+					Map<String,String> result = ComUtil.savePicture(files, path = req.getSession().getServletContext().getRealPath("upload"));
 					if(!"ok".equalsIgnoreCase(result.get("message"))){
 						rs.put("message", result.get("message"));
 						return rs.toJSONString();
 					}
-					survey.modifyAtachement(((result.get("urls")).toString()));
+					
+					Map<String, String> where = new HashMap<String, String>();
+					where.put("surId", survey.getSurId());
+					List<Survey> ss = surveymapper.selectByWhere(where );
+					if(null != ss && 0 < ss.size()){
+						survey.setAttachmentUrl(ss.get(0).getAttachmentUrl());
+					}
+					survey.modifyAtachement(files ,((result.get("urls")).toString()) , path.substring(0,path.indexOf("upload")));
 			   }
 
 				surveymapper.updateByPrimaryKeyWithBLOBs(survey);
@@ -124,12 +132,18 @@ public class SurveyController implements ApplicationContextAware {
     	// 取出相关的信息
     	JSONObject json = new JSONObject();
     	Map<String, String> where = new HashMap<String,String>();
+    	 String path = req.getSession().getServletContext().getRealPath("upload");
     	where.put("surId", surId);
 		// 调研
     	List<Survey> surveys = surveymapper.selectByWhere(where ); 
     	Survey survey1 = null ;
     	if( 0 < surveys.size() ){
 	    	survey1 = surveys.get(0);
+	    	
+			   if( null != survey1.getAttachmentUrl() && !"".equalsIgnoreCase(survey1.getAttachmentUrl())){
+				   survey1.setAttachmentUrl(survey1.getAttachmentUrl().replace(path.substring(0,path.indexOf("upload")), "/hdk/"));
+			   }
+	    	
 	    	json.put("survey", survey1);
     	}
     	// 收银机 
@@ -139,8 +153,6 @@ public class SurveyController implements ApplicationContextAware {
 	    	printer = printers.get(0);
 	    	json.put("printer", printer);
     	}
-    	
-
     	
     	// 打印机
     	List<Cash> cashes = cashMapper.selectByWhere(where ); 
@@ -174,7 +186,7 @@ public class SurveyController implements ApplicationContextAware {
     	
 		JSONObject rs = new JSONObject();
 		
-	   if("".equalsIgnoreCase(files)){	
+	   if(!"".equalsIgnoreCase(files)){	
 		Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
 		
 		

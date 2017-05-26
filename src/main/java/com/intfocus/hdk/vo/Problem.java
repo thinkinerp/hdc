@@ -1,5 +1,8 @@
 package com.intfocus.hdk.vo;
 
+import java.util.Arrays;
+
+import com.alibaba.fastjson.JSONArray;
 import com.intfocus.hdk.util.ComUtil;
 
 public class Problem {
@@ -61,13 +64,25 @@ public class Problem {
     
     
 
-    public  void modifyAtachement(String picUrls){
+    public  void modifyAtachement(String files ,String picUrls){
     	
     	if(null != picUrls){
-    		if(null == this.problemEnclosure){
-    			this.problemEnclosure = picUrls;
+    		JSONArray filesArray = JSONArray.parseArray(files); 
+    		String[] filesArray2 = null ;
+    		if(null !=  this.problemEnclosure  && !"".equalsIgnoreCase(this.problemEnclosure)){
+	    		filesArray2 = this.problemEnclosure.split(",");
+	    		
+	    		for (int i = 0; i < filesArray2.length; i++) {
+	    			if(!filesArray.contains(filesArray2[i])){
+	    				filesArray2[i] = filesArray2[filesArray2.length -1];
+	    				filesArray2 = Arrays.copyOf(filesArray2, filesArray2.length);
+	    			}
+				}
+    		}
+    		if(null != filesArray2 && 0 < filesArray2.length ){
+    			this.problemEnclosure =   org.apache.commons.lang.StringUtils.join(filesArray2,",") +"," + picUrls;
     		}else{
-    			this.problemEnclosure =  picUrls;
+    			this.problemEnclosure =picUrls;
     		}
     	}
     }

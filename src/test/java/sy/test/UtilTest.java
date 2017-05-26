@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSONObject;
 import com.intfocus.hdk.util.ComUtil;
 
 public class UtilTest {
@@ -12,6 +13,17 @@ public class UtilTest {
 	@Test
 	public void comUtilDateFormat() {
 		System.out.println(ComUtil.dateFormat("2017-05-15 16:57:10"));	
+	}
+	@Test
+	public void testComUtilRemove(){
+		String[] ss = {"ddddd","d"};
+		
+		System.out.println(JSONObject.toJSON(ComUtil.remove("dd",ss	)));
+	}
+	@Test
+	public void testArrayLength(){
+		String[] ss = {"d","d"};
+		System.out.println(ss.length);
 	}
 	@Test
 	public void apacheUitljoinTest(){

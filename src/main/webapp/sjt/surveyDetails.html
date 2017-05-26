@@ -295,6 +295,7 @@
 				shopName:null,	//商店名称
 				item:null,		//项目集合
 				itemId:null,	//项目id
+				files:null,
 				init:function(){
 					this.initPorName();
 				},
@@ -626,7 +627,7 @@
 			
 			function xgsubmit(){	//修改
 				var obj={
-                    'files':JSON.stringify(imgs),
+                    'files':(JSON.stringify(imgs) != JSON.stringify(shop.files)?JSON.stringify(imgs):""),
 					'survey.proId':xg.data.survey.proId,	//项目编号
 					'survey.shopId':$('#shopID').html(),		//门店编号
 					'survey.surNetwork':qt.network,	//商户网络环境
@@ -786,11 +787,10 @@
 					}
 					
 					if( data.survey.attachmentUrl != '' &&  data.survey.attachmentUrl != null &&  data.survey.attachmentUrl != undefined){
-						data.survey.attachmentUrl = data.survey.attachmentUrl.split(",");
-						for(var i = 0; i<data.survey.attachmentUrl.length; i++){
-							app.addImg(data.survey.attachmentUrl[i]);
+						shop.files = data.survey.attachmentUrl.split(",");
+						for(var i = 0; i<shop.files.length; i++){
+							app.addImg(shop.files[i]);
 						}
-						imgs = [];
 					}
 				},
 				zhidu:function(id){

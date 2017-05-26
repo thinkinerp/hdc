@@ -16,9 +16,9 @@
 		<script src="${ctx}/casher/js/global.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>  
 <script type="text/javascript" src="${ctx}/js/comUtil.js"></script> 
-<script type="text/javascript" src="${ctx}/js/syp_v1.js"></script> 
+<%-- <script type="text/javascript" src="${ctx}/js/syp_v1.js"></script>  --%>
 <script type="text/javascript" >
-window.SYP.toggleShowBanner('hidden');
+//window.SYP.toggleShowBanner('hidden');
     var ctx = "${ctx}";	
     var surId = "";
     var proId = '';

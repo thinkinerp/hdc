@@ -292,8 +292,8 @@
       sur_power = #{surPower,jdbcType=VARCHAR},
       sur_vip = #{surVip,jdbcType=VARCHAR},
       sur_vip_data = #{surVipData,jdbcType=VARCHAR},
-      created_at = #{createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      attachement_url = #{attachmentUrl,jdbcType=VARCHAR},
+
       sur_remarks = #{surRemarks,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +35,19 @@ public class ComUtil {
         return rannum + str;// 当前时间  
 	}
 
+	
+	public static String[] remove( String target , String[] list ){
+		String[] rs = list.clone() ;
+		for(int i = 0 ; i < rs.length;i++){
+			if(target.equalsIgnoreCase(rs[i])){
+				rs[i] = rs[list.length -1];
+				rs = Arrays.copyOf(rs, rs.length - 1);
+				break;
+			}
+		}
+		return rs ;
+	}
+	
 	public static Map<String,String> savePicture(String files ,String url ){
 	       String dataPrix = "";
 	       String data = "";
@@ -43,6 +57,9 @@ public class ComUtil {
 	       List<String> urls = new ArrayList<String>();
 		   if(null != jsonArray && 0 != jsonArray.size()){ 
 			   for(int i =0 ; i < jsonArray.size();i = i +1){
+				   if(!jsonArray.getString(i).startsWith("data:image")){
+					   continue;
+				   }
 				    d = jsonArray.getString(i).split("base64,"); 
 				    if(d != null && d.length == 2){
 				    	

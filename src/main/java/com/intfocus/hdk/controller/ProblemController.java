@@ -36,6 +36,7 @@ import com.intfocus.hdk.vo.Equipment;
 import com.intfocus.hdk.vo.Message;
 import com.intfocus.hdk.vo.Operation_history;
 import com.intfocus.hdk.vo.Problem;
+import com.intfocus.hdk.vo.Project;
 
 @Controller
 @RequestMapping("/problem")
@@ -128,7 +129,13 @@ public class ProblemController implements ApplicationContextAware {
 					rs.put("message", result.get("message"));
 					return rs.toJSONString();
 				}
-				problem.modifyAtachement((result.get("urls")));
+				Map<String,String> where = new HashMap<String, String>();
+				where.put("problemId", problem.getProblemId());
+				List<Problem> ps = problemMapper.selectByWhere(where);
+				if(null != ps && ps.size() > 0){
+					problem.setProblemEnclosure(ps.get(0).getProblemEnclosure());
+				}
+				problem.modifyAtachement(files,(result.get("urls")));
     		}
     		problemMapper.updateByPrimaryKeySelective(problem);
     		

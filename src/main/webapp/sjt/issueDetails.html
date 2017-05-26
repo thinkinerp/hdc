@@ -367,6 +367,8 @@
 
             return query;
          }();
+         
+        
             var sp = {//商铺信息
                 sp1 : null, //项目名称
                 sp2 : null, //商铺名称
@@ -375,6 +377,7 @@
                 proData : null,
                 proid : null,
                 shopid : null,
+                files:null,
                 init : function() {
                     sp.sp1Fun()
                 },
@@ -805,7 +808,7 @@
                     ,
                     'problem.problemDetails' : $('#wtms').html()//问题描述
                     ,
-                    'files' : JSON.stringify(imgs)//附件信息
+                    'files' :( JSON.stringify(imgs) != JSON.stringify(sp.files)?JSON.stringify(imgs):"")//附件信息
                     ,
                     'problem.problemTable' : gs.gs7String//标签
                     ,
@@ -893,11 +896,10 @@
                     $("#jjfa").html(data.problemPlan);
 
                     if (data.problemEnclosure != '' && data.problemEnclosure != null && data.problemEnclosure != undefined) {
-                        data.problemEnclosure = data.problemEnclosure.split(",");
-                        for (var i = 0; i < data.problemEnclosure.length; i++) {
-                            app.addImg(data.problemEnclosure[i]);
+                       sp.files  = data.problemEnclosure.split(",");
+                        for (var i = 0; i < sp.files.length; i++) {
+                            app.addImg(sp.files[i]);
                         }
-                        imgs = [];
                     }
 
                     if (data.problemTable != '' && data.problemTable != null && data.problemTable != undefined) {
