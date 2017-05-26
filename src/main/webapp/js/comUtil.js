@@ -6,9 +6,10 @@ function onlyEnglishAndDecimal(field){
 	
 	return a.test(field);
 } 
-var checkCode = function(obj){
+var checkCode = function(obj,label){
 	if(!onlyEnglishAndDecimal($(obj).val())){
-		app.alert("编码:" + $(obj).val() +",只能有数字和英文字母组成",1);
+		app.alert(label+"编码:" + $(obj).val() +",只能有数字和英文字母组成",1,null);
+
 	}
 }
 function codeUnique(config){

@@ -244,20 +244,20 @@ function loadPrinterAndCasher(surId) {
 }
 
 
-function setCashidOnInstall(obj) {
-	checkCode(obj);
+function setCashidOnInstall(obj,label) {
+	checkCode(obj,label);
   $('#cashCode').html($('#cashId').val());
 }
 
 
-function setpriIdOnInstall(obj) {
-	checkCode(obj);
+function setpriIdOnInstall(obj,label) {
+	checkCode(obj,label);
   $('#printCode').html($('#priId').val());
 
 }
 
-function seteqIdOnInstall(obj) {
-	checkCode(obj);
+function seteqIdOnInstall(obj,label) {
+	checkCode(obj,label);
   $('#equipmentCode').html($('#eqId').val());
 
 }
