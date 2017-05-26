@@ -128,7 +128,7 @@
 							<div class="g-importList-title">项目名称</div>
 							<div id ="proNameDiv" class="g-importList-content">
 								<div class="i-xiala-list">
-									<div id = "proName" data-select="" onclick="app.select(this,2, Window.selected)" class="on">未选择</div>
+									<div id = "proName" data-select="" onclick="app.select(this,3, Window.selected)" class="on">未选择</div>
 								</div>
 							</div>
 						</li>

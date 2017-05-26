@@ -394,7 +394,7 @@
                 },
                 sp1Fun : function() {
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/project/getSome",
+                        url : "/hdk/project/getSome",
                         type : "get",
                         dataType : "jsonp",
                         jsonpCallback : "project_null_getSome",
@@ -410,7 +410,7 @@
                             }
                             $('#sp1')[0].dataset.select = text
                             $("#sp1").click(function() {
-                                app.select(this, 1, sp.selectSp1);
+                                app.select(this, 3, sp.selectSp1);
                             })
                         }
                     })
@@ -456,7 +456,7 @@
                             }
                             $('#sp2')[0].dataset.select = text
                             $("#sp2").click(function() {
-                                app.select(this, 1, sp.selectSp2);
+                                app.select(this, 3, sp.selectSp2);
                             })
                         }
                     })
@@ -507,7 +507,7 @@
                             }
                             $('#gs2')[0].dataset.select = text
                             $("#gs2").click(function() {
-                                app.select(this, 1, gs.selectGs2);
+                                app.select(this, 3, gs.selectGs2);
                             })
                             gs.gs3Fun();
                         }
@@ -519,7 +519,7 @@
                 },
                 gs3Fun : function() {
                     $("#gs3").click(function() {
-                        app.select(this, 1, gs.selectGs3);
+                        app.select(this, 3, gs.selectGs3);
                        
                     })
                     gs.gs4Fun();
@@ -548,7 +548,7 @@
                             }
                             $('#gs4')[0].dataset.select = text
                             $("#gs4").click(function() {
-                                app.select(this, 1, gs.selectGs4);
+                                app.select(this, 3, gs.selectGs4);
                             })
                             gs.gs5Fun();
                         }
@@ -576,7 +576,7 @@
                             }
                             $('#gs5')[0].dataset.select = text
                             $("#gs5").click(function() {
-                                app.select(this, 1, gs.selectGs5);
+                                app.select(this, 3, gs.selectGs5);
                             })
                             gs.gs6Fun();
                         }
@@ -604,7 +604,7 @@
                             }
                             $('#gs6')[0].dataset.select = text
                             $("#gs6").click(function() {
-                                app.select(this, 1, gs.selectGs6);
+                                app.select(this, 3, gs.selectGs6);
                             })
                             gs.gs7Fun();
                         }
@@ -687,7 +687,7 @@
                             //					   		$('#ms7')[0].dataset.select = text2
                             $("#asddas").unbind('click');
                             $("#asddas").click(function() {
-                                app.select(this, 1, ms.selectcj);
+                                app.select(this, 3, ms.selectcj);
                             })
                         }
                     })
