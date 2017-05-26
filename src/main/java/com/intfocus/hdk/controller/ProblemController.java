@@ -121,9 +121,10 @@ public class ProblemController implements ApplicationContextAware {
     		, Problem problem ,String callback ,String files
     		,String userName ,String userNum){
        JSONObject rs = new JSONObject();
+       String path = null ;
     	try{
     		if(null != files && !"".equalsIgnoreCase(files)){
-				Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
+				Map<String,String> result = ComUtil.savePicture(files,path= req.getSession().getServletContext().getRealPath("upload"));
 				
 				if(!"ok".equalsIgnoreCase(result.get("message"))){
 					rs.put("message", result.get("message"));
@@ -135,7 +136,7 @@ public class ProblemController implements ApplicationContextAware {
 				if(null != ps && ps.size() > 0){
 					problem.setProblemEnclosure(ps.get(0).getProblemEnclosure());
 				}
-				problem.modifyAtachement(files,(result.get("urls")));
+				problem.modifyAtachement(files,(result.get("urls")),path.substring(0,path.indexOf("upload")));
     		}
     		problemMapper.updateByPrimaryKeySelective(problem);
     		

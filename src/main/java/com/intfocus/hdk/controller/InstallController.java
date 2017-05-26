@@ -213,11 +213,11 @@ public class InstallController implements ApplicationContextAware {
     ,  Install install,Printer printer,Cash cash,Equipment equipmengt ,String files 
     ,String userName ,String userNum){
     	try{
-    		
+    		String path = null; 
         	Map<String,String> rs = null ;
     	    	if(null != files && !"".equalsIgnoreCase(files)){
     	    		rs = new HashMap<String,String>();
-    	    		rs = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
+    	    		rs = ComUtil.savePicture(files, path=req.getSession().getServletContext().getRealPath("upload"));
     	    		if(!"ok".equalsIgnoreCase(rs.get("message"))){
     	    			return "{'message':'"+rs.get("message")+"'}";
     	    		}
@@ -229,7 +229,7 @@ public class InstallController implements ApplicationContextAware {
     	    if(0 < installs.size()){
     	    	install.setAttachment_url(installs.get(0).getAttachmentUrl());
     	    }
-    		install.modifyAtachement(files , rs.get("urls"));
+    		install.modifyAtachement(files , rs.get("urls"),path.substring(0,path.indexOf("upload")));
 			installmapper.updateByPrimaryKeySelective(install);
 			printerMapper.updateByPrimaryKeySelective(printer);
 			cashMapper.updateByPrimaryKeySelective(cash);

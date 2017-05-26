@@ -42,27 +42,28 @@ public class Install {
 
     private String installRemarks;
 
-    public  void modifyAtachement(String files,String picUrls){
+    public  void modifyAtachement(String files,String picUrls,String path){
     	
     	if(null != picUrls){
     		
     		JSONArray filesArray = JSONArray.parseArray(files); 
     		String[] filesArray2 = null ;
+    		String[] temp = null;
     		if(null !=  this.attachmentUrl && !"".equalsIgnoreCase(this.attachmentUrl)){
 	    		filesArray2 = this.attachmentUrl.split(",");
-	    		
+	    		temp = filesArray2.clone();
 	    		for (int i = 0; i < filesArray2.length; i++) {
-	    			if(!filesArray.contains(filesArray2[i])){
-	    				filesArray2[i] = filesArray2[filesArray2.length -1];
-	    				filesArray2 = Arrays.copyOf(filesArray2, filesArray2.length);
+	    			if(!filesArray.contains( filesArray2[i].replace(path, "/hdk/"))){
+	    				temp = ComUtil.remove(filesArray2[i], temp);
 	    			}
 				}
     		}
-    		if(null != filesArray2 && 0 < filesArray2.length ){
-    			this.attachmentUrl =   org.apache.commons.lang.StringUtils.join(filesArray2,",") +"," + picUrls;
+    		if(null != temp && 0 < temp.length ){
+    			this.attachmentUrl =   org.apache.commons.lang.StringUtils.join(temp,",") + ("".equalsIgnoreCase(picUrls)?"" :"," + picUrls);
     		}else{
     			this.attachmentUrl =picUrls;
     		}
+
     	}
     }
     public Integer getId() {
