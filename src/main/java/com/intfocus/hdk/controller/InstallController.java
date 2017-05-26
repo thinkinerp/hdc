@@ -160,7 +160,6 @@ public class InstallController implements ApplicationContextAware {
 			   i.setAttachment_url(i.getAttachmentUrl().replace(path.substring(0,path.indexOf("upload")), "/hdk/"));
 		   }
 		   json.put("install", i);
-		   where.clear();
 		   //找到门店
 		   where.put("shopId", installs.get(0).getShopId());
 		   List<Shops> shopss = shopsMapper.selectByWhere(where);
@@ -170,7 +169,6 @@ public class InstallController implements ApplicationContextAware {
 		   }
 		   
 		   //找到收款机
-		   where.clear();
 		   where.put("cashId", installs.get(0).getCashId());
 		   List<Cash> cashes = cashMapper.selectByWhere(where);
 		   
@@ -178,7 +176,6 @@ public class InstallController implements ApplicationContextAware {
 			   json.put("cash",cashes.get(0));
 		   }
 		   //打印机
-		   where.clear();
 		   where.put("printerId", installs.get(0).getPrinterId());
 		   List<Printer> printers = printerMapper.selectByWhere(where);
 		   
@@ -186,7 +183,6 @@ public class InstallController implements ApplicationContextAware {
 			   json.put("printer",printers.get(0));
 		   }
 		   //采集点
-		   where.clear();
 		   where.put("eqId", installs.get(0).getEqId());
 		   List<Equipment> equipments = equipmentMapper.selectByWhere(where);
 		   
@@ -194,7 +190,6 @@ public class InstallController implements ApplicationContextAware {
 			   json.put("equipment",equipments.get(0));
 		   }
 		   //项目
-		   where.clear();
 		   where.put("proId", installs.get(0).getProId());
 		   List<Project> projects = projectMapper.selectByWhere(where);
 		   

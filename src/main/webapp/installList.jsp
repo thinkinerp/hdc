@@ -20,7 +20,11 @@
 		<script src="${ctx}/casher/js/global.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="${ctx}/js/comUtil.js"></script>  
 		<script src="${ctx}/js/install.js" type="text/javascript" charset="utf-8"></script>
+		<script src="${ctx}/js/syp_v1.js" type="text/javascript" charset="utf-8"></script>
 </head>
+<script type="text/javascript">
+window.SYP.toggleShowBanner('hidden');
+</script>
 <body>
 		<!-- 选择项目名称 -->
 		<div  class="i-itemName">
@@ -77,7 +81,8 @@
 		
 		<script type="text/javascript">
 		 var gotoDetail =  function(){
-				location.href = ctx + "/installDetails.jsp?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
+			 window.SYP.pageLink("新建安装", ctx + "/installDetails.jsp?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'], -1);
+				//location.href = ctx + "/installDetails.jsp?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 			} 
 			$(function(){
 			//	comboboxForProState();

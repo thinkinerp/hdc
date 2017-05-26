@@ -32,8 +32,8 @@
 		</div>
 		<!-- 搜索 -->
 		<div class="i-itemSeek">
-			<input id ="proName" type="text" onclick="search()" />
-			<div></div>
+			<input id ="proName" type="text" />
+			<div id="indexSeek"></div>
 		</div>
 
 		<!-- 项目详情 -->

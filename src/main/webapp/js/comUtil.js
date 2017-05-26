@@ -145,4 +145,25 @@ function getValue(id){
 	   });
 	   return false;
  }
+ function dellExist(ls1 , ls2){
+	 
+	 for(var i = 0 ; i < ls1.length ; i++){
+		 if($.inArray(ls1[i],ls2)!=-1){
+			 ls1.splice(i,1);
+		 }
+	 }
+	 return ls1;
+ }
+ 
+ function ajaxLoading(){
+	 $('body').append(
+	'<div id="loading" class="loading"><img src="/hdk/image/1111.gif" alt=""/>正在加载数据,请稍候...</div>'		 
+	 );
+	 $("#loading").show();	 
+}
+function ajaxLoadEnd(){
+	$("#loading").hide();    
+	$("#loading").remove();    
+	
+	}
  

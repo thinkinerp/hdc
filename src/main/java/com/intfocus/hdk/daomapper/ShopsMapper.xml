@@ -133,6 +133,10 @@
 				and shops.pro_id  = #{proId,jdbcType=VARCHAR}
 			</if>	
  
+    		<if test="null != installId  and '' != installId">
+				and install.install_id = #{installId,jdbcType=VARCHAR}
+			</if>	
+ 
     </where>  
     <if test="null != page and ''!= page">
 	    <if test="null != pageSize and ''!= pageSize">

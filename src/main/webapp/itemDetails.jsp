@@ -73,27 +73,27 @@
 					<ul class="iz-list">
 						<li>
 							<div class="iz-list-title"><a href="javascript:void(0)" onclick="gotoDetail(1)">海鼎跟进：</a></div>
-							<div id="haiding" class="iz-list-content"></div>
+							<div id="haiding" class="iz-list-content">0</div>
 						</li>
 						<li>
 							<div class="iz-list-title">海鼎-商务：</div>
-							<div id = "haidingSale" class="iz-list-content"></div>
+							<div id = "haidingSale" class="iz-list-content">0</div>
 						</li>
 						<li>
 							<div class="iz-list-title">海鼎-技术：</div>
-							<div id="haidingTec" class="iz-list-content"></div>
+							<div id="haidingTec" class="iz-list-content">0</div>
 						</li>
 						<li>
 							<div class="iz-list-title">海鼎-运维：</div>
-							<div id="haidingOperation" class="iz-list-content"></div>
+							<div id="haidingOperation" class="iz-list-content">0</div>
 						</li>
 						<li>
 							<div class="iz-list-title"><a href="javascript:void(0)" onclick="gotoDetail(2)">客户跟进：</a></div>
-							<div id="customer" class="iz-list-content"></div>
+							<div id="customer" class="iz-list-content">0</div>
 						</li>
 						<li>
 							<div class="iz-list-title">其他：</div>
-							<div id="customerOther" class="iz-list-content"></div>
+							<div id="customerOther" class="iz-list-content">0</div>
 						</li>
 					</ul>	
 				</div>
@@ -180,9 +180,9 @@
 			</div>
 		</div>
 		<!-- 保存按钮 -->
-		<div class="g-ok">
+<!-- 		<div class="g-ok">
 			<div id="save">保存</div>
-		</div>
+		</div> -->
 		
 		<script src="${ctx}/casher/js/swiper.js" type="text/javascript" charset="utf-8"></script>
 		<script>

@@ -15,8 +15,10 @@
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 		<script src="${ctx}/casher/js/global.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>  
-<script type="text/javascript" src="${ctx}/js/comUtil.js"></script>  
+<script type="text/javascript" src="${ctx}/js/comUtil.js"></script> 
+<script type="text/javascript" src="${ctx}/js/syp_v1.js"></script> 
 <script type="text/javascript" >
+window.SYP.toggleShowBanner('hidden');
     var ctx = "${ctx}";	
     var surId = "";
     var proId = '';
@@ -48,7 +50,8 @@
 		<script src="${ctx}/casher/js/global.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${ctx}/js/installDetails.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" href="${ctx}/casher/css/swiper.css"></link>
-		
+		<link rel="stylesheet" href="${ctx}/css/loading.css"></link>
+
 </head>
 <body>
 		<!-- 顶部菜单  -->
@@ -113,7 +116,7 @@
 					</div>
 					<div class="i-xiala">
 						<div class="i-xiala-list">
-							<div id = 'installData' data-select="正确,不正确" onclick="app.select(this,1)">正确</div>
+							<div id = 'installData' data-select="正确,不正确" onclick="app.select(this,1)"></div>
 						</div>
 					</div>
 				</div>
@@ -166,7 +169,7 @@
 							<div class="g-importList-title">安装状态</div>
 							<div class="g-importList-content">
 								<div class="i-xiala-list">
-									<div class="on" id = "installState" data-select="" onclick="app.select(this,3,onSetupState)">未选择</div>
+									<div id = "installState" data-select="" onclick="app.select(this,3,onSetupState)">未选择</div>
 								</div>
 							</div>
 						</li>
@@ -188,7 +191,7 @@
 					<div class="g-importList-title">收银机操作系统</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-xiala-list">
-									<div id= "cashSystem"  data-select=""  onclick="app.select(this,3,null)" class ="on">未选择</div>
+									<div id= "cashSystem"  data-select=""  onclick="app.select(this,3,null)" >未选择</div>
 								</div>
 				    		</div>	
 						
@@ -197,7 +200,7 @@
 					<div class="g-importList-title">账户收银系统品牌</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-xiala-list">
-									<div id= "cashBrand"  data-select=""  onclick="app.select(this,3,null)" class ="on">未选择</div>
+									<div id= "cashBrand"  data-select=""  onclick="app.select(this,3,null)" >未选择</div>
 								</div>
 				    		</div>	
 						</li>
@@ -205,7 +208,7 @@
 						<div class="g-importList-title">收银机端接口</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-xiala-list">
-									<div id= "cashPort"  data-select=""  onclick="app.select(this,3,null)" class ="on">未选择</div>
+									<div id= "cashPort"  data-select=""  onclick="app.select(this,3,null)" >未选择</div>
 								</div>
 				    		</div>		
 							
@@ -252,7 +255,7 @@
 				    		<div class="g-importList-title">打印机端口</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-xiala-list">
-									<div id= "printerPort"   data-select=""   onclick="app.select(this,3,null)" class="on">未选择</div>
+									<div id= "printerPort"   data-select=""   onclick="app.select(this,3,null)" >未选择</div>
 								</div>
 				    		</div>
 				    	</li>
@@ -289,7 +292,7 @@
 				    		<div class="g-importList-title">采集方式</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-xiala-list">
-									<div id ="eqStyle" class="on"  data-select=""  onclick="app.select(this,3,null)">未选择</div>
+									<div id ="eqStyle"  data-select=""  onclick="app.select(this,3,null)">未选择</div>
 								</div>
 				    		</div>
 				    	</li>
@@ -305,7 +308,7 @@
 				    		<div class="g-importList-title">安装日期</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-date">
-									<input id = "installTime" type="date" placeholder="未选择" onchange="app.dateVerify(this,1)"/>
+									<input id = "installTime" type="date" placeholder="未选择" onblur="app.dateVerify(this,1)"/>
 								</div>
 				    		</div>
 				    	</li>
@@ -356,7 +359,7 @@
 							<div onclick="app.fullImg(0)"></div>
 							<div onclick="app.fullImg(1)"></div> 
 						</div>
-						<div class="add"><input name ="fileImg" multiple="multiple" type="file" id="files" onchange="app.getImgUrl();"/></div>
+						<div class="add"><input name ="fileImg"  type="file" id="fileImg" onchange="app.getImgUrl();"/></div>
 					</div>
 				</div>
 				<!-- 安装详情7(附件) -->
@@ -370,7 +373,7 @@
 		<script src="${ctx}/casher/js/swiper.js" type="text/javascript" charset="utf-8"></script>
 		<script>
  			//var imgs = [];	//2个图片都会在这个数组里
-			
+			var files =[];
 			var swiper1 = new Swiper('.swiper-container1', {	//菜单区滑块
 				paginationClickable: true,
 				slidesPerView: 'auto',
@@ -485,12 +488,12 @@
 		$('#installData').html(isUndefined(allObjs.install["installData"]));
 		
 		if(!!isUndefined(allObjs.install['attachmentUrl'])){
-			var files = allObjs.install['attachmentUrl'].split(',');
+		 files = allObjs.install['attachmentUrl'].split(',');
 			
 			for(var i = 0 ; i <files.length ; i ++){
 				app.addImg(files[i]);
 			}
-			imgs =[];
+			
 			$('.fullimg').remove();
 		}
 		
@@ -513,6 +516,7 @@
 		//收银机信息
 		$('#cashId').val(isUndefined(allObjs.cash.cashId));
 		$('#cashSystem').html(isUndefined(allObjs.cash.cashSystem));
+		
 		$('#cashBrand').html(isUndefined(allObjs.cash.cashBrand));
 		$('#cashPort').html(isUndefined(allObjs.cash.cashPort));
 		if( "是" == isUndefined(allObjs.cash.printerDriver)){

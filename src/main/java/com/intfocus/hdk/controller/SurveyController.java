@@ -1,4 +1,3 @@
-
 package com.intfocus.hdk.controller;
 import java.io.IOException;
 import java.io.Writer;
@@ -25,14 +24,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.intfocus.hdk.dao.CashMapper;
-import com.intfocus.hdk.dao.Operation_historyMapper;
 import com.intfocus.hdk.dao.PrinterMapper;
 import com.intfocus.hdk.dao.ProjectMapper;
 import com.intfocus.hdk.dao.ShopsMapper;
 import com.intfocus.hdk.dao.SurveyMapper;
 import com.intfocus.hdk.util.ComUtil;
 import com.intfocus.hdk.vo.Cash;
-import com.intfocus.hdk.vo.Operation_history;
 import com.intfocus.hdk.vo.Printer;
 import com.intfocus.hdk.vo.Shops;
 import com.intfocus.hdk.vo.Survey;
@@ -53,45 +50,34 @@ public class SurveyController implements ApplicationContextAware {
     @Resource
     private CashMapper cashMapper ;
     
-    @Resource
-    private Operation_historyMapper ohm ;
-    
     @RequestMapping(value = "modify" , method=RequestMethod.POST)
     @ResponseBody
     public String modify(HttpServletResponse res , HttpServletRequest req ,HttpSession session
     		, Survey survey , Printer printer , Cash cash , Shops shops,String callback, String files
     		,String userName ,String userNum){
-    	
-    	JSONObject rsjson = new JSONObject();
+    	JSONObject rs = new JSONObject();
 		try {
-			   if(!"".equalsIgnoreCase(files)){	
+			   if("".equalsIgnoreCase(files)){	
 					Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
 					if(!"ok".equalsIgnoreCase(result.get("message"))){
-						rsjson.put("message", result.get("message"));
-						return rsjson.toJSONString();
+						rs.put("message", result.get("message"));
+						return rs.toJSONString();
 					}
-					survey.modifyAtachement(result.get("urls"));
+					survey.modifyAtachement(((result.get("urls")).toString()));
 			   }
 
-				surveymapper.updateByPrimaryKeySelective(survey);
+				surveymapper.updateByPrimaryKeyWithBLOBs(survey);
 				printerMapper.updateByPrimaryKeySelective(printer);
 				cashMapper.updateByPrimaryKeySelective(cash);
 				shopsMapper.updateByPrimaryKeySelective(shops);
-				rsjson.put("message","success");
-		    	Operation_history record = new Operation_history();
-		    	record.setUserId(userNum);
-		    	record.setFormType("调研");
-		    	record.setAction("修改调研编号为："+survey.getSurId());
-				ohm.insertSelective(record );
-				return rsjson.toJSONString();
 		}catch(Exception e){
 			e.printStackTrace();
-//			return callback+"({'message':'fail'})";
-		   rsjson.put("message","fail");
-			return rsjson.toJSONString();
+			rs.put("message", "fail");
+			return rs.toJSONString();
 		}
-//		return callback+"({'message':'success'})";
-
+		
+		rs.put("message", "success");
+		return rs.toJSONString();
     	
     	
     	
@@ -109,9 +95,9 @@ public class SurveyController implements ApplicationContextAware {
     		              , Survey survey ){
     	
     	Map<String,String> where = new HashMap<String,String>();
-		where.put("proName", survey.getProId());	
-		where.put("shopName", survey.getShopId());	
-		where.put("shopStation", survey.getShopMerStation());
+		where.put("proName", survey.getProName());	
+		where.put("shopName", survey.getShopName());	
+		where.put("shopMerStation", survey.getShopMerStation());
     	try {
 			Writer w = res.getWriter();
 
@@ -138,44 +124,38 @@ public class SurveyController implements ApplicationContextAware {
     	// 取出相关的信息
     	JSONObject json = new JSONObject();
     	Map<String, String> where = new HashMap<String,String>();
-		String path = req.getSession().getServletContext().getRealPath("upload");
     	where.put("surId", surId);
 		// 调研
     	List<Survey> surveys = surveymapper.selectByWhere(where ); 
     	Survey survey1 = null ;
-    	if(null != surveys &&  surveys.size() > 0 ){
-			 survey1 = surveys.get(0);
+    	if( 0 < surveys.size() ){
+	    	survey1 = surveys.get(0);
+	    	json.put("survey", survey1);
     	}
-		if(null != survey1.getAttachmentUrl()&& !"".equalsIgnoreCase(survey1.getAttachmentUrl())){
-			survey1.setAttachmentUrl((survey1.getAttachmentUrl().replace(path.substring(0,path.indexOf("upload")), "/hdk/")));
-		}
-    	
-    	json.put("survey", survey1);
     	// 收银机 
     	List<Printer> printers = printerMapper.selectByWhere(where ); 
-    	if(null != printers && printers.size() > 0){
-    		Printer printer = printers.get(0);
-    		json.put("printer", printer);
-    	}else{
-    		json.put("printer", "{}");
+    	Printer printer = null ;
+    	if(0<printers.size()){
+	    	printer = printers.get(0);
+	    	json.put("printer", printer);
     	}
+    	
 
     	
     	// 打印机
     	List<Cash> cashes = cashMapper.selectByWhere(where ); 
-    	if(null != cashes && cashes.size() > 0 ){
-    		Cash cash = cashes.get(0);
-    		json.put("cash", cash);
-    	}else{
-    		json.put("cash", "{}");
+    	if(0<cashes.size()){
+	    	Cash cash = cashes.get(0);
+	    	json.put("cash", cash);
     	}
+    	
     	//门店
-    	List<Shops> shops = shopsMapper.selectForCombobox(where ); 
-    	if(null != shops && shops.size() > 0 ){
+    	where.put("proId", survey1.getProId());
+    	where.put("shop_id", survey1.getShopId());
+    	List<Shops> shops = shopsMapper.selectByWhere(where ); 
+    	if(0<shops.size()){
     		Shops shop = shops.get(0);
     		json.put("shops", shop);
-    	}else{
-    		json.put("shops", "{}");
     	}
     	where.clear();  	
     	Writer w = null;
@@ -192,16 +172,16 @@ public class SurveyController implements ApplicationContextAware {
     		, Survey survey , Printer printer , Cash cash , Shops shops ,String callback, String files
     		,String userName ,String userNum){
     	
-			 JSONObject rsjson = new JSONObject();
+		JSONObject rs = new JSONObject();
 		
 	   if("".equalsIgnoreCase(files)){	
 		Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
 		
 		
 		if(!"ok".equalsIgnoreCase(result.get("message"))){
-			rsjson.put("message", result.get("message"));
-			return rsjson.toJSONString();
-		} 
+			rs.put("message", result.get("message"));
+			return rs.toJSONString();
+		}
 		survey.setAttachmentUrl((result.get("urls")).toString());
 	   }
 		try {
@@ -210,31 +190,22 @@ public class SurveyController implements ApplicationContextAware {
 				printerMapper.insertSelective(printer);
 				cashMapper.insertSelective(cash);
 				
-				Map<String, String> where = new HashMap<String , String >();
-				where.put("shopId", shops.getShopId());
-				Shops s = new Shops();
-				List<Shops> shopss = shopsMapper.selectByWhere(where );
-				if(0 < shopss.size()){
-					s = shopss.get(0);	
-				}
-			    shops.setId(s.getId());
-				shopsMapper.updateByPrimaryKeySelective(shops);
+//				Map<String, String> where = new HashMap<String , String >();
+//				where.put("shopId", shops.getShopId());
+//				Shops s = new Shops();
+//				List<Shops> shopss = shopsMapper.selectByWhere(where );
+//				if(0 < shopss.size()){
+//					s = shopss.get(0);	
+//				}
+//			    shops.setId(s.getId());
+//				shopsMapper.updateByPrimaryKeySelective(shops);
 		}catch(Exception e){
 			e.printStackTrace();
-//			return callback+"({'message':'fail'})";
-			
-			rsjson.put("message", "fail");
-			
-			return rsjson.toJSONString();
+			rs.put("message", "fail");
+			return rs.toJSONString();
 		}
-		rsjson.put("message", "success");
-//		return callback+"({'message':'success'})";
-    	Operation_history record = new Operation_history();
-    	record.setUserId(userNum);
-    	record.setFormType("调研");
-    	record.setAction("新建调研编号为："+survey.getSurId());
-		ohm.insertSelective(record );
-		return rsjson.toJSONString();
+		rs.put("message", "success");
+		return rs.toJSONString();
     }
 	
 	   @InitBinder("survey")    

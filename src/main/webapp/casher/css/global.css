@@ -65,7 +65,7 @@ input[type=button] {width: auto; overflow: visible;}
 .swiper-wrapper{ }
 .swiper-container2{ padding-top: .8rem; }
 .swiper-container1 .swiper-wrapper{  width:190%!important; }
-.swiper-container1 .swiper-slide{ width:auto!important;  position: relative; display: block; color:#151515;  padding: .3rem .16rem .2rem .16rem;}
+.swiper-container1 .swiper-slide{ width:auto!important; font-size: .32rem;  position: relative; display: block; color:#151515;  padding: .3rem .16rem .2rem .16rem;}
 .swiper-container1 .swiper-slide.on{ color: #1f4ba5;}
 .swiper-container1 .swiper-slide.on:after{ content: ""; width: 50%; height: 2px; background: #1F4BA5; position: absolute; left:50%; bottom:0; -webkit-transform: translate(-50%, 0); transform: translate(-50%, 0); }
 .g-popup{ position: fixed; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,.6); z-index:99; font-size: .36rem;}
@@ -144,8 +144,8 @@ input[type=button] {width: auto; overflow: visible;}
 .g-importList li{ display: flex; margin:0 .35rem .1rem .55rem; height: .8rem;}
 .g-importList-title{ min-width: 2rem; padding-right: .2rem; color: #666; display: flex; align-items: center;}
 .g-importList-content{ flex: 1;}
-.i-text{ color: #1F4BA5; display: flex; align-items: center; height: 100%; padding-left: .56rem;}
-.i-choice{ display: flex; height: 100%;}
+.i-text{ color: #1F4BA5; display: flex; align-items: center; height: .8rem; padding-left: .56rem;}
+.i-choice{ display: flex; height: .8rem;}
 .i-choice-row{ flex:1; display: flex; align-items: center;}
 .i-choice-row div{ width: .4rem; height: .4rem; background: url(../images/icon6.png); background-size:100% 100%; margin-right: .18rem;}
 .i-choice-row .on{ background: url(../images/icon5.png); background-size:100% 100%;  }
@@ -214,8 +214,7 @@ input[type=button] {width: auto; overflow: visible;}
     content:none;
 }
 
-
-
+.g-select-title{ padding-top: .1rem; text-align: center; font-size: .36rem;}
 
 
 

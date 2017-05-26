@@ -97,7 +97,6 @@ Window.selected = function() {
 }
 Window.shopSelected = function() {
 	if(""==$('#shopName').html()){
-		
 		return;
 	}
   $.ajax({
@@ -133,10 +132,14 @@ Window.shopSelected = function() {
       'shopName': $('#shopName').html(),
       'proName': $('#proName').html()
     },
-    dataType: 'json',
+    dataType: 'jsonp',
+    jsonpCallback: "getSome",
+    jsonp: "callback",
     success: function(rs) {
       if (null != rs && undefined != rs && rs.length > 0) {
-        loadPrinterAndCasher();
+    	  if( 1 ==rs.length ){
+    		  loadPrinterAndCasher(rs[0].surId);
+    	  }
       } else {
         $.each(rs, function(index, item) {
           surId = item.surId
@@ -148,57 +151,96 @@ Window.shopSelected = function() {
 }
 
 function loadPrinterAndCasher(surId) {
+	
+	
   $.ajax({
-    url: ctx + '/printer/getSome',
-    type: 'post',
-    data: {
-      'surId': surId,
-    },
-    jsonpCallback: "printer_getSome",
-    jsonp: "callback",
-    dataType: 'jsonp',
-    success: function(rs) {
-      if (null != rs && undefined != rs && rs.length > 0) {
-        $.each(rs, function(index, item) {
-          $('#priId').html(item.printerId);
-          $('#priBrand').html(item.printerBrand);
-          $('#prinPort').html(item.printerPort);
-        });
+  url: ctx + '/survey/gotoModify',
+  type: 'get',
+  data: {
+    'surId': surId,
+  },
+  jsonp: "callback",
+  dataType: 'jsonp',
+  success: function(rs) {
+      console.log(rs);
+      
+      if(undefined != rs.printer){
+        $('#priId').val(rs.printer.printerId);
+        $('#priBrand').val(rs.printer.printerBrand);
+        $('#prinPort').val(rs.printer.printerPort);
       }
-    },
-    error: function(rs) {}
-  });
-  $.ajax({
-    url: ctx + '/cash/getSome',
-    type: 'post',
-    data: {
-      'surId': surId,
-    },
-    jsonpCallback: "cash_getSome",
-    jsonp: "callback",
-    dataType: 'jsonp',
-    success: function(rs) {
-      if (null != rs && undefined != rs && rs.length > 0) {
-        $.each(rs, function(index, item) {
-          $('#cashId').html(item.cashId);
-          $('#cashSystem').html(item.cashSystem);
-          $('#cashBrand').html(item.cashBrand);
-          $('#cashPort').html(item.cashPort);
+      if(undefined != rs.cash){
+        $('#cashId').val(rs.cash.cashId);
+        $('#cashSystem').html(rs.cash.cashSystem);
+        $('#cashBrand').html(rs.cash.cashBrand);
+        $('#cashPort').html(rs.cash.cashPort);
 
-          if (undefined == item.printerDriver || "" == item.printerDriver) {
-            $('#t').attr("class", "off");
-            $('#f').attr("class", "on");
-          } else {
-            $('#t').attr("class", "on");
-            $('#f').attr("class", "off");
+        if (undefined == rs.cash.printerDriver || "" == rs.cash.printerDriver) {
+          $('#t').attr("class", "off");
+          $('#f').attr("class", "on");
+        } else {
+          $('#t').attr("class", "on");
+          $('#f').attr("class", "off");
 
-          }
-
-        });
+        }
       }
-    },
-    error: function(rs) {}
+      
+  },
+  error:function(rs){
+	  app.alert("网络出错",1);
+  }	
   });
+//  $.ajax({
+//    url: ctx + '/printer/getSome',
+//    type: 'post',
+//    data: {
+//      'surId': surId,
+//    },
+//    jsonpCallback: "printer_getSome",
+//    jsonp: "callback",
+//    dataType: 'jsonp',
+//    success: function(rs) {
+//      if (null != rs && undefined != rs && rs.length > 0) {
+//        $.each(rs, function(index, item) {
+//          $('#priId').val(item.printerId);
+//          $('#priBrand').val(item.printerBrand);
+//          $('#prinPort').val(item.printerPort);
+//        });
+//      }
+//    },
+//    error: function(rs) {}
+//  });
+//  $.ajax({
+//    url: ctx + '/cash/getSome',
+//    type: 'post',
+//    data: {
+//      'surId': surId,
+//    },
+//    jsonpCallback: "cash_getSome",
+//    jsonp: "callback",
+//    dataType: 'jsonp',
+//    success: function(rs) {
+//      if (null != rs && undefined != rs && rs.length > 0) {
+//        $.each(rs, function(index, item) {
+//          $('#cashId').html(item.cashId);
+//          $('#cashSystem').html(item.cashSystem);
+//          $('#cashBrand').html(item.cashBrand);
+//          $('#cashPort').html(item.cashPort);
+//
+//          if (undefined == item.printerDriver || "" == item.printerDriver) {
+//            $('#t').attr("class", "off");
+//            $('#f').attr("class", "on");
+//          } else {
+//            $('#t').attr("class", "on");
+//            $('#f').attr("class", "off");
+//
+//          }
+//
+//        });
+//      }
+//    },
+//    error: function(rs) {}
+//  });
 }
 
 
@@ -247,8 +289,10 @@ var submit = function() {
     $.ajax({
       url: ctx + '/install/modify',
       type: 'post',
+      beforeSend:ajaxLoading(),
+      complete:ajaxLoadEnd(),
       data: {
-    	  files:JSON.stringify(imgs),
+    	  files:(JSON.stringify(imgs) != JSON.stringify(files)?(JSON.stringify(dellExist(imgs,files))):""),	
         'install.installId': $("#installCode").val(),
         'install.id': allObjs.install.id,
         'install.installStation': $('#installStation').html(),

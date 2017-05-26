@@ -3,6 +3,15 @@
  */
 $(function(){
 	search();
+	
+	$('#indexSeek').click(function(){//点击搜索图标
+		search();
+	});
+	$("#proName").keydown(function(e) { //输入完按键盘确定
+        if (e.keyCode == 13) {  
+        	search();
+	       }  
+	    });
 	var time =  (new Date().getTime());
 	$.ajax({
 		url:ctx+'/project/getCount',
@@ -89,7 +98,7 @@ var search = function(){
 	  						"						<p>"+item.proStation+"</p>" +
 	  						"					</div>" +
 	  						"					<div class='content-row'>" +
-	  						"						<p>项目状态</p>" +
+	  						"						<p>更新时间</p>" +
 	  						"						<p>"+item.updatedAt+"</p>" +
 	  						"					</div>" +
 	  						"</div>"+

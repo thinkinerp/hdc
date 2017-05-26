@@ -34,7 +34,7 @@
 		<!-- 2个下拉 -->
 		<div class="i-itemXl">		
 			<div class="i-itemXl-list">
-				<div id='order' data-select="正序,倒序" onclick="app.select(this,1,me.upOrder)">正序</div>
+				<div id='order' data-select="倒序,正序" onclick="app.select(this,1,me.upOrder)">倒序</div>
 			</div>
 			<div class="i-itemXl-list">
 				<div id='surveyState' onclick="app.select(this,1,me.upShopStation)" ></div>
@@ -112,7 +112,7 @@
 				},
 				parName:function(){	//项目名称
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/project/getSome",
+					   url: "/hdk/project/getSome",
 					   type: "get",
 					   dataType:"jsonp",
 					   jsonpCallback:"project_null_getSome",
@@ -132,7 +132,7 @@
 				},
 				lastName:function(){	//上次的项目名称
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/project/getSome",
+					   url: "/hdk/project/getSome",
 					   data:{"isLast":1},
 					   type: "get",
 					   dataType:"jsonp",
@@ -145,7 +145,7 @@
 				},
 				surveyState:function(){	//调研状态
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/state/getSome",
+					   url: "/hdk/state/getSome",
 					   data:{"ownerTable":"shop_mer_station"},
 					   type: "get",
 					   dataType:"jsonp",
@@ -168,7 +168,7 @@
 				},
 				selectItem:function(){	//选择项目
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/project/getSome",
+					   url: "/hdk/project/getSome",
 					   data:{"proName":$('#itemName').html()},
 					   type: "get",
 					   dataType:"jsonp",
@@ -203,7 +203,7 @@
 					this.shopName = $('#mendian').val();
 					var obj = {"proName":me.proName,"shopName":me.shopName,"order":me.order,"shopMerStation":me.shopStation};
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/survey/getSome",
+					   url: "/hdk/survey/getSome",
 					   data:obj,
 					   type: "get",
 					   dataType:"jsonp",
@@ -240,10 +240,22 @@
 				tz:function(id){
 					window.location = "surveyDetails.html?surId=" + id + "&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 				}
-			}
+			};
 			$(function(){
-				me.init();				
-			})
+				me.init();		
+				
+				
+				    // $('#mendian').click(function(){//点击搜索图标
+                            // me.selectItem();
+                    // });
+                    // $("#mendian").keydown(function(e) { //输入完按键盘确定
+                            // if (e.keyCode == 13) {  
+                            // me.selectItem();
+                               // }  
+        // });
+				
+						
+			});
 		</script>
 	</body>
 </html>

@@ -11,6 +11,7 @@
         <title>问题详情</title>
         <link rel="stylesheet" type="text/css" href="css/global.css" />
         <link rel="stylesheet" href="css/swiper.css">
+        <link rel="stylesheet" href="/hdk/css/loading.css">
         <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
         <script src="js/global.js" type="text/javascript" charset="utf-8"></script>
         <script src="/hdk/js/comUtil.js" type="text/javascript" charset="utf-8"></script>
@@ -73,8 +74,8 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div id="gs3" data-select="海鼎,客户" >
-                                        海鼎
+                                    <div id="gs3" data-select="海鼎,客户">
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +179,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-date">
-                                    <input id="ms1" type="date" placeholder="未选择" onchange="app.dateVerify(this,1)"/>
+                                    <input id="ms1" type="date" placeholder="未选择" onblur="app.dateVerify(this,1)"/>
                                 </div>
                             </div>
                         </li>
@@ -188,7 +189,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-date">
-                                    <input  id="ms2" type="date" placeholder="未选择" onchange="app.dateVerify(this,1)"/>
+                                    <input  id="ms2" type="date" placeholder="未选择" onblur="app.dateVerify(this,1)"/>
                                 </div>
                             </div>
                         </li>
@@ -198,7 +199,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-date">
-                                    <input  id="ms3" type="date" placeholder="未选择" onchange="app.dateVerify(this,2)"/>
+                                    <input  id="ms3" type="date" placeholder="未选择" onblur="app.dateVerify(this,2)"/>
                                 </div>
                             </div>
                         </li>
@@ -218,7 +219,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-date">
-                                    <input  id="ms5" type="date" placeholder="未选择" onchange="app.dateVerify(this,2)"/>
+                                    <input  id="ms5" type="date" placeholder="未选择" onblur="app.dateVerify(this,2)"/>
                                 </div>
                             </div>
                         </li>
@@ -484,7 +485,7 @@
                 gs2Fun : function() {
                     var time = new Date().getTime();
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/state/getSome",
+                        url : "/hdk/state/getSome",
                         type : "get",
                         data : {
                             "ownerTable" : "problem_station",
@@ -511,10 +512,12 @@
                 },
                 selectGs3 : function() {
                     gs.gs3 = $("#gs3").html();
+                     onGs3Click();
                 },
                 gs3Fun : function() {
                     $("#gs3").click(function() {
                         app.select(this, 1, gs.selectGs3);
+                       
                     })
                     gs.gs4Fun();
                 },
@@ -523,7 +526,7 @@
                 },
                 gs4Fun : function() {
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/state/getSome",
+                        url : "/hdk/state/getSome",
                         type : "get",
                         dataType : "jsonp",
                         data : {
@@ -554,7 +557,7 @@
                 },
                 gs5Fun : function() {
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/user/getSome",
+                        url : "/hdk/user/getSome",
                         type : "get",
                         dataType : "jsonp",
                         jsonpCallback : "getSome",
@@ -582,7 +585,7 @@
                 gs6Fun : function() {
 
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/user/getDepartment",
+                        url : "/hdk/user/getDepartment",
                         type : "get",
                         dataType : "jsonp",
                         jsonpCallback : "getDepartment",
@@ -624,7 +627,7 @@
                 },
                 gs7Fun : function() {
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/state/getSome",
+                        url : "/hdk/state/getSome",
                         type : "get",
                         data : {
                             'ownerTable' : 'problem_table'
@@ -654,7 +657,7 @@
                 data : null,
                 init : function() {
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/problem/getEquipmentList",
+                        url : "/hdk/problem/getEquipmentList",
                         type : "get",
                         data : {
                             'proName' : sp.sp1,
@@ -750,6 +753,8 @@
                         url : "/hdk/problem/submit",
                         type : "post",
                         data : obj,
+                        beforeSend:ajaxLoading(),
+                        complete:ajaxLoadEnd(),
                         dataType : "json",
                         success : function(data) {
                             if (data.message == "success") {
@@ -782,7 +787,7 @@
                     ,
                     'problem.problemType' : $('#gs4').html()//问题类型
                     ,
-                    'problem.problemObject' : $('#gs5').html()//跟踪方
+                    'problem.problemObject' : $('#gs3').html()//跟踪方
                     ,
                     'problem.problemDepartment' : $('#gs6').html()//跟踪部门
                     ,
@@ -811,6 +816,8 @@
                     //url : "/hdk/problem/modify",
                     type : "post",
                     data : obj,
+                    beforeSend:ajaxLoading(),
+                    complete:ajaxLoadEnd(),
                     dataType : "json",
                     success : function(data) {
                         if (data.message == "success") {
@@ -835,7 +842,7 @@
                 },
                 getData : function() {
                     $.ajax({
-                       url : "http://www.onetoend.cn/hdk/problem/gotoModify",
+                       url : "/hdk/problem/gotoModify",
                         // url : "http://localhost:8080/hdk/problem/gotoModify",
                         type : "get",
                         jsonp:'callback',
@@ -946,6 +953,15 @@
                     app.upStyle(swiper.activeIndex);
                 }
             });
+            
+            var onGs3Click = function(){
+              if('海鼎' == $("#gs3").html()){
+                  $('#gs4').attr('data-select' , '商务,运维,技术');
+              }else{
+                  $('#gs4').attr('data-select' , '其他');
+              }
+            };
+            
         </script>
     </body>
 

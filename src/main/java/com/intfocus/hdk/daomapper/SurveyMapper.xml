@@ -82,6 +82,9 @@
     		<if test="null != surId  and '' != surId">
 				and survey.sur_id   = #{surId,jdbcType=VARCHAR}
 			</if>	
+    		<if test="null != shopMerStation  and '' != shopMerStation">
+				and shops.shop_mer_station   = #{shopMerStation,jdbcType=VARCHAR}
+			</if>	
  
     </where>  
     
