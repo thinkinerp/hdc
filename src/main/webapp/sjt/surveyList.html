@@ -34,7 +34,7 @@
 		<!-- 2个下拉 -->
 		<div class="i-itemXl">		
 			<div class="i-itemXl-list">
-				<div id='order' data-select="倒序,正序" onclick="app.select(this,1,me.upOrder)">倒序</div>
+				<div id='order' placeholder="排序" data-select="倒序,正序" onclick="app.select(this,1,me.upOrder)">倒序</div>
 			</div>
 			<div class="i-itemXl-list">
 				<div id='surveyState' onclick="app.select(this,1,me.upShopStation)" ></div>
@@ -100,7 +100,7 @@
 				init:function(){
 					this.parName()		
 					//this.lastName()
-					//this.surveyState()
+					this.surveyState()
 				},
 				upOrder:function(){
 					me.order = $('#order').html();
@@ -139,7 +139,7 @@
 					   jsonpCallback:"project_null_getSome",
 					   success:function(data){
 					   		me.upItemStyle(data);
-					   		me.surveyState()
+					   		//me.surveyState()
 					   }					   
 					})
 				},
@@ -189,7 +189,7 @@
 					   success:function(data){
 					   		me.upItemStyle(data);
 					   		//me.list();
-					   		me.surveyState();
+					   		//me.surveyState();
 					   }					   
 					});
 				},

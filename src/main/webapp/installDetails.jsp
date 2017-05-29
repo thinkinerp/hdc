@@ -16,9 +16,9 @@
 		<script src="${ctx}/casher/js/global.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" src="${ctx}/js/ajaxfileupload.js"></script>  
 <script type="text/javascript" src="${ctx}/js/comUtil.js"></script> 
-<%-- <script type="text/javascript" src="${ctx}/js/syp_v1.js"></script>  --%>
+<%--  <script type="text/javascript" src="${ctx}/js/syp_v1.js"></script>  --%>
 <script type="text/javascript" >
-//window.SYP.toggleShowBanner('hidden');
+/* window.SYP.toggleShowBanner('hidden'); */
     var ctx = "${ctx}";	
     var surId = "";
     var proId = '';
@@ -116,7 +116,7 @@
 					</div>
 					<div class="i-xiala">
 						<div class="i-xiala-list">
-							<div id = 'installData' data-select="正确,不正确" onclick="app.select(this,1)"></div>
+							<div id = 'installData' data-select="准确,不准确" onclick="app.select(this,1)"></div>
 						</div>
 					</div>
 				</div>

@@ -21,42 +21,48 @@ $(function(){
 			
 			$('.i-itemStyle-list').html('');	
 			$.each(rs,function(index,item){
-				if('all' == item.count_type){
-					$('.i-itemStyle-list').append(
-							"				<div>" +
-							"					<p>合计项目</p>" +
-							"					<p>"+item.pro_count+"</p>" +
-							"				</div>"
-					);	
-				}else if('实施' == item.count_type){
-					$('.i-itemStyle-list').append(
-							"				<div>" +
-							"					<p>实施项目</p>" +
-							"					<p>"+item.pro_count+"</p>" +
-							"				</div>"
-					);	
-				}else if('待启动' == item.count_type){
-					$('.i-itemStyle-list').append(
-							"				<div>" +
-							"					<p>待启动项目</p>" +
-							"					<p>"+item.pro_count+"</p>" +
-							"				</div>"
-					);	
-				}else if('维护' == item.count_type){
-					$('.i-itemStyle-list').append(
-							"				<div>" +
-							"					<p>维护项目</p>" +
-							"					<p>"+item.pro_count+"</p>" +
-							"				</div>"	
-					);	
-				}else if('停止' == item.count_type){
-					$('.i-itemStyle-list').append(
-							"				<div>" +
-							"					<p>停止项目</p>" +
-							"					<p>"+item.pro_count+"</p>" +
-							"				</div>"	
-					);	
-				}
+				$('.i-itemStyle-list').append(
+				"				<div>" +
+				"					<p>"+ item.count_type+"项目</p>" +
+				"					<p>"+item.pro_count+"</p>" +
+				"				</div>"
+		);				
+//				if('all' == item.count_type){
+//					$('.i-itemStyle-list').append(
+//							"				<div>" +
+//							"					<p>合计项目</p>" +
+//							"					<p>"+item.pro_count+"</p>" +
+//							"				</div>"
+//					);	
+//				}else if('实施' == item.count_type){
+//					$('.i-itemStyle-list').append(
+//							"				<div>" +
+//							"					<p>实施项目</p>" +
+//							"					<p>"+item.pro_count+"</p>" +
+//							"				</div>"
+//					);	
+//				}else if('待启动' == item.count_type){
+//					$('.i-itemStyle-list').append(
+//							"				<div>" +
+//							"					<p>待启动项目</p>" +
+//							"					<p>"+item.pro_count+"</p>" +
+//							"				</div>"
+//					);	
+//				}else if('维护' == item.count_type){
+//					$('.i-itemStyle-list').append(
+//							"				<div>" +
+//							"					<p>维护项目</p>" +
+//							"					<p>"+item.pro_count+"</p>" +
+//							"				</div>"	
+//					);	
+//				}else if('停止' == item.count_type){
+//					$('.i-itemStyle-list').append(
+//							"				<div>" +
+//							"					<p>停止项目</p>" +
+//							"					<p>"+item.pro_count+"</p>" +
+//							"				</div>"	
+//					);	
+//				}
 			});
 			
 		},

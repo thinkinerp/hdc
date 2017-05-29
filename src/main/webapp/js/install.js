@@ -33,8 +33,8 @@ var shopStateSeach = function(){
 			data:{
 				"proId":$('#itemName').html(),
 				'shopName':$('#middle').val(),
-				"installStation":delAll('installState' ),
-				"eqType":delAll('eqType')
+				"installStation":delAll(getValue('installState')),
+				"eqType":delAll(getValue('eqType'))
 			},
 	 		dataType:'jsonp',
 	 		success:function(rs){
@@ -94,4 +94,6 @@ var gotoModify = function(link){
 	location.href = ctx + "/install/gotoModify?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 }
 
-
+var searche = function(){
+	shopStateSeach();
+}

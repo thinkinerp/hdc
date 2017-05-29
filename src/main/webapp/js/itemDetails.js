@@ -72,9 +72,9 @@ if(allThing != '{}' && allThing !='' && allThing !='null' ){
 	
 	if(!!isUndefined(allObjs.check)){
       $.each(allObjs.check,function(index,item){
-			setValue('checkPercentage',item.proAlready);
-			setValue('certainPercentage',item.count);
-			setValue('installPercnetage',item.pro_check);
+			setValue('checkPercentage',item.proAlready+ "%");
+			setValue('certainPercentage',item.count+ "%");
+			setValue('installPercnetage',item.proCheck+ "%");
       });
    }
 	

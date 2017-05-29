@@ -104,9 +104,9 @@ function setValue(id,value){
 
 function getValue(id){
 	 if($('#'+id).is('div')){
-		return $('#'+id).html();
+		return ($('#'+id).html() != $('#'+id).attr('defaultVal'))?$('#'+id).html():"";
 	 }else if($('#'+id).is('input')){
-		 return $('#'+id).val();
+		 return ($('#'+id).val() != $('#'+id).attr('defaultVal'))?$('#'+id).val():"";
 	 }	
 }
 

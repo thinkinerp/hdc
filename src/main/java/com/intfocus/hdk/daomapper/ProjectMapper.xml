@@ -116,14 +116,14 @@ group by  c.cash_port
   </select>
 
       <select id="getCheck" resultMap="BaseResultMap" parameterType="java.util.Map" >
-  select (pro_already/pro_check)*100 as pro_already 
-  			,(pro_check/pro_todal)*100 as pro_check
-  			,  (a.install_data/pro_check)*100 as count
+select (c.pro_check/project.pro_need)*100 as pro_already 
+  			,(b.pro_already/project.pro_need)*100 as pro_check
+  			,  (a.install_data/c.pro_check)*100 as count
   			,pro_todal 
   			,pro_need
-  			,pro_already
-  			,pro_check
-  			,pro_not
+  			,b.pro_already
+  			,c.pro_check
+  			,pro_need - b.pro_already - c.pro_check
   from project
 left join (
     select count(i.install_id) as install_data
@@ -137,6 +137,30 @@ where  i.install_data = '准确'
 				and p.pro_id = #{proId,jdbcType=VARCHAR}
 			</if>	
 ) as a on 1=1
+left join (
+    select count(i.install_id) as pro_already
+      from project as p
+inner join install as i on i.pro_id = p.pro_id
+where  i.install_station in('已安装','已验收') 
+    		<if test="null != proName  and '' != proName">
+				and p.pro_name = #{proName,jdbcType=VARCHAR}
+			</if>	
+									    <if test="null != proId  and '' != proId">
+				and p.pro_id = #{proId,jdbcType=VARCHAR}
+			</if>	
+) as b on 1=1 
+left join (
+    select count(i.install_id) as pro_check
+      from project as p
+inner join install as i on i.pro_id = p.pro_id
+where  i.install_station = '已验收' 
+    		<if test="null != proName  and '' != proName">
+				and p.pro_name = #{proName,jdbcType=VARCHAR}
+			</if>	
+									    <if test="null != proId  and '' != proId">
+				and p.pro_id = #{proId,jdbcType=VARCHAR}
+			</if>	
+) as c on 1=1 
 	<where>
     	1=1
     		<if test="null != proName  and '' != proName">
@@ -153,24 +177,12 @@ where  i.install_data = '准确'
 select count_type , pro_count
   from 
 	(
-		select 'all' as count_type , count(distinct pro_name) as pro_count
+		select '合计' as count_type , count(distinct pro_name) as pro_count
 		  from project 
 		union
-		select '实施' as count_type,count(distinct pro_name) as pro_count
-		  from project 
-		 where pro_station = '实施'
-		UNION
-		select '待启动' as count_type,count(distinct pro_name) as pro_count
-		  from project 
-		 where pro_station = '待启动'  
-		union 
-		select '维护' as count_type,count(distinct pro_name) as pro_count
-		  from project 
-		 where pro_station = '维护'  
-		union 
-		select '停止' as count_type,count(distinct pro_name) as pro_count
-		  from project 
-		 where pro_station = '停止'  
+		select pro_station , count(distinct pro_name)
+		from project
+		group by pro_station
 	) as a
   </select>
   

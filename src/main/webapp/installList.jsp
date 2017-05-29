@@ -20,7 +20,7 @@
 		<script src="${ctx}/casher/js/global.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="${ctx}/js/comUtil.js"></script>  
 		<script src="${ctx}/js/install.js" type="text/javascript" charset="utf-8"></script>
-<%-- 		<script src="${ctx}/js/syp_v1.js" type="text/javascript" charset="utf-8"></script> --%>
+<%--  		<script src="${ctx}/js/syp_v1.js" type="text/javascript" charset="utf-8"></script> --%>
 </head>
 <script type="text/javascript">
 //window.SYP.toggleShowBanner('hidden');
@@ -30,7 +30,7 @@
 		<div  class="i-itemName">
 			<div class="i-itemName-name">项目名称</div>
 			<div class="i-itemName-list">
-				<div id="itemName" data-select="" onclick="app.select(this,3,Window.selected)" placeholder ="请选择项目" ></div>
+				<div id="itemName" data-select="" onclick="app.select(this,3,Window.selected)"  alertTitle="请选择项目" ></div>
 			</div>
 		</div>
 		<!-- 项目状态 -->
@@ -54,15 +54,15 @@
 		<!-- 搜索 -->
 		<div class="i-itemSeek">
 			<input placeholder="请输入门店名称" type="text" id="middle" />
-			<div></div>
+			<div onclick="searche()"></div>
 		</div>
 		<!-- 2个下拉 -->
 		<div class="i-itemXl">		
 			<div class="i-itemXl-list">
-				<div id="eqType" data-select="" onclick="app.select(this,1,equipmentTypeSeach)"></div>
+				<div id="eqType" defaultVal="采集点类型" alertTitle="采集点类型" data-select="" onclick="app.select(this,1,equipmentTypeSeach)"></div>
 			</div>
 			<div class="i-itemXl-list">
-				<div data-select=""  id = "installState" onclick="app.select(this,1,shopStateSeach)"></div>
+				<div data-select="" defaultVal="安装状态"   alertTitle="安装状态" id = "installState" onclick="app.select(this,1,shopStateSeach)"></div>
 			</div>
 		</div>
 		<!-- 项目详情 -->
@@ -70,7 +70,7 @@
 			<div class="i-itemDetail-area">
 
 			</div>
-	
+
 		</div>
 		<!-- 新建抄表 -->
 		<div class="i-addTable">
@@ -82,7 +82,7 @@
 		<script type="text/javascript">
 		 var gotoDetail =  function(){
 			 //window.SYP.pageLink("新建安装", ctx + "/installDetails.jsp?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'], -1);
-				location.href = ctx + "/installDetails.jsp?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
+			location.href = ctx + "/installDetails.jsp?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 			} 
 			$(function(){
 			//	comboboxForProState();
@@ -214,6 +214,11 @@
 					  });
 				};
 
+				for(var i = 0 ; i < $('div').length;i++ ){
+					if(undefined != $($('div')[i]).attr('defaultVal')){
+						$($('div')[i]).html($($('div')[i]).attr('alertTitle'));
+					}
+				}
 			/*  	shopStateSeach();*/
 				/*
 				 *	弹窗的使用方法  代码在global.js  app.alert
