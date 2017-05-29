@@ -26,15 +26,15 @@ var params = function() {
 var shopStateSeach = function(){
 	var shopSta = '';
 	 $.ajax({ 
-	 		url:ctx + '/shops/getSome',
+	 		url:'/hdk/shops/getSome',
 	 		type:'get',
 	 		//jsonpCallback:"shops_getSome",
 	 		jsonp: "callback",
 			data:{
 				"proId":$('#itemName').html(),
 				'shopName':$('#middle').val(),
-				"installStation":delAll(getValue('installState')),
-				"eqType":delAll(getValue('eqType'))
+				"installStation":delAll('installState'),
+				"eqType":delAll('eqType')
 			},
 	 		dataType:'jsonp',
 	 		success:function(rs){
@@ -91,7 +91,7 @@ var equipmentTypeSeach = function(){
 	shopStateSeach();
 }
 var gotoModify = function(link){
-	location.href = ctx + "/install/gotoModify?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
+	location.href =  "installDetails.html?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 }
 
 var searche = function(){

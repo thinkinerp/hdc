@@ -52,7 +52,7 @@ function codeUnique(config){
  function loadCombobox(id , table){
 	 var time = (new Date().getTime());
 	 $.ajax({ 
-		 url:ctx + '/state/getSome',
+		 url: '/hdk/state/getSome',
 		 type:'get',
 		 data:{
 				'ownerTable':table,
@@ -124,7 +124,7 @@ function getValue(id){
 			 if( -1 != $.inArray($('#'+id).html(),exclude) ){
 				 return '';
 			 }else{
-				return  $('#'+id).html();
+				return  ($('#'+id).html() != $('#'+id).attr('defaultVal'))?$('#'+id).html():"";
 			 }
 		 
 		 
@@ -133,7 +133,7 @@ function getValue(id){
 		 if(-1 != $.inArray($('#'+id).val(),exclude)){
 				 return ''; 
 		 }else{
-			 return $('#'+id).val();
+			 return ($('#'+id).html() != $('#'+id).attr('defaultVal'))?$('#'+id).html():"";
 		 }
 	 }
  }

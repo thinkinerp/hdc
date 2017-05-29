@@ -10,6 +10,7 @@
 		<title>问题列表</title>
 		<link rel="stylesheet" type="text/css" href="css/global.css"/>
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script src="/hdk/js/comUtil.js"></script>
 		<script src="js/global.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
@@ -41,10 +42,10 @@
 		<!-- 2个下拉 -->
 		<div class="i-itemXl">		
 			<div class="i-itemXl-list">
-				<div data-select="海鼎,客户" id="order" onclick="app.select(this,1,me.upOrder)">海鼎</div>
+				<div data-select="海鼎,客户" defaultVal="跟进方" alertTitle="选择跟进方" id="order" onclick="app.select(this,1,me.upOrder)"></div>
 			</div>
 			<div class="i-itemXl-list">
-				<div onclick="app.select(this,1,me.upShopStation)" id="surveyState" ></div>
+				<div   defaultVal="问题状态" alertTitle="选择问题状态"  onclick="app.select(this,1,me.upShopStation)" id="surveyState" ></div>
 			</div>
 		</div>
 		<!-- 项目详情 -->
@@ -206,7 +207,7 @@
 					   jsonpCallback:"state_null_getSome",
 					   success:function(data){
 					   		me.shopStation = data[0].staName;
-					   		$('#surveyState').html(me.shopStation);
+					   		//$('#surveyState').html(me.shopStation);
 					   		var text = ''
 					   		for(var i = 0 ; i<data.length; i++){
 					   			if(i == data.length -1){
@@ -222,7 +223,9 @@
 				},
 				list:function(){
 					this.shopName = $('#mendian').val();
-					var obj = {"proName":me.proName,"problemObject":me.order,"state":$('#surveyState').html()};
+					var obj = {"proName":me.proName
+					                  ,"problemObject":delAll("order")
+					                  ,"state":delAll('surveyState')};
 					$.ajax({	
 					   url: "/hdk/problem/getSome",
 					   data:obj,
@@ -265,7 +268,12 @@
 			}
 			
 			$(function(){
-				me.init()
+				me.init();
+				 for(var i = 0 ; i < $('div').length;i++ ){
+                    if(undefined != $($('div')[i]).attr('defaultVal')){
+                        $($('div')[i]).html($($('div')[i]).attr('defaultVal'));
+                    }
+                }
 				/*
 				 *	弹窗的使用方法  代码在global.js  app.alert
 				*/

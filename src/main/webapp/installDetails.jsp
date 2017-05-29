@@ -19,6 +19,7 @@
 <%--  <script type="text/javascript" src="${ctx}/js/syp_v1.js"></script>  --%>
 <script type="text/javascript" >
 /* window.SYP.toggleShowBanner('hidden'); */
+
     var ctx = "${ctx}";	
     var surId = "";
     var proId = '';
@@ -128,7 +129,7 @@
 							<div class="g-importList-title">项目名称</div>
 							<div id ="proNameDiv" class="g-importList-content">
 								<div class="i-xiala-list">
-									<div id = "proName" data-select="" onclick="app.select(this,3, Window.selected)" class="on">未选择</div>
+									<div id = "proName" alertTitle="请选择项目名称" data-select="" onclick="app.select(this,3, Window.selected)" class="on"></div>
 								</div>
 							</div>
 						</li>
@@ -136,7 +137,7 @@
 							<div class="g-importList-title">商铺名称</div>
 							<div id="shopNameDiv" class="g-importList-content">
 								<div class="i-xiala-list">
-									<div id = "shopName" data-select="" onclick="app.select(this,3,Window.shopSelected)" class="on">未选择</div>
+									<div id = "shopName" alertTitle="请选择商铺名称" data-select="" onclick="app.select(this,3,Window.shopSelected)" class="on">未选择</div>
 								</div>
 							</div>
 						</li>
@@ -169,7 +170,7 @@
 							<div class="g-importList-title">安装状态</div>
 							<div class="g-importList-content">
 								<div class="i-xiala-list">
-									<div id = "installState" data-select="" onclick="app.select(this,3,onSetupState)">未选择</div>
+									<div id = "installState" alertTitle="请选择安装状态" data-select="" onclick="app.select(this,3,onSetupState)"></div>
 								</div>
 							</div>
 						</li>
@@ -191,7 +192,7 @@
 					<div class="g-importList-title">收银机操作系统</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-xiala-list">
-									<div id= "cashSystem"  data-select=""  onclick="app.select(this,3,null)" >未选择</div>
+									<div id= "cashSystem" alertTitle="收银机操作系统"  data-select=""  onclick="app.select(this,3,null)" ></div>
 								</div>
 				    		</div>	
 						
@@ -200,7 +201,7 @@
 					<div class="g-importList-title">账户收银系统品牌</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-xiala-list">
-									<div id= "cashBrand"  data-select=""  onclick="app.select(this,3,null)" >未选择</div>
+									<div id= "cashBrand" alertTitle="账户收银系统品牌"  data-select=""  onclick="app.select(this,3,null)" ></div>
 								</div>
 				    		</div>	
 						</li>
@@ -208,7 +209,7 @@
 						<div class="g-importList-title">收银机端接口</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-xiala-list">
-									<div id= "cashPort"  data-select=""  onclick="app.select(this,3,null)" >未选择</div>
+									<div id= "cashPort"  alertTitle="收银机端接口"  data-select=""  onclick="app.select(this,3,null)" ></div>
 								</div>
 				    		</div>		
 							
@@ -247,7 +248,7 @@
 				    		<div class="g-importList-title">打印机品牌型号</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-import">
-									<input id = "priBrand" type="text" placeholder="请输入" />
+									<input id = "priBrand" alertTitle="打印机品牌型号" type="text" placeholder="请输入" />
 								</div>
 				    		</div>
 				    	</li>
@@ -255,7 +256,7 @@
 				    		<div class="g-importList-title">打印机端口</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-xiala-list">
-									<div id= "printerPort"   data-select=""   onclick="app.select(this,3,null)" >未选择</div>
+									<div id= "printerPort" alertTitle="打印机端口"  data-select=""   onclick="app.select(this,3,null)" >未选择</div>
 								</div>
 				    		</div>
 				    	</li>
@@ -278,7 +279,7 @@
 				    		<div class="g-importList-content">
 				    			<div class="i-choice">
 				    				<div class="i-choice-row">
-				    					<div id="eqTypeHard" class="on"></div>
+				    					<div id="eqTypeHard" alertTitle="采集接口类型" class="on"></div>
 				    					<p>硬件</p>
 				    				</div>
 				    				<div  class="i-choice-row">
@@ -292,7 +293,7 @@
 				    		<div class="g-importList-title">采集方式</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-xiala-list">
-									<div id ="eqStyle"  data-select=""  onclick="app.select(this,3,null)">未选择</div>
+									<div id ="eqStyle"  data-select=""  alertTitle="采集方式" onclick="app.select(this,3,null)"></div>
 								</div>
 				    		</div>
 				    	</li>

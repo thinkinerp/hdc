@@ -24,6 +24,7 @@
 </head>
 <script type="text/javascript">
 //window.SYP.toggleShowBanner('hidden');
+
 </script>
 <body>
 		<!-- 选择项目名称 -->
@@ -213,7 +214,6 @@
 					 		}
 					  });
 				};
-
 				for(var i = 0 ; i < $('div').length;i++ ){
 					if(undefined != $($('div')[i]).attr('defaultVal')){
 						$($('div')[i]).html($($('div')[i]).attr('alertTitle'));

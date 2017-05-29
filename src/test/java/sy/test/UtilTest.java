@@ -13,6 +13,7 @@ public class UtilTest {
 	@Test
 	public void comUtilDateFormat() {
 		System.out.println(ComUtil.dateFormat("2017-05-15 16:57:10"));	
+		
 	}
 	@Test
 	public void testComUtilRemove(){

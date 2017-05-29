@@ -32,7 +32,7 @@
 		</div>
 		<!-- 搜索 -->
 		<div class="i-itemSeek">
-			<input id ="proName" type="text" />
+			<input placeholder="请输入项目名称"id ="proName" type="text" />
 			<div id="indexSeek"></div>
 		</div>
 
@@ -63,11 +63,11 @@
 			</div>
 		</div>
 		<!-- 新建抄表 -->
-<!-- 		<div class="i-addTable">
+<!--  		<div class="i-addTable">
 			<div class="icon"></div>
 			<div class="text" href="javascript:void(0)" onClick="create()" >新建抄表</div>
-		</div> -->
-		
+		</div> 
+		 -->
 		<script type="text/javascript">
 
 			$(function(){

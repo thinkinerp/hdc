@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="css/global.css"/>
 		<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/global.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/hdk/js/comUtil.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
 		<!-- 选择项目名称 -->
@@ -34,10 +35,10 @@
 		<!-- 2个下拉 -->
 		<div class="i-itemXl">		
 			<div class="i-itemXl-list">
-				<div id='order' placeholder="排序" data-select="倒序,正序" onclick="app.select(this,1,me.upOrder)">倒序</div>
+				<div id='order' alertTitle="排序" defaultVal="排序" data-select="倒序,正序" onclick="app.select(this,1,me.upOrder)"></div>
 			</div>
 			<div class="i-itemXl-list">
-				<div id='surveyState' onclick="app.select(this,1,me.upShopStation)" ></div>
+				<div id='surveyState'  alertTitle="门店状态" defaultVal="门店状态" onclick="app.select(this,1,me.upShopStation)" ></div>
 			</div>
 		</div>
 		<!-- 项目详情 -->
@@ -152,7 +153,7 @@
 					   jsonpCallback:"state_null_getSome",
 					   success:function(data){
 					   		me.shopStation = data[0].staName;
-					   		$('#surveyState').html(me.shopStation);
+					   		//$('#surveyState').html(me.shopStation);
 					   		var text = ''
 					   		for(var i = 0 ; i<data.length; i++){
 					   			if(i == data.length -1){
@@ -214,7 +215,10 @@
 				},
 				list:function(){
 					this.shopName = $('#mendian').val();
-					var obj = {"proName":me.proName,"shopName":me.shopName,"order":me.order,"shopMerStation":me.shopStation};
+					var obj = {"proName":me.proName
+					                  ,"shopName":me.shopName,
+					                  "order":delAll('order'),
+					                  "shopMerStation":delAll('surveyState')};
 					$.ajax({	
 					   url: "/hdk/survey/getSome",
 					   data:obj,
@@ -256,7 +260,11 @@
 			};
 			$(function(){
 				me.init();		
-				
+				                for(var i = 0 ; i < $('div').length;i++ ){
+                    if(undefined != $($('div')[i]).attr('defaultVal')){
+                        $($('div')[i]).html($($('div')[i]).attr('alertTitle'));
+                    }
+                }
 				
 				    // $('#mendian').click(function(){//点击搜索图标
                             // me.selectItem();

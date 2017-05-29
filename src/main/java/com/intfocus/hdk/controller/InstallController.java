@@ -1,7 +1,6 @@
 package com.intfocus.hdk.controller;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,22 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.intfocus.hdk.dao.CashMapper;
 import com.intfocus.hdk.dao.EquipmentMapper;
@@ -142,11 +137,9 @@ public class InstallController implements ApplicationContextAware {
 	   binder.setFieldDefaultPrefix("equipment.");    
    } 
    
-   
-   
    @RequestMapping(value = "gotoModify" , method=RequestMethod.GET)
-   public String gotoModify(HttpServletResponse res , HttpServletRequest req ,HttpSession session
-		   , Install install ){
+   public void gotoModify(HttpServletResponse res , HttpServletRequest req ,HttpSession session
+		   , Install install ,String callback){
 	   
 	   JSONObject json = new JSONObject();
 	   Map<String, String> where = new HashMap<String,String>();
@@ -196,10 +189,19 @@ public class InstallController implements ApplicationContextAware {
 		   if(null != projects && projects.size() > 0 ){
 			   json.put("project",projects.get(0));
 		   }
-		   
-		   
+		   json.put("message","success");
 	   }
-	   return "forward:/installDetails.jsp?allThing=" + json.toJSONString();
+	   
+	  
+	   Writer w = null ;
+	   try {
+		w = res.getWriter();
+		w.write(callback+"("+json.toJSONString()+")");
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	    
    }
     @RequestMapping(value = "getSome" , method=RequestMethod.POST)
     @ResponseBody
