@@ -1,13 +1,48 @@
 /**
  * 
  */
-if(allThing != '{}' && allThing !='' && allThing !='null' ){
+var params = function() {
+  var query = {},
+    search = window.location.search.substring(1),
+    parts = search.split('&'),
+    pairs = [];
+
+  for (var i = 0, len = parts.length; i < len; i++) {
+    pairs = parts[i].split('=');
+    query[pairs[0]] = (pairs.length > 1 ? decodeURIComponent(pairs[1]) : null);
+  }
+
+  return query;
+}();
+
+if(undefined != params["proId"] && "" != params["proId"]){
+	$.ajax({
+		url:"/hdk/project/gotoModify",
+		data:{
+			proId:params["proId"]
+		},
+		dataType:'jsonp',
+		type:'get',
+		jsonp:"callback",
+		success:function(res){
+			if(undefined !=res && null != res && 'success' == res.message){
+				allThing = res;
+				loadItem(res);
+			}else{
+				app.alert("网络出现问题",1);
+			}
+		},
+		error:function(rs){
+			console.log(rs);
+		}
+	});
+}
+
+var loadItem = function(allThing){
+
+if(undefined != allThing && null != allThing ){
 	
-	console.log(allThing)
-	var allObjs = JSON.parse(allThing);
-	
-	console.log(allObjs);
-	
+	var allObjs = allThing;
 	setValue("proName",allObjs.project.proName);
 	setValue("proEdition",allObjs.project.proEdition);
 	setValue("proStation",allObjs.project.proStation);
@@ -72,19 +107,18 @@ if(allThing != '{}' && allThing !='' && allThing !='null' ){
 	
 	if(!!isUndefined(allObjs.check)){
       $.each(allObjs.check,function(index,item){
-			setValue('checkPercentage',item.proAlready+ "%");
-			setValue('certainPercentage',item.count+ "%");
-			setValue('installPercnetage',item.proCheck+ "%");
+			setValue('checkPercentage',isUndefined(item.proAlready)+ "%");
+			setValue('certainPercentage',isUndefined(item.count)+ "%");
+			setValue('installPercnetage',isUndefined(item.proCheck)+ "%");
       });
    }
-	
 }
-
+}
 
 function gotoDetail(t){
 	if(1==t){
-		location.href = ctx + "/issueList.jsp?problemObject=海鼎"
+		location.href = "/hdk/issueList.jsp?problemObject=海鼎"
 	}else if(2==t){
-		location.href = ctx + "/issueList.jsp?problemObject=客户"
+		location.href = "/hdk/issueList.jsp?problemObject=客户"
 	}
 }

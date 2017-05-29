@@ -14,7 +14,7 @@ $(function(){
 	    });
 	var time =  (new Date().getTime());
 	$.ajax({
-		url:ctx+'/project/getCount',
+		url:'/hdk/project/getCount',
 		type:'get',
 		dataType:'json',
 		success:function(rs){
@@ -75,7 +75,7 @@ $(function(){
 var search = function(){
 	var time =  (new Date().getTime());
 	 $.ajax({ 
-	 		url:ctx + '/project/getSome',
+	 		url: '/hdk/project/getSome',
 	 		type:'get',
 			data:{
 					proName:$('#proName').val(),
@@ -121,9 +121,9 @@ var search = function(){
 
 
 function gotoModify(proId){
-	location.href = ctx + '/project/gotoModify?proId=' + proId;
+	location.href ='/hdk/itemDetails.html?proId=' + proId;
 }
 
 function create(){
-	location.href = ctx + "/itemDetails.jsp";	
+	location.href =  "/hdk/itemDetails.html";	
 }

@@ -43,9 +43,13 @@ public class ProjectController implements ApplicationContextAware {
     }
     
     @RequestMapping(value = "gotoModify" , method=RequestMethod.GET)
-    public String gotoModify(HttpServletResponse res , HttpServletRequest req ,HttpSession session,Project project){
+    public void gotoModify(HttpServletResponse res , HttpServletRequest req 
+    		,HttpSession session,Project project
+    		,String callback){
         	JSONObject json = new JSONObject();
-        	
+    	    Writer w = null ;
+    	    String str ="";
+    	    try {
         	Map<String,String> where =new HashMap<String,String>(); 
         	where.put("proId", project.getProId());
         	where.put("proName", project.getProName());
@@ -56,8 +60,24 @@ public class ProjectController implements ApplicationContextAware {
         	json.put("projectProblem", projectmapper.getProjectProblem( where));
            List<Project> projects = projectmapper.selectByWhere(where);
         	json.put("project", projects.get(0));
-        	String str = json.toJSONString();
-    	return "forward:/itemDetails.jsp?allThing="+str;
+        	json.put("message","success");
+        	str = json.toJSONString();
+
+				w = res.getWriter();
+				w.write(callback+"("+str+")");
+			} catch (IOException e) {
+				try {
+			    if(null == w){
+						w = res.getWriter();
+			    }else{
+			    	str ="{\"message\":\"fail\"}";
+			    	w.write(callback+"("+str+")");
+			    }
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}	
+				e.printStackTrace();
+			}
     }
      
     @RequestMapping(value = "getCount" , method=RequestMethod.GET)
