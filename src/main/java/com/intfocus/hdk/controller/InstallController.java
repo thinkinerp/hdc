@@ -86,7 +86,8 @@ public class InstallController implements ApplicationContextAware {
 	    		rs = new HashMap<String,String>();
 	    		rs = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
 	    		if(!"ok".equalsIgnoreCase(rs.get("message"))){
-	    			return "{'message':'"+rs.get("message")+"'}";
+	    			result.put("message", rs.get("message"));
+	    			return result.toJSONString();
 	    		}
 	    	}
 	    	Map<String, String> where = new HashMap<String,String>();
@@ -214,24 +215,27 @@ public class InstallController implements ApplicationContextAware {
     public String modify(HttpServletResponse res , HttpServletRequest req ,HttpSession session
     ,  Install install,Printer printer,Cash cash,Equipment equipmengt ,String files 
     ,String userName ,String userNum){
+    	JSONObject ret = new JSONObject();
     	try{
-    		String path = null; 
+    		String path = req.getSession().getServletContext().getRealPath("upload"); 
         	Map<String,String> rs = null ;
     	    	if(null != files && !"".equalsIgnoreCase(files)){
     	    		rs = new HashMap<String,String>();
-    	    		rs = ComUtil.savePicture(files, path=req.getSession().getServletContext().getRealPath("upload"));
+    	    		rs = ComUtil.savePicture(files, path);
     	    		if(!"ok".equalsIgnoreCase(rs.get("message"))){
-    	    			return "{'message':'"+rs.get("message")+"'}";
+    	    			ret.put("message", rs.get("message"));
+    	    			return ret.toJSONString();
     	    		}
+    	    	    Map<String, String> where = new HashMap<String, String>();
+    	    	    where.put("installId", install.getInstallId());
+    				List<Install> installs = installmapper.selectByWhere(where );
+    	    	    if(0 < installs.size()){
+    	    	    	install.setAttachment_url(installs.get(0).getAttachmentUrl());
+    	    	    }
+    	    		install.modifyAtachement(files , rs.get("urls"),path.substring(0,path.indexOf("upload")));
     	    	}
     	   
-    	    Map<String, String> where = new HashMap<String, String>();
-    	    where.put("installId", install.getInstallId());
-			List<Install> installs = installmapper.selectByWhere(where );
-    	    if(0 < installs.size()){
-    	    	install.setAttachment_url(installs.get(0).getAttachmentUrl());
-    	    }
-    		install.modifyAtachement(files , rs.get("urls"),path.substring(0,path.indexOf("upload")));
+
 			installmapper.updateByPrimaryKeySelective(install);
 			printerMapper.updateByPrimaryKeySelective(printer);
 			cashMapper.updateByPrimaryKeySelective(cash);
@@ -246,9 +250,11 @@ public class InstallController implements ApplicationContextAware {
 			
     	}catch(Exception e){
 			e.printStackTrace();
-			return "fail" ;
+			ret.put("message", "fail");
+			return ret.toJSONString();
     	}
-		return "{'message':'success'}" ;
+    	ret.put("message", "success");
+		return ret.toJSONString();
     }
 	@Override
 	public void setApplicationContext(ApplicationContext ctx)

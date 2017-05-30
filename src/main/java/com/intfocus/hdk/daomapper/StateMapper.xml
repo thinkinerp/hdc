@@ -28,6 +28,9 @@
     		<if test="null != ownerTable  and '' != ownerTable">
 				and owner_table = #{ownerTable,jdbcType=VARCHAR}
 			</if>	
+    		<if test="null == isAll or '' == isAll">
+				and sta_name &lt;&gt; '全部'
+			</if>	
     </where>    
     
     <if test="null != page and ''!= page">

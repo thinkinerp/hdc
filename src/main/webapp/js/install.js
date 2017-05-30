@@ -3,8 +3,8 @@
  */
 //shopStateSeach();
 
- loadCombobox("installState","install");			
- loadCombobox("eqType","equipment_type");					
+ loadCombobox("installState","install",1);			
+ loadCombobox("eqType","equipment_type",1);					
 
 $('#middle').bind('click',function(){
 	shopStateSeach();

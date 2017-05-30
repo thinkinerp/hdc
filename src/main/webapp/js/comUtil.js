@@ -16,11 +16,11 @@ function codeUnique(config){
 	var dtd = $.Deferred(); 
 	
 	if('' == config.code ){
-		alert(config.which+":"+config.code + ",不能为空");
+		app.alert(config.which+":"+config.code + ",不能为空",1);
 		return dtd.promise();
 	}
 	if(!onlyEnglishAndDecimal(config.code)){
-		alert("编码:" + config.code +",只能有数字和英文字母组成");
+		app.alert("编码:" + config.code +",只能有数字和英文字母组成",1);
 		return dtd.promise();
 		
 	}
@@ -37,7 +37,7 @@ function codeUnique(config){
 					   success:function(data){
 						   var i = data[0];
 						   if(i.count > 0 ){
-							   alert(config.which+":"+config.code+"重复，请重新编码",1);
+							   app.alert(config.which+":"+config.code+"重复，请重新编码",1);
 						   }else{
 							   dtd.resolve();
 						   }
@@ -49,14 +49,15 @@ function codeUnique(config){
 				return dtd.promise();
 }
 
- function loadCombobox(id , table){
+ function loadCombobox(id , table,isAll){
 	 var time = (new Date().getTime());
 	 $.ajax({ 
 		 url: '/hdk/state/getSome',
 		 type:'get',
 		 data:{
 				'ownerTable':table,
-				'time':time
+				'time':time,
+				'isAll':isAll
 		 },
 	 		jsonpCallback:"state_"+time+"_getSome",
 	 		jsonp: "callback",

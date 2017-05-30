@@ -25,10 +25,10 @@ var app ={
 		html.push('</div>');
 		$("body").append(html.join(''));
 		$("#g-popupOk").click(function(){
+			$("#g-popup").remove();		
 			if(fun != undefined){
 				fun();
 			}
-			$("#g-popup").remove();		
 		})
 		$("#g-popupNo").click(function(){
 			$("#g-popup").remove();

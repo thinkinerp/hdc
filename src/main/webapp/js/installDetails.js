@@ -412,6 +412,7 @@ var submit = function() {
       type: 'post',
       beforeSend:ajaxLoading(),
       complete:ajaxLoadEnd(),
+      dataType: 'json',
       data: {
     	  files:(JSON.stringify(imgs) != JSON.stringify(files)?(JSON.stringify(imgs,files)):""),	
         'install.installId': $("#installCode").val(),
@@ -475,11 +476,16 @@ var submit = function() {
         //          ,'updatedAt':''
       },
       success: function(result) {
-
-        location.href =  "/hdk/installList.html";
+    	  if("success" == result.message){
+    		  app.alert("保存成功",2);
+    		  location.href =  "/hdk/installList.html";
+    	  }else{
+    		  app.alert("保存失败，请重试",1);
+    		  
+    	  }
       },
       error: function(result) {
-        console.log(result)
+    	  app.alert("保存失败，请重试",1);
       }
     });
 
@@ -516,6 +522,8 @@ var submit = function() {
       url:  '/hdk/install/submit', //用于文件上传的服务器端请求地址
       dataType: 'json', //返回值类型 一般设置为json
       type:'post',
+      beforeSend:ajaxLoading(),
+      complete:ajaxLoadEnd(),
       data: {
     	  files:JSON.stringify(imgs),
         'install.installId': $("#installCode").val(),
@@ -581,7 +589,15 @@ var submit = function() {
       success: function(data, status) //服务器成功响应处理函数
       {
         console.log(data);
-       location.href =  "/hdk/installList.html";
+        
+        if(data.message == "success"){
+        	app.alert("保存成功",1);
+        	location.href =  "/hdk/installList.html";
+        }else{
+        	app.alert("保存失败",1);
+        	
+        }
+        
       },
       error: function(data, status, e) //服务器响应失败处理函数
       {

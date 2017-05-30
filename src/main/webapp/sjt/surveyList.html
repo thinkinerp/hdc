@@ -147,7 +147,7 @@
 				surveyState:function(){	//调研状态
 					$.ajax({	
 					   url: "/hdk/state/getSome",
-					   data:{"ownerTable":"shop_mer_station"},
+					   data:{"ownerTable":"shop_mer_station","isAll":1},
 					   type: "get",
 					   dataType:"jsonp",
 					   jsonpCallback:"state_null_getSome",
@@ -193,6 +193,7 @@
 					   		//me.surveyState();
 					   }					   
 					});
+					me.list();
 				},
 				upItemStyle:function(data){	//更改显示项目信息
 			

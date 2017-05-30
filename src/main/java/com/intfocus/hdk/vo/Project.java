@@ -27,11 +27,17 @@ public class Project {
     private String proUpdataTime;
 
     private Integer proTodal;
+    
+    private Integer leftNum;
 
     private Integer proNeed;
 
     private Integer proAlready;
-
+    
+    private Integer proAlreadyPer;
+    
+    private Integer proCheckPer;
+    
     private Integer proCheck;
 
     private Integer proNot;
@@ -223,5 +229,29 @@ public class Project {
 
 	public void setCount(Integer count) {
 		Count = count;
+	}
+
+	public Integer getProAlreadyPer() {
+		return proAlreadyPer;
+	}
+
+	public void setProAlreadyPer(Integer proAlreadyPer) {
+		this.proAlreadyPer = proAlreadyPer;
+	}
+
+	public Integer getProCheckPer() {
+		return proCheckPer;
+	}
+
+	public void setProCheckPer(Integer proCheckPer) {
+		this.proCheckPer = proCheckPer;
+	}
+
+	public Integer getLeftNum() {
+		return leftNum;
+	}
+
+	public void setLeftNum(Integer leftNum) {
+		this.leftNum = leftNum;
 	}
 }

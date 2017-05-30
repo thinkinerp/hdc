@@ -118,6 +118,7 @@
 					   		me.upItemStyle(data);
 					   }					   
 					});
+					me.list();
 				},
 				parName:function(){	//项目名称
 					$.ajax({	
@@ -201,7 +202,7 @@
 				staName:function(){
 					$.ajax({	
 					   url: "/hdk/state/getSome",
-					   data:{"ownerTable":'problem_station'},
+					   data:{"ownerTable":'problem_station',"isAll":1},
 					   type: "get",
 					   dataType:"jsonp",
 					   jsonpCallback:"state_null_getSome",

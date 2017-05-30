@@ -56,10 +56,10 @@ public class SurveyController implements ApplicationContextAware {
     		, Survey survey , Printer printer , Cash cash , Shops shops,String callback, String files
     		,String userName ,String userNum){
     	JSONObject rs = new JSONObject();
-    	String path = "" ;
+    	String path = req.getSession().getServletContext().getRealPath("upload") ;
 		try {
 			   if(!"".equalsIgnoreCase(files) && null != files){	
-					Map<String,String> result = ComUtil.savePicture(files, path = req.getSession().getServletContext().getRealPath("upload"));
+					Map<String,String> result = ComUtil.savePicture(files, path );
 					if(!"ok".equalsIgnoreCase(result.get("message"))){
 						rs.put("message", result.get("message"));
 						return rs.toJSONString();
