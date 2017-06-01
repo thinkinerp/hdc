@@ -51,6 +51,12 @@
     		<if test="null != proName  and '' != proName">
 				and pro_name = #{proName,jdbcType=VARCHAR}
 			</if>	
+			
+    		<if test="null != proNameLike  and '' != proNameLike">
+				and pro_name rlike #{proNameLike,jdbcType=VARCHAR}
+			</if>	
+			
+			
     		<if test="null != proManagerPro  and '' != proManagerPro">
 				and pro_manager_pro = #{proManagerPro,jdbcType=VARCHAR}
 			</if>	

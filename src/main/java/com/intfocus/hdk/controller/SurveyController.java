@@ -100,11 +100,12 @@ public class SurveyController implements ApplicationContextAware {
     @RequestMapping(value = "getSome" , method=RequestMethod.GET)
     @ResponseBody
     public void getSome(HttpServletResponse res , HttpServletRequest req ,HttpSession session
-    		              , Survey survey ){
+    		              , Survey survey ,String callback,String shopNameLike){
     	
     	Map<String,String> where = new HashMap<String,String>();
 		where.put("proName", survey.getProName());	
 		where.put("shopName", survey.getShopName());	
+		where.put("shopNameLike", shopNameLike);	
 		where.put("shopMerStation", survey.getShopMerStation());
     	try {
 			Writer w = res.getWriter();
@@ -116,7 +117,7 @@ public class SurveyController implements ApplicationContextAware {
 		}
     	List<Survey> surveys = surveymapper.selectByWhere(where);
     	
-		w.write( "getSome("+JSONObject.toJSONString(surveys) +")");	
+		w.write( callback + "("+JSONObject.toJSONString(surveys) +")");	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -8,16 +8,17 @@
         <meta name="browsermode" content="application">
         <meta name="renderer" content="webkit">
 <title>安装</title>
-        <link rel="stylesheet" type="text/css" href="/hdk/casher/css/global.css"/>
         <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-        <script src="/hdk/casher/js/global.js" type="text/javascript" charset="utf-8"></script>
-        <script type="text/javascript" src="/hdk/js/ajaxfileupload.js"></script>  
-        <script type="text/javascript" src="/hdk/js/comUtil.js"></script> 
         <link rel="stylesheet" type="text/css" href="/hdk/casher/css/global.css"/>
+        <link rel="stylesheet" href="/hdk/casher/css/swiper.css"/>
+        <link rel="stylesheet" href="/hdk/css/loading.css"/>
+        <script type="text/javascript" src="/hdk/js/comUtil.js"></script> 
         <script src="/hdk/casher/js/global.js" type="text/javascript" charset="utf-8"></script>
         <script src="/hdk/js/installDetails.js" type="text/javascript" charset="utf-8"></script>
-        <link rel="stylesheet" href="/hdk/casher/css/swiper.css"></link>
-        <link rel="stylesheet" href="/hdk/css/loading.css"></link>
+        <script src="/hdk/js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
+        <script type="text/javascript" charset="utf-8">
+            window.SYP.setBannerTitle("安装详情");
+        </script> 
 </head>
 <body>
 <script type="text/javascript" >
@@ -81,7 +82,7 @@
                     </div>
                     <div class="i-xiala">
                         <div class="i-xiala-list">
-                            <div id = 'installData' data-select="准确,不准确" onclick="app.select(this,1)"></div>
+                            <div id = 'installData' alertTitle="数据精准度" data-select="准确,不准确" onclick="app.select(this,3)"></div>
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,7 @@
 //shopStateSeach();
 
  loadCombobox("installState","install",1);			
- loadCombobox("eqType","equipment_type",1);					
+ loadCombobox("eqType","equipment_eq_style",1);					
 
 $('#middle').bind('click',function(){
 	shopStateSeach();
@@ -32,7 +32,7 @@ var shopStateSeach = function(){
 	 		jsonp: "callback",
 			data:{
 				"proId":$('#itemName').html(),
-				'shopName':$('#middle').val(),
+				'shopNameLike':$('#middle').val(),
 				"installStation":delAll('installState'),
 				"eqType":delAll('eqType')
 			},
@@ -91,7 +91,8 @@ var equipmentTypeSeach = function(){
 	shopStateSeach();
 }
 var gotoModify = function(link){
-	location.href =  "installDetails.html?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
+	window.SYP.pageLink("安装详情",domainName +"/hdk/installDetails.html?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'],-1);
+	//location.href =  "installDetails.html?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 }
 
 var searche = function(){

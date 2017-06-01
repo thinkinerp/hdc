@@ -129,6 +129,10 @@
     		<if test="null != shopName  and '' != shopName">
 				and shops.shop_name  = #{shopName,jdbcType=VARCHAR}
 			</if>	
+    		<if test="null != shopNameLike  and '' != shopNameLike">
+				and shops.shop_name  rlike #{shopNameLike,jdbcType=VARCHAR}
+			</if>	
+			
     		<if test="null != proId  and '' != proId">
 				and shops.pro_id  = #{proId,jdbcType=VARCHAR}
 			</if>	
@@ -136,7 +140,6 @@
     		<if test="null != installId  and '' != installId">
 				and install.install_id = #{installId,jdbcType=VARCHAR}
 			</if>	
- 
     </where>  
     <if test="null != page and ''!= page">
 	    <if test="null != pageSize and ''!= pageSize">

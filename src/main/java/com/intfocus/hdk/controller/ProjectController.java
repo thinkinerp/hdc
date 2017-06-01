@@ -120,10 +120,11 @@ public class ProjectController implements ApplicationContextAware {
     @RequestMapping(value = "getSome" , method=RequestMethod.GET)
     @ResponseBody
     public void getSome(HttpServletResponse res , HttpServletRequest req ,HttpSession session
-    		              , Project project ,String time){
+    		              , Project project ,String time,String proNameLike){
     	log.info("pro:"+project.getProName());
     	Map<String ,String> where = new HashMap<String,String>();
     	where.put("proName", project.getProName());
+    	where.put("proNameLike", proNameLike);
     	if(null != project.getIsLast()){
     		where.put("isLast", project.getIsLast().toString());
     	}

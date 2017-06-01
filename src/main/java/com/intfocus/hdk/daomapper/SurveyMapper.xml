@@ -55,9 +55,14 @@
     		<if test="null != shopId  and '' != shopId">
 				and shop_id  = #{shopId,jdbcType=VARCHAR}
 			</if>	
+			
     		<if test="null != shopName  and '' != shopName">
 				and shops.shop_id in (  select shop_id from shops where shop_mer_name = #{shopName,jdbcType=VARCHAR})
-			</if>	
+			</if>
+    		<if test="null != shopNameLike  and '' != shopNameLike">
+				and shops.shop_id in (  select shop_id from shops where shop_mer_name rlike #{shopNameLike,jdbcType=VARCHAR})
+			</if>
+				
     		<if test="null != surNetwork  and '' != surNetwork">
 				and sur_network  = #{surNetwork,jdbcType=VARCHAR}
 			</if>	

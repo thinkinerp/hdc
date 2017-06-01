@@ -15,6 +15,10 @@
         <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
         <script src="js/global.js" type="text/javascript" charset="utf-8"></script>
         <script src="/hdk/js/comUtil.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/hdk/js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
+       <script type="text/javascript" charset="utf-8">
+                window.SYP.setBannerTitle("问题详情");
+        </script>
     </head>
 
     <body>
@@ -275,14 +279,8 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="i-contenteditable" contenteditable="true" style="-webkit-user-select:text" placeholder="输入" id ="messageContext"></div>
-                    <div class="i-contenteditable-ok" id = "saveMessage">确定</div>
-                    
-                    <div class="i-itemDetail" id ="messageArea">
-                        
-                        
-                        
-                    </div>
-                    
+                    <div class="i-contenteditable-ok" id = "saveMessage">添加批注</div>
+                    <div class="i-itemDetail" id ="messageArea"></div>
                 </div>
             </div>
         </div>
@@ -309,10 +307,10 @@
                 }, 
                  success:function(rs){
                          if(rs.message == "success"){
-                             app.alert("保存成功",1);
+                             app.alert("批注保存成功",1);
                              loadMessage($('#gs1').val());
                          }else if(rs.message == "fail"){
-                             app.alert("保存失败",1);
+                             app.alert("批注保存失败",1);
                          }
                  },
                  error:function(rs){
@@ -330,7 +328,7 @@
                  data:{'problemId': id//问题编号
                 }, 
                  success:function(rs){
-                             $('#messageArea').html('');
+                            $('#messageArea').html('');
                          $.each(rs,function(index,item){
                              $('#messageArea').append(
                              
@@ -345,7 +343,6 @@
             "                   </div>" +
             "               </div>" +
             "           </div>");
-
                          });
                  },
                  error:function(rs){
@@ -383,6 +380,8 @@
                 },
                 selectSp1 : function() {
                     sp.sp1 = $("#sp1").html();
+                    $('#sp2').html('');
+                    $('#sp3').html('');
                     sp.sp2Fun();
                     for (var i = 0; i < sp.proData.length; i++) {
                         if (sp.proData[i].proName == sp.sp1) {
@@ -762,8 +761,11 @@
                         dataType : "json",
                         success : function(data) {
                             if (data.message == "success") {
-                                app.alert('保存成功', 1)
-                                window.location = 'issueList.html'
+                                app.alert('保存成功', 1);
+                               setTimeout(function(){
+                                window.location = 'issueList.html';
+                                 },2000);   
+
                             } else if (data.message == "fail") {
                                 app.alert('保存失败', 1);
                             }
@@ -826,7 +828,9 @@
                     success : function(data) {
                         if (data.message == "success") {
                             app.alert('修改成功', 1);
-                            window.location = 'issueList.html'
+                          setTimeout(function(){
+                                window.location = 'issueList.html';
+                          },2000);
                         } else if (data.message == "fail") {
                             app.alert('修改失败', 1);
                         }

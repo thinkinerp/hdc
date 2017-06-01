@@ -65,6 +65,12 @@ $.ajax({
 });
 
 Window.selected = function() {
+	$("#shopName").html('');
+    $("#shopState").html('');
+    $('#shopPosition').html('');
+    $('#shopType').html('');
+    $('#shopSecType').html('');
+    $('#shopCode').html('');
   $.ajax({
     url: '/hdk/shops/selectForCombobox',
     type: 'get',
@@ -116,7 +122,6 @@ Window.shopSelected = function() {
         $('#shopPosition').html(item.shopPosition);
         $('#shopType').html(item.shopType);
         $('#shopSecType').html(item.shopSecType);
-
         $('#shopCode').html(item.shopId);
       });
 
@@ -477,8 +482,10 @@ var submit = function() {
       },
       success: function(result) {
     	  if("success" == result.message){
-    		  app.alert("保存成功",2);
-    		  location.href =  "/hdk/installList.html";
+    		  app.alert("保存成功",1);
+    		  setTimeout(function(){
+    			  location.href =  "/hdk/installList.html"
+    	     },2000);
     	  }else{
     		  app.alert("保存失败，请重试",1);
     		  
@@ -592,7 +599,9 @@ var submit = function() {
         
         if(data.message == "success"){
         	app.alert("保存成功",1);
-        	location.href =  "/hdk/installList.html";
+  		  setTimeout(function(){
+				  location.href =  "/hdk/installList.html";
+	     },2000);
         }else{
         	app.alert("保存失败",1);
         	

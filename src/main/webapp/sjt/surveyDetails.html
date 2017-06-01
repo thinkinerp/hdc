@@ -15,6 +15,10 @@
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 		<script src="js/global.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/hdk/js/comUtil.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/hdk/js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
+       <script type="text/javascript" charset="utf-8">
+                window.SYP.setBannerTitle("调研详情");
+        </script>
 	</head>
 
 	<body>
@@ -302,6 +306,13 @@
 				selectPorName:function(){//选择项目名称
 					shop.itemName = $('#itemName').html();
 					shop.initShopName();
+					
+                   $("#shopState").html('');
+                    $("#shopSite").html('');
+                    $("#shopFl1").html('');
+                    $("#shopFl2").html('');
+                    $("#shopID").html('');
+			
 					for(var i = 0 ; i<shop.item.length; i++){
 						if(shop.itemName == shop.item[i].proName){
 							shop.itemId =  shop.item[i].proId;
@@ -612,8 +623,10 @@
         					  // jsonpCallback:"state_null_getSome",
         					   success:function(data){
         					   		if(data.message == "success"){
-        					   			app.alert('保存成功',1);			
-        					   			window.location='surveyList.html';
+        					   			app.alert('保存成功',1);		
+        					   			           setTimeout(function(){
+                            					   			window.location='surveyList.html';
+                                                     },2000);	
         					   		}else if(data.message == "fail"){
         					   			app.alert('保存失败',1);
         					   		}
@@ -677,7 +690,11 @@
 					   success:function(data){
 					   		if(data.message == "success"){
 					   			app.alert('修改成功',1);			
-					   			window.location='surveyList.html';
+                               setTimeout(function(){
+                                    window.location='surveyList.html';
+                             },2000);   
+
+
 					   		}else if(data.message == "fail"){
 					   			app.alert('修改失败',1);
 					   		}

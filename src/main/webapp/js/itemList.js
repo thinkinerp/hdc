@@ -78,7 +78,7 @@ var search = function(){
 	 		url: '/hdk/project/getSome',
 	 		type:'get',
 			data:{
-					proName:$('#proName').val(),
+					proNameLike:$('#proName').val(),
 					time:time
 					},
 	 		dataType:'jsonp',
@@ -121,7 +121,8 @@ var search = function(){
 
 
 function gotoModify(proId){
-	location.href ='/hdk/itemDetails.html?proId=' + proId;
+	window.SYP.pageLink("调研详情",domainName +'/hdk/itemDetails.html?proId=' + proId,-1);
+	//location.href ='/hdk/itemDetails.html?proId=' + proId;
 }
 
 function create(){
