@@ -10,7 +10,7 @@ loadCombobox("installState", "install");
 
 var time = new Date().getTime();
 $.ajax({
-  url:  '/hdk/project/getSome',
+  url: domainName +  '/hdk/project/getSome',
   type: 'get',
   data: {
     time: time
@@ -38,7 +38,7 @@ $.ajax({
 });
 
 $.ajax({
-  url:  '/hdk/state/getSome',
+  url:domainName +   '/hdk/state/getSome',
   type: 'get',
   data: {
     'ownerTable': "install"
@@ -73,7 +73,7 @@ Window.selected = function() {
     $('#shopSecType').html('');
     $('#shopCode').html('');
   $.ajax({
-    url: '/hdk/shops/selectForCombobox',
+    url:domainName +  '/hdk/shops/selectForCombobox',
     type: 'get',
     data: {
       'proId': $('#proName').html()
@@ -107,7 +107,7 @@ Window.shopSelected = function() {
 		return;
 	}
   $.ajax({
-    url:  '/hdk/shops/selectForCombobox',
+    url:domainName +   '/hdk/shops/selectForCombobox',
     type: 'get',
     data: {
       'shopName': $('#shopName').html()
@@ -132,7 +132,7 @@ Window.shopSelected = function() {
   //如果这个门店已经调研了，与此门店相关的打印机和收银机信息都已经存在，所以在这样情况下
   //需要将收银机和打印机的信息加载过来。
   $.ajax({
-    url: '/hdk/survey/getSome',
+    url:domainName +  '/hdk/survey/getSome',
     type: 'get',
     data: {
       'shopName': $('#shopName').html(),
@@ -257,7 +257,7 @@ function loadPrinterAndCasher(surId) {
 	
 	
   $.ajax({
-  url:  '/hdk/survey/gotoModify',
+  url:domainName +   '/hdk/survey/gotoModify',
   type: 'get',
   data: {
     'surId': surId,
@@ -381,7 +381,7 @@ var params = function() {
 
 if(undefined != params["installId"] && "" != params["installId"]){
 	$.ajax({
-		url:"/hdk/install/gotoModify",
+		url:domainName + "/hdk/install/gotoModify",
 		data:{
 			installId:params["installId"]
 		},
@@ -414,7 +414,7 @@ var submit = function() {
   if (null != allThing && undefined !=allThing) {
 
     $.ajax({
-      url: '/hdk/install/modify',
+      url:domainName +  '/hdk/install/modify',
       type: 'post',
       beforeSend:ajaxLoading(),
       complete:ajaxLoadEnd(),
@@ -484,7 +484,7 @@ var submit = function() {
       success: function(result) {
     	  if("success" == result.message){
      
-    			  window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功",domainName+"/hdk/installList.html");
+    			  window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功","installList.html");
  
     	  }else{
     		  app.alert("保存失败，请重试",1);
@@ -526,7 +526,7 @@ var submit = function() {
 	 .done(function(){ 
 
     $.ajax({
-      url:  '/hdk/install/submit', //用于文件上传的服务器端请求地址
+      url:domainName +   '/hdk/install/submit', //用于文件上传的服务器端请求地址
       dataType: 'json', //返回值类型 一般设置为json
       type:'post',
       beforeSend:ajaxLoading(),
@@ -600,7 +600,7 @@ var submit = function() {
         if(data.message == "success"){
    
   
-  			window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功",domainName+"/hdk/installList.html");
+  			window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功","installList.html");
  
         }else{
         	app.alert("保存失败",1);

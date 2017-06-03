@@ -9,6 +9,9 @@ var app ={
 	selectOverFun:'',  //选择后要执行的方法
 	alert:function(msg,style,fun){ //消息内容    状态(1为只有确定按钮 2为是否按钮)  fun点确定后要执行的方法
 		var html = [];
+		if(undefined != $('#g-popup').attr("id")){
+			return;
+		}	
 		html.push('<div class="g-popup" id="g-popup">');
 		html.push('<div class="g-popup-main">');
 		html.push('<div class="g-popup-main-title">提示</div>');

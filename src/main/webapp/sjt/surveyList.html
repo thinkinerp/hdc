@@ -9,11 +9,11 @@
 		<meta name="renderer" content="webkit">
 		<title>调研列表</title>
 		<link rel="stylesheet" type="text/css" href="css/global.css"/>
-        <script src="/hdk/js/config.js" type="text/javascript" charset="utf-8"></script> 
+        <script src="js/config.js" type="text/javascript" charset="utf-8"></script> 
 		<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/global.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/hdk/js/comUtil.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/hdk/js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
+		<script src="js/comUtil.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
         <script type="text/javascript" charset="utf-8">
                 window.SYP.setBannerTitle("调研列表");
         </script>
@@ -23,7 +23,7 @@
 		<div  class="i-itemName">
 			<div class="i-itemName-name">项目名称</div>
 			<div class="i-itemName-list">
-				<div id="itemName" onclick="app.select(this,1,me.selectItem)"></div>
+				<div id="itemName" alertTitle="项目名称" onclick="app.select(this,2,me.selectItem)"></div>
 			</div>
 		</div>
 		<!-- 项目状态 -->
@@ -40,10 +40,10 @@
 		<!-- 2个下拉 -->
 		<div class="i-itemXl">		
 			<div class="i-itemXl-list">
-				<div id='order' alertTitle="排序" defaultVal="排序" data-select="倒序,正序" onclick="app.select(this,1,me.upOrder)"></div>
+				<div id='order' alertTitle="排序" defaultVal="排序" data-select="倒序,正序" onclick="app.select(this,2,me.upOrder)"></div>
 			</div>
 			<div class="i-itemXl-list">
-				<div id='surveyState'  alertTitle="门店状态" defaultVal="门店状态" onclick="app.select(this,1,me.upShopStation)" ></div>
+				<div id='surveyState'  alertTitle="门店状态" defaultVal="门店状态" onclick="app.select(this,2,me.upShopStation)" ></div>
 			</div>
 		</div>
 		<!-- 项目详情 -->
@@ -82,7 +82,10 @@
 		<script type="text/javascript">
 		
 		  var gotoDetails = function() {
-		      window.SYP.pageLink("调研详情",domainName + "/hdk/sjt/surveyDetails.html?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'],-1);
+		      window.SYP.pageLink("调研详情",domainName + "/hdk/sjt/surveyDetails.html?userNum="
+		                                                              +params['syp_user_num']
+		                                                              +"&userName="+params['syp_user_name']
+		                                                              +"&pproName="+$("#itemName").html(),-1);
 			//window.location="surveyDetails.html?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 		  };
 		
@@ -147,6 +150,7 @@
 					   success:function(data){
 					   		me.upItemStyle(data);
 					   		//me.surveyState()
+					   		me.list();
 					   }					   
 					})
 				},
@@ -169,7 +173,7 @@
 					   			}
 					   		}
 					   		$('#surveyState')[0].dataset.select = text
-					   		me.list();
+					   		
 					   }					   
 					})
 				},
@@ -263,13 +267,14 @@
 					})
 				},
 				tz:function(id){
-                    window.SYP.pageLink("调研详情",domainName +"/hdk/sjt/surveyDetails.html?surId=" + id + "&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'],-1);
+				   window.SYP.pageLink("调研详情"
+				   ,domainName +"/hdk/sjt/surveyDetails.html?surId=" + id + "&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'],-1);
 					//window.location = "surveyDetails.html?surId=" + id + "&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 				}
 			};
 			$(function(){
 				me.init();		
-				                for(var i = 0 ; i < $('div').length;i++ ){
+				  for(var i = 0 ; i < $('div').length;i++ ){
                     if(undefined != $($('div')[i]).attr('defaultVal')){
                         $($('div')[i]).html($($('div')[i]).attr('alertTitle'));
                     }

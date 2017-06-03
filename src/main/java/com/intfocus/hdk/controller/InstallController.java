@@ -217,6 +217,7 @@ public class InstallController implements ApplicationContextAware {
     ,String userName ,String userNum){
     	JSONObject ret = new JSONObject();
     	try{
+    		log.info(JSONObject.toJSON(install));
     		String path = req.getSession().getServletContext().getRealPath("upload"); 
         	Map<String,String> rs = null ;
     	    	if(null != files && !"".equalsIgnoreCase(files)){
@@ -234,7 +235,7 @@ public class InstallController implements ApplicationContextAware {
     	    	    }
     	    		install.modifyAtachement(files , rs.get("urls"),path.substring(0,path.indexOf("upload")));
     	    	}
-    	   
+    	    
 
 			installmapper.updateByPrimaryKeySelective(install);
 			printerMapper.updateByPrimaryKeySelective(printer);

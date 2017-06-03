@@ -151,7 +151,7 @@
       <if test="mesId != null" >
         mes_id,
       </if>
-      <if test="problemType != null" >
+      <if test="problemType != null " >
         problem_type,
       </if>
       <if test="problemObject != null" >
@@ -163,16 +163,16 @@
       <if test="problemUser != null" >
         problem_user,
       </if>
-      <if test="problemHappen != null" >
+      <if test="problemHappen != null and '' != problemHappen" >
         problem_happen,
       </if>
-      <if test="problemPut != null" >
+      <if test="problemPut != null and '' != problemPut" >
         problem_put,
       </if>
-      <if test="problemEstimate != null" >
+      <if test="problemEstimate != null and '' !=problemEstimate " >
         problem_estimate,
       </if>
-      <if test="problemResloveTime != null" >
+      <if test="problemResloveTime != null and ''!= problemResloveTime" >
         problem_reslove_time,
       </if>
       <if test="problemResolveUser != null" >
@@ -231,16 +231,16 @@
       <if test="problemUser != null" >
         #{problemUser,jdbcType=VARCHAR},
       </if>
-      <if test="problemHappen != null" >
+      <if test="problemHappen != null and '' != problemHappen" >
         #{problemHappen,jdbcType=TIMESTAMP},
       </if>
-      <if test="problemPut != null" >
+      <if test="problemPut != null and '' != problemPut" >
         #{problemPut,jdbcType=TIMESTAMP},
       </if>
-      <if test="problemEstimate != null" >
+      <if test="problemEstimate != null and '' != problemEstimate" >
         #{problemEstimate,jdbcType=TIMESTAMP},
       </if>
-      <if test="problemResloveTime != null" >
+      <if test="problemResloveTime != null and '' != problemResloveTime" >
         #{problemResloveTime,jdbcType=TIMESTAMP},
       </if>
       <if test="problemResolveUser != null" >
@@ -299,16 +299,16 @@
       <if test="problemUser != null" >
         problem_user = #{problemUser,jdbcType=VARCHAR},
       </if>
-      <if test="problemHappen != null" >
+      <if test="problemHappen != null and '' != problemHappen" >
         problem_happen = #{problemHappen,jdbcType=TIMESTAMP},
       </if>
-      <if test="problemPut != null" >
+      <if test="problemPut != null and '' !=  problemPut" >
         problem_put = #{problemPut,jdbcType=TIMESTAMP},
       </if>
-      <if test="problemEstimate != null" >
+      <if test="problemEstimate != null  and '' != problemEstimate" >
         problem_estimate = #{problemEstimate,jdbcType=TIMESTAMP},
       </if>
-      <if test="problemResloveTime != null" >
+      <if test="problemResloveTime != null and '' != problemResloveTime" >
         problem_reslove_time = #{problemResloveTime,jdbcType=TIMESTAMP},
       </if>
       <if test="problemResolveUser != null" >

@@ -11,13 +11,15 @@
         <title>问题详情</title>
         <link rel="stylesheet" type="text/css" href="css/global.css" />
         <link rel="stylesheet" href="css/swiper.css">
-        <link rel="stylesheet" href="/hdk/css/loading.css">
+        <link rel="stylesheet" href="css/loading.css">
         <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
         <script src="js/global.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/hdk/js/comUtil.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/hdk/js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
-       <script type="text/javascript" charset="utf-8">
-                window.SYP.setBannerTitle("问题详情");
+        <script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/comUtil.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/syp_v1.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" charset="utf-8">
+            window.SYP.setBannerTitle("问题详情");
+
         </script>
     </head>
 
@@ -79,7 +81,7 @@
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
                                     <div id="gs3" alertTitle="跟踪方" data-select="海鼎,客户">
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +93,7 @@
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
                                     <div  id="gs4" class="on"  alertTitle="问题类型">
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +105,7 @@
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
                                     <div id="gs5" class="on" alertTitle="跟进人">
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -279,7 +281,9 @@
                 </div>
                 <div class="swiper-slide">
                     <div class="i-contenteditable" contenteditable="true" style="-webkit-user-select:text" placeholder="输入" id ="messageContext"></div>
-                    <div class="i-contenteditable-ok" id = "saveMessage">添加批注</div>
+                    <div class="i-contenteditable-ok" id = "saveMessage">
+                        添加批注
+                    </div>
                     <div class="i-itemDetail" id ="messageArea"></div>
                 </div>
             </div>
@@ -293,79 +297,65 @@
 
         <script src="js/swiper.js"></script>
         <script>
-        
-        $('#saveMessage').bind('click',function(){
-              $.ajax({                 
-                 url:'/hdk/problem/saveMessage',
-                 type:'get',
-                 dataType:'jsonp',
-                 jsonp: "callback",
-                 data:{
-                 'mesUser':params['userName']//添加批注的用户 ID，功能还未实现，暂时不用传入
-                 ,'problemId':$('#gs1').val() //问题编号
-                 ,'mesContent':$('#messageContext').html()//批注内容
-                }, 
-                 success:function(rs){
-                         if(rs.message == "success"){
-                             app.alert("批注保存成功",1);
-                             loadMessage($('#gs1').val());
-                         }else if(rs.message == "fail"){
-                             app.alert("批注保存失败",1);
-                         }
-                 },
-                 error:function(rs){
-                         console.log(rs);
-                 }
-                }); 
-        });
-        
-          var loadMessage = function(id){
-          $.ajax({                 
-                 url:'/hdk/problem/getMessageSome',
-                 type:'get',
-                 dataType:'jsonp',
-                 jsonp: "callback",
-                 data:{'problemId': id//问题编号
-                }, 
-                 success:function(rs){
-                            $('#messageArea').html('');
-                         $.each(rs,function(index,item){
-                             $('#messageArea').append(
-                             
-                             "          <div class='i-itemDetail-area'>" +
-            "               <div class='i-itemDetail-area-title'>" +
-            "                   <div>"+item.mesUser+"</div>" +
-            "                   <p>"+item.updatedAt+"</p>" +
-            "               </div>" +
-            "               <div class='i-itemDetail-area-content'>" +
-            "                   <div class='content-row'>" +
-            "                       <span>"+item.mesContent+"</span>" +
-            "                   </div>" +
-            "               </div>" +
-            "           </div>");
-                         });
-                 },
-                 error:function(rs){
-                         console.log(rs);
-                 }
-             });
-          };
-        
-                var params = function() {
-            var query = {},
-            search = window.location.search.substring(1),
-            parts = search.split('&'),
-            pairs = [];
+            $('#saveMessage').bind('click', function() {
+                $.ajax({
+                    url :domainName +  '/hdk/problem/saveMessage',
+                    type : 'get',
+                    dataType : 'jsonp',
+                    jsonp : "callback",
+                    data : {
+                        'mesUser' : params['userName']//添加批注的用户 ID，功能还未实现，暂时不用传入
+                        ,
+                        'problemId' : $('#gs1').val()//问题编号
+                        ,
+                        'mesContent' : $('#messageContext').html()//批注内容
+                    },
+                    success : function(rs) {
+                        if (rs.message == "success") {
+                            app.alert("批注保存成功", 1);
+                            loadMessage($('#gs1').val());
+                        } else if (rs.message == "fail") {
+                            app.alert("批注保存失败", 1);
+                        }
+                    },
+                    error : function(rs) {
+                        console.log(rs);
+                    }
+                });
+            });
 
-            for (var i = 0, len = parts.length; i < len; i++) {
-                pairs = parts[i].split('=');
-                query[pairs[0]] = (pairs.length > 1 ? decodeURIComponent(pairs[1]) : null);
-             }
+            var loadMessage = function(id) {
+                $.ajax({
+                    url :domainName +  '/hdk/problem/getMessageSome',
+                    type : 'get',
+                    dataType : 'jsonp',
+                    jsonp : "callback",
+                    data : {
+                        'problemId' : id//问题编号
+                    },
+                    success : function(rs) {
+                        $('#messageArea').html('');
+                        $.each(rs, function(index, item) {
+                            $('#messageArea').append("          <div class='i-itemDetail-area'>" + "               <div class='i-itemDetail-area-title'>" + "                   <div>" + item.mesUser + "</div>" + "                   <p>" + item.updatedAt + "</p>" + "               </div>" + "               <div class='i-itemDetail-area-content'>" + "                   <div class='content-row'>" + "                       <span>" + item.mesContent + "</span>" + "                   </div>" + "               </div>" + "           </div>");
+                        });
+                    },
+                    error : function(rs) {
+                        console.log(rs);
+                    }
+                });
+            };
 
-            return query;
-         }();
-         
-        
+            var params = function() {
+                var query = {}, search = window.location.search.substring(1), parts = search.split('&'), pairs = [];
+
+                for (var i = 0, len = parts.length; i < len; i++) {
+                    pairs = parts[i].split('=');
+                    query[pairs[0]] = (pairs.length > 1 ? decodeURIComponent(pairs[1]) : null);
+                }
+
+                return query;
+            }();
+
             var sp = {//商铺信息
                 sp1 : null, //项目名称
                 sp2 : null, //商铺名称
@@ -374,7 +364,7 @@
                 proData : null,
                 proid : null,
                 shopid : null,
-                files:null,
+                files : null,
                 init : function() {
                     sp.sp1Fun()
                 },
@@ -383,17 +373,18 @@
                     $('#sp2').html('');
                     $('#sp3').html('');
                     sp.sp2Fun();
-                    for (var i = 0; i < sp.proData.length; i++) {
-                        if (sp.proData[i].proName == sp.sp1) {
-                            sp.proid = sp.proData[i].proId;
-                            return;
+                    if (null != sp.proData && undefined != sp.proData) {
+                        for (var i = 0; i < sp.proData.length; i++) {
+                            if (sp.proData[i].proName == sp.sp1) {
+                                sp.proid = sp.proData[i].proId;
+                                return;
+                            }
                         }
                     }
-
                 },
                 sp1Fun : function() {
                     $.ajax({
-                        url : "/hdk/project/getSome",
+                        url :domainName +  "/hdk/project/getSome",
                         type : "get",
                         dataType : "jsonp",
                         jsonpCallback : "project_null_getSome",
@@ -409,7 +400,7 @@
                             }
                             $('#sp1')[0].dataset.select = text
                             $("#sp1").click(function() {
-                                app.select(this, 3, sp.selectSp1);
+                                app.select(this, 2, sp.selectSp1);
                             })
                         }
                     })
@@ -436,7 +427,7 @@
                     $('#asddas').addClass('on')
                     $('#asddas').html('未选择');
                     $.ajax({
-                        url : "/hdk/shops/selectForCombobox",
+                        url :domainName +  "/hdk/shops/selectForCombobox",
                         type : "get",
                         data : {
                             "proId" : sp.sp1
@@ -455,7 +446,7 @@
                             }
                             $('#sp2')[0].dataset.select = text
                             $("#sp2").click(function() {
-                                app.select(this, 3, sp.selectSp2);
+                                app.select(this, 2, sp.selectSp2);
                                 sp.init();
                             })
                         }
@@ -488,14 +479,14 @@
                 gs2Fun : function() {
                     var time = new Date().getTime();
                     $.ajax({
-                        url : "/hdk/state/getSome",
+                        url :domainName +  "/hdk/state/getSome",
                         type : "get",
                         data : {
                             "ownerTable" : "problem_station",
-                            time :time
+                            time : time
                         },
                         dataType : "jsonp",
-                        jsonpCallback : "state_"+time+"_getSome",
+                        jsonpCallback : "state_" + time + "_getSome",
                         success : function(data) {
                             var text = ''
                             for (var i = 0; i < data.length; i++) {
@@ -507,7 +498,7 @@
                             }
                             $('#gs2')[0].dataset.select = text
                             $("#gs2").click(function() {
-                                app.select(this, 3, gs.selectGs2);
+                                app.select(this, 2, gs.selectGs2);
                             })
                             gs.gs3Fun();
                         }
@@ -515,12 +506,12 @@
                 },
                 selectGs3 : function() {
                     gs.gs3 = $("#gs3").html();
-                     onGs3Click();
+                    onGs3Click();
                 },
                 gs3Fun : function() {
                     $("#gs3").click(function() {
-                        app.select(this, 3, gs.selectGs3);
-                       
+                        app.select(this, 2, gs.selectGs3);
+
                     })
                     gs.gs4Fun();
                 },
@@ -529,7 +520,7 @@
                 },
                 gs4Fun : function() {
                     $.ajax({
-                        url : "/hdk/state/getSome",
+                        url :domainName +  "/hdk/state/getSome",
                         type : "get",
                         dataType : "jsonp",
                         data : {
@@ -548,7 +539,7 @@
                             }
                             $('#gs4')[0].dataset.select = text
                             $("#gs4").click(function() {
-                                app.select(this, 3, gs.selectGs4);
+                                app.select(this, 2, gs.selectGs4);
                             })
                             gs.gs5Fun();
                         }
@@ -560,7 +551,7 @@
                 },
                 gs5Fun : function() {
                     $.ajax({
-                        url : "/hdk/user/getSome",
+                        url :domainName +  "/hdk/user/getSome",
                         type : "get",
                         dataType : "jsonp",
                         jsonpCallback : "getSome",
@@ -576,7 +567,7 @@
                             }
                             $('#gs5')[0].dataset.select = text
                             $("#gs5").click(function() {
-                                app.select(this, 3, gs.selectGs5);
+                                app.select(this, 2, gs.selectGs5);
                             })
                             gs.gs6Fun();
                         }
@@ -588,7 +579,7 @@
                 gs6Fun : function() {
 
                     $.ajax({
-                        url : "/hdk/user/getDepartment",
+                        url :domainName +  "/hdk/user/getDepartment",
                         type : "get",
                         dataType : "jsonp",
                         jsonpCallback : "getDepartment",
@@ -604,7 +595,7 @@
                             }
                             $('#gs6')[0].dataset.select = text
                             $("#gs6").click(function() {
-                                app.select(this, 3, gs.selectGs6);
+                                app.select(this, 2, gs.selectGs6);
                             })
                             gs.gs7Fun();
                         }
@@ -630,7 +621,7 @@
                 },
                 gs7Fun : function() {
                     $.ajax({
-                        url : "/hdk/state/getSome",
+                        url :domainName +  "/hdk/state/getSome",
                         type : "get",
                         data : {
                             'ownerTable' : 'problem_table'
@@ -649,7 +640,7 @@
                             }
                             $('#gs7')[0].dataset.select = text
                             $("#gs7").click(function() {
-                                app.select(this, 3, gs.selectGs7);
+                                app.select(this, 2, gs.selectGs7);
                             })
                         }
                     })
@@ -660,7 +651,7 @@
                 data : null,
                 init : function() {
                     $.ajax({
-                        url : "/hdk/problem/getEquipmentList",
+                        url :domainName +  "/hdk/problem/getEquipmentList",
                         type : "get",
                         data : {
                             'proName' : sp.sp1,
@@ -687,7 +678,7 @@
                             //					   		$('#ms7')[0].dataset.select = text2
                             $("#asddas").unbind('click');
                             $("#asddas").click(function() {
-                                app.select(this, 3, ms.selectcj);
+                                app.select(this, 2, ms.selectcj);
                             })
                         }
                     })
@@ -705,6 +696,12 @@
                 }
             }
             function submit() {//新建保存
+                for (var i = 0; i < sp.proData.length; i++) {
+                    if (sp.proData[i].proName == sp.sp1) {
+                        sp.proid = sp.proData[i].proId;
+                    }
+                }
+
                 var obj = {
                     'problem.state' : gs.gs2//问题状态
                     ,
@@ -742,33 +739,32 @@
                     ,
                     'problem.problemPlan' : $('#jjfa').html()	//解决方案
                 };
-                
-                $.when(
-                             codeUnique({
-                            tableName:"problem"
-                            ,codeField:"problem_id"
-                            ,code:$('#gs1').val()
-                            , which:"问题编码"
-                    } )
-                ).done(function(){
+
+                $.when(codeUnique({
+                    tableName : "problem",
+                    codeField : "problem_id",
+                    code : $('#gs1').val(),
+                    which : "问题编码"
+                })).done(function() {
 
                     $.ajax({
-                        url : "/hdk/problem/submit",
+                        url :domainName +  "/hdk/problem/submit",
                         type : "post",
                         data : obj,
-                        beforeSend:ajaxLoading(),
-                        complete:ajaxLoadEnd(),
+                        beforeSend : ajaxLoading(),
+                        complete : ajaxLoadEnd(),
                         dataType : "json",
                         success : function(data) {
                             if (data.message == "success") {
-                                app.alert('保存成功', 1);
-                               setTimeout(function(){
-                                window.location = 'issueList.html';
-                                 },2000);   
+
+                                window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功", domainName + "/hdk/sjt/issueList.html");
 
                             } else if (data.message == "fail") {
                                 app.alert('保存失败', 1);
                             }
+                        },
+                        error : function(res) {
+                            app.alert('保存失败', 1);
                         }
                     });
                 });
@@ -811,32 +807,31 @@
                     ,
                     'problem.problemDetails' : $('#wtms').html()//问题描述
                     ,
-                    'files' :( JSON.stringify(imgs) != JSON.stringify(sp.files)?JSON.stringify(imgs):"")//附件信息
+                    'files' : (JSON.stringify(imgs) != JSON.stringify(sp.files) ? JSON.stringify(imgs) : "")//附件信息
                     ,
                     'problem.problemTable' : gs.gs7String//标签
                     ,
                     'problem.problemPlan' : $('#jjfa').html()	//解决方案
                 };
                 $.ajax({
-                   url : "/hdk/problem/modify",
+                    url :domainName +  "/hdk/problem/modify",
                     //url : "/hdk/problem/modify",
                     type : "post",
                     data : obj,
-                    beforeSend:ajaxLoading(),
-                    complete:ajaxLoadEnd(),
+                    beforeSend : ajaxLoading(),
+                    complete : ajaxLoadEnd(),
                     dataType : "json",
                     success : function(data) {
                         if (data.message == "success") {
-                            app.alert('修改成功', 1);
-                          setTimeout(function(){
-                                window.location = 'issueList.html';
-                          },2000);
+
+                            window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功", domainName + "/hdk/sjt/issueList.html");
+
                         } else if (data.message == "fail") {
                             app.alert('修改失败', 1);
                         }
                     },
-                    error:function(rs){
-                      console.log(rs);  
+                    error : function(rs) {
+                        console.log(rs);
                     }
                 });
             }
@@ -850,17 +845,17 @@
                 },
                 getData : function() {
                     $.ajax({
-                       url : "/hdk/problem/gotoModify",
+                        url :domainName +  "/hdk/problem/gotoModify",
                         // url : "http://localhost:8080/hdk/problem/gotoModify",
                         type : "get",
-                        jsonp:'callback',
+                        jsonp : 'callback',
                         data : {
-                            problemId: xg.problemId
+                            problemId : xg.problemId
                         },
                         dataType : "jsonp",
                         // jsonpCallback:"forword:/surveyDetails.jsp",
                         success : function(data) {
-                           // console.log(data);
+                            // console.log(data);
                             xg.data = data;
                             xg.upStyle(data);
                         }
@@ -901,7 +896,7 @@
                     $("#jjfa").html(data.problemPlan);
 
                     if (data.problemEnclosure != '' && data.problemEnclosure != null && data.problemEnclosure != undefined) {
-                       sp.files  = data.problemEnclosure.split(",");
+                        sp.files = data.problemEnclosure.split(",");
                         for (var i = 0; i < sp.files.length; i++) {
                             app.addImg(sp.files[i]);
                         }
@@ -960,15 +955,40 @@
                     app.upStyle(swiper.activeIndex);
                 }
             });
-            
-            var onGs3Click = function(){
-              if('海鼎' == $("#gs3").html()){
-                  $('#gs4').attr('data-select' , '商务,运维,技术');
-              }else{
-                  $('#gs4').attr('data-select' , '其他');
-              }
+
+            var onGs3Click = function() {
+                if ('海鼎' == $("#gs3").html()) {
+                    $('#gs4').attr('data-select', '商务,运维,技术');
+                } else {
+                    $('#gs4').attr('data-select', '其他');
+                }
             };
-            
+
+            if (undefined != params["pproName"] && "" != params["pproName"]) {
+                $('#sp1').html(params["pproName"]);
+                sp.sp1 = params["pproName"];
+                $('#sp1').attr("class", "");
+                sp.selectSp1();
+            }
+            $('input').focus(function() {
+                $("#save").hide();
+            });
+            $('input').blur(function() {
+                $("#save").show();
+            });
+            $(".g-fa").focus(function() {
+                $("#save").hide();
+            });
+            $(".g-fa").blur(function() {
+                $("#save").show();
+            });
+            $(".i-contenteditable").focus(function() {
+                $("#save").hide();
+            });
+            $(".i-contenteditable").blur(function() {
+                $("#save").show();
+            });
+
         </script>
     </body>
 

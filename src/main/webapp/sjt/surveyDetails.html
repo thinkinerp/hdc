@@ -11,11 +11,12 @@
 		<title>调研详情</title>
 		<link rel="stylesheet" type="text/css" href="css/global.css" />
 		<link rel="stylesheet" href="css/swiper.css">
-		<link rel="stylesheet" href="/hdk/css/loading.css">
+		<link rel="stylesheet" href="css/loading.css">
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/global.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/hdk/js/comUtil.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/hdk/js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
+		<script src="js/comUtil.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
        <script type="text/javascript" charset="utf-8">
                 window.SYP.setBannerTitle("调研详情");
         </script>
@@ -73,7 +74,7 @@
 							<div class="g-importList-title">项目名称</div>
 							<div class="g-importList-content">
 								<div class="i-xiala-list">
-									<div id="itemName" alertTitle="项目名称" onclick="app.select(this,3,shop.selectPorName)" class="on">未选择</div>
+									<div id="itemName" alertTitle="项目名称" onclick="app.select(this,2,shop.selectPorName)" class="on">未选择</div>
 								</div>
 							</div>
 						</li>
@@ -81,7 +82,7 @@
 							<div class="g-importList-title">商铺名称</div>
 							<div class="g-importList-content">
 								<div class="i-xiala-list">
-									<div id="shopName" alertTitle="商铺名称" onclick="app.select(this,3,shop.selectShopName)" class="on">未选择</div>
+									<div id="shopName" alertTitle="商铺名称" onclick="app.select(this,2,shop.selectShopName)" class="on">未选择</div>
 								</div>
 							</div>
 						</li>
@@ -424,7 +425,7 @@
 					   		}
 					   		$('#syjSystem')[0].dataset.select = text;
 					   		$('#syjSystem').click(function(){
-					   			app.select(this,3,syj.selectSyjSystem)
+					   			app.select(this,2,syj.selectSyjSystem)
 					   		})					   		
 					   }					   
 					})
@@ -451,7 +452,7 @@
 					   		}
 					   		$('#syjBrand')[0].dataset.select = text;
 					   		$('#syjBrand').click(function(){
-					   			app.select(this,3,syj.selectSyjBrand)
+					   			app.select(this,2,syj.selectSyjBrand)
 					   		})
 					   }					   
 					})
@@ -478,7 +479,7 @@
 					   		}
 					   		$('#syjPort')[0].dataset.select = text;
 					   		$('#syjPort').click(function(){
-					   			app.select(this,3,syj.selectSyjPort)
+					   			app.select(this,2,syj.selectSyjPort)
 					   		})
 					   }					   
 					})
@@ -517,7 +518,7 @@
 					   		}
 					   		$('#dyjPort')[0].dataset.select = text;
 					   		$('#dyjPort').click(function(){
-					   			app.select(this,3,syj.selectDyjPort)
+					   			app.select(this,2,syj.selectDyjPort)
 					   		})
 					   		
 					   }					   
@@ -550,6 +551,12 @@
 			};
 			
 			function submit(){//提交
+			    
+			       for(var i = 0 ; i<shop.item.length; i++){
+                        if(shop.itemName == shop.item[i].proName){
+                            shop.itemId =  shop.item[i].proId;
+                        }
+                    }
 				var obj = {
 					//调研
 					'survey.proId':shop.itemId,		//项目编号
@@ -593,7 +600,7 @@
 //					'shops.installStation':'',		//安装状态？
 //					'shops.eqId':''				//采集点编号？ 
 				};
-				
+				try{
 				$.when(codeUnique({
                                            tableName:"survey"
                                          ,codeField:"sur_id"
@@ -623,10 +630,10 @@
         					  // jsonpCallback:"state_null_getSome",
         					   success:function(data){
         					   		if(data.message == "success"){
-        					   			app.alert('保存成功',1);		
-        					   			           setTimeout(function(){
-                            					   			window.location='surveyList.html';
-                                                     },2000);	
+
+        					   			               window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功",
+                            					   			domainName + '/hdk/sjt/surveyList.html');
+
         					   		}else if(data.message == "fail"){
         					   			app.alert('保存失败',1);
         					   		}
@@ -636,7 +643,11 @@
         					   }				   
         					});
 					}).fail(function(){alert("网路问题，请重试");});//done end
-			}
+					}catch(e){  
+					    alert(e.name);
+                    throw(e.name); //抛出异常 
+            }
+}
 			
 			function xgsubmit(){	//修改
 				var obj={
@@ -689,10 +700,11 @@
 					  // jsonpCallback:"state_null_getSome",
 					   success:function(data){
 					   		if(data.message == "success"){
-					   			app.alert('修改成功',1);			
-                               setTimeout(function(){
-                                    window.location='surveyList.html';
-                             },2000);   
+					  	
+
+                                 window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功",
+                                                            domainName + '/hdk/sjt/surveyList.html');
+          
 
 
 					   		}else if(data.message == "fail"){
@@ -854,6 +866,13 @@
 					app.upStyle(swiper.activeIndex);
 				}
 			});
+			
+            if(undefined != params["pproName"] && "" !=params["pproName"] ){
+                $('#itemName').html(params["pproName"]);
+                $('#itemName').attr("class","");
+                shop.itemName = params["pproName"];
+                shop.selectPorName();
+            }
 		</script>
 	</body>
 

@@ -14,7 +14,7 @@ $(function(){
 	    });
 	var time =  (new Date().getTime());
 	$.ajax({
-		url:'/hdk/project/getCount',
+		url:domainName + '/hdk/project/getCount',
 		type:'get',
 		dataType:'json',
 		success:function(rs){
@@ -75,7 +75,7 @@ $(function(){
 var search = function(){
 	var time =  (new Date().getTime());
 	 $.ajax({ 
-	 		url: '/hdk/project/getSome',
+	 		url: domainName + '/hdk/project/getSome',
 	 		type:'get',
 			data:{
 					proNameLike:$('#proName').val(),
@@ -122,7 +122,7 @@ var search = function(){
 
 function gotoModify(proId){
 	
-	window.SYP.pageLink("项目详情",domainName +'/hdk/itemDetails.html?proId=' + proId,-1);
+	window.SYP.pageLink("项目详情",'itemDetails.html?proId=' + proId,-1);
 	//location.href ='/hdk/itemDetails.html?proId=' + proId;
 }
 

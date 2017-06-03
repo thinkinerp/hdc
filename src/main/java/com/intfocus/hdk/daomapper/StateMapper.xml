@@ -38,6 +38,7 @@
 			limit 	#{page,jdbcType=VARCHAR}, #{pageSize,jdbcType=VARCHAR}		    	
 	    </if>
     </if>
+    order by `order`
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from state

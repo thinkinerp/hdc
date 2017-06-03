@@ -108,7 +108,7 @@ public class ComUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 		
 		try {
-			if(null != date){
+			if(null != date && !"".equalsIgnoreCase(date)){
 				return sdf.format( sdf.parse(date));
 			}else{
 				return null ;
@@ -125,7 +125,7 @@ public class ComUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat(formatter);
 		
 		try {
-			if(null != date){
+			if(null != date && !"".equalsIgnoreCase(date)){
 				return sdf.format( sdf.parse(date));
 			}else{
 				return null ;

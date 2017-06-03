@@ -11,10 +11,10 @@
         <link rel="stylesheet" type="text/css" href="/hdk/casher/css/global.css"/>
         <script src="/hdk/js/config.js" type="text/javascript" charset="utf-8"></script> 
         <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-        <script src="/hdk/casher/js/global.js" type="text/javascript" charset="utf-8"></script>
-        <script type="text/javascript" src="/hdk/js/comUtil.js"></script>  
-        <script src="/hdk/js/install.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/hdk/js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
+        <script src="js/global.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" src="js/comUtil.js"></script>  
+        <script src="js/install.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
 <script type="text/javascript" charset="utf-8">
 	window.SYP.setBannerTitle("安装列表");
 </script>
@@ -24,7 +24,7 @@
         <div  class="i-itemName">
             <div class="i-itemName-name">项目名称</div>
             <div class="i-itemName-list">
-                <div id="itemName" data-select="" onclick="app.select(this,3,Window.selected)"  alertTitle="请选择项目" ></div>
+                <div id="itemName" data-select="" onclick="app.select(this,2,Window.selected)"  alertTitle="请选择项目" ></div>
             </div>
         </div>
         <!-- 项目状态 -->
@@ -52,10 +52,10 @@
         <!-- 2个下拉 -->
         <div class="i-itemXl">      
             <div class="i-itemXl-list">
-                <div id="eqType" defaultVal="采集点类型" alertTitle="采集点类型" data-select="" onclick="app.select(this,1,equipmentTypeSeach)"></div>
+                <div id="eqType" defaultVal="采集点类型" alertTitle="采集点类型" data-select="" onclick="app.select(this,2,equipmentTypeSeach)"></div>
             </div>
             <div class="i-itemXl-list">
-                <div data-select="" defaultVal="安装状态"   alertTitle="安装状态" id = "installState" onclick="app.select(this,1,shopStateSeach)"></div>
+                <div data-select="" defaultVal="安装状态"   alertTitle="安装状态" id = "installState" onclick="app.select(this,2,shopStateSeach)"></div>
             </div>
         </div>
         <!-- 项目详情 -->
@@ -73,7 +73,10 @@
 
         <script type="text/javascript">
          var gotoDetail =  function(){
-             window.SYP.pageLink("安装详情",  domainName + "/hdk/installDetails.html?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'], -1);
+             window.SYP.pageLink("新建详情" ,  "installDetails.html?userNum="
+                                                                      +params['syp_user_num']+"&userName="+params['syp_user_name']
+                                                                      +"&pproName="+$('#itemName').html(),-1);
+            
            //location.href =  "/hdk/installDetails.html?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
             } 
             $(function(){
@@ -81,7 +84,7 @@
                 //comboboxForEqType();
                 var time =  (new Date().getTime());
                  $.ajax({ 
-                        url:'/hdk/project/getSome',
+                        url:domainName + '/hdk/project/getSome',
                         type:'get',
                         data:{
                             time:time
@@ -112,7 +115,7 @@
                  
                  time = (new Date().getTime());
                  $.ajax({ 
-                        url: '/hdk/project/getSome',
+                        url:domainName +  '/hdk/project/getSome',
                         type:'get',
                         data:{
                             isLast:1,
@@ -152,7 +155,7 @@
 
                      
                     $.ajax({
-                        url:"/hdk/project/setLast",
+                        url:domainName + "/hdk/project/setLast",
                         data:{
                             "proName": $('#itemName').html()
                         },
@@ -168,7 +171,7 @@
                     time = (new Date().getTime());
                      $(".i-itemStyle-title").html($('#itemName').html());
                      $.ajax({ 
-                            url: '/hdk/project/getSome',
+                            url:domainName +  '/hdk/project/getSome',
                             type:'get',
                             jsonpCallback:"project_"+time+"_getSome",
                             jsonp: "callback",

@@ -1,82 +1,44 @@
 /**
- * 加载初始化的项目
+ * 
  */
-//loadCombobox('itemName','project');
-//loadCombobox('itemName','project');
-//loadCombobox('itemName','project');
+//shopStateSeach();
 
+ loadCombobox("installState","install",1);			
+ loadCombobox("eqType","equipment_eq_style",1);					
 
-var onItemNameSelected = function(){
-	
-	
-	
-	$.ajax({ 
-		url:ctx + '/project/getSome',
-		type:'get',
-		data:{
+$('#middle').bind('click',function(){
+	shopStateSeach();
+	 
+});
+var params = function() {
+	  var query = {},
+	    search = window.location.search.substring(1),
+	    parts = search.split('&'),
+	    pairs = [];
 
-		},
-		dataType:'json',
-		success:function(rs){
-			var items = [];
-			$.each(rs , function(index,item){
-				items.push(item.proName);
-			});
-			$('#itemName').attr('data-select',items.join(","));	
-		
-		},
-		error:function(rs){
-			
-		}
-	});
-	 $.ajax({ 
-	 		url:ctx + '/project/getSome',
-	 		type:'get',
-			data:{
-				isLast:1
-					},
-	 		dataType:'json',
-	 		success:function(rs){
-					
-	 			//加载最后一次选择的项目信息
-	 			 $(".i-itemStyle-title").html(rs[0].proName);
-	 			$('#itemName').html(rs[0].proName);
-				$('.i-itemStyle-list').html(
-						"				<div>" +
-						"					<p>项目经理</p>" +
-						"					<p>"+rs[0].proManagerPro+"</p>" +
-						"					<p>项目版本</p>" +
-						"					<p>"+rs[0].proEdition+"</p>" +
-						"				</div>" +
-						"				<div>" +
-						"					<p>项目状态</p>" +
-						"					<p>"+rs[0].proStation+"</p>" +
-						"					<p>更新时间</p>" +
-						"					<p>"+rs[0].updatedAt+"</p>" +
-						"				</div>"
-				);
-	 		},
-	  		error:function(rs){
-	 		}
-	  });		
-}
+	  for (var i = 0, len = parts.length; i < len; i++) {
+	    pairs = parts[i].split('=');
+	    query[pairs[0]] = (pairs.length > 1 ? decodeURIComponent(pairs[1]) : null);
+	  }
 
-onItemNameSelected();
-
-var loadSurvey = function(){
+	  return query;
+	}();
+var shopStateSeach = function(){
 	var shopSta = '';
 	 $.ajax({ 
-	 		url:ctx + '/survey/getList',
+	 		url:domainName + '/hdk/shops/getSome',
 	 		type:'get',
+	 		//jsonpCallback:"shops_getSome",
+	 		jsonp: "callback",
 			data:{
 				"proId":$('#itemName').html(),
-				'shopName':$('#middle').val(),
-				"installStation":delAll('installState' ),
+				'shopNameLike':$('#middle').val(),
+				"installStation":delAll('installState'),
 				"eqType":delAll('eqType')
 			},
-	 		dataType:'json',
+	 		dataType:'jsonp',
 	 		success:function(rs){
-				$('.i-itemDetail-area').html('');
+ 				$('.i-itemDetail-area').html('');
 	 			$.each(rs,function(index,item){
 	 				
 	 				if("无需安装" == item.installStation){
@@ -96,7 +58,7 @@ var loadSurvey = function(){
 	 				$('.i-itemDetail-area').append(
 	 						"				<div class='i-itemDetail-area-title'>" +
 	 						"					<div>"+item.shopName+"("+item.shopPosition+")</div>" +
-	 						(undefined == item.installId ? "" : "					<p><a  href = 'javascript:void(0)' onClick='gotoModify("+item.installId+")' target='_self'>详情</a></p>")
+	 						(undefined == item.installId ? "" : "					<p><a href = 'javascript:void(0)' onClick='gotoModify(\""+item.installId+"\")' target='_self'>详情</a></p>")
 	 						 +
 	 						"				</div>" +
 	 						"				<div class='i-itemDetail-area-content'>" +
@@ -120,11 +82,20 @@ var loadSurvey = function(){
 	 			});
 	 		},
 	  		error:function(rs){
+	  			console.log(rs);
 	 		}
 	  });	
-	
+}
+
+var equipmentTypeSeach = function(){
+	shopStateSeach();
 }
 var gotoModify = function(link){
-	window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "创建成功",domainName + "/survey/gotoModify?surveyId=" +link);
-	
+	window.SYP.pageLink("新建详情","installDetails.html?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'],-1);
+
+	//location.href =  "installDetails.html?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
+}
+
+var searche = function(){
+	shopStateSeach();
 }

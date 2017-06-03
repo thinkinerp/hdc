@@ -186,7 +186,10 @@ public class SurveyController implements ApplicationContextAware {
     		,String userName ,String userNum){
     	
 		JSONObject rs = new JSONObject();
-		
+		log.info("survey:"+JSONObject.toJSONString(survey));
+		log.info("printer:"+JSONObject.toJSONString(printer));
+		log.info("cash:"+JSONObject.toJSONString(cash));
+		log.info("shops:"+JSONObject.toJSONString(shops));
 	   if(!"".equalsIgnoreCase(files)){	
 		Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
 		

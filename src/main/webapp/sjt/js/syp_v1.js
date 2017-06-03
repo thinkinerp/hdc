@@ -76,13 +76,6 @@ window.SYPWithinAndroid = {
       }
     }
   },
-clearurlStack:function(){
-    if(window.AndroidJSBridge && typeof(window.AndroidJSBridge.clearurlStack) === "function") {
-        window.AndroidJSBridge.clearurlStack();
-      } else {
-        alert("Error 未定义接口(Android): clearurlStack");
-      }
-},
   /*
    * 项目内部模块页面跳转（离线页面）
    *
@@ -221,11 +214,6 @@ window.SYPWithinIOS = {
       }, false)
     }
   },
-  clearurlStack: function() {
-	    SYPWithinIOS.connectWebViewJavascriptBridge(function(bridge){
-	      bridge.callHandler('clearurlStack',{}, function(response) {});
-	    })
-	  },
   jsException: function(e) {
     SYPWithinIOS.connectWebViewJavascriptBridge(function(bridge){
       bridge.callHandler('jsException', {ex: e}, function(response) {});
