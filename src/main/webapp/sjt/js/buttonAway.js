@@ -1,5 +1,5 @@
 /**
- * 
+ *当点击 input 、输入框的时候隐藏保存按钮
  */
             $('input').focus(function() {
                 $("#save").hide();
