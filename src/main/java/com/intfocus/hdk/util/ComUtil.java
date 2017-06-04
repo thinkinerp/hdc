@@ -5,11 +5,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.util.Base64Utils;
@@ -19,22 +18,18 @@ import com.alibaba.fastjson.JSONArray;
 public class ComUtil {
 	
 	public static String getRandomFileName(){
-		
-        SimpleDateFormat simpleDateFormat;  
+  
+         return UUID.randomUUID().toString();// 当前时间  
         
-        simpleDateFormat = new SimpleDateFormat("yyyyMMdd");  
-  
-        Date date = new Date();  
-  
-        String str = simpleDateFormat.format(date);  
-  
-        Random random = new Random();  
-  
-        int rannum = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;// 获取5位随机数  
-  
-        return rannum + str;// 当前时间  
 	}
 
+	public static String getRandomFileNameWithsuffix(String oFileName){
+		if(null != oFileName && !"".equalsIgnoreCase(oFileName)){
+			return getRandomFileName() + oFileName.substring(oFileName.indexOf("."));
+		}else{
+			return null;
+		}
+	}
 	
 	public static String[] remove( String target , String[] list ){
 		String[] rs = list.clone() ;

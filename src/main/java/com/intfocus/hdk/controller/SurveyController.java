@@ -58,22 +58,25 @@ public class SurveyController implements ApplicationContextAware {
     	JSONObject rs = new JSONObject();
     	String path = req.getSession().getServletContext().getRealPath("upload") ;
 		try {
-			   if(!"".equalsIgnoreCase(files) && null != files){	
-					Map<String,String> result = ComUtil.savePicture(files, path );
-					if(!"ok".equalsIgnoreCase(result.get("message"))){
-						rs.put("message", result.get("message"));
-						return rs.toJSONString();
-					}
-					
-					Map<String, String> where = new HashMap<String, String>();
-					where.put("surId", survey.getSurId());
-					List<Survey> ss = surveymapper.selectByWhere(where );
-					if(null != ss && 0 < ss.size()){
-						survey.setAttachmentUrl(ss.get(0).getAttachmentUrl());
-					}
-					survey.modifyAtachement(files ,((result.get("urls")).toString()) , path.substring(0,path.indexOf("upload")));
-			   }
-
+//			   if(!"".equalsIgnoreCase(files) && null != files){	
+//					Map<String,String> result = ComUtil.savePicture(files, path );
+//					if(!"ok".equalsIgnoreCase(result.get("message"))){
+//						rs.put("message", result.get("message"));
+//						return rs.toJSONString();
+//					}
+//					
+//					Map<String, String> where = new HashMap<String, String>();
+//					where.put("surId", survey.getSurId());
+//					List<Survey> ss = surveymapper.selectByWhere(where );
+//					if(null != ss && 0 < ss.size()){
+//						survey.setAttachmentUrl(ss.get(0).getAttachmentUrl());
+//					}
+//					survey.modifyAtachement(files ,((result.get("urls")).toString()) , path.substring(0,path.indexOf("upload")));
+//			   }
+	    	if(null != files && !"".equals(files)){
+	        	
+	    		survey.setAttachmentUrl(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
+	    	}
 				surveymapper.updateByPrimaryKeyWithBLOBs(survey);
 				printerMapper.updateByPrimaryKeySelective(printer);
 				cashMapper.updateByPrimaryKeySelective(cash);
@@ -190,16 +193,20 @@ public class SurveyController implements ApplicationContextAware {
 		log.info("printer:"+JSONObject.toJSONString(printer));
 		log.info("cash:"+JSONObject.toJSONString(cash));
 		log.info("shops:"+JSONObject.toJSONString(shops));
-	   if(!"".equalsIgnoreCase(files)){	
-		Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
-		
-		
-		if(!"ok".equalsIgnoreCase(result.get("message"))){
-			rs.put("message", result.get("message"));
-			return rs.toJSONString();
-		}
-		survey.setAttachmentUrl((result.get("urls")).toString());
-	   }
+//	   if(!"".equalsIgnoreCase(files)){	
+//		Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
+//		
+//		
+//		if(!"ok".equalsIgnoreCase(result.get("message"))){
+//			rs.put("message", result.get("message"));
+//			return rs.toJSONString();
+//		}
+//		survey.setAttachmentUrl((result.get("urls")).toString());
+//	   }
+    	if(null != files && !"".equals(files)){
+        	
+    		survey.setAttachmentUrl(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
+    	}
 		try {
 
 				surveymapper.insertSelective(survey);

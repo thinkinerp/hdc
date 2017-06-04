@@ -82,14 +82,14 @@ public class InstallController implements ApplicationContextAware {
     	Map<String,String> rs = null ;
     	JSONObject result = new JSONObject();
     	try{
-	    	if(null != files && !"".equalsIgnoreCase(files)){
-	    		rs = new HashMap<String,String>();
-	    		rs = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
-	    		if(!"ok".equalsIgnoreCase(rs.get("message"))){
-	    			result.put("message", rs.get("message"));
-	    			return result.toJSONString();
-	    		}
-	    	}
+//	    	if(null != files && !"".equalsIgnoreCase(files)){
+//	    		rs = new HashMap<String,String>();
+//	    		rs = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
+//	    		if(!"ok".equalsIgnoreCase(rs.get("message"))){
+//	    			result.put("message", rs.get("message"));
+//	    			return result.toJSONString();
+//	    		}
+//	    	}
 	    	Map<String, String> where = new HashMap<String,String>();
 		   where.put("proName",install.getProId());
 		   
@@ -97,8 +97,9 @@ public class InstallController implements ApplicationContextAware {
 			Project i = projects.get(0);
 			install.setProId(i.getProId());	
 			equipment.setProId(i.getProId());
-			
-			install.setAttachment_url(null != rs ? rs.get("urls") :null );
+			if(null != files && !"".equals(files)){
+				install.setAttachment_url(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
+			}
 	    	installmapper.insertSelective(install);
 	    	printerMapper.insertSelective(printer);
 	    	cashMapper.insertSelective(cash);
@@ -150,9 +151,10 @@ public class InstallController implements ApplicationContextAware {
 	   if(null != installs && installs.size() > 0 ){
 		   
 		   Install i = installs.get(0);
-		   if( null != i.getAttachmentUrl() && !"".equalsIgnoreCase(i.getAttachmentUrl())){
-			   i.setAttachment_url(i.getAttachmentUrl().replace(path.substring(0,path.indexOf("upload")), "/hdk/"));
-		   }
+//		   if( null != i.getAttachmentUrl() && !"".equalsIgnoreCase(i.getAttachmentUrl())){
+//			   i.setAttachment_url(i.getAttachmentUrl().replace(path.substring(0,path.indexOf("upload")), "/hdk/"));
+			 //  i.setAttachment_url(    i.getAttachmentUrl() );
+//		   }
 		   json.put("install", i);
 		   //找到门店
 		   where.put("shopId", installs.get(0).getShopId());
@@ -220,21 +222,26 @@ public class InstallController implements ApplicationContextAware {
     		log.info(JSONObject.toJSON(install));
     		String path = req.getSession().getServletContext().getRealPath("upload"); 
         	Map<String,String> rs = null ;
-    	    	if(null != files && !"".equalsIgnoreCase(files)){
-    	    		rs = new HashMap<String,String>();
-    	    		rs = ComUtil.savePicture(files, path);
-    	    		if(!"ok".equalsIgnoreCase(rs.get("message"))){
-    	    			ret.put("message", rs.get("message"));
-    	    			return ret.toJSONString();
-    	    		}
-    	    	    Map<String, String> where = new HashMap<String, String>();
-    	    	    where.put("installId", install.getInstallId());
-    				List<Install> installs = installmapper.selectByWhere(where );
-    	    	    if(0 < installs.size()){
-    	    	    	install.setAttachment_url(installs.get(0).getAttachmentUrl());
-    	    	    }
-    	    		install.modifyAtachement(files , rs.get("urls"),path.substring(0,path.indexOf("upload")));
-    	    	}
+        	if(null != files && !"".equals(files)){
+        	
+        		install.setAttachment_url(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
+        	}
+//        	install.modifyAtachement(files , null,null);
+//    	    	if(null != files && !"".equalsIgnoreCase(files)){
+//    	    		rs = new HashMap<String,String>();
+//    	    		rs = ComUtil.savePicture(files, path);
+//    	    		if(!"ok".equalsIgnoreCase(rs.get("message"))){
+//    	    			ret.put("message", rs.get("message"));
+//    	    			return ret.toJSONString();
+//    	    		}
+//    	    	    Map<String, String> where = new HashMap<String, String>();
+//    	    	    where.put("installId", install.getInstallId());
+//    				List<Install> installs = installmapper.selectByWhere(where );
+//    	    	    if(0 < installs.size()){
+//    	    	    	install.setAttachment_url(installs.get(0).getAttachmentUrl());
+//    	    	    }
+//    	    		install.modifyAtachement(files , rs.get("urls"),path.substring(0,path.indexOf("upload")));
+//    	    	}
     	    
 
 			installmapper.updateByPrimaryKeySelective(install);

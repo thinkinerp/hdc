@@ -59,7 +59,7 @@ function codeUnique(config){
 				'time':time,
 				'isAll':isAll
 		 },
-	 		jsonpCallback:"state_"+time+"_getSome",
+	 		//jsonpCallback:"state_"+time+"_getSome",
 	 		jsonp: "callback",
 		 dataType:'jsonp',
 		 success:function(rs){

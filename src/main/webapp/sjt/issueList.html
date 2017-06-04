@@ -64,7 +64,7 @@
 		<script type="text/javascript">
 		
 		var gotoDetails =  function(){
-		    window.SYP.pageLink("网页标题","issueDetails.html?"  
+		    window.SYP.pageLink("网页标题",domainName + "/hdk/sjt/issueDetails.html?"  
 		                                                          +"userNum="+params['syp_user_num']
 		                                                          +"&userName="+params['syp_user_name']
 		                                                          +"&pproName="+$("#itemName").html(),-1);
@@ -273,7 +273,8 @@
 					})
 				},
 				tz:function(id){
-				    window.SYP.pageLink("网页标题","issueDetails.html?problemId=" + id + "&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'],-1);
+				    window.SYP.pageLink("网页标题",
+				    domainName + "/hdk/sjt/issueDetails.html?problemId=" + id + "&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'],-1);
 					//window.location = "issueDetails.html?problemId=" + id + "&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 				}
 			}

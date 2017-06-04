@@ -91,7 +91,7 @@ var equipmentTypeSeach = function(){
 	shopStateSeach();
 }
 var gotoModify = function(link){
-	window.SYP.pageLink("新建详情","installDetails.html?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'],-1);
+	window.SYP.pageLink("新建详情",domainName + "/hdk/sjt/installDetails.html?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'],-1);
 
 	//location.href =  "installDetails.html?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 }

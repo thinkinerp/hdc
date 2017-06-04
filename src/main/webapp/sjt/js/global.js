@@ -2,6 +2,40 @@ document.getElementsByTagName("html")[0].style.fontSize=Math.floor(document.docu
 var imgs = [];	//2个图片都会在这个数组里
 var swiper1 = '';
 var swiper2 = '';
+var m_loading = {
+		html:function(){
+			var html = [];
+	        html.push("<div class='m_load'>");
+	        html.push("<div class='load2'>");
+	        html.push("<span class='loading'>");
+	    	html.push("<span class='bar1'></span>");
+	    	html.push("<span class='bar2'></span>");
+	    	html.push("<span class='bar3'></span>");
+	    	html.push("<span class='bar4'></span>");
+	    	html.push("<span class='bar5'></span>");
+	    	html.push("<span class='bar6'></span>");
+	    	html.push("<span class='bar7'></span>");
+	    	html.push("<span class='bar8'></span>");
+	    	html.push("<span class='bar9'></span>");
+	    	html.push("<span class='bar10'></span>");
+	    	html.push("<span class='bar11'></span>");
+	    	html.push("<span class='bar12'></span>");
+		    html.push("</span>");
+
+	        //html.push("<span class='load_text'>加载中...</span>");
+	        html.push("</div>");
+	        html.push("</div>");
+	        $("body").append(html.join(""));
+	        $(".xxx").click(function(){
+	        	m_loading.remove();
+	        });
+
+		},
+		remove:function(){
+			$(".m_load").remove();
+
+		}
+	}
 var app ={
 	listdata:'', //选择列表数据
 	put:'', 	//选择后要显示的位置
@@ -140,24 +174,110 @@ var app ={
 	getImgUrl:function(){
 		var file = document.getElementById("fileImg").files;
 		file = file[0];
-		var reader = new FileReader(); 
-		reader.readAsDataURL(file); 
-		reader.onload = function(e){ 
-			app.addImg(this.result)
-		} 
+		app.changeBlobImageQuantity(file);
+//		var reader = new FileReader(); 
+//		reader.readAsDataURL(file); 
+//		reader.onload = function(e){ 
+//			app.addImg(this.result)
+//		} 
+	},
+	changeBlobImageQuantity:function(blob){
+		m_loading.html();
+		var format = null;
+		var quality  = format = ""
+		format =  'image/jpeg';
+		quality = 0.2; // 经测试0.9最合适
+		var fr = new FileReader();
+		fr.onload = function(e) {
+			var dataURL = e.target.result;
+			var img = new Image();
+			img.onload = function() {
+				var canvas = document.createElement('canvas');
+				var ctx = canvas.getContext('2d');
+				var oldWidth = img.width;
+				var oldHeight = img.height;
+				var newWidth = img.width; //window.screen.width;
+				var newHeight = Math.floor(oldHeight / oldWidth * newWidth);
+				canvas.width = newWidth;
+				canvas.height = newHeight;
+				ctx.drawImage(img, 0, 0, newWidth, newHeight);
+				// ctx.drawImage(img, 0, 0);
+				var newDataURL = canvas.toDataURL(format, quality);
+				var newBlob = app.convertDataURLToBlob(newDataURL);
+				var data = new FormData();
+				if(newBlob) {
+					var uploadFile = new File([newBlob], blob.name, {
+						type: newBlob.type
+					});
+					
+					if( 1048576 < uploadFile.size){
+						app.alert("图片过大，无法上传",1);
+					}
+					
+					data.append('files', newBlob, blob.name);
+				}
+				
+				$.ajax({
+					url:domainName + '/hdk/image/recerverImag',
+					data: data,
+					cache: false,
+					contentType: false,
+					processData: false,
+					dataType: "json",
+					type: 'post',
+				}).done(function(result) {
+					if("success" ==result.message) {
+						//alert(result.fileName);
+						imgs.push(result.fileName);
+						if(imgs.length >= 3){
+							imgs.splice(0,1);
+						}
+						app.addImg();
+						
+					} else {
+						app.alert("图片上传失败",1);
+					}
+					m_loading.remove();
+				});
+				
+				canvas = null;
+			};
+			img.src = dataURL;
+		};
+		fr.readAsDataURL(blob); 
+	},
+	convertDataURLToBlob:function(dataURL) {
+		var arr = dataURL.split(',');
+		var code = window.atob(arr[1]);
+		var aBuffer = new window.ArrayBuffer(code.length);
+		var uBuffer = new window.Uint8Array(aBuffer);
+		for(var i = 0; i < code.length; i++) {
+			uBuffer[i] = code.charCodeAt(i);
+		}
+		var Builder = window.WebKitBlobBuilder || window.MozBlobBuilder;
+		if(Builder) {
+			var builder = new Builder;
+			builder.append(aBuffer);
+			return builder.getBlob(format);
+		} else {
+			// return new window.Blob([ uBuffer ]);
+			return new window.Blob([aBuffer], {
+				type: arr[0].match(/:(.*?);/)[1]
+			});
+		}
 	},
 	addImg:function(base){
-		imgs.push(base)
-		if(imgs.length >= 3){
-			imgs.splice(0,1);
-		}
+//		imgs.push(base)
+//		if(imgs.length >= 3){
+//			imgs.splice(0,1);
+//		}
 		app.imgsShow();
 	},
 	imgsShow:function(){	//显示图片
 		$("#imgShow").find('div').hide();
 		$("#imgShow").find('div').find('img').remove();
 		for(var i = 0; i<imgs.length; i++){
-			$("#imgShow").find('div').eq(i).html('<img src="'+imgs[i]+'"/>');
+			$("#imgShow").find('div').eq(i).html('<img src="/hdk/upload/'+imgs[i]+'"/>');
 			$("#imgShow").find('div').eq(i).show();
 		}	
 	},
@@ -170,7 +290,7 @@ var app ={
 		dom.push('<div class="fanhui"  id="fullimgClose"> < </div>');
 		dom.push('<div class="shanchu" id="fullimgRemove"></div>');
 		dom.push('</div>');
-		dom.push('<div class="img"><img src="'+base+'"/></div>');
+		dom.push('<div class="img"><img src="/hdk/upload/'+base+'"/></div>');
 		dom.push('</div>');
 		$('body').append(dom.join(''));
 		$("#fullimgClose").click(function(){

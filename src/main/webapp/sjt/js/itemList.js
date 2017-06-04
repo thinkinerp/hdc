@@ -122,7 +122,8 @@ var search = function(){
 
 function gotoModify(proId){
 	
-	window.SYP.pageLink("项目详情",'itemDetails.html?proId=' + proId,-1);
+	window.SYP.pageLink("项目详情"
+			,domainName + '/hdk/sjt/itemDetails.html?proId=' + proId,-1);
 	//location.href ='/hdk/itemDetails.html?proId=' + proId;
 }
 

@@ -53,7 +53,7 @@ public class Install {
 	    		filesArray2 = this.attachmentUrl.split(",");
 	    		temp = filesArray2.clone();
 	    		for (int i = 0; i < filesArray2.length; i++) {
-	    			if(!filesArray.contains( filesArray2[i].replace(path, "/hdk/"))){
+	    			if(!filesArray.contains( filesArray2[i])){
 	    				temp = ComUtil.remove(filesArray2[i], temp);
 	    			}
 				}

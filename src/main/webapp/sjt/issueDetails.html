@@ -807,7 +807,7 @@
                     ,
                     'problem.problemDetails' : $('#wtms').html()//问题描述
                     ,
-                    'files' : (JSON.stringify(imgs) != JSON.stringify(sp.files) ? JSON.stringify(imgs) : "")//附件信息
+                    'files' :JSON.stringify(imgs) //附件信息
                     ,
                     'problem.problemTable' : gs.gs7String//标签
                     ,
@@ -896,7 +896,7 @@
                     $("#jjfa").html(data.problemPlan);
 
                     if (data.problemEnclosure != '' && data.problemEnclosure != null && data.problemEnclosure != undefined) {
-                        sp.files = data.problemEnclosure.split(",");
+                        imgs = sp.files = data.problemEnclosure.split(",");
                         for (var i = 0; i < sp.files.length; i++) {
                             app.addImg(sp.files[i]);
                         }
@@ -970,24 +970,7 @@
                 $('#sp1').attr("class", "");
                 sp.selectSp1();
             }
-            $('input').focus(function() {
-                $("#save").hide();
-            });
-            $('input').blur(function() {
-                $("#save").show();
-            });
-            $(".g-fa").focus(function() {
-                $("#save").hide();
-            });
-            $(".g-fa").blur(function() {
-                $("#save").show();
-            });
-            $(".i-contenteditable").focus(function() {
-                $("#save").hide();
-            });
-            $(".i-contenteditable").blur(function() {
-                $("#save").show();
-            });
+
 
         </script>
     </body>

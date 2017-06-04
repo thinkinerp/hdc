@@ -91,16 +91,20 @@ public class ProblemController implements ApplicationContextAware {
     	JSONObject rs = new JSONObject();
     	try{
 
-    		if(null != files && !"".equalsIgnoreCase(files)){
-				Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
-				
-				if(!"ok".equalsIgnoreCase(result.get("message"))){
-					rs.put("message",  result.get("message"));
-					return rs.toJSONString();
-				}
-				
-				problem.setProblemEnclosure(result.get("urls"));
-    		}
+//    		if(null != files && !"".equalsIgnoreCase(files)){
+//				Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
+//				
+//				if(!"ok".equalsIgnoreCase(result.get("message"))){
+//					rs.put("message",  result.get("message"));
+//					return rs.toJSONString();
+//				}
+//				
+//				problem.setProblemEnclosure(result.get("urls"));
+//    		}
+        	if(null != files && !"".equals(files)){
+            	
+        		problem.setProblemEnclosure(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
+        	}
     		problemMapper.insertSelective(problem);
     		rs.put("message", "success");
 	    	Operation_history record = new Operation_history();
@@ -123,21 +127,27 @@ public class ProblemController implements ApplicationContextAware {
        JSONObject rs = new JSONObject();
        String path = req.getSession().getServletContext().getRealPath("upload") ;
     	try{
-    		if(null != files && !"".equalsIgnoreCase(files)){
-				Map<String,String> result = ComUtil.savePicture(files,path);
-				
-				if(!"ok".equalsIgnoreCase(result.get("message"))){
-					rs.put("message", result.get("message"));
-					return rs.toJSONString();
-				}
-				Map<String,String> where = new HashMap<String, String>();
-				where.put("problemId", problem.getProblemId());
-				List<Problem> ps = problemMapper.selectByWhere(where);
-				if(null != ps && ps.size() > 0){
-					problem.setProblemEnclosure(ps.get(0).getProblemEnclosure());
-				}
-				problem.modifyAtachement(files,(result.get("urls")),path.substring(0,path.indexOf("upload")));
-    		}
+//    		if(null != files && !"".equalsIgnoreCase(files)){
+//				Map<String,String> result = ComUtil.savePicture(files,path);
+//				
+//				if(!"ok".equalsIgnoreCase(result.get("message"))){
+//					rs.put("message", result.get("message"));
+//					return rs.toJSONString();
+//				}
+//				Map<String,String> where = new HashMap<String, String>();
+//				where.put("problemId", problem.getProblemId());
+//				List<Problem> ps = problemMapper.selectByWhere(where);
+//				if(null != ps && ps.size() > 0){
+//					problem.setProblemEnclosure(ps.get(0).getProblemEnclosure());
+//				}
+//				problem.modifyAtachement(files,(result.get("urls")),path.substring(0,path.indexOf("upload")));
+//    		}
+    		
+        	if(null != files && !"".equals(files)){
+            	
+        		problem.setProblemEnclosure(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
+        	}
+    		
     		problemMapper.updateByPrimaryKeySelective(problem);
     		
 	    	Operation_history record = new Operation_history();

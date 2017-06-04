@@ -36,33 +36,33 @@ $.ajax({
     console.log(rs);
   }
 });
-
-$.ajax({
-  url:domainName +   '/hdk/state/getSome',
-  type: 'get',
-  data: {
-    'ownerTable': "install"
-  },
-  jsonpCallback: "state_getSome",
-  jsonp: "callback",
-  dataType: 'jsonp',
-  success: function(rs) {
-    /*            alert(JSON.stringify(rs)); */
-    var str = '';
-    var i = 0;
-    $.each(rs, function(index, item) {
-
-      if (0 == i) {
-        i++;
-        str = str + item.staName;
-      } else {
-        str = str + "," + item.staName;
-      }
-    });
-    $('#installState').attr("data-select", str);
-  },
-  error: function(rs) {}
-});
+//
+//$.ajax({
+//  url:domainName +   '/hdk/state/getSome',
+//  type: 'get',
+//  data: {
+//    'ownerTable': "install"
+//  },
+//  jsonpCallback: "state_getSome",
+//  jsonp: "callback",
+//  dataType: 'jsonp',
+//  success: function(rs) {
+//    /*            alert(JSON.stringify(rs)); */
+//    var str = '';
+//    var i = 0;
+//    $.each(rs, function(index, item) {
+//
+//      if (0 == i) {
+//        i++;
+//        str = str + item.staName;
+//      } else {
+//        str = str + "," + item.staName;
+//      }
+//    });
+//    $('#installState').attr("data-select", str);
+//  },
+//  error: function(rs) {}
+//});
 
 
 Window.selected = function() {
@@ -180,7 +180,7 @@ var loadInstall = function(allThing){
         $('#installData').html(isUndefined(allObjs.install["installData"]));
         
         if(!!isUndefined(allObjs.install['attachmentUrl'])){
-         files = allObjs.install['attachmentUrl'].split(',');
+         imgs = files = allObjs.install['attachmentUrl'].split(',');
             
             for(var i = 0 ; i <files.length ; i ++){
                 app.addImg(files[i]);
@@ -420,7 +420,7 @@ var submit = function() {
       complete:ajaxLoadEnd(),
       dataType: 'json',
       data: {
-    	  files:(JSON.stringify(imgs) != JSON.stringify(files)?(JSON.stringify(imgs,files)):""),	
+    	  files:JSON.stringify(imgs),	
         'install.installId': $("#installCode").val(),
         'install.id': allObjs.install.id,
         'install.installStation': $('#installStation').html(),
@@ -484,7 +484,8 @@ var submit = function() {
       success: function(result) {
     	  if("success" == result.message){
      
-    			  window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功","installList.html");
+    			  window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功"
+    					  ,domainName + "/hdk/sjt/installList.html");
  
     	  }else{
     		  app.alert("保存失败，请重试",1);
@@ -600,7 +601,8 @@ var submit = function() {
         if(data.message == "success"){
    
   
-  			window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功","installList.html");
+  			window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功"
+  					,domainName + "/hdk/sjt/installList.html");
  
         }else{
         	app.alert("保存失败",1);

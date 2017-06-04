@@ -70,7 +70,7 @@ public class StateController implements ApplicationContextAware {
 		Writer w;
 		try {
 			w = res.getWriter();
-			w.write("state_"+time+"_getSome("+JSONObject.toJSONString(states)+")");
+			w.write(callback+"("+JSONObject.toJSONString(states)+")");
 //			w.write(callbackparam+"("+JSONObject.toJSONString(states)+")");
 			
 		} catch (IOException e) {
