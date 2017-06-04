@@ -19,3 +19,9 @@
             $(".i-contenteditable").blur(function() {
                 $("#save").show();
             });
+            $('input').focus(function() {
+                $(".i-addTable").hide();
+            });
+            $('input').blur(function() {
+                $(".i-addTable").show();
+            }); 
