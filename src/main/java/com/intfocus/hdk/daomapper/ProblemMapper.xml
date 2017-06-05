@@ -95,14 +95,14 @@
     select problem.problem_object ,problem.problem_type,count(problem.problem_id) as count
     from problem     inner join project on project.pro_id = problem.pro_id
     inner join shops on shops.shop_id = problem.shop_id
-    inner join equipment on equipment.eq_id = problem.eq_id
+    left join equipment on equipment.eq_id = problem.eq_id
     <where>
     	1=1
     	<if test="null != proName and '' != proName">
     		  and problem.pro_id in (select pro_id from project where pro_name =#{proName} )
  	   </if>
     </where>
-     order by problem.problem_object ,problem.problem_type
+     group by problem.problem_object ,problem.problem_type
 
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

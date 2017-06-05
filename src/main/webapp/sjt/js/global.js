@@ -232,7 +232,7 @@ var app ={
 						if(imgs.length >= 3){
 							imgs.splice(0,1);
 						}
-						app.addImg();
+						app.imgsShow(uploadFile.size);
 						
 					} else {
 						app.alert("图片上传失败",1);
@@ -273,11 +273,17 @@ var app ={
 //		}
 		app.imgsShow();
 	},
-	imgsShow:function(){	//显示图片
+	imgsShow:function(picSize){	//显示图片
 		$("#imgShow").find('div').hide();
 		$("#imgShow").find('div').find('img').remove();
+		var isIOS = (/iphone|ipad/gi).test(navigator.appVersion);
 		for(var i = 0; i<imgs.length; i++){
-			$("#imgShow").find('div').eq(i).html('<img src="/hdk/upload/'+imgs[i]+'"/>');
+			if( isIOS){	
+				$("#imgShow").find('div').eq(i).html('<img style="-webkit-transform:rotate(90deg)" src="/hdk/upload/'+imgs[i]+'"/>');
+			}else{
+				$("#imgShow").find('div').eq(i).html('<img src="/hdk/upload/'+imgs[i]+'"/>');
+			}
+
 			$("#imgShow").find('div').eq(i).show();
 		}	
 	},
@@ -290,7 +296,12 @@ var app ={
 		dom.push('<div class="fanhui"  id="fullimgClose"> < </div>');
 		dom.push('<div class="shanchu" id="fullimgRemove"></div>');
 		dom.push('</div>');
-		dom.push('<div class="img"><img src="/hdk/upload/'+base+'"/></div>');
+		var isIOS = (/iphone|ipad/gi).test(navigator.appVersion);
+		if( isIOS){	
+			dom.push('<div class="img"><img style="-webkit-transform:rotate(90deg)"  src="/hdk/upload/'+base+'"/></div>');
+		}else{
+			dom.push('<div class="img"><img  src="/hdk/upload/'+base+'"/></div>');
+		}
 		dom.push('</div>');
 		$('body').append(dom.join(''));
 		$("#fullimgClose").click(function(){
