@@ -117,7 +117,7 @@ input[type=button] {width: auto; overflow: visible;}
 .i-itemDetail-area-content .content-row p i.on4{ background: url(../images/on4.png); background-size:100% 100% ; }
 .i-itemDetail-area-content .content-row p i.on5{ background: url(../images/on5.png); background-size:100% 100% ; }
 .i-itemDetail-area-content .content-row p i.on6{ background: url(../images/on6.png); background-size:100% 100% ; }
-.i-addTable{ font-size: .32rem; display: flex; position: fixed; left: 0; bottom:0; border-top:solid 1px #eee; height:.95rem; width: 100%; background: rgba(255,255,255,.95); justify-content: center; align-items: center;}
+.i-addTable{ font-size: .32rem; display: flex; position: fixed; left: 0; bottom:0; border-top:solid 1px #eee; height:.95rem; width: 100%; background: rgba(255,255,255,.95); justify-content: center; align-items: center;z-index:5;}
 .i-addTable .icon{ width: .38rem; height: .38rem; background: url(../images/icon4.png); background-size:100% 100% ;}
 .i-addTable .text{ margin-left: .36rem; }
 
@@ -138,7 +138,7 @@ input[type=button] {width: auto; overflow: visible;}
 .i-xiala-list{position: relative;  border: solid 1px #e4e4e6; border-radius: .2rem; width: 100%;   }
 .i-xiala-list div{ color:#1f4ba4; height:.76rem; padding-left: .55rem; display: flex; justify-content: flex-start; align-items: center; margin-right: .4rem; background: url(../images/icon1.png) no-repeat right 50%; background-size:.24rem .16rem;}
 .i-xiala-list .on{ color: #e4e4e4;}
-.g-ok{ height: 1.2rem; width: 100%; background: #fff; position: fixed; z-index: 2; left:0; bottom:0; border-top:solid 1px #eee; display: flex; justify-content: center; align-items: center;}
+.g-ok{ height: 1.2rem; width: 100%; background: #fff; position: fixed; z-index:3; left:0; bottom:0; border-top:solid 1px #eee; display: flex; justify-content: center; align-items: center;}
 .g-ok div{ width: 5rem; height: .8rem; border-radius: .4rem; background: #1f4ba5; color: #fff; display: flex; justify-content: center; align-items: center;}
 .g-importList{font-size: .24rem; padding-top: .3rem;}
 .g-importList li{ display: flex; margin:0 .35rem .1rem .55rem; height: .8rem;}
@@ -241,5 +241,10 @@ input[type=button] {width: auto; overflow: visible;}
 .loading .bar11 {-webkit-transform:rotate(300deg) translate(0, -142%); -webkit-animation-delay: -0.1667s;color:#d53043;}
 .loading .bar12 {-webkit-transform:rotate(330deg) translate(0, -142%); -webkit-animation-delay: -0.0833s;color:#d53043;}
 .m_load{background: rgba(0, 0, 0, 0.2); position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000;}
-
+.wrapbox{
+position: absolute;
+top:0px;
+bottom:0.01rem;
+ overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;  width:100%;z-index:1;}
 

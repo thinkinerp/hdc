@@ -12,6 +12,13 @@ var checkCode = function(obj,label){
 
 	}
 }
+var readOnly = function(id){
+	$("#" + id).removeClass('on');
+	$("#" + id).parent('div').css('border', 'none');
+	$("#" + id).css('background', 'none');
+	$("#" + id).attr('readonly', 'readonly');
+}
+
 function codeUnique(config){
 	var dtd = $.Deferred(); 
 	

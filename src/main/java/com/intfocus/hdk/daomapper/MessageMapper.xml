@@ -47,6 +47,7 @@
 			limit 	#{page,jdbcType=VARCHAR}, #{pageSize,jdbcType=VARCHAR}		    	
 	    </if>
     </if>
+    order by updated_at desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from message

@@ -172,6 +172,7 @@ var loadInstall = function(allThing){
         
         
         $('#installCode').val(isUndefined(allObjs.shop["installId"]));
+        readOnly("installCode");
         $('#shopCode').html(isUndefined(allObjs.install["shopId"]));
         $('#cashCode').html(isUndefined(allObjs.install["cashId"]));
         $('#printCode').html(isUndefined(allObjs.install["printerId"]));

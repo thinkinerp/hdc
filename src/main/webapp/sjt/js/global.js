@@ -173,6 +173,10 @@ var app ={
 	},
 	getImgUrl:function(){
 		var file = document.getElementById("fileImg").files;
+		
+		if((null == file) || ('' == file) || (undefined == file)){
+			return ;
+		}
 		file = file[0];
 		app.changeBlobImageQuantity(file);
 //		var reader = new FileReader(); 
@@ -182,7 +186,7 @@ var app ={
 //		} 
 	},
 	changeBlobImageQuantity:function(blob){
-		m_loading.html();
+		//m_loading.html();
 		var format = null;
 		var quality  = format = ""
 		format =  'image/jpeg';
@@ -237,7 +241,7 @@ var app ={
 					} else {
 						app.alert("图片上传失败",1);
 					}
-					m_loading.remove();
+					//m_loading.remove();
 				});
 				
 				canvas = null;
@@ -377,4 +381,26 @@ $(function(){
 	$(".i-choice-row div").click(function(){	//单选
 		$(this).addClass('on').parent('div').siblings('.i-choice-row').find('div').removeClass('on');
 	})
+	
 })
+buttonFixed();
+function buttonFixed()
+{		 var u = navigator.userAgent;
+             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端 		   
+  				var winHeight = $(window).height();   //获取当前页面高度
+            $(window).resize(function(){
+               var thisHeight=$(this).height();
+                if(winHeight - thisHeight >50){
+                    $(".g-ok,.i-addTable").hide();
+                }else{
+                    $(".g-ok,.i-addTable").show();
+                }
+
+            }); 
+            if(isAndroid)
+            {
+            	$(".wrapbox").css({position:"static"});
+            } 
+            else
+            {$(".wrapbox").css({position:"absolute"});}
+ }	

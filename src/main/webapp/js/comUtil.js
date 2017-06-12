@@ -12,6 +12,7 @@ var checkCode = function(obj,label){
 
 	}
 }
+
 function codeUnique(config){
 	var dtd = $.Deferred(); 
 	

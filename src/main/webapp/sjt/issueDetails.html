@@ -48,6 +48,7 @@
             </div>
         </div>
         <!-- 内容区 -->
+        <div class="wrapbox">
         <div class="swiper-container swiper-container2">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -288,6 +289,7 @@
                 </div>
             </div>
         </div>
+        </div>
         <!-- 保存按钮 -->
         <div class="g-ok">
             <div id="save">
@@ -298,6 +300,9 @@
         <script src="js/swiper.js"></script>
         <script>
             $('#saveMessage').bind('click', function() {
+                if(''==$('#messageContext').html()){
+                    return ;
+                }
                 $.ajax({
                     url :domainName +  '/hdk/problem/saveMessage',
                     type : 'get',
@@ -313,7 +318,7 @@
                     success : function(rs) {
                         if (rs.message == "success") {
                             app.alert("批注保存成功", 1);
-                            loadMessage($('#gs1').val());
+                            loadMessage($('#gs1').val(),0);
                         } else if (rs.message == "fail") {
                             app.alert("批注保存失败", 1);
                         }
@@ -324,7 +329,7 @@
                 });
             });
 
-            var loadMessage = function(id) {
+            var loadMessage = function(id,toHome) {
                 $.ajax({
                     url :domainName +  '/hdk/problem/getMessageSome',
                     type : 'get',
@@ -334,10 +339,27 @@
                         'problemId' : id//问题编号
                     },
                     success : function(rs) {
-                        $('#messageArea').html('');
+                        $("#messageContext").html("");
+                        $('#messageArea').empty();
                         $.each(rs, function(index, item) {
-                            $('#messageArea').append("          <div class='i-itemDetail-area'>" + "               <div class='i-itemDetail-area-title'>" + "                   <div>" + item.mesUser + "</div>" + "                   <p>" + item.updatedAt + "</p>" + "               </div>" + "               <div class='i-itemDetail-area-content'>" + "                   <div class='content-row'>" + "                       <span>" + item.mesContent + "</span>" + "                   </div>" + "               </div>" + "           </div>");
+                            $('#messageArea').append(
+                                "<div class='i-itemDetail-area'>" + 
+                                "               <div class='i-itemDetail-area-title'>" + 
+                                "                   <div>" + item.mesUser + "</div>" + 
+                                "                   <p>" + item.updatedAt + "</p>" + "               </div>" +
+                                 "               <div class='i-itemDetail-area-content'>" 
+                                 + "                   <div class='content-row'>" + 
+                                 "                       <span>" + item.mesContent + "</span>" + 
+                                 "                   </div>" + 
+                                 "               </div>" + 
+                                 "           </div>");
+                                 
                         });
+                        swiper2.slideTo(5, 0, false);
+                       if(1 == toHome){
+                        swiper2.slideTo(0, 0, false);
+                       }
+                        $('#messageArea').trigger('create');
                     },
                     error : function(rs) {
                         console.log(rs);
@@ -868,7 +890,10 @@
                     xg.zhidu('sp1');
                     xg.zhidu('sp2');
                     $("#gs1").val(data.problemId);
-                    loadMessage(data.problemId);
+
+                        
+                        loadMessage(data.problemId,1);
+
                     xg.zhidu('gs1');
                     $("#gs2").html(data.state);
                     xg.youzhi('gs2');
