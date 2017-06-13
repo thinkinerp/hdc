@@ -95,9 +95,11 @@
                         <li>
                             <div class="g-importList-title">项目名称</div>
                             <div id ="proNameDiv" class="g-importList-content">
-                                <div class="i-xiala-list">
-                                    <div id = "proName" alertTitle="请选择项目名称" data-select="" onclick="app.select(this,2, Window.selected)" class="on"></div>
+                            <!-- 项目名称不能点击修改onclick="app.select(this,2, Window.selected)" 这个去掉 -->
+                                <div class="i-text">
+                                    <div id = "proName" alertTitle="请选择项目名称" data-select="" class="on"></div>
                                 </div>
+                              <!-- 项目名称 end --> 
                             </div>
                         </li>
                         <li>
@@ -324,8 +326,8 @@
                 <div class="swiper-slide">
                     <div class="i-addImg">
                         <div class="img" id="imgShow">
-                            <div onclick="app.fullImg(0)"></div>
-                            <div onclick="app.fullImg(1)"></div> 
+                           <!--  <div onclick="app.fullImg(0)"></div>
+                            <div onclick="app.fullImg(1)"></div>  -->
                         </div>
                         <div class="add"><input name ="fileImg"  type="file" id="fileImg" onchange="app.getImgUrl();"/></div>
                     </div>

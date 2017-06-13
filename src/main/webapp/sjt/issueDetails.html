@@ -48,7 +48,8 @@
             </div>
         </div>
         <!-- 内容区 -->
-        <div class="wrapbox">
+        <!-- <div class="wrapbox"> -->
+        <div >
         <div class="swiper-container swiper-container2">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -147,11 +148,13 @@
                                 项目名称
                             </div>
                             <div class="g-importList-content">
-                                <div class="i-xiala-list">
+                            <!-- 项目名称不能点击 start -->
+                                <div class="i-text">
                                     <div id="sp1" class="on" alertTitle="项目名称">
-                                        未选择
+                                        
                                     </div>
                                 </div>
+                                <!-- 项目名称不能点击 end -->
                             </div>
                         </li>
                         <li>
@@ -267,8 +270,8 @@
                         <div class="swiper-slide">
                             <div class="i-addImg">
                                 <div class="img" id="imgShow">
-                                    <div onclick="app.fullImg(0)"></div>
-                                    <div onclick="app.fullImg(1)"></div>
+                                   <!--updatecynthia  <div onclick="app.fullImg(0)"></div>
+                                    <div onclick="app.fullImg(1)"></div> -->
                                 </div>
                                 <div class="add">
                                     <input type="file" id="fileImg" onchange="app.getImgUrl();"/>
@@ -278,10 +281,10 @@
                     </ul>
                 </div>
                 <div class="swiper-slide">
-                    <div class="g-fa" placeholder="请输入解决方案" style="-webkit-user-select:text" id="jjfa" contenteditable="true"></div>
+                    <textarea class="i-contenteditable textarea-text1" placeholder="请输入解决方案"  id="jjfa" contenteditable="true"></textarea>
                 </div>
                 <div class="swiper-slide">
-                    <div class="i-contenteditable" contenteditable="true" style="-webkit-user-select:text" placeholder="输入" id ="messageContext"></div>
+                    <textarea class="i-contenteditable textarea-text1" contenteditable="true"  placeholder="输入" id ="messageContext"></textarea>
                     <div class="i-contenteditable-ok" id = "saveMessage">
                         添加批注
                     </div>
@@ -300,7 +303,7 @@
         <script src="js/swiper.js"></script>
         <script>
             $('#saveMessage').bind('click', function() {
-                if(''==$('#messageContext').html()){
+                if(''==$('#messageContext').val()){
                     return ;
                 }
                 $.ajax({
@@ -313,7 +316,7 @@
                         ,
                         'problemId' : $('#gs1').val()//问题编号
                         ,
-                        'mesContent' : $('#messageContext').html()//批注内容
+                        'mesContent' : $('#messageContext').val()//批注内容
                     },
                     success : function(rs) {
                         if (rs.message == "success") {
@@ -339,7 +342,7 @@
                         'problemId' : id//问题编号
                     },
                     success : function(rs) {
-                        $("#messageContext").html("");
+                        $("#messageContext").val("");
                         $('#messageArea').empty();
                         $.each(rs, function(index, item) {
                             $('#messageArea').append(
@@ -421,9 +424,9 @@
                                 }
                             }
                             $('#sp1')[0].dataset.select = text
-                            $("#sp1").click(function() {
-                                app.select(this, 2, sp.selectSp1);
-                            })
+                            //cynthia 项目名称不能点击 $("#sp1").click(function() {
+                            //     app.select(this, 2, sp.selectSp1);
+                            // })
                         }
                     })
                 },
@@ -759,7 +762,7 @@
                     ,
                     'problem.problemTable' : gs.gs7String//标签
                     ,
-                    'problem.problemPlan' : $('#jjfa').html()	//解决方案
+                    'problem.problemPlan' : $('#jjfa').val()	//解决方案
                 };
 
                 $.when(codeUnique({
@@ -833,7 +836,7 @@
                     ,
                     'problem.problemTable' : gs.gs7String//标签
                     ,
-                    'problem.problemPlan' : $('#jjfa').html()	//解决方案
+                    'problem.problemPlan' : $('#jjfa').val()	//解决方案
                 };
                 $.ajax({
                     url :domainName +  "/hdk/problem/modify",
@@ -918,7 +921,7 @@
                     $("#ms7").html(data.eqType);
                     $("#wtms").html(data.problemDetails);
 
-                    $("#jjfa").html(data.problemPlan);
+                    $("#jjfa").val(data.problemPlan);
 
                     if (data.problemEnclosure != '' && data.problemEnclosure != null && data.problemEnclosure != undefined) {
                         imgs = sp.files = data.problemEnclosure.split(",");
