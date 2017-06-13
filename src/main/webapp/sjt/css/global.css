@@ -106,7 +106,7 @@ input[type=button] {width: auto; overflow: visible;}
 .i-itemDetail-area-content .content-row{ display: flex; margin-left: .5rem; border-bottom: solid 1px #e8e8e8;}
 .i-itemDetail-area-content .content-row:nth-last-child(1){ border-bottom: none;}
 .i-itemDetail-area-content .content-row p{ height: .7rem; padding-bottom: .1rem; display: flex; align-items: flex-end;}
-.i-itemDetail-area-content .content-row span{ height: .7rem; padding-bottom: .1rem; display: flex; align-items: flex-end; overflow: hidden;white-space:nowrap; text-overflow:ellipsis;}
+.i-itemDetail-area-content .content-row span{ padding: .3rem 0; line-height:150%;  word-wrap : break-word ;width:90%;}
 .i-itemDetail-area-content .content-row p:nth-child(1){ width: 3.3rem; color:#b1b1b1; }
 .i-itemDetail-area-content .content-row p:nth-child(2){ width: 1.8rem;}
 .i-itemDetail-area-content .content-row p:nth-child(3){ flex:1; }
@@ -137,6 +137,7 @@ input[type=button] {width: auto; overflow: visible;}
 .i-xiala{ display: flex; height: .76rem; font-size: .24rem; margin:.15rem .25rem;border-radius: .2rem; justify-content: space-between;}
 .i-xiala-list{position: relative;  border: solid 1px #e4e4e6; border-radius: .2rem; width: 100%;   }
 .i-xiala-list div{ color:#1f4ba4; height:.76rem; padding-left: .55rem; display: flex; justify-content: flex-start; align-items: center; margin-right: .4rem; background: url(../images/icon1.png) no-repeat right 50%; background-size:.24rem .16rem;}
+.i-xiala-list div#proName{background:none;}
 .i-xiala-list .on{ color: #e4e4e4;}
 .g-ok{ height: 1.2rem; width: 100%; background: #fff; position: fixed; z-index:3; left:0; bottom:0; border-top:solid 1px #eee; display: flex; justify-content: center; align-items: center;}
 .g-ok div{ width: 5rem; height: .8rem; border-radius: .4rem; background: #1f4ba5; color: #fff; display: flex; justify-content: center; align-items: center;}
@@ -154,7 +155,8 @@ input[type=button] {width: auto; overflow: visible;}
 .i-import{position: relative;  border: solid 1px #e4e4e6; border-radius: .2rem; width: 100%;   }
 .i-import input{ height: .76rem; border: none ; background: none; color: #1f4ba4; width: 100%; padding-left: .55rem; padding-right: .4rem; box-sizing: border-box;}
 
-.i-date{position: relative;  border: solid 1px #e4e4e6; border-radius: .2rem; width: 100%;   }
+.i-date{position: relative;  border: solid 1px #e4e4e6; border-radius: .2rem; width: 100%; 
+background: url(../images/icon-calendar.png) 95% center no-repeat;background-size:auto 0.4rem;}
 .i-date input{ height: .76rem; border: none ; background: none; color: #1f4ba4; width: 100%; padding-left: .55rem; box-sizing: border-box;}
 .i-addImg{ display: flex; padding: .2rem .3rem; }
 .i-addImg .img{  display: flex;  }
@@ -166,7 +168,7 @@ input[type=button] {width: auto; overflow: visible;}
 ::-webkit-input-placeholder {   color:#e4e4e4; }
 :-ms-input-placeholder {   color:#e4e4e4; }
 
-.i-contenteditable{ font-size: .24rem; margin: .3rem .5rem 0 .5rem; height: 2.4rem; border:solid 1px #e4e4e4; border-radius: .2rem; padding: .2rem .3rem; overflow: auto; }
+.i-contenteditable{ /*font-size: .24rem; */margin: .3rem .5rem 0 .5rem; height: 2.4rem; border:solid 1px #e4e4e4; border-radius: .2rem; padding: .2rem .3rem; overflow: auto; }
 .i-contenteditable:empty:before{
     content: attr(placeholder);
     color:#b2b2b2;
@@ -187,14 +189,14 @@ input[type=button] {width: auto; overflow: visible;}
 .g-select-seek{ display: flex; margin:.4rem .25rem 0 .25rem; height: .7rem; border: solid 1px #e4e4e4; border-radius: .2rem;}
 .g-select-seek input{ flex: 1; height: .7rem; border: none; background: none; padding: 0 .2rem;}
 .g-select-seek div{ width: 1.1rem; height: .7rem; background: url(../images/icon2.png) no-repeat 50% 50%; background-size: .3rem .3rem;}
-.g-select-list{ width: 100%; height: 100%; overflow: auto; padding-top:.5rem; padding-bottom:.8rem; }
+.g-select-list{ width: 100%; height: 100%; overflow: auto; padding-top:.5rem; padding-bottom:2.5rem; }
 .g-select-list li{ width: 100%; padding: .24rem .7rem;  font-size: .36rem; }
 .g-select-list li.on{ background:#1f4ba4; color: #fff;}
 
 .g-importList-zp{  width:100%; display: flex;}
 .g-importList-zp p{ border:solid 1px #1F4BA5; width:30%; margin:0 .1rem; display: flex; justify-content: center; align-items: center; overflow: hidden; }
 .g-fa{ margin:1rem .2rem 0 .2rem; border: solid 1px #1F4BA4; border-radius:.2rem; padding:.2rem .2rem 0 .2rem; height: 5rem; overflow: auto;}
-.g-select-back{position: fixed; left:0; bottom:0; height:.8rem; width: 100%; background:#1f4ba4; font-size: .36rem; color: #fff; display: flex; justify-content: center; align-items: center;}
+.g-select-back{position: fixed; left:0; bottom:0; height:.8rem; width: 100%; width: 5rem; height: .8rem; border-radius: .4rem; background: #1f4ba5; color: #fff;  display: flex; justify-content: center; align-items: center;}
 
 
 .i-qk{ display: flex; margin:0 .25rem 0 .25rem; align-items:center; }
@@ -246,5 +248,7 @@ position: absolute;
 top:0px;
 bottom:0.01rem;
  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;  width:100%;z-index:1;}
+  -webkit-overflow-scrolling: touch;  width:100%;z-index:1;padding-bottom:2em;}
+textarea.textarea-text1{width:75%;}
 
+#jjfa{border: solid 1px #1F4BA4; }

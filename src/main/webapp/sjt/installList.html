@@ -47,7 +47,7 @@
         </div>
         <!-- 搜索 -->
         <div class="i-itemSeek">
-            <input placeholder="请输入门店名称" type="text" id="middle" />
+            <input placeholder="请输入商铺名称进行搜索" type="text" id="middle" />
             <div onclick="searche()"></div>
         </div>
         <!-- 2个下拉 -->
@@ -76,11 +76,10 @@
         <script type="text/javascript">
          var gotoDetail =  function(){
         
-             window.SYP.pageLink("新建详情" ,  domainName + "/hdk/sjt/installDetails.html?userNum="
+            window.SYP.pageLink("新建详情" ,  domainName + "/hdk/sjt/installDetails.html?userNum="
                                                                       +params['syp_user_num']+"&userName="+params['syp_user_name']
-                                                                      +"&pproName="+$('#itemName').html(),-1);
-            
-           //location.href =  "/hdk/installDetails.html?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
+                                                                      +"&pproName="+$('#itemName').html(),-1);            
+         //location.href = "installDetails.html?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name']                                                                   +"&pproName="+$('#itemName').html();
             } 
             $(function(){
             //  comboboxForProState();

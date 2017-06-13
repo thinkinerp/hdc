@@ -66,11 +66,11 @@
 		<script type="text/javascript">
 		
 		var gotoDetails =  function(){
-		    window.SYP.pageLink("网页标题",domainName + "/hdk/sjt/issueDetails.html?"  
-		                                                          +"userNum="+params['syp_user_num']
-		                                                          +"&userName="+params['syp_user_name']
-		                                                          +"&pproName="+$("#itemName").html(),-1);
-		  //window.location="issueDetails.html?"  +"userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
+		    //window.SYP.pageLink("网页标题",domainName + "/hdk/sjt/issueDetails.html?"  
+		                                                       //   +"userNum="+params['syp_user_num']
+		                                                       //   +"&userName="+params['syp_user_name']
+		                                                        //  +"&pproName="+$("#itemName").html(),-1);
+		  window.location="issueDetails.html?"  +"userNum="+params['syp_user_num']+"&userName="+params['syp_user_name']+"&pproName="+$("#itemName").html();
 		};
 		var params = function() {
             var query = {},

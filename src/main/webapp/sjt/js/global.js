@@ -107,7 +107,8 @@ var app ={
        		}
         }
         dom.push('</ul>');
-        dom.push('<div class="g-select-back" onclick="app.selectBack()">退出</div>');
+        //cynthia 按钮样式
+        dom.push('<div class="g-ok"><div  onclick="app.selectBack()">退出</div></div>');
         dom.push('</div>');
         $("body").append(dom.join(''));
         app.selectClick();     
@@ -233,9 +234,12 @@ var app ={
 					if("success" ==result.message) {
 						//alert(result.fileName);
 						imgs.push(result.fileName);
-						if(imgs.length >= 3){
-							imgs.splice(0,1);
-						}
+						/*==== updatecynthia start====*/
+						// if(imgs.length >= 3){
+						// 	imgs.splice(0,1);
+						// }						
+						$("#imgShow").append('<div ></div>');
+						/*==== updatecynthia end====*/
 						app.imgsShow(uploadFile.size);
 						
 					} else {
@@ -287,7 +291,9 @@ var app ={
 			}else{
 				$("#imgShow").find('div').eq(i).html('<img src="/hdk/upload/'+imgs[i]+'"/>');
 			}
-
+			//updatecynthia start
+			$("#imgShow").find('div').eq(i).bind("click",function(){app.fullImg(i);});
+			//updatecynthia end
 			$("#imgShow").find('div').eq(i).show();
 		}	
 	},
