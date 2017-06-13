@@ -107,7 +107,8 @@ var app ={
        		}
         }
         dom.push('</ul>');
-        dom.push('<div class="g-select-back" onclick="app.selectBack()">退出</div>');
+        //cynthia 按钮样式
+        dom.push('<div class="g-ok"><div  onclick="app.selectBack()">退出</div></div>');
         dom.push('</div>');
         $("body").append(dom.join(''));
         app.selectClick();     
