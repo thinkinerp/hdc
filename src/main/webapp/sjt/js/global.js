@@ -220,8 +220,7 @@ var app ={
 					}
 					
 					data.append('files', newBlob, blob.name);
-				}
-				
+				}				
 				$.ajax({
 					url:domainName + '/hdk/image/recerverImag',
 					data: data,

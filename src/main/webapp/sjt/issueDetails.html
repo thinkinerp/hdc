@@ -59,8 +59,8 @@
                                 问题编号
                             </div>
                             <div class="g-importList-content">
-                                <div class="i-import">
-                                    <input onblur="checkCode(this,'问题')" id="gs1" type="text"  />
+                                <div class="i-import" style="border:none">
+                                    <input  id="gs1" type="text"  readonly/>
                                 </div>
                             </div>
                         </li>
@@ -769,13 +769,15 @@
                     ,
                     'problem.problemPlan' : $('#jjfa').val()	//解决方案
                 };
-
-                $.when(codeUnique({
-                    tableName : "problem",
-                    codeField : "problem_id",
-                    code : $('#gs1').val(),
-                    which : "问题编码"
-                })).done(function() {
+                    form_empty({code:$('#gs1').val(), which:"问题编号"});
+                    form_empty({code:$('#sp1').html(), which:"项目名称"});
+                    form_empty({code:$('#sp2').html(), which:"商铺名称"});
+                // $.when(codeUnique({
+                //     tableName : "problem",
+                //     codeField : "problem_id",
+                //     code : $('#gs1').val(),
+                //     which : "问题编码"
+                // })).done(function() {
 
                     $.ajax({
                         url :domainName +  "/hdk/problem/submit",
@@ -797,7 +799,7 @@
                             app.alert('保存失败', 1);
                         }
                     });
-                });
+                // });
             };
 
             function submit2() {//修改保存
@@ -1004,7 +1006,50 @@
                 sp.selectSp1();
             }
 
-
+             /*====安装cynthia ，获得安装编号 start===*/
+            var time = new Date().getTime();
+            var proId_name="";
+            $.ajax({
+              url: domainName +  '/hdk/project/getSome',
+              type: 'get',
+              data: {
+                time: time
+              },
+              jsonpCallback: "project_" + time + "_getSome",
+              jsonp: "callback",
+              dataType: 'jsonp',
+              success: function(rs) {
+                var str = '';
+                var i = 0;
+                $.each(rs, function(index, item) {
+                  if(item.proName==params["pproName"])
+                   {proId_name=item.proId;}
+                });
+               /*====获得编号 start=====*/
+             getproId();
+            /*====获得编号 end=====*/
+              },
+              error: function(rs) {
+                console.log(rs);
+              }
+            });   
+            function getproId()
+            {  $.ajax({
+                url:"http://www.onetoend.cn/hdk/project/getFormCode",
+                dataType:"jsonp",
+                jsonp:"callback",
+                data:{
+                    formType:"problem",
+                    proId:proId_name
+                },
+               type:"post",
+               success:function(res){
+                  $("#gs1").val(res.code);
+               },
+               error:function(res){                   
+               } 
+              });}           
+            /*====安装cynthia ，获得安装编号 end===*/
         </script>
     
     </body>

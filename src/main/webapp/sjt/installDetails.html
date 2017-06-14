@@ -53,8 +53,8 @@
                         <li>
                             <div class="g-importList-title">安装编号</div>
                             <div class="g-importList-content">
-                                <div class="i-import">
-                                    <input onblur="checkCode(this,'安装')" id ="installCode" type="text" placeholder="请输入" />
+                                <div class="i-import" style="border:none">
+                                    <input  id ="installCode" type="text"  readonly />
                                 </div>
                             </div>
                         </li>
@@ -437,7 +437,51 @@
             $(".i-choice-row div").click(function(){    //单选
                 $(this).addClass('on').parent('div').siblings('.i-choice-row').find('div').removeClass('on');
             });
-        
+            /*====安装cynthia ，获得安装编号 start===*/
+            var time = new Date().getTime();
+            var proId_name="";
+            $.ajax({
+              url: domainName +  '/hdk/project/getSome',
+              type: 'get',
+              data: {
+                time: time
+              },
+              jsonpCallback: "project_" + time + "_getSome",
+              jsonp: "callback",
+              dataType: 'jsonp',
+              success: function(rs) {
+                var str = '';
+                var i = 0;
+                $.each(rs, function(index, item) {
+                  if(item.proName==params["pproName"])
+                   {proId_name=item.proId;}
+                });
+               /*====获得编号 start=====*/
+               getproId()
+            /*====获得编号 end=====*/
+              },
+              error: function(rs) {
+                console.log(rs);
+              }
+            });   
+            function getproId()
+            {  $.ajax({
+                url:"http://www.onetoend.cn/hdk/project/getFormCode",
+                dataType:"jsonp",
+                jsonp:"callback",
+                data:{
+                    formType:"install",
+                    proId:proId_name
+                },
+               type:"post",
+               success:function(res){
+                console.log(res);
+                  $("#installCode").val(res.code);
+               },
+               error:function(res){                   
+               } 
+              });}           
+            /*====安装cynthia ，获得安装编号 end===*/
         </script>
 <!-- <script src="js/buttonAway.js" type="text/javascript" charset="utf-8"></script> -->
 </body>

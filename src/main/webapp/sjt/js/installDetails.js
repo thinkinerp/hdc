@@ -408,10 +408,10 @@ var submit = function() {
   //  app.saveDate();
   // 在没有调研的情况下要进行一下动作
   //保存收银机
-
   // 保存打印机
-
   // 采集点
+  //验证
+ 
   if (null != allThing && undefined !=allThing) {
 
     $.ajax({
@@ -500,32 +500,36 @@ var submit = function() {
 
 
   } else {
-	  
-	 $.when(codeUnique({
-		 tableName:"install"
-								         ,codeField:"install_id"
-								         ,code:$('#installCode').val()
-								         , which:"安装编码"
-	 				} )
-			      ,codeUnique({
-			 		 tableName:"cash"
-				         ,codeField:"cash_id"
-				         ,code:$('#cashId').val()
-				         , which:"收银机编号"
-		} )
-			      ,codeUnique({
-			 		 tableName:"printer"
-				         ,codeField:"printer_id"
-				         ,code:$('#priId').val()
-				         , which:"打印机编号"
-		} )
-			      ,codeUnique({
-			 		 tableName:"equipment"
-				         ,codeField:"eq_id"
-				         ,code:$('#eqId').val()
-				         , which:"采集点编码"
-		} ))
-	 .done(function(){ 
+	  form_empty({code:$('#installCode').val(), which:"安装编号"});
+    form_empty({code:$('#proName').html(), which:"项目名称"});
+    form_empty({code:$('#shopName').html(), which:"商铺名称"});
+	 // $.when(
+  // //   codeUnique({
+		// //  tableName:"install"
+		// // 						         ,codeField:"install_id"
+		// // 						         ,code:$('#installCode').val()
+		// // 						         , which:"安装编码"
+	 // // 				} )
+		// // 	      ,codeUnique({
+		// // 	 		 tableName:"cash"
+		// // 		         ,codeField:"cash_id"
+		// // 		         ,code:$('#cashId').val()
+		// // 		         , which:"收银机编号"
+		// // } )
+		// // 	      ,codeUnique({
+		// // 	 		 tableName:"printer"
+		// // 		         ,codeField:"printer_id"
+		// // 		         ,code:$('#priId').val()
+		// // 		         , which:"打印机编号"
+		// // } )
+		// // 	      ,codeUnique({
+		// // 	 		 tableName:"equipment"
+		// // 		         ,codeField:"eq_id"
+		// // 		         ,code:$('#eqId').val()
+		// // 		         , which:"采集点编码"
+		// // } )
+  //           )
+	 // .done(function(){ 
 
     $.ajax({
       url:domainName +   '/hdk/install/submit', //用于文件上传的服务器端请求地址
@@ -621,7 +625,7 @@ var submit = function() {
       //ajax end
     });
    //done end 
-	 }).fail(function(){alert("网路原因未请求成功")});
+	 // }).fail(function(){alert("网路原因未请求成功")});
 	 
 	 
   }
