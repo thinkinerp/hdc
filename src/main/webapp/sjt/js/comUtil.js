@@ -18,11 +18,23 @@ var readOnly = function(id){
 	$("#" + id).css('background', 'none');
 	$("#" + id).attr('readonly', 'readonly');
 }
-
+function form_empty(config){
+    if(config.code==""  )
+    {
+    	app.alert(config.which+":"+config.code + ",不能为空",1);
+	 return;
+    }
+    else if(config.which="商铺名称")
+    {if(config.code=="未选择"  )
+	{app.alert("请选择"+config.which,1);
+	 return;}
+    }
+}
 function codeUnique(config){
 	var dtd = $.Deferred(); 
-	
-	if('' == config.code ){
+	//判断是否为空 cynthia
+	//if('' == config.code && (config.codeField=="install_id" || config.codeField=="sur_id" || config.codeField=="problem_id" ){
+	if('' == config.code){
 		app.alert(config.which+":"+config.code + ",不能为空",1);
 		return dtd.promise();
 	}

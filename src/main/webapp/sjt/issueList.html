@@ -66,11 +66,11 @@
 		<script type="text/javascript">
 		
 		var gotoDetails =  function(){
-		    //window.SYP.pageLink("网页标题",domainName + "/hdk/sjt/issueDetails.html?"  
-		                                                       //   +"userNum="+params['syp_user_num']
-		                                                       //   +"&userName="+params['syp_user_name']
-		                                                        //  +"&pproName="+$("#itemName").html(),-1);
-		  window.location="issueDetails.html?"  +"userNum="+params['syp_user_num']+"&userName="+params['syp_user_name']+"&pproName="+$("#itemName").html();
+		    window.SYP.pageLink("网页标题",domainName + "/hdk/sjt/issueDetails.html?"  
+		                                                          +"userNum="+params['syp_user_num']
+		                                                          +"&userName="+params['syp_user_name']
+		                                                          +"&pproName="+$("#itemName").html(),-1);
+		 // window.location="issueDetails.html?"  +"userNum="+params['syp_user_num']+"&userName="+params['syp_user_name']+"&pproName="+$("#itemName").html();
 		};
 		var params = function() {
             var query = {},
@@ -105,7 +105,7 @@
 				    
 				    
 				      $.ajax({
-                        url: "/hdk/project/setLast",
+                        url: domainName+"/hdk/project/setLast",
                         type:"get",
                         data:{
                             "proName": $('#itemName').html()
@@ -120,7 +120,7 @@
                 });
 				    
 					$.ajax({	
-					   url: "/hdk/project/getSome",
+					   url:domainName+ "/hdk/project/getSome",
 					   data:{"proName":$('#itemName').html()},
 					   type: "get",
 					   dataType:"jsonp",
@@ -133,7 +133,7 @@
 				},
 				parName:function(){	//项目名称
 					$.ajax({	
-					   url: "/hdk/project/getSome",
+					   url: domainName+ "/hdk/project/getSome",
 					   type: "get",
 					   dataType:"jsonp",
 					   jsonpCallback:"project_null_getSome",
@@ -152,7 +152,7 @@
 					});
 				},lastName:function(){	//上次的项目名称
 					$.ajax({	
-					   url: "/hdk/project/getSome",
+					   url: domainName+ "/hdk/project/getSome",
 					   data:{"isLast":1},
 					   type: "get",
 					   dataType:"jsonp",
@@ -182,7 +182,7 @@
 				},
 				issueClass:function(){	//问题分类汇总
 					$.ajax({	
-					   url: "/hdk/problem/getCount",
+					   url: domainName+ "/hdk/problem/getCount",
 					   data:{"proName":$('#itemName').html()},
 					   type: "get",
 					   dataType:"jsonp",
@@ -212,7 +212,7 @@
 				},
 				staName:function(){
 					$.ajax({	
-					   url: "/hdk/state/getSome",
+					   url: domainName+ "/hdk/state/getSome",
 					   data:{"ownerTable":'problem_station',"isAll":1},
 					   type: "get",
 					   dataType:"jsonp",
@@ -239,7 +239,7 @@
 					                  ,"problemObject":delAll("order")
 					                  ,"state":delAll('surveyState')};
 					$.ajax({	
-					   url: "/hdk/problem/getSome",
+					   url: domainName+ "/hdk/problem/getSome",
 					   data:obj,
 					   type: "get",
 					   dataType:"jsonp",
