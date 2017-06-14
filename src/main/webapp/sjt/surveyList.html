@@ -83,12 +83,12 @@
 		
 		<script type="text/javascript">
 		
-		  var gotoDetails = function() {
+		 var gotoDetails = function() {
 		      window.SYP.pageLink("调研详情",domainName + "/hdk/sjt/surveyDetails.html?userNum="
 		                                                              +params['syp_user_num']
 		                                                              +"&userName="+params['syp_user_name']
-		                                                              +"&pproName="+$("#itemName").html(),-1);
-			//window.location="surveyDetails.html?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
+		                                                             +"&pproName="+$("#itemName").html(),-1);
+			//window.location="surveyDetails.html?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name']+"&pproName="+$('#itemName').html();;
 		  };
 		
 		      var params = function() {
@@ -124,7 +124,7 @@
 				},
 				parName:function(){	//项目名称
 					$.ajax({	
-					   url: "/hdk/project/getSome",
+					   url: domainName +   "/hdk/project/getSome",
 					   type: "get",
 					   dataType:"jsonp",
 					   jsonpCallback:"project_null_getSome",
@@ -144,7 +144,7 @@
 				},
 				lastName:function(){	//上次的项目名称
 					$.ajax({	
-					   url: "/hdk/project/getSome",
+					   url: domainName +   "/hdk/project/getSome",
 					   data:{"isLast":1},
 					   type: "get",
 					   dataType:"jsonp",
@@ -158,7 +158,7 @@
 				},
 				surveyState:function(){	//调研状态
 					$.ajax({	
-					   url: "/hdk/state/getSome",
+					   url: domainName +   "/hdk/state/getSome",
 					   data:{"ownerTable":"shop_mer_station","isAll":1},
 					   type: "get",
 					   dataType:"jsonp",
@@ -181,7 +181,7 @@
 				},
 				selectItem:function(){	//选择项目
 				        $.ajax({
-                        url:"/hdk/project/setLast",
+                        url: domainName +  "/hdk/project/setLast",
                         data:{
                             "proName": $('#itemName').html()
                         },
@@ -195,7 +195,7 @@
                     });
                     var time = new Date().getTime();
 					$.ajax({	
-					   url: "/hdk/project/getSome",
+					   url: domainName +   "/hdk/project/getSome",
 					   data:{"proName":$('#itemName').html(),"time":time},
 					   type: "get",
 					   dataType:"jsonp",
@@ -234,7 +234,7 @@
 					                  "order":delAll('order'),
 					                  "shopMerStation":delAll('surveyState')};
 					$.ajax({	
-					   url: "/hdk/survey/getSome",
+					   url: domainName +   "/hdk/survey/getSome",
 					   data:obj,
 					   type: "get",
 					   dataType:"jsonp",

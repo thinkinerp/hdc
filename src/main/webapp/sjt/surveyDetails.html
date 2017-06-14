@@ -44,8 +44,8 @@
 						<li>
 							<div class="g-importList-title">调研编号：</div>
 							<div class="g-importList-content">
-								<div class="i-import">
-									<input onblur="checkCode(this,'调研')"  type="text" id="dyid" placeholder="请输入" />
+								<div class="i-import" style="border:none">
+									<input  type="text" id="dyid"  readonly />
 								</div>
 							</div>
 						</li>
@@ -174,14 +174,24 @@
 								</div>
 				    		</div>
 				    	</li>
+				    	<!--打印机品牌型号分开 start  -->
 				    	<li>
-				    		<div class="g-importList-title">打印机品牌型号</div>
+				    		<div class="g-importList-title">打印机品牌</div>
+				    		<div class="g-importList-content">
+				    			<div class="i-import">
+									<input type="text"  id="dyjbrand" placeholder="请输入" />
+								</div>
+				    		</div>
+				    	</li>
+				    	<li>
+				    		<div class="g-importList-title">打印机型号</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-import">
 									<input type="text"  id="dyjxh" placeholder="请输入" />
 								</div>
 				    		</div>
 				    	</li>
+				    	<!--打印机品牌型号分开 end  -->
 				    	<li>
 				    		<div class="g-importList-title">打印机端口</div>
 				    		<div class="g-importList-content">
@@ -267,10 +277,9 @@
 				<div class="swiper-slide">
 					<div class="i-addImg">
 						<div class="img" id="imgShow">
-							<!-- <div onclick="app.fullImg(0)"></div>
-							<div onclick="app.fullImg(1)"></div> -->
 						</div>
 						<div class="add"><input type="file" id="fileImg" onchange="app.getImgUrl();"/></div>
+						<div style="clear:both"></div>
 					</div>
 				</div>
 			</div>
@@ -283,6 +292,52 @@
 		
 		<script src="js/swiper.js"></script>
 		<script>
+		  /*====安装cynthia ，获得安装编号 start===*/
+            var time = new Date().getTime();
+            var proId_name="";
+            $.ajax({
+              url: domainName +  '/hdk/project/getSome',
+              type: 'get',
+              data: {
+                time: time
+              },
+              jsonpCallback: "project_" + time + "_getSome",
+              jsonp: "callback",
+              dataType: 'jsonp',
+              success: function(rs) {
+                var str = '';
+                var i = 0;
+                $.each(rs, function(index, item) {
+                  if(item.proName==params["pproName"])
+                   {proId_name=item.proId;}
+                });
+               /*====获得编号 start=====*/
+               getproId()
+            /*====获得编号 end=====*/
+              },
+              error: function(rs) {
+                console.log(rs);
+              }
+            });   
+
+            function getproId()
+            {  $.ajax({
+                url:"http://www.onetoend.cn/hdk/project/getFormCode",
+                dataType:"jsonp",
+                jsonp:"callback",
+                data:{
+                    formType:"survey",
+                    proId:proId_name
+                },
+               type:"post",
+               success:function(res){
+                console.log(res);
+                  $("#dyid").val(res.code);
+               },
+               error:function(res){                   
+               } 
+              });}           
+            /*====安装cynthia ，获得安装编号 end===*/
 		      var params = function() {
             var query = {},
             search = window.location.search.substring(1),
@@ -553,7 +608,9 @@
 			};
 			
 			function submit(){//提交
-			    
+			     form_empty({code:$('#dyid').val(), which:"调研编号"});
+				 form_empty({code:$('#itemName').html(), which:"项目名称"});
+				 form_empty({code:$('#shopName').html(), which:"商铺名称"});
 			       for(var i = 0 ; i<shop.item.length; i++){
                         if(shop.itemName == shop.item[i].proName){
                             shop.itemId =  shop.item[i].proId;
@@ -582,8 +639,10 @@
 //					'cash.installId':'',				//安装编号？
 					//打印机
 					'printer.printerId':dyj.id,			//打印机编号
-					'printer.printerBrand':$("#dyjxh").val(),			//打印机品牌
+					/*====打印机品牌型号cynthia start===*/
+					'printer.printerBrand':$("#dyjbrand").val(),			//打印机品牌
 					'printer.printerModel':$("#dyjxh").val(),		//打印机型号
+					/*====打印机品牌型号cynthia end===*/
 					'printer.printerPort':$("#dyjPort").html(),		//打印机端口
 					'printer.surId':$("#dyid").val(),	//调研编号
 //					'installId':'',						//安装编号？			
@@ -603,25 +662,26 @@
 //					'shops.eqId':''				//采集点编号？ 
 				};
 				try{
-				$.when(codeUnique({
-                                           tableName:"survey"
-                                         ,codeField:"sur_id"
-                                         ,code:$('#dyid').val()
-                                         , which:"调研编码"
-                    } ),
-                    codeUnique({
-                                           tableName:"cash"
-                                         ,codeField:"cash_id"
-                                         ,code:$('#syjId').val()
-                                         , which:"收银机编码"
-                    } ),
-                    codeUnique({
-                                           tableName:"printer"
-                                         ,codeField:"printer_id"
-                                         ,code:$('#dyjId').val()
-                                         , which:"打印机编码"
-                    } )
-                    ).done(function(){
+				// $.when(codeUnique({
+    //                                        tableName:"survey"
+    //                                      ,codeField:"sur_id"
+    //                                      ,code:$('#dyid').val()
+    //                                      , which:"调研编码"
+    //                 } ),
+    //                 codeUnique({
+    //                                        tableName:"cash"
+    //                                      ,codeField:"cash_id"
+    //                                      ,code:$('#syjId').val()
+    //                                      , which:"收银机编码"
+    //                 } ),
+    //                 codeUnique({
+    //                                        tableName:"printer"
+    //                                      ,codeField:"printer_id"
+    //                                      ,code:$('#dyjId').val()
+    //                                      , which:"打印机编码"
+    //                 } )
+    //                 ).done(function(){
+					   
         				$.ajax({	
         					   url: "/hdk/survey/submit",
         					   type: "post",
@@ -644,7 +704,7 @@
         					      app.alert(rs.status,1);
         					   }				   
         					});
-					}).fail(function(){alert("网路问题，请重试");});//done end
+					// }).fail(function(){alert("网路问题，请重试");});//done end
 					}catch(e){  
 					    alert(e.name);
                     throw(e.name); //抛出异常 
@@ -676,8 +736,10 @@
 					'cash.id':xg.data.cash.id,	//自增id
 					'printer.id':xg.data.printer.id,	//打印机自增id
 					'printer.printerId':$('#dyjId').val(),	//打印机编号
-					'printer.printerBrand':$("#dyjxh").val(),	//打印机品牌
+					/*====打印机品牌型号cynthia start====*/	
+					'printer.printerBrand':$("#dyjbrand").val(),	//打印机品牌
 					'printer.printerModel':$("#dyjxh").val(),	//打印机型号
+					/*====打印机品牌型号cynthia start====*/	
 					'printer.printerPort':$('#dyjPort').html(),	//打印机端口
 					'printer.surId':$('#dyid').val(),	//调研编号
 					'shops.id':xg.data.shops.id,	//门店自增id
@@ -779,7 +841,10 @@
 					//打印机
 					if(undefined != data.printer){
 					$("#dyjId").val(data.printer.printerId);
-					$("#dyjxh").val(data.printer.printerBrand);
+					/*===打印机品牌型号cynthia start===*/
+					$("#dyjbrand").val(data.printer.printerBrand);
+					$("#dyjxh").val(data.printer.printerModel);
+					/*===打印机品牌型号cynthia end===*/
 					$("#dyjPort").html(data.printer.printerPort);
 					xg.youzhi("dyjPort");
 					//其他
@@ -875,6 +940,7 @@
                 shop.itemName = params["pproName"];
                 shop.selectPorName();
             }
+
 		</script>
 	</body>
 <!-- <script src="js/buttonAway.js" type="text/javascript" charset="utf-8"></script> -->
