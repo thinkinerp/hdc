@@ -25,6 +25,8 @@ public class Survey {
     private String shopMerStation;
 
     private String surNetwork;
+    
+    private String vipInfo;
 
     private String surPower;
 
@@ -189,6 +191,14 @@ public class Survey {
 
 	public void setShopName(String shopName) {
 		this.shopName = shopName;
+	}
+
+	public String getVipInfo() {
+		return vipInfo;
+	}
+
+	public void setVipInfo(String vipInfo) {
+		this.vipInfo = vipInfo;
 	}
 
 

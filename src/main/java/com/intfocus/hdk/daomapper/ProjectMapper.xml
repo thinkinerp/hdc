@@ -110,7 +110,7 @@ inner join equipment as e on p.pro_id = e.pro_id
    select  c.cash_port as problem_object , count(c.cash_id) as count
     from project as p 
 inner join install as i on i.pro_id = p.pro_id
-inner join cash as c on i.install_id = c.install_id
+inner join cash as c on i.cash_id = c.cash_id
 	<where>
     	1=1
     		<if test="null != proName  and '' != proName">
@@ -125,15 +125,22 @@ group by  c.cash_port
   </select>
 
       <select id="getCheck" resultMap="BaseResultMap" parameterType="java.util.Map" >
-select (c.pro_check/project.pro_need)*100 as pro_already_per
-  			,(b.pro_already/project.pro_need)*100 as pro_check_per
-  			,  (a.install_data/b.pro_already)*100 as count
-  			,pro_todal 
-  			,pro_need
-  			,b.pro_already
-  			,c.pro_check
-  			,(pro_need - b.pro_already - c.pro_check) as left_num
-  from project
+select (c.pro_check/project.pro_need)*100 as pro_already_per 
+,(b.pro_already/project.pro_need)*100 as pro_check_per 
+, (a.install_data/project.pro_need)*100 as count ,a.install_data,b.pro_already
+,p.pro_todal ,p.pro_need ,b.pro_already ,c.pro_check ,(p.pro_need - b.pro_already - c.pro_check) as left_num 
+  from project as p 
+left join 
+(
+SELECT COUNT(1) as pro_need FROM INSTALL a,project b
+WHERE a.pro_id =b.pro_id
+    		<if test="null != proName  and '' != proName">
+				and b.pro_name = #{proName,jdbcType=VARCHAR}
+			</if>	
+			<if test="null != proId  and '' != proId">
+				and b.pro_id = #{proId,jdbcType=VARCHAR}
+			</if>	
+) as project on 1=1
 left join (
     select count(i.install_id) as install_data
       from project as p 
@@ -142,7 +149,7 @@ where  i.install_data = '准确'
     		<if test="null != proName  and '' != proName">
 				and p.pro_name = #{proName,jdbcType=VARCHAR}
 			</if>	
-									    <if test="null != proId  and '' != proId">
+			<if test="null != proId  and '' != proId">
 				and p.pro_id = #{proId,jdbcType=VARCHAR}
 			</if>	
 ) as a on 1=1
@@ -150,11 +157,11 @@ left join (
     select count(i.install_id) as pro_already
       from project as p
 inner join install as i on i.pro_id = p.pro_id
-where  i.install_station in('已安装','已验收') 
+where  i.install_station   &lt;&gt; '未安装'
     		<if test="null != proName  and '' != proName">
 				and p.pro_name = #{proName,jdbcType=VARCHAR}
 			</if>	
-									    <if test="null != proId  and '' != proId">
+			<if test="null != proId  and '' != proId">
 				and p.pro_id = #{proId,jdbcType=VARCHAR}
 			</if>	
 ) as b on 1=1 

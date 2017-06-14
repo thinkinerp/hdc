@@ -63,8 +63,8 @@ var shopStateSeach = function(){
 	 						"				</div>" +
 	 						"				<div class='i-itemDetail-area-content'>" +
 	 						"					<div class='content-row'>" +
-	 						"						<p>采集点编号</p>" +
-	 						"						<p>"+item.eqId+"</p>" +
+//	 						"						<p>采集点编号</p>" +
+//	 						"						<p>"+item.eqId+"</p>" +
 	 						"						<!-- i标签 on1无需安装   on2已安装   on3安装失败  on4未安装   on5未开业  on6已拆除 -->" +
 	 						"						<p><i class='"+shopSta+"'></i>"+item.installStation+"</p>" +
 	 						"					</div>" +
@@ -72,18 +72,21 @@ var shopStateSeach = function(){
 	 						"						<p>采集接口类型</p>" +
 	 						"						<p>"+(undefined == item.eqType?"":item.eqType)+"</p>" +
 	 						"					</div>" +
-//	 						"					<div class='content-row'>" +
-//	 						"						<p>收银机操作系统</p>" +
-//	 						"						<p>"+(undefined == item.cashSystem?"":item.cashSystem)+"</p>" +
-//	 						"					</div>" +
+	 						"					<div class='content-row'>" +
+	 						"						<p>收银机编号</p>" +
+	 						"						<p>"+(undefined == item.cashSystem?"":item.cashId)+"</p>" +
+	 						"					</div>" +
+	 						"					<div class='content-row'>" +
+	 						"						<p>采集方式</p>" +
+	 						"						<p>"+(undefined == item.cashSystem?"":item.eqStyle)+"</p>" +
+	 						"					</div>" +
 	 						"				</div>"
 	 					
 	 				);	
 	 			});
 	 		},
 	  		error:function(rs){
-	  			console.log(rs);
-	 		}
+	  			console.log(rs); }
 	  });	
 }
 

@@ -29,7 +29,7 @@
 		</div>
 		<!-- 项目状态 -->
 		<div class="i-itemStyle">
-			<div class="i-itemStyle-title">上海新天地时尚</div>
+			<div class="i-itemStyle-title"></div>
 			<div class="i-itemStyle-list"></div>
 		</div>
 		<!-- 1 -->
@@ -163,7 +163,8 @@
 					})
 				},upItemStyle:function(data){	//更改显示项目信息
 					this.proName = data[0].proName;	
-					$('#itemName,.i-itemStyle-title').html(this.proName);	
+					$('#itemName').html(this.proName);
+					// $('#itemName,.i-itemStyle-title').html(this.proName);	
 					var itemStyleDom = [];
 			   		itemStyleDom.push('<div>');
 			   		itemStyleDom.push('<p>项目经理</p>');

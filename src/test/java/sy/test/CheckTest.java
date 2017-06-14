@@ -17,11 +17,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSONObject;
+import com.intfocus.hdk.dao.FormCodeMapper;
 import com.intfocus.hdk.dao.MessageMapper;
 import com.intfocus.hdk.dao.ProblemMapper;
 import com.intfocus.hdk.dao.ProjectMapper;
 import com.intfocus.hdk.dao.SurveyMapper;
 import com.intfocus.hdk.dao.UserMapper;
+import com.intfocus.hdk.service.FormCodeService;
 import com.intfocus.hdk.util.StaticVariableUtil;
 import com.intfocus.hdk.vo.Message;
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -44,8 +46,25 @@ public class CheckTest {
     private SurveyMapper surveyMapper;
     @Resource
     private MessageMapper messageMapper;
-    
-    
+    @Resource
+    private FormCodeMapper formCodeMapper;
+    @Resource
+    private FormCodeService formCodeService;
+    @Test
+    public void testFormCodeService(){
+    	System.out.println(formCodeService.getFormCode("install", "pro_001"));
+    }
+    @Test
+    public void testFormCodeMapper(){
+    	
+    	formCodeMapper.updateMaxCode("install");
+    	Map<String, String> where = new HashMap<String,String>();
+    	where.put("formType", "install");
+		System.out.println(JSONObject.toJSONString(formCodeMapper.selectByWhere(where )));
+		
+		
+		
+    }
     @Test
     public void testProblemMapperCodeUnique(){
     	Map<String, String> where = new HashMap<String,String>();

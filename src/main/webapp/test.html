@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+        <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+	$.ajax({
+	    url:"http://www.onetoend.cn
+	    /hdk/project/getFormCode",
+	    dataType:"jsonp",
+	    jsonp:"callback",
+	    data:{
+	        formType:"install",
+	        proId:"pro_001"
+	    },
+	   type:"post",
+	   success:function(res){
+	      console.log(res); 
+	   },
+	   error:function(res){
+	       
+	   } 
+	});
+	
+</script>
+</body>
+</html>

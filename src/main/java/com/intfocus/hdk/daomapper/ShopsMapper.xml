@@ -11,7 +11,9 @@
     <result column="shop_type" property="shopType" jdbcType="VARCHAR" />
     <result column="shop_sec_type" property="shopSecType" jdbcType="VARCHAR" />
     <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="cash_id" property="cashId" jdbcType="VARCHAR" />
     <result column="pro_id" property="proId" jdbcType="VARCHAR" />
+    <result column="eq_style" property="eqStyle" jdbcType="VARCHAR" />
     <result column="eq_type" property="eqType" jdbcType="VARCHAR" />
     <result column="install_id" property="installId" jdbcType="VARCHAR" />
     <result column="install_station" property="installStation" jdbcType="VARCHAR" />
@@ -22,7 +24,7 @@
     shops.id, shops.shop_id, shops.shop_position, shops.shop_floor
     , shops.shop_mer_name, shops.shop_mer_station, shops.shop_type, 
     shops.shop_sec_type, shops.shop_name, shops.pro_id
-    ,equipment.eq_type,cash.cash_system,install.install_id,install.install_station,equipment.eq_id
+    ,equipment.eq_type,cash.cash_system,install.install_id,install.install_station,equipment.eq_id,cash.cash_id,equipment.eq_style
   </sql>
   <sql id="origin_Column_List" >
     shops.id, shops.shop_id, shops.shop_position, shops.shop_floor

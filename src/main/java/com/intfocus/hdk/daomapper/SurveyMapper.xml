@@ -10,6 +10,7 @@
     <result column="shop_mer_station" property="shopMerStation" jdbcType="VARCHAR" />
     <result column="sur_power" property="surPower" jdbcType="VARCHAR" />
     <result column="sur_vip" property="surVip" jdbcType="VARCHAR" />
+    <result column="vip_info" property="vipInfo" jdbcType="VARCHAR" />
     <result column="sur_vip_data" property="surVipData" jdbcType="VARCHAR" />
     <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
     <result column="created_at" property="createdAt" jdbcType="VARCHAR" />
@@ -23,7 +24,7 @@
 
   <sql id="Base_Column_List" >
       survey.id, survey.pro_id, survey.shop_id, survey.sur_network, survey.sur_power, survey.sur_vip, survey.sur_vip_data
-      , survey.created_at, survey.updated_at,survey.sur_id,shops.shop_name,shops.shop_mer_station,project.pro_name,survey.attachement_url
+      , survey.created_at, survey.updated_at,survey.sur_id,shops.shop_name,shops.shop_mer_station,project.pro_name,survey.attachement_url,survey.vip_info
   </sql>
   
   <sql id="extra_Column_List" >
@@ -192,11 +193,11 @@
       <if test="surPower != null" >
         sur_power,
       </if>
-      <if test="surVip != null" >
-        sur_vip,
-      </if>
       <if test="surVipData != null" >
         sur_vip_data,
+      </if>
+      <if test="vipInfo != null" >
+        vip_info,
       </if>
       <if test="createdAt != null" >
         created_at,
@@ -209,6 +210,9 @@
       </if>
       <if test="attachmentUrl != null" >
         attachement_url,
+      </if>
+      <if test="surVip != null" >
+        sur_vip,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -248,6 +252,9 @@
       <if test="attachmentUrl != null" >
         #{attachmentUrl,jdbcType=VARCHAR},
       </if>
+      <if test="vipInfo != null" >
+        #{vipInfo,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.intfocus.hdk.vo.Survey" >
@@ -285,6 +292,9 @@
       </if>
       <if test="attachmentUrl != null" >
         attachement_url = #{attachmentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="vipInfo != null" >
+      vip_info=   #{vipInfo,jdbcType=VARCHAR},
       </if>
     </set>
     where sur_id = #{surId,jdbcType=INTEGER}

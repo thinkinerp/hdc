@@ -211,7 +211,8 @@
 				upItemStyle:function(data){	//更改显示项目信息
 			
                         this.proName = data[0].proName;					
-                        $('#itemName,.i-itemStyle-title').html(this.proName);	
+                        $('#itemName').html(this.proName);
+                        // $('#itemName,.i-itemStyle-title').html(this.proName);	
                            var itemStyleDom = [];
                            itemStyleDom.push('<div>');
                            itemStyleDom.push('<p>项目经理</p>');
@@ -254,7 +255,7 @@
 					   			//dom.push('<p><i class="on1"></i>无需安装</p>');
 					   			dom.push('</div>');
 					   			dom.push('<div class="content-row">');
-					   			dom.push('<p>状态</p>');
+					   			dom.push('<p>商铺状态</p>');
 					   			dom.push('<p>'+data[i].shopMerStation+'</p>');
 					   			dom.push('</div>');
 					   			dom.push('<div class="content-row">');
