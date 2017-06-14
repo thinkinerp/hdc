@@ -402,6 +402,34 @@ if(undefined != params["installId"] && "" != params["installId"]){
 		}
 	});
 }
+else
+{    var time = new Date().getTime();
+            var proId_name="";
+            $.ajax({
+              url: domainName +  '/hdk/project/getSome',
+              type: 'get',
+              data: {
+                time: time
+              },
+              jsonpCallback: "project_" + time + "_getSome",
+              jsonp: "callback",
+              dataType: 'jsonp',
+              success: function(rs) {
+                var str = '';
+                var i = 0;
+                $.each(rs, function(index, item) {
+                  if(item.proName==params["pproName"])
+                   {proId_name=item.proId;}
+                });
+               /*====获得编号 start=====*/
+               getproId()
+              /*====获得编号 end=====*/
+              },
+              error: function(rs) {
+                console.log(rs);
+              }
+            });  
+  }
 
 
 var submit = function() {

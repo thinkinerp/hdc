@@ -437,33 +437,7 @@
             $(".i-choice-row div").click(function(){    //单选
                 $(this).addClass('on').parent('div').siblings('.i-choice-row').find('div').removeClass('on');
             });
-            /*====安装cynthia ，获得安装编号 start===*/
-            var time = new Date().getTime();
-            var proId_name="";
-            $.ajax({
-              url: domainName +  '/hdk/project/getSome',
-              type: 'get',
-              data: {
-                time: time
-              },
-              jsonpCallback: "project_" + time + "_getSome",
-              jsonp: "callback",
-              dataType: 'jsonp',
-              success: function(rs) {
-                var str = '';
-                var i = 0;
-                $.each(rs, function(index, item) {
-                  if(item.proName==params["pproName"])
-                   {proId_name=item.proId;}
-                });
-               /*====获得编号 start=====*/
-               getproId()
-            /*====获得编号 end=====*/
-              },
-              error: function(rs) {
-                console.log(rs);
-              }
-            });   
+            /*====安装cynthia ，获得安装编号 start===*/         
             function getproId()
             {  $.ajax({
                 url:"http://www.onetoend.cn/hdk/project/getFormCode",

@@ -292,34 +292,7 @@
 		
 		<script src="js/swiper.js"></script>
 		<script>
-		  /*====安装cynthia ，获得安装编号 start===*/
-            var time = new Date().getTime();
-            var proId_name="";
-            $.ajax({
-              url: domainName +  '/hdk/project/getSome',
-              type: 'get',
-              data: {
-                time: time
-              },
-              jsonpCallback: "project_" + time + "_getSome",
-              jsonp: "callback",
-              dataType: 'jsonp',
-              success: function(rs) {
-                var str = '';
-                var i = 0;
-                $.each(rs, function(index, item) {
-                  if(item.proName==params["pproName"])
-                   {proId_name=item.proId;}
-                });
-               /*====获得编号 start=====*/
-               getproId()
-               /*====获得编号 end=====*/
-              },
-              error: function(rs) {
-                console.log(rs);
-              }
-            });   
-
+		  /*====安装cynthia ，获得安装编号 start===*/ 
             function getproId()
             {  $.ajax({
                 url:"http://www.onetoend.cn/hdk/project/getFormCode",
@@ -331,7 +304,6 @@
                 },
                type:"get",
                success:function(res){
-                console.log(res);
                   $("#dyid").val(res.code);
                },
                error:function(res){                   
@@ -766,13 +738,9 @@
 					   dataType:"json",			
 					  // jsonpCallback:"state_null_getSome",
 					   success:function(data){
-					   		if(data.message == "success"){
-					  	
-
+					   		if(data.message == "success"){	
                                  window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功",
                                                             domainName + '/hdk/sjt/surveyList.html');
-          
-
 
 					   		}else if(data.message == "fail"){
 					   			app.alert('修改失败',1);
@@ -902,13 +870,40 @@
 					$("#" + id).removeClass('on');
 				}
 			}
+			var proId_name="";
 			$(function(){				
-				var surId = app.getUrlSearch("surId");
+				var surId = app.getUrlSearch("surId");				
 				if(surId == null){	// 新建
 					shop.init();
 					syj.init();
 					dyj.init();
-					
+					var time = new Date().getTime();
+		            
+		            $.ajax({
+		              url: domainName +  '/hdk/project/getSome',
+		              type: 'get',
+		              data: {
+		                time: time
+		              },
+		              jsonpCallback: "project_" + time + "_getSome",
+		              jsonp: "callback",
+		              dataType: 'jsonp',
+		              success: function(rs) {
+		                var str = '';
+		                var i = 0;
+		                $.each(rs, function(index, item) {
+		                  if(item.proName==params["pproName"])
+		                   {proId_name=item.proId;}
+
+		                });
+		               /*====获得编号 start=====*/
+		               getproId()
+		               /*====获得编号 end=====*/
+		              },
+		              error: function(rs) {
+		                console.log(rs);
+		              }
+		            });  
 					$("#save").click(function(){ //保存按钮
 						app.alert("确定要保存吗？",2,submit)
 					});
