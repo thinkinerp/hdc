@@ -500,9 +500,12 @@ var submit = function() {
 
 
   } else {
-	  form_empty({code:$('#installCode').val(), which:"安装编号"});
-    form_empty({code:$('#proName').html(), which:"项目名称"});
-    form_empty({code:$('#shopName').html(), which:"商铺名称"});
+	  if(form_empty({code:$('#installCode').val(), which:"安装编号"}))
+      {return;}
+    if(form_empty({code:$('#proName').html(), which:"项目名称"}))
+      {return;}
+    if(form_empty({code:$('#shopName').html(), which:"商铺名称"}))
+      {return;}
 	 // $.when(
   // //   codeUnique({
 		// //  tableName:"install"
