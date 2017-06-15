@@ -281,6 +281,7 @@ var app ={
 		app.imgsShow();
 	},
 	imgsShow:function(picSize){	//显示图片
+
 		$("#imgShow").find('div').hide();
 		$("#imgShow").find('div').find('img').remove();
 		var isIOS = (/iphone|ipad/gi).test(navigator.appVersion);
@@ -381,7 +382,7 @@ function removeByValue(arr, val) {
   }
 }
 function chk_brand(dyjbrand,dyjxh,dyjPort,obj)
-{ if(dyjbrand!="" || dyjxh!="" || dyjPort!="" )
+{ if((dyjbrand!=""&&dyjbrand!="未选择") || (dyjxh!=""&&dyjxh!="未选择") || (dyjPort!=""&&dyjPort!="未选择") )
 				 {codeUnique({
                                            tableName:"cash"
                                          ,codeField:"cash_id"
@@ -391,7 +392,7 @@ function chk_brand(dyjbrand,dyjxh,dyjPort,obj)
 			     }
 }
 function chk_print(dyjbrand,dyjxh,dyjPort,obj)
-{ if(dyjbrand!="" || dyjxh!="" || dyjPort!="" )
+{ if((dyjbrand!=""&&dyjbrand!="未选择") || (dyjxh!=""&&dyjxh!="未选择") || (dyjPort!=""&&dyjPort!="未选择") )
 				 { codeUnique({
                                            tableName:"printer"
                                          ,codeField:"printer_id"
