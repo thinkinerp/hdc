@@ -372,7 +372,34 @@ var app ={
 	}
 	
 }
-
+function removeByValue(arr, val) {
+  for(var i=0; i<arr.length; i++) {
+    if(arr[i] == val) {
+      arr.splice(i, 1);
+      break;
+    }
+  }
+}
+function chk_brand(dyjbrand,dyjxh,dyjPort)
+{ if(dyjbrand!="" || dyjxh!="" || dyjPort!="" )
+				 {codeUnique({
+                                           tableName:"cash"
+                                         ,codeField:"cash_id"
+                                         ,code:$(obj).val()
+                                         , which:"收银机编码"
+                    } );
+			     }
+}
+function chk_print(dyjbrand,dyjxh,dyjPort,obj)
+{ if(dyjbrand!="" || dyjxh!="" || dyjPort!="" )
+				 { codeUnique({
+                                           tableName:"printer"
+                                         ,codeField:"printer_id"
+                                         ,code:$(obj).val()
+                                         , which:"打印机编码"
+                    } );
+			     }
+}
 $(function(){
 	$("#menu div").click(function() {	//顶部菜单点击下面内容区改变
 		var index = $(this).index();
@@ -386,6 +413,7 @@ $(function(){
 	$(".i-choice-row div").click(function(){	//单选
 		$(this).addClass('on').parent('div').siblings('.i-choice-row').find('div').removeClass('on');
 	})
+
 	
 })
 buttonFixed();

@@ -207,13 +207,13 @@
 				    	<li>
 				    		<div class="g-importList-title" style="width: 3.1rem;">客户网络情况</div>
 				    		<div class="g-importList-content">
-				    			<div class="i-choice">
-				    				<div class="i-choice-row">
-				    					<div id="qt1" onclick="qt.selectNetwork('外网')"></div>
+				    			<div class="i-choicechk">
+				    				<div class="i-choice-rowchk">
+				    					<div id="qt1" onclick="qt.selectNetwork('外网','qt1')"></div>
 				    					<p>外网</p>
 				    				</div>
-				    				<div class="i-choice-row">
-				    					<div id="qt2" onclick="qt.selectNetwork('wifi')"></div>
+				    				<div class="i-choice-rowchk">
+				    					<div id="qt2" onclick="qt.selectNetwork('wifi','qt2')"></div>
 				    					<p>wifi</p>
 				    				</div>
 				    			</div>
@@ -249,7 +249,7 @@
 				    			</div>
 				    		</div>
 				    	</li>
-				    	<li>
+				    	<li id="vipshow" style="visibility: hidden;">
 				    		<div class="g-importList-title" style="width: 3.1rem;">会员信息是否小票上体现</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-choice">
@@ -263,14 +263,16 @@
 				    				</div>
 				    			</div>
 				    		</div>
+
 				    	</li>
-				    	<li style="visibility: hidden;" id="subnote">
-				    		<div class="g-importList-title" style="width: 3.1rem;"> </div>
+				    	<li style="visibility: hidden;height:auto" id="subnote">
+				    		<div class="g-importList-title2" style="width: 3.1rem;">会员信息</div>
 				    		<div class="g-importList-content">
-				    			<div class="i-import">
-									<input  type="text" id="vipinfo" placeholder="请输入" />
-								</div>
+				    			<div class="i-choicechk" id="vipchkbox">
+				    				
+				    			</div>
 				    		</div>
+				    		<input type="hidden" id="vipinfo" value="">
 				    	</li>
 				    </ul>
 				</div>
@@ -556,18 +558,39 @@
 			}
 			
 			var qt = {//其他
-				network:null,	//网络情况
+				network:"",	//网络情况
 				plug:null,		//电源插口情况 
 				vip:null,       //租户是否有会员系统
 				note:null,		//是否小票
-				selectNetwork:function(data){
-					qt.network = data;
+				selectNetwork:function(data,obj){
+					if($("#"+obj).hasClass("on"))
+					{
+						$("#"+obj).removeClass("on");
+						var ss=qt.network.split(",")
+						removeByValue(ss, data);
+						qt.network=ss.join(",")
+			        }
+				else
+					{$("#"+obj).addClass('on');
+						if(qt.network.length==0)
+						{qt.network+=data;}
+						else
+						{
+							if(qt.network.indexOf(data)==-1)
+							qt.network+=","+data;
+						}
+			      }
 				},		
 				selectPlug:function(data){
 					qt.plug = data;
 				},		
 				selectVip:function(data){
 					qt.vip = data;
+					if(data == "是"){
+						$("#vipshow").css("visibility","inherit");
+					}else{
+						$("#vipshow").css("visibility","hidden");
+					}
 				},		
 				selectNote:function(data){
 					qt.note = data;
@@ -586,6 +609,16 @@
 				 	{return;}
 				 if(form_empty({code:$('#shopName').html(), which:"商铺名称"}))
 				 	{return;}
+				 //验证收银机编号和打印机编号 start
+				 var syjSystem_txt=$("#syjSystem").html();
+				 var syjBrand_txt=$("#syjBrand").html();
+				 var syjPort_txt=$("#syjPort").html();
+				chk_brand(syjSystem_txt,syjBrand_txt,syjPort_txt,"#syjId");
+				var dyjbrand_txt=$("#dyjbrand").val();
+				 var dyjxh_txt=$("#dyjxh").html();
+				 var dyjPort_txt=$("#dyjPort").html();
+				chk_print(dyjbrand_txt,dyjxh_txt,dyjPort_txt,"#dyjId");
+                 //验证收银机编号和打印机编号 end  
 			       for(var i = 0 ; i<shop.item.length; i++){
                         if(shop.itemName == shop.item[i].proName){
                             shop.itemId =  shop.item[i].proId;
@@ -599,7 +632,7 @@
 					'survey.surNetwork':qt.network,			//网络环境
 					'survey.surPower':qt.plug,				//电源插口
 					'survey.surVip':qt.vip,					//会员系统
-					'survey.surVipData':$("#vipinfo").val(),	//会员信息
+					'survey.vipInfo':$("#vipinfo").val(),	//会员信息
 					'survey.surId':$("#dyid").val(),		  //调研编号
 //					'survey.attachmentUrl':JSON.stringify(imgs),
 //					'survey.surRemarks':'',				 //备注？
@@ -694,7 +727,7 @@
 					'survey.surNetwork':qt.network,	//商户网络环境
 					'survey.surPower':qt.plug,		//电源插卡
 					'survey.surVip':qt.vip,		//会员系统
-					'survey.surVipData':$("#vipinfo").val(),	//会员信息
+					'survey.vipInfo':$("#vipinfo").val(),	//会员信息
 //					'survey.createdAt':'',	//创建时间？
 					'survey.surId':$('#dyid').val(),		//调研编码
 //					'survey.updatedAt':'',	//更新时间？
@@ -843,12 +876,12 @@
 						qt.vip = "否";
 					}
 					}
-					if(data.survey.surVipData != null ){
+					if(data.survey.vipInfo != null ){
 						$('#qt7').addClass('on');
 						qt.note = "是";
 						$("#subnote").css("visibility","inherit");
-						$('#vipinfo').val(data.survey.surVipData);
-					}else if(data.survey.surVipData == null){
+						$('#vipinfo').val(data.survey.vipInfo);
+					}else if(data.survey.vipInfo == null){
 						$('#qt8').addClass('on');
 						qt.note = "否";
 					}
@@ -938,7 +971,53 @@
                 shop.itemName = params["pproName"];
                 shop.selectPorName();
             }
-
+            loadsurvey();
+			 function loadsurvey(id , table,isAll){
+				 var time = (new Date().getTime());
+				 var qtidx,vipid;
+				 $.ajax({ 
+					 url: domainName+'/hdk/state/getSome',
+					 type:'get',
+					 data:{
+							'ownerTable':"vip_info"
+					 },
+				 		//jsonpCallback:"state_"+time+"_getSome",
+				 		jsonp: "callback",
+					 dataType:'jsonp',
+					 success:function(rs){
+						 var str = '';
+						 var i = 0 ;
+						 $.each(rs,function(index,item){
+var vipinfotxt='<div class="i-choice-rowchk"><div></div><p>'+item.staName+'</p></div>';
+							 $("#vipchkbox").append(vipinfotxt);
+							 qtidx=index+9;
+							 vipid="qt"+qtidx;
+							 $("#vipchkbox").find(".i-choice-rowchk").eq(index).find("div").attr("id",vipid);								 				 
+						 });
+					 },
+					 error:function(rs){
+					 }
+				 });
+				
+			 }
+			  var viparr=[];	
+				 $("#vipchkbox").on("click",".i-choice-rowchk",function()
+				 		{
+				 	var data=$(this).find("p").html();
+				 	//会员信息 start	
+				 	var objthis=$(this).find("div");			 	
+				 	if(objthis.hasClass("on"))
+					{
+						objthis.removeClass("on");
+						removeByValue(viparr, data);
+			        }
+				else
+					{objthis.addClass('on');
+						viparr.push(data);
+			     	}
+			     	$("#vipinfo").val(viparr.join(","));
+			     	//会员信息 end
+				 })
 		</script>
 	</body>
 <!-- <script src="js/buttonAway.js" type="text/javascript" charset="utf-8"></script> -->

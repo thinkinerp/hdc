@@ -224,6 +224,7 @@ var loadInstall = function(allThing){
         
         $('#priId').val(isUndefined(allObjs.printer.printerId));
         $('#priBrand').val(isUndefined(allObjs.printer.printerBrand));
+        $("#dyjxh").val(isUndefined(allObjs.printer.printerModel));
         $('#printerPort').html(isUndefined(allObjs.printer.printerPort));
 
         // 采集点
@@ -271,6 +272,7 @@ function loadPrinterAndCasher(surId) {
       if(undefined != rs.printer){
         $('#priId').val(rs.printer.printerId);
         $('#priBrand').val(rs.printer.printerBrand);
+        $("#dyjxh").val(rs.printer.printerModel);
         $('#prinPort').val(rs.printer.printerPort);
       }
       if(undefined != rs.cash){
@@ -479,14 +481,11 @@ var submit = function() {
         'cash.cashPort': $("#cashPort").html(),
         'cash.printerDriver': ($("#t").attr("class") == "off" ? "否" : "是"),
         'cash.surId': surId,
-        'cash.installId': $("#installCode").val()
-          //打印机
-          ,
+        'cash.installId': $("#installCode").val(),          
         'printer.id': allObjs.printer.id,
         'printer.printerId': $('#priId').val(),
-        'printer.printerBrand': $('#priBrand').val()
-          //          ,'printerModel':''
-          ,
+        'printer.printerBrand': $('#priBrand').val(),
+        'printer.printerModel':$("#dyjxh").val(),    //打印机型号
         'printer.printerPort': $('#printerPort').html(),
         'printer.surId': surId,
         'printer.installId': $("#installCode").val()
@@ -534,6 +533,16 @@ var submit = function() {
       {return;}
     if(form_empty({code:$('#shopName').html(), which:"商铺名称"}))
       {return;}
+     //验证收银机编号和打印机编号 start
+         var cashSystem_txt=$("#cashSystem").html();
+         var cashBrand_txt=$("#cashBrand").html();
+         var cashPort_txt=$("#cashPort").html();
+        chk_brand(cashSystem_txt,cashBrand_txt,cashPort_txt,"#cashId");
+        var priBrand_txt=$("#priBrand").val();
+         var dyjxh_txt=$("#dyjxh").html();
+         var dyjPort_txt=$("#printerPort").html();
+        chk_print(priBrand_txt,dyjxh_txt,dyjPort_txt,"#priId");
+         //验证收银机编号和打印机编号 end 
 	 // $.when(
   // //   codeUnique({
 		// //  tableName:"install"
@@ -579,42 +588,41 @@ var submit = function() {
         'install.printerId': $('#printCode').html(),
         'install.eqId': $('#equipmentCode').html(),
         'install.installData': $('#installData').html(),
-        'install.installTime': $('#installTime').val()
+        'install.installTime': $('#installTime').val()  ,
           //,'install.installUser':''
-          ,
+        
         'install.installNetwork': $('#installNetworkHard').attr('class') == 'on' ? "硬件" : "软件",
-        'install.installRemote': $('#installRemote').val()
+        'install.installRemote': $('#installRemote').val() ,
           //,'install.installEndtime':
           //,'install.install.createdAt':''
           //,'install.updatedAt':''
           //,'install.installRemarks':''
           //收银机
           //          ,"cash.id":allObjs.cash.id
-          ,
+         
         'cash.cashId': $("#cashId").val(),
-        'cash.cashBrand': $("#cashBrand").html()
+        'cash.cashBrand': $("#cashBrand").html()  ,
           //,'cashRegister':''
-          ,
+        
         'cash.cashSystem': $("#cashSystem").html(),
         'cash.cashPort': $("#cashPort").html(),
         'cash.printerDriver': ($("#t").attr("class") == "off" ? "否" : "是"),
         'cash.surId': surId,
-        'cash.installId': $("#installCode").val()
+        'cash.installId': $("#installCode").val(),
           //打印机
           //          ,'printer.id':allObjs.printer.id
-          ,
+       
         'printer.printerId': $('#priId').val(),
-        'printer.printerBrand': $('#priBrand').val()
-          //          ,'printerModel':''
-          ,
+        'printer.printerBrand': $('#priBrand').val(),
+        'printer.printerModel':$("#dyjxh").val(), //打印机型号
         'printer.printerPort': $('#printerPort').html(),
         'printer.surId': surId,
-        'printer.installId': $("#installCode").val()
+        'printer.installId': $("#installCode").val(),
           //          ,'createdAt':''
           //          ,'updatedAt':''
           //采集点
           //          ,'equipment.id':allObjs.equipment.id
-          ,
+     
         'equipment.eqId': $("#eqId").val(),
         'equipment.eqType': $('#eqTypeHard').attr('class') == "on" ? "硬件" : "软件",
         'equipment.eqStyle': $("#eqStyle").html()
