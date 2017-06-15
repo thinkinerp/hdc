@@ -799,7 +799,7 @@
 				},
 				getData:function(){
 					$.ajax({	
-					   url: "/hdk/survey/gotoModify",
+					   url: domainName+"/hdk/survey/gotoModify",
 					   // url: "http://localhost:8080/hdk/survey/gotoModify",
 					   type: "get",
 					   data:{"surId":xg.surId},
@@ -881,11 +881,19 @@
 						qt.vip = "否";
 					}
 					}
+					data.survey.vipInfo="电话,姓名";
 					if(data.survey.vipInfo != null ){
 						$('#qt7').addClass('on');
 						qt.note = "是";
+						$("#vipshow").css("visibility","inherit");
 						$("#subnote").css("visibility","inherit");
 						$('#vipinfo').val(data.survey.vipInfo);
+						$("#vipchkbox .i-choice-rowchk").each(function(){
+							var viptxt=$(this).find("p").html();
+							var vipchktxt=$('#vipinfo').val();
+						    if (vipchktxt.indexOf(viptxt)!=-1)
+						    	{$(this).find("div").addClass("on");}
+						  });
 					}else if(data.survey.vipInfo == null){
 						$('#qt8').addClass('on');
 						qt.note = "否";
