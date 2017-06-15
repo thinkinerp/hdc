@@ -344,12 +344,14 @@
                     $("#shopFl1").html('');
                     $("#shopFl2").html('');
                     $("#shopID").html('');
-			
+			   if(shop.item)
+				{	
 					for(var i = 0 ; i<shop.item.length; i++){
 						if(shop.itemName == shop.item[i].proName){
 							shop.itemId =  shop.item[i].proId;
 						}
 					}
+				}
 				},
 				initPorName:function(){	//初始化项目名称
 					var time  =  new Date().getTime();
@@ -904,6 +906,34 @@
 				}
 			}
 			var proId_name="";
+			 function loadsurvey(id , table,isAll){
+				 var time = (new Date().getTime());
+				 var qtidx,vipid;
+				 $.ajax({ 
+					 url: domainName+'/hdk/state/getSome',
+					 type:'get',
+					 data:{
+							'ownerTable':"vip_info"
+					 },
+				 		//jsonpCallback:"state_"+time+"_getSome",
+				 		jsonp: "callback",
+					 dataType:'jsonp',
+					 success:function(rs){
+						 var str = '';
+						 var i = 0 ;
+						 $.each(rs,function(index,item){
+						var vipinfotxt='<div class="i-choice-rowchk"><div></div><p>'+item.staName+'</p></div>';
+							 $("#vipchkbox").append(vipinfotxt);
+							 qtidx=index+9;
+							 vipid="qt"+qtidx;
+							 //"#vipchkbox").find(".i-choice-rowchk").eq(index).find("div").attr("id",vipid);								 				 
+						 });
+					 },
+					 error:function(rs){
+					 }
+				 });
+				
+			 }
 			$(function(){				
 				var surId = app.getUrlSearch("surId");				
 				if(surId == null){	// 新建
@@ -948,6 +978,7 @@
 						app.alert("确定要保存吗？",2,xgsubmit);
 					});
 				}
+				loadsurvey();
 			});
 			swiper1 = new Swiper('.swiper-container1', {	//菜单区滑块
 				paginationClickable: true,
@@ -971,35 +1002,8 @@
                 shop.itemName = params["pproName"];
                 shop.selectPorName();
             }
-            loadsurvey();
-			 function loadsurvey(id , table,isAll){
-				 var time = (new Date().getTime());
-				 var qtidx,vipid;
-				 $.ajax({ 
-					 url: domainName+'/hdk/state/getSome',
-					 type:'get',
-					 data:{
-							'ownerTable':"vip_info"
-					 },
-				 		//jsonpCallback:"state_"+time+"_getSome",
-				 		jsonp: "callback",
-					 dataType:'jsonp',
-					 success:function(rs){
-						 var str = '';
-						 var i = 0 ;
-						 $.each(rs,function(index,item){
-var vipinfotxt='<div class="i-choice-rowchk"><div></div><p>'+item.staName+'</p></div>';
-							 $("#vipchkbox").append(vipinfotxt);
-							 qtidx=index+9;
-							 vipid="qt"+qtidx;
-							 $("#vipchkbox").find(".i-choice-rowchk").eq(index).find("div").attr("id",vipid);								 				 
-						 });
-					 },
-					 error:function(rs){
-					 }
-				 });
-				
-			 }
+            
+			
 			  var viparr=[];	
 				 $("#vipchkbox").on("click",".i-choice-rowchk",function()
 				 		{
