@@ -590,8 +590,11 @@
 					qt.vip = data;
 					if(data == "是"){
 						$("#vipshow").css("visibility","inherit");
+						if(qt.note== "是")
+						{$("#subnote").css("visibility","inherit");}
 					}else{
 						$("#vipshow").css("visibility","hidden");
+						$("#subnote").css("visibility","hidden");
 					}
 				},		
 				selectNote:function(data){
