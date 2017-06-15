@@ -898,10 +898,7 @@
                     xg.zhidu('sp1');
                     xg.zhidu('sp2');
                     $("#gs1").val(data.problemId);
-
-                        
-                        loadMessage(data.problemId,1);
-
+                    loadMessage(data.problemId,1);
                     xg.zhidu('gs1');
                     $("#gs2").html(data.state);
                     xg.youzhi('gs2');
@@ -927,10 +924,11 @@
                     $("#wtms").html(data.problemDetails);
 
                     $("#jjfa").val(data.problemPlan);
-
+                    
                     if (data.problemEnclosure != '' && data.problemEnclosure != null && data.problemEnclosure != undefined) {
                         imgs = sp.files = data.problemEnclosure.split(",");
                         for (var i = 0; i < sp.files.length; i++) {
+                            $("#imgShow").append('<div ></div>');
                             app.addImg(sp.files[i]);
                         }
                     }
