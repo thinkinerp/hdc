@@ -272,7 +272,7 @@
 				    				
 				    			</div>
 				    		</div>
-				    		<input type="hidden" id="vipinfo" value="">
+				    		<input type="hidden" id="vipinfo" value="未选择">
 				    	</li>
 				    </ul>
 				</div>
@@ -767,7 +767,7 @@
 					'shops.proId':xg.data.shops.proId	//项目编号
 				};
 				$.ajax({	
-					   url: "/hdk/survey/modify",
+					   url: domainName+"/hdk/survey/modify",
 					   //url: "http://localhost:8080/hdk/survey/modify",
 					   type: "post",
 					   data:obj,
@@ -799,7 +799,7 @@
 				},
 				getData:function(){
 					$.ajax({	
-					   url: "/hdk/survey/gotoModify",
+					   url: domainName+"/hdk/survey/gotoModify",
 					   // url: "http://localhost:8080/hdk/survey/gotoModify",
 					   type: "get",
 					   data:{"surId":xg.surId},
@@ -857,12 +857,13 @@
 					$("#dyjPort").html(data.printer.printerPort);
 					xg.youzhi("dyjPort");
 					//其他
-					if(data.survey.surNetwork == "外网"){
+					if(data.survey.surNetwork.indexOf("外网")!=-1){
 						$('#qt1').addClass('on');
-						qt.network = "外网";
-					}else if(data.survey.surNetwork == "wifi"){
+						qt.network = data.survey.surNetwork;
+					}
+					if(data.survey.surNetwork.indexOf("wifi")!=-1){
 						$('#qt2').addClass('on');
-						qt.network = "wifi";
+						qt.network = data.survey.surNetwork;
 					}
 
 					if(data.survey.surPower == "有"){
@@ -875,17 +876,25 @@
 					
 					if(data.survey.surVip == "是"){
 						$('#qt5').addClass('on');
+						$("#vipshow").css("visibility","inherit");
 						qt.vip = "是";
 					}else if(data.survey.surVip == "否"){
 						$('#qt6').addClass('on');
 						qt.vip = "否";
 					}
 					}
-					if(data.survey.vipInfo != null ){
+					if(data.survey.vipInfo != null && data.survey.vipInfo !="未选择" ){
 						$('#qt7').addClass('on');
 						qt.note = "是";
+						$("#vipshow").css("visibility","inherit");
 						$("#subnote").css("visibility","inherit");
 						$('#vipinfo').val(data.survey.vipInfo);
+						$("#vipchkbox .i-choice-rowchk").each(function(){
+							var viptxt=$(this).find("p").html();
+							var vipchktxt=$('#vipinfo').val();
+						    if (vipchktxt.indexOf(viptxt)!=-1)
+						    	{$(this).find("div").addClass("on");}
+						  });
 					}else if(data.survey.vipInfo == null){
 						$('#qt8').addClass('on');
 						qt.note = "否";
@@ -1022,7 +1031,10 @@
 					{objthis.addClass('on');
 						viparr.push(data);
 			     	}
-			     	$("#vipinfo").val(viparr.join(","));
+			     	if(!$("#vipinfo").val() || $("#vipinfo").val()=="")
+			     	{$("#vipinfo").val("未选择")}
+			     	else
+			     	{$("#vipinfo").val(viparr.join(","));}
 			     	//会员信息 end
 				 })
 		</script>
