@@ -380,7 +380,7 @@ function removeByValue(arr, val) {
     }
   }
 }
-function chk_brand(dyjbrand,dyjxh,dyjPort)
+function chk_brand(dyjbrand,dyjxh,dyjPort,obj)
 { if(dyjbrand!="" || dyjxh!="" || dyjPort!="" )
 				 {codeUnique({
                                            tableName:"cash"

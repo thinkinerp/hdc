@@ -356,7 +356,7 @@
 				initPorName:function(){	//初始化项目名称
 					var time  =  new Date().getTime();
 					$.ajax({	
-					   url: "/hdk/project/getSome",
+					   url:domainName+ "/hdk/project/getSome",
 					   type: "get",
 					   data:{"time":time},
 					   dataType:"jsonp",
@@ -390,7 +390,7 @@
 				initShopName:function(){ //初始化商店名称
 					
 					$.ajax({	
-					   url: "/hdk/shops/selectForCombobox",
+					   url: domainName+"/hdk/shops/selectForCombobox",
 					   type: "get",
 					   data:{"proId":shop.itemName},
 					   dataType:"jsonp",
@@ -442,7 +442,7 @@
 				syjSystem:function(){
 					var time  =  new Date().getTime();
 					$.ajax({	
-					   url: "/hdk/state/getSome",
+					   url:domainName+ "/hdk/state/getSome",
 					   type: "get",
 					   data:{"ownerTable":"cash_system","time":time},
 					   dataType:"jsonp",
@@ -469,7 +469,7 @@
 				syjBrand:function(){	
 					var time  =  new Date().getTime();
 					$.ajax({	
-					   url: "/hdk/state/getSome",
+					   url: domainName+"/hdk/state/getSome",
 					   type: "get",
 					   data:{"ownerTable":"cash_brand","time":time},
 					   dataType:"jsonp",
@@ -496,7 +496,7 @@
 				syjPort:function(){
 					var time  =  new Date().getTime();
 					$.ajax({	
-					   url: "/hdk/state/getSome",
+					   url: domainName+"/hdk/state/getSome",
 					   type: "get",
 					   data:{"ownerTable":"cash_port","time":time},
 					   dataType:"jsonp",
@@ -535,7 +535,7 @@
 				dyjPort:function(){
 					var time  =  new Date().getTime();
 					$.ajax({	
-					   url: "/hdk/state/getSome",
+					   url: domainName+"/hdk/state/getSome",
 					   type: "get",
 					   data:{"ownerTable":"printer_port","time":time},
 					   dataType:"jsonp",
@@ -696,7 +696,7 @@
     //                 ).done(function(){
 					   
         				$.ajax({	
-        					   url: "/hdk/survey/submit",
+        					   url:domainName+ "/hdk/survey/submit",
         					   type: "post",
         					   data:obj,
                                 beforeSend:ajaxLoading(),
@@ -899,10 +899,11 @@
 						$('#qt8').addClass('on');
 						qt.note = "否";
 					}
-					
 					if( data.survey.attachmentUrl != '' &&  data.survey.attachmentUrl != null &&  data.survey.attachmentUrl != undefined){
 						imgs = shop.files = data.survey.attachmentUrl.split(",");
+
 						for(var i = 0; i<shop.files.length; i++){
+							$("#imgShow").append('<div ></div>');
 							app.addImg(shop.files[i]);
 						}
 					}
