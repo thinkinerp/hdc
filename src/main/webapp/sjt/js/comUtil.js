@@ -45,6 +45,7 @@ function codeUnique(config){
 		return dtd.promise();
 		
 	}
+	if(''!= config.code ){
 				$.ajax({	
 					   url: domainName + "/hdk/problem/codeUnique",
 					   data:{
@@ -67,6 +68,7 @@ function codeUnique(config){
 					   	console.log(rs);
 					   }				   
 				});
+	}
 				return dtd.promise();
 }
 
