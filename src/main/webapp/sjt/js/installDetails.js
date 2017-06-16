@@ -184,7 +184,8 @@ var loadInstall = function(allThing){
          imgs = files = allObjs.install['attachmentUrl'].split(',');
             
             for(var i = 0 ; i <files.length ; i ++){
-                app.addImg(files[i]);
+              $("#imgShow").append('<div ></div>');
+              app.addImg(files[i]);
             }
             
             $('.fullimg').remove();
@@ -673,3 +674,11 @@ var submit = function() {
 var onSetupState = function() {
   $('#installStation').html($('#installState').html());
 }
+$(function(){
+   //img start
+                $("#imgShow").on("click","div",function(){
+                    var i=$(this).index();
+                    app.fullImg(i);
+                })
+  //img end
+})

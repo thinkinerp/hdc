@@ -293,7 +293,7 @@ var app ={
 			}
 			//updatecynthia start
 		    
-			$("i-addImg").find('div').eq(i).on("click",$("#imgShow").find("div").eq(i),function(){app.fullImg(i);});			//updatecynthia end
+						//updatecynthia end
 			$("#imgShow").find('div').eq(i).show();
 		}	
 	},

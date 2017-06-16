@@ -270,8 +270,8 @@
                         <div class="swiper-slide">
                             <div class="i-addImg">
                                 <div class="img" id="imgShow">
-                                   <!--updatecynthia  <div onclick="app.fullImg(0)"></div>
-                                    <div onclick="app.fullImg(1)"></div> -->
+                                   <div style="display:block"></div>
+                                    <div style="display:block" ></div>
                                 </div>
                                 <div class="add">
                                     <input type="file" id="fileImg" onchange="app.getImgUrl();"/>
@@ -994,7 +994,12 @@
                         app.alert("确定要保存吗？", 2, submit2)
                     })
                 }
-
+                //img start
+                $("#imgShow").on("click","div",function(){
+                    var i=$(this).index();
+                    app.fullImg(i);
+                })
+                //img end
             })
             swiper1 = new Swiper('.swiper-container1', {//菜单区滑块
                 paginationClickable : true,
