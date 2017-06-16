@@ -35,17 +35,17 @@ function form_empty(config){
 }
 function codeUnique(config){
 	var dtd = $.Deferred(); 
-	//判断是否为空 cynthia
-	//if('' == config.code && (config.codeField=="install_id" || config.codeField=="sur_id" || config.codeField=="problem_id" ){
-	if('' == config.code){
-		app.alert(config.which+":"+config.code + ",不能为空",1);
-		return dtd.promise();
-	}
+	
+	// if('' == config.code ){
+	// 	app.alert(config.which+":"+config.code + ",不能为空",1);
+	// 	return dtd.promise();
+	// }
 	if(!onlyEnglishAndDecimal(config.code)){
 		app.alert("编码:" + config.code +",只能有数字和英文字母组成",1);
 		return dtd.promise();
 		
 	}
+	if(''!= config.code ){
 				$.ajax({	
 					   url: domainName + "/hdk/problem/codeUnique",
 					   data:{
@@ -68,8 +68,10 @@ function codeUnique(config){
 					   	console.log(rs);
 					   }				   
 				});
+	}
 				return dtd.promise();
 }
+
 
  function loadCombobox(id , table,isAll){
 	 var time = (new Date().getTime());
