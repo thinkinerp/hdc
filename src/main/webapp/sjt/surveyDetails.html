@@ -640,7 +640,7 @@
 					'survey.surPower':qt.plug,				//电源插口
 					'survey.surVip':qt.vip,					//会员系统
 					'survey.vipInfo':$("#vipinfo").val(),	//会员信息
-					'survey.suapprId':$("#dyid").val(),		  //调研编号
+					'survey.surId':$("#dyid").val(),		  //调研编号
 //					'survey.attachmentUrl':JSON.stringify(imgs),
 //					'survey.surRemarks':'',				 //备注？
 					//收银机
@@ -803,7 +803,7 @@
                        }    					   
 					});
 			}
-			
+			var viparr=[];
 			var xg = {
 				surId:null,	
 				data:null,
@@ -897,7 +897,6 @@
 						qt.vip = "否";
 					}
 					}
-					console.log(data.survey.vipInfo);
 					if(data.survey.vipInfo != null && data.survey.vipInfo !="未选择" ){
 						$('#qt7').addClass('on');
 						qt.note = "是";
@@ -907,6 +906,7 @@
 						$("#vipchkbox .i-choice-rowchk").each(function(){
 							var viptxt=$(this).find("p").html();
 							var vipchktxt=$('#vipinfo').val();
+							viparr=vipchktxt.split(",");
 						    if (vipchktxt.indexOf(viptxt)!=-1)
 						    	{$(this).find("div").addClass("on");}
 						  });
@@ -1037,27 +1037,27 @@
                 shop.itemName = params["pproName"];
                 shop.selectPorName();
             }
-            
-			
-			  var viparr=[];	
+
 				 $("#vipchkbox").on("click",".i-choice-rowchk",function()
 				 		{
+
 				 	var data=$(this).find("p").html();
 				 	//会员信息 start	
-				 	var objthis=$(this).find("div");			 	
+				 	var objthis=$(this).find("div");
+				 			 	
 				 	if(objthis.hasClass("on"))
 					{
-						objthis.removeClass("on");
+						
 						removeByValue(viparr, data);
+						objthis.removeClass("on");
 			        }
 				else
-					{objthis.addClass('on');
+					{
 						viparr.push(data);
+						objthis.addClass('on');
 			     	}
-			     	if(!$("#vipinfo").val() || $("#vipinfo").val()=="")
-			     	{$("#vipinfo").val("未选择")}
-			     	else
-			     	{$("#vipinfo").val(viparr.join(","));}
+			     	
+			     	$("#vipinfo").val(viparr.join(","));
 			     	//会员信息 end
 				 })
 		</script>
