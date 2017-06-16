@@ -792,7 +792,7 @@
                         success : function(data) {
                             if (data.message == "success") {
 
-                                window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功", domainName + "/hdk/sjt/issueList.html");
+                                window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功", domainName + "/hdk/sjt/issueList.html?syp_user_num="+params["userNum"]+"&syp_user_name="+params["userName"]);
 
                             } else if (data.message == "fail") {
                                 app.alert('保存失败', 1);
@@ -859,7 +859,7 @@
                     success : function(data) {
                         if (data.message == "success") {
 
-                            window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功", domainName + "/hdk/sjt/issueList.html");
+                            window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功", domainName + "/hdk/sjt/issueList.html?syp_user_num="+params["userNum"]+"&syp_user_name="+params["userName"]);
 
                         } else if (data.message == "fail") {
                             app.alert('修改失败', 1);

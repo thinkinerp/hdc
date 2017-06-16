@@ -514,7 +514,7 @@ var submit = function() {
     	  if("success" == result.message){
      
     			  window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功"
-    					  ,domainName + "/hdk/sjt/installList.html");
+    					  ,domainName + "/hdk/sjt/installList.html?syp_user_num="+params["userNum"]+"&syp_user_name="+params["userName"]);
  
     	  }else{
     		  app.alert("保存失败，请重试",1);
@@ -647,7 +647,7 @@ var submit = function() {
    
   
   			window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功"
-  					,domainName + "/hdk/sjt/installList.html");
+  					,domainName + "/hdk/sjt/installList.html?syp_user_num="+params["userNum"]+"&syp_user_name="+params["userName"]);
  
         }else{
         	app.alert("保存失败",1);
