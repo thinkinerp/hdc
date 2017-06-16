@@ -434,7 +434,19 @@ else
             });  
   }
 
-
+      function xgid()
+      {var xgcashid=""
+        if(allObjs.cash.id)
+        {xgcashid=allObjs.cash.id }
+       return xgcashid;
+      }
+      function printid()
+      {
+        var printerid="";
+        if(allObjs.printer.id)
+        {printerid=allObjs.printer.id;}
+        return printerid;
+      }
 var submit = function() {
   //  app.saveDate();
   // 在没有调研的情况下要进行一下动作
@@ -473,7 +485,7 @@ var submit = function() {
           //,'install.installRemarks':''
           //收银机
           ,
-        "cash.id": allObjs.cash.id,
+        "cash.id": xgid(),
         'cash.cashId': $("#cashId").val(),
         'cash.cashBrand': $("#cashBrand").html()
           //,'cashRegister':''
@@ -483,7 +495,7 @@ var submit = function() {
         'cash.printerDriver': ($("#t").attr("class") == "off" ? "否" : "是"),
         'cash.surId': surId,
         'cash.installId': $("#installCode").val(),          
-        'printer.id': allObjs.printer.id,
+        'printer.id': printid(),
         'printer.printerId': $('#priId').val(),
         'printer.printerBrand': $('#priBrand').val(),
         'printer.printerModel':$("#dyjxh").val(),    //打印机型号
@@ -546,7 +558,6 @@ var submit = function() {
         if(chk_print(priBrand_txt,dyjxh_txt,dyjPort_txt,"#priId"))
           {return;}
          //验证收银机编号和打印机编号 end 
-        }
 	 $.when(
     codeUnique({
 		 tableName:"install"

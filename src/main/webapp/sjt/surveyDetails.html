@@ -725,7 +725,19 @@
                     throw(e.name); //抛出异常 
             }
 }
-			
+			function xgid()
+			{var xgcashid=""
+				if(xg.data.cash.id)
+				{xgcashid=xg.data.cash.id }
+			 return xgcashid;
+			}
+			function printid()
+			{
+				var printerid="";
+				if(xg.data.printer.id)
+				{printerid=xg.data.printer.id;}
+				return printerid;
+			}
 			function xgsubmit(){	//修改
 				var obj={
                     'files':(JSON.stringify(imgs)),
@@ -748,8 +760,8 @@
 					'cash.cashPort':$('#syjPort').html(),	//收银机端口
 					'cash.printerDriver':syj.drive,	//是否有驱动
 					'cash.surId':$('#dyid').val(),	//调研编号
-					'cash.id':xg.data.cash.id,	//自增id
-					'printer.id':xg.data.printer.id,	//打印机自增id
+					'cash.id':xgid(),	//自增id
+					'printer.id':printid(),	//打印机自增id
 					'printer.printerId':$('#dyjId').val(),	//打印机编号
 					/*====打印机品牌型号cynthia start====*/	
 					'printer.printerBrand':$("#dyjbrand").val(),	//打印机品牌
@@ -809,7 +821,7 @@
 					  // jsonpCallback:"forword:/surveyDetails.jsp",
 					   success:function(data){
 					   		xg.upStyle(data);
-					   		xg.data = data;
+					   		xg.data = data;					   		
 					   }					   
 					});
 				},
