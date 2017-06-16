@@ -196,8 +196,8 @@
       <if test="surVipData != null" >
         sur_vip_data,
       </if>
-      <if test="vipInfo != null" >
-        vip_info,
+      <if test="surVip != null" >
+        sur_vip,
       </if>
       <if test="createdAt != null" >
         created_at,
@@ -211,8 +211,8 @@
       <if test="attachmentUrl != null" >
         attachement_url,
       </if>
-      <if test="surVip != null" >
-        sur_vip,
+      <if test="vipInfo != null" >
+        vip_info,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -308,7 +308,7 @@
       sur_vip = #{surVip,jdbcType=VARCHAR},
       sur_vip_data = #{surVipData,jdbcType=VARCHAR},
       attachement_url = #{attachmentUrl,jdbcType=VARCHAR},
-
+      vip_info = #{vipInfo,jdbcType=VARCHAR},
       sur_remarks = #{surRemarks,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

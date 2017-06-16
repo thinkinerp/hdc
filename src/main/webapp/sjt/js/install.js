@@ -63,8 +63,8 @@ var shopStateSeach = function(){
 	 						"				</div>" +
 	 						"				<div class='i-itemDetail-area-content'>" +
 	 						"					<div class='content-row'>" +
-//	 						"						<p>采集点编号</p>" +
-//	 						"						<p>"+item.eqId+"</p>" +
+	 						"						<p>采集点编号</p>" +
+	 						"						<p>"+item.eqId+"</p>" +
 	 						"						<!-- i标签 on1无需安装   on2已安装   on3安装失败  on4未安装   on5未开业  on6已拆除 -->" +
 	 						"						<p><i class='"+shopSta+"'></i>"+item.installStation+"</p>" +
 	 						"					</div>" +

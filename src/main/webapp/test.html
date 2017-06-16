@@ -8,13 +8,11 @@
 <body>
 <script type="text/javascript" charset="utf-8">
 	$.ajax({
-	    url:"http://www.onetoend.cn
-	    /hdk/project/getFormCode",
-	    dataType:"jsonp",
-	    jsonp:"callback",
+	    url:"http://localhost:8070/yhportal/userapi/login",
+	    dataType:"json",
 	    data:{
-	        formType:"install",
-	        proId:"pro_001"
+	        password:"123456",
+	        jobnumber:"80666444"
 	    },
 	   type:"post",
 	   success:function(res){

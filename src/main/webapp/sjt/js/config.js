@@ -10,4 +10,4 @@
 //}
 
 var domainName=  "http://www.onetoend.cn";
-var domainName=  "http://localhost:8080";
+// domainName=  "http://localhost:8080";
