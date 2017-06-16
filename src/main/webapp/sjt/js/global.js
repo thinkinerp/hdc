@@ -383,22 +383,16 @@ function removeByValue(arr, val) {
 }
 function chk_brand(dyjbrand,dyjxh,dyjPort,obj)
 { if((dyjbrand!=""&&dyjbrand!="未选择") || (dyjxh!=""&&dyjxh!="未选择") || (dyjPort!=""&&dyjPort!="未选择") )
-				 {codeUnique({
-                                           tableName:"cash"
-                                         ,codeField:"cash_id"
-                                         ,code:$(obj).val()
-                                         , which:"收银机编码"
-                    } );
+				 {
+				   if (form_empty({code:$(obj).val(), which:"收银机编号"}))
+				   {return true;}
 			     }
 }
 function chk_print(dyjbrand,dyjxh,dyjPort,obj)
 { if((dyjbrand!=""&&dyjbrand!="未选择") || (dyjxh!=""&&dyjxh!="未选择") || (dyjPort!=""&&dyjPort!="未选择") )
-				 { codeUnique({
-                                           tableName:"printer"
-                                         ,codeField:"printer_id"
-                                         ,code:$(obj).val()
-                                         , which:"打印机编码"
-                    } );
+				 { 
+				   if (form_empty({code:$(obj).val(), which:"打印机编号"}))
+				   {return true;}
 			     }
 }
 $(function(){

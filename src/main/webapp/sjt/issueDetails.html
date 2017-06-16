@@ -770,13 +770,12 @@
                         {return;}
                     if(form_empty({code:$('#sp2').html(), which:"商铺名称"}))
                         {return;}
-                // $.when(codeUnique({
-                //     tableName : "problem",
-                //     codeField : "problem_id",
-                //     code : $('#gs1').val(),
-                //     which : "问题编码"
-                // })).done(function() {
-
+                $.when(codeUnique({
+                    tableName : "problem",
+                    codeField : "problem_id",
+                    code : $('#gs1').val(),
+                    which : "问题编码"
+                })).done(function() {
                     $.ajax({
                         url :domainName +  "/hdk/problem/submit",
                         type : "post",
@@ -797,7 +796,7 @@
                             app.alert('保存失败', 1);
                         }
                     });
-                // });
+                });
             };
 
             function submit2() {//修改保存

@@ -618,11 +618,13 @@
 				 var syjSystem_txt=$("#syjSystem").html();
 				 var syjBrand_txt=$("#syjBrand").html();
 				 var syjPort_txt=$("#syjPort").html();
-				chk_brand(syjSystem_txt,syjBrand_txt,syjPort_txt,"#syjId");
+				if(chk_brand(syjSystem_txt,syjBrand_txt,syjPort_txt,"#syjId"))
+					{return;}
 				var dyjbrand_txt=$("#dyjbrand").val();
 				 var dyjxh_txt=$("#dyjxh").html();
 				 var dyjPort_txt=$("#dyjPort").html();
-				chk_print(dyjbrand_txt,dyjxh_txt,dyjPort_txt,"#dyjId");
+				if(chk_print(dyjbrand_txt,dyjxh_txt,dyjPort_txt,"#dyjId"))
+					{return;}
                  //验证收银机编号和打印机编号 end  
 			       for(var i = 0 ; i<shop.item.length; i++){
                         if(shop.itemName == shop.item[i].proName){
@@ -638,7 +640,7 @@
 					'survey.surPower':qt.plug,				//电源插口
 					'survey.surVip':qt.vip,					//会员系统
 					'survey.vipInfo':$("#vipinfo").val(),	//会员信息
-					'survey.surId':$("#dyid").val(),		  //调研编号
+					'survey.suapprId':$("#dyid").val(),		  //调研编号
 //					'survey.attachmentUrl':JSON.stringify(imgs),
 //					'survey.surRemarks':'',				 //备注？
 					//收银机
@@ -675,25 +677,25 @@
 //					'shops.eqId':''				//采集点编号？ 
 				};
 				try{
-				// $.when(codeUnique({
-    //                                        tableName:"survey"
-    //                                      ,codeField:"sur_id"
-    //                                      ,code:$('#dyid').val()
-    //                                      , which:"调研编码"
-    //                 } ),
-    //                 codeUnique({
-    //                                        tableName:"cash"
-    //                                      ,codeField:"cash_id"
-    //                                      ,code:$('#syjId').val()
-    //                                      , which:"收银机编码"
-    //                 } ),
-    //                 codeUnique({
-    //                                        tableName:"printer"
-    //                                      ,codeField:"printer_id"
-    //                                      ,code:$('#dyjId').val()
-    //                                      , which:"打印机编码"
-    //                 } )
-    //                 ).done(function(){
+				$.when(codeUnique({
+                                           tableName:"survey"
+                                         ,codeField:"sur_id"
+                                         ,code:$('#dyid').val()
+                                         , which:"调研编码"
+                    } ),
+                    codeUnique({
+                                           tableName:"cash"
+                                         ,codeField:"cash_id"
+                                         ,code:$('#syjId').val()
+                                         , which:"收银机编码"
+                    } ),
+                    codeUnique({
+                                           tableName:"printer"
+                                         ,codeField:"printer_id"
+                                         ,code:$('#dyjId').val()
+                                         , which:"打印机编码"
+                    } )
+                    ).done(function(){
 					   
         				$.ajax({	
         					   url:domainName+ "/hdk/survey/submit",
@@ -717,7 +719,7 @@
         					      app.alert(rs.status,1);
         					   }				   
         					});
-					// }).fail(function(){alert("网路问题，请重试");});//done end
+					 }).fail(function(){alert("网路问题，请重试");});//done end
 					}catch(e){  
 					    alert(e.name);
                     throw(e.name); //抛出异常 
@@ -993,6 +995,12 @@
 					});
 				}
 				loadsurvey();
+				 //img start
+                $("#imgShow").on("click","div",function(){
+                    var i=$(this).index();
+                    app.fullImg(i);
+                })
+                //img end
 			});
 			swiper1 = new Swiper('.swiper-container1', {	//菜单区滑块
 				paginationClickable: true,
