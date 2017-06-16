@@ -538,39 +538,42 @@ var submit = function() {
          var cashSystem_txt=$("#cashSystem").html();
          var cashBrand_txt=$("#cashBrand").html();
          var cashPort_txt=$("#cashPort").html();
-        chk_brand(cashSystem_txt,cashBrand_txt,cashPort_txt,"#cashId");
+        if(chk_brand(cashSystem_txt,cashBrand_txt,cashPort_txt,"#cashId"))
+          {return;}
         var priBrand_txt=$("#priBrand").val();
          var dyjxh_txt=$("#dyjxh").html();
          var dyjPort_txt=$("#printerPort").html();
-        chk_print(priBrand_txt,dyjxh_txt,dyjPort_txt,"#priId");
+        if(chk_print(priBrand_txt,dyjxh_txt,dyjPort_txt,"#priId"))
+          {return;}
          //验证收银机编号和打印机编号 end 
-	 // $.when(
-  // //   codeUnique({
-		// //  tableName:"install"
-		// // 						         ,codeField:"install_id"
-		// // 						         ,code:$('#installCode').val()
-		// // 						         , which:"安装编码"
-	 // // 				} )
-		// // 	      ,codeUnique({
-		// // 	 		 tableName:"cash"
-		// // 		         ,codeField:"cash_id"
-		// // 		         ,code:$('#cashId').val()
-		// // 		         , which:"收银机编号"
-		// // } )
-		// // 	      ,codeUnique({
-		// // 	 		 tableName:"printer"
-		// // 		         ,codeField:"printer_id"
-		// // 		         ,code:$('#priId').val()
-		// // 		         , which:"打印机编号"
-		// // } )
-		// // 	      ,codeUnique({
-		// // 	 		 tableName:"equipment"
-		// // 		         ,codeField:"eq_id"
-		// // 		         ,code:$('#eqId').val()
-		// // 		         , which:"采集点编码"
-		// // } )
-  //           )
-	 // .done(function(){ 
+        }
+	 $.when(
+    codeUnique({
+		 tableName:"install"
+								         ,codeField:"install_id"
+								         ,code:$('#installCode').val()
+								         , which:"安装编码"
+	 				} )
+			      ,codeUnique({
+			 		 tableName:"cash"
+				         ,codeField:"cash_id"
+				         ,code:$('#cashId').val()
+				         , which:"收银机编号"
+		} )
+			      ,codeUnique({
+			 		 tableName:"printer"
+				         ,codeField:"printer_id"
+				         ,code:$('#priId').val()
+				         , which:"打印机编号"
+		} )
+			      ,codeUnique({
+			 		 tableName:"equipment"
+				         ,codeField:"eq_id"
+				         ,code:$('#eqId').val()
+				         , which:"采集点编码"
+		} )
+            )
+	 .done(function(){ 
 
     $.ajax({
       url:domainName +   '/hdk/install/submit', //用于文件上传的服务器端请求地址
@@ -665,7 +668,7 @@ var submit = function() {
       //ajax end
     });
    //done end 
-	 // }).fail(function(){alert("网路原因未请求成功")});
+	 }).fail(function(){alert("网路原因未请求成功")});
 	 
 	 
   }
