@@ -292,8 +292,8 @@ var app ={
 				$("#imgShow").find('div').eq(i).html('<img src="/hdk/upload/'+imgs[i]+'"/>');
 			}
 			//updatecynthia start
-			$("#imgShow").find('div').eq(i).bind("click",function(){app.fullImg(i);});
-			//updatecynthia end
+		    
+						//updatecynthia end
 			$("#imgShow").find('div').eq(i).show();
 		}	
 	},
