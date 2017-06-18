@@ -3,6 +3,7 @@ package com.intfocus.hdk.controller;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.apache.tomcat.util.security.MD5Encoder;
+import org.eclipse.jetty.util.security.Credential.MD5;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.intfocus.hdk.dao.UserMapper;
+import com.intfocus.hdk.util.MD5Util;
 import com.intfocus.hdk.vo.User;
 
 @Controller
@@ -37,6 +41,36 @@ public class UserController {
     	
     }
     
+	@RequestMapping(value = "login" , method=RequestMethod.GET)
+	@ResponseBody
+	public  void login(HttpServletResponse res , HttpServletRequest req  , String userName , String userPass ){
+		JSONObject rs = new JSONObject();
+		Writer w = null ;
+		try {
+			w = res.getWriter();
+			if(null == userName || "".equals(userName) || null == userPass || "".equals(userPass)){
+				
+				rs.put("message", "账号或密码错误");
+				w.write(rs.toJSONString());	
+				return ;
+			}
+			Map<String, String> where = new HashMap<String, String>();
+			where.put("userName", userName);
+			where.put("password", userPass);
+			List<User> users = usermapper.selectByWhere(where );
+			if(null == users || users.size() <= 0 ){
+				rs.put("message", "账号或密码错误");
+				w.write(rs.toJSONString());	
+				return ;
+					
+			}
+			rs.put("message", "success");	
+			w.write(rs.toJSONString());	
+		} catch (IOException e) {
+			e.printStackTrace();
+			rs.put("message", "服务器错误，请重试");
+		}			
+	}
 	@RequestMapping(value = "getDepartment" , method=RequestMethod.GET)
 	@ResponseBody
 	public void getDepartment(HttpServletResponse res , HttpServletRequest req ){
