@@ -696,7 +696,7 @@ $(function(){
                 })
   //img end
 })
-/*====安装cynthia ，获得安装编号 start===*/         
+/*====安装cynthia ，获得安装编号 start0619===*/         
             function getproId()
             {  $.ajax({
                 url:domainName + "hdk/project/getFormCode",
