@@ -696,3 +696,22 @@ $(function(){
                 })
   //img end
 })
+/*====安装cynthia ，获得安装编号 start===*/         
+            function getproId()
+            {  $.ajax({
+                url:domainName + "hdk/project/getFormCode",
+                dataType:"jsonp",
+                jsonp:"callback",
+                data:{
+                    formType:"install",
+                    proId:proId_name
+                },
+               type:"get",
+               success:function(res){
+                console.log(res);
+                  $("#installCode").val(res.code);
+               },
+               error:function(res){                   
+               } 
+              });}           
+            /*====安装cynthia ，获得安装编号 end===*/

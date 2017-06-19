@@ -626,11 +626,14 @@
 				if(chk_print(dyjbrand_txt,dyjxh_txt,dyjPort_txt,"#dyjId"))
 					{return;}
                  //验证收银机编号和打印机编号 end  
+                 if(shop.item)
+                 {
 			       for(var i = 0 ; i<shop.item.length; i++){
                         if(shop.itemName == shop.item[i].proName){
                             shop.itemId =  shop.item[i].proId;
                         }
                     }
+                   }
 				var obj = {
 					//调研
 					'survey.proId':shop.itemId,		//项目编号
@@ -725,6 +728,7 @@
                     throw(e.name); //抛出异常 
             }
 }
+var vipinfovalue;
 			function xgid()
 			{var xgcashid=""
 				if(xg.data.cash.id)
@@ -793,7 +797,6 @@
 					   		if(data.message == "success"){	
                                  window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功",
                                                             domainName + '/hdk/sjt/surveyList.html');
-
 					   		}else if(data.message == "fail"){
 					   			app.alert('修改失败',1);
 					   		}
@@ -897,24 +900,19 @@
 						qt.vip = "否";
 					}
 					}
-					if(data.survey.vipInfo != null && data.survey.vipInfo !="未选择" ){
+					vipinfovalue=data.survey.vipInfo;   
+					console.log("test1"+vipinfovalue);      
+					if(vipinfovalue != null && vipinfovalue !="未选择" ){
 						$('#qt7').addClass('on');
 						qt.note = "是";
 						$("#vipshow").css("visibility","inherit");
 						$("#subnote").css("visibility","inherit");
-						$('#vipinfo').val(data.survey.vipInfo);
-						$("#vipchkbox .i-choice-rowchk").each(function(){
-							var viptxt=$(this).find("p").html();
-							var vipchktxt=$('#vipinfo').val();
-							viparr=vipchktxt.split(",");
-						    if (vipchktxt.indexOf(viptxt)!=-1)
-						    	{$(this).find("div").addClass("on");}
-						  });
-					}else if(data.survey.vipInfo == null){
+						$('#vipinfo').val(vipinfovalue);
+						setTimeout('func_chkvip()',400);
+					}else if(vipinfovalue == null){
 						$('#qt8').addClass('on');
 						qt.note = "否";
 					}
-
 					if( data.survey.attachmentUrl != '' &&  data.survey.attachmentUrl != null &&  data.survey.attachmentUrl != undefined){
 						imgs = shop.files = data.survey.attachmentUrl.split(",");
 
@@ -934,6 +932,16 @@
 					$("#" + id).removeClass('on');
 				}
 			}
+
+			function func_chkvip()
+			{	$("#vipchkbox .i-choice-rowchk").each(function(i){
+							var viptxt=$(this).find("p").html();
+							var vipchktxt=$('#vipinfo').val();
+							 console.log(vipinfovalue);
+						    if (vipinfovalue.indexOf(viptxt)!=-1)
+						    	{$(this).find("div").addClass("on");}
+						  });
+		 }
 			var proId_name="";
 			 function loadsurvey(id , table,isAll){
 				 var time = (new Date().getTime());
