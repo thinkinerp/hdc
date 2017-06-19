@@ -34,18 +34,14 @@ function form_empty(config){
     {return false;}
 }
 function codeUnique(config){
-	var dtd = $.Deferred(); 
-	
-	// if('' == config.code ){
-	// 	app.alert(config.which+":"+config.code + ",不能为空",1);
-	// 	return dtd.promise();
-	// }
+	if(''!= config.code ){
+		var dtd = $.Deferred(); 
 	if(!onlyEnglishAndDecimal(config.code)){
 		app.alert("编码:" + config.code +",只能有数字和英文字母组成",1);
 		return dtd.promise();
 		
 	}
-	if(''!= config.code ){
+	
 				$.ajax({	
 					   url: domainName + "/hdk/problem/codeUnique",
 					   data:{
@@ -68,10 +64,19 @@ function codeUnique(config){
 					   	console.log(rs);
 					   }				   
 				});
+				return dtd.promise();
+	}
+				
+}
+function codeUnique2(config){
+	var dtd = $.Deferred(); 
+	if(!onlyEnglishAndDecimal(config.code)){
+		app.alert("编码:" + config.code +",只能有数字和英文字母组成",1);
+		return dtd.promise();
+		
 	}
 				return dtd.promise();
 }
-
 
  function loadCombobox(id , table,isAll){
 	 var time = (new Date().getTime());
