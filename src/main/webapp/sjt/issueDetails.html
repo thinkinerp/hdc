@@ -531,6 +531,8 @@
                 },
                 selectGs3 : function() {
                     gs.gs3 = $("#gs3").html();
+                    $("#gs4").html('');
+                       gs.gs4 = '';
                     onGs3Click();
                 },
                 gs3Fun : function() {
@@ -617,10 +619,13 @@
                         success : function(data) {
                             var text = ''
                             for (var i = 0; i < data.length; i++) {
+                                if(null != data[i].department && undefined != data[i].department){
                                 if (i == data.length - 1) {
                                     text += data[i].department
                                 } else {
-                                    text += data[i].department + ','
+                                 
+                                    text += data[i].department  + ','
+                                }
                                 }
                             }
                             $('#gs6')[0].dataset.select = text

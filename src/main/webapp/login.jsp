@@ -60,7 +60,7 @@
 							dataType:"json",
 							success:function(rs){
 								if("success" == rs.message){
-									location.href = "/hdk/uploadUsers.jsp";
+									location.href = "/hdk/sjt/background/upload.jsp";
 								}else{
 									$('#colorGrey').text(rs.message);
 								}

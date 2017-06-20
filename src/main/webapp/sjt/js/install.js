@@ -25,6 +25,7 @@ var params = function() {
 	}();
 var shopStateSeach = function(){
 	var shopSta = '';
+	$('.i-itemDetail-area').html('');
 	 $.ajax({ 
 	 		url:domainName + '/hdk/shops/getSome',
 	 		type:'get',
@@ -38,7 +39,6 @@ var shopStateSeach = function(){
 			},
 	 		dataType:'jsonp',
 	 		success:function(rs){
- 				$('.i-itemDetail-area').html('');
 	 			$.each(rs,function(index,item){
 	 				
 	 				if("无需安装" == item.installStation){

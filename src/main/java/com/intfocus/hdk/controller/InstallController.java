@@ -158,7 +158,7 @@ public class InstallController implements ApplicationContextAware {
 		   json.put("install", i);
 		   //找到门店
 		   where.put("shopId", installs.get(0).getShopId());
-		   List<Shops> shopss = shopsMapper.selectByWhere(where);
+		   List<Shops> shopss = shopsMapper.selectShops(where);
 		   
 		   if(null != shopss && shopss.size()>0){
 			   json.put("shop",shopss.get(0));

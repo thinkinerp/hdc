@@ -18,11 +18,11 @@
     <result column="pro_todal" property="proTodal" jdbcType="INTEGER" />
     <result column="pro_need" property="proNeed" jdbcType="INTEGER" />
     <result column="pro_already" property="proAlready" jdbcType="INTEGER" />
-    <result column="pro_already_per" property="proAlreadyPer" jdbcType="INTEGER" />
+    <result column="pro_already_per" property="proAlreadyPer" jdbcType="VARCHAR" />
     <result column="pro_check" property="proCheck" jdbcType="INTEGER" />
-    <result column="pro_check_per" property="proCheckPer" jdbcType="INTEGER" />
+    <result column="pro_check_per" property="proCheckPer" jdbcType="VARCHAR" />
     <result column="left_num" property="leftNum" jdbcType="INTEGER" />
-    <result column="count" property="Count" jdbcType="INTEGER" />
+    <result column="count" property="Count" jdbcType="VARCHAR" />
     <result column="pro_not" property="proNot" jdbcType="INTEGER" />
     <result column="is_last" property="isLast" jdbcType="INTEGER" />
     <result column="created_at" property="createdAt" jdbcType="VARCHAR" />
@@ -125,9 +125,9 @@ group by  c.cash_port
   </select>
 
       <select id="getCheck" resultMap="BaseResultMap" parameterType="java.util.Map" >
-select (c.pro_check/project.pro_need)*100 as pro_already_per 
-,(b.pro_already/project.pro_need)*100 as pro_check_per 
-, (a.install_data/project.pro_need)*100 as count ,a.install_data,b.pro_already
+select concat(c.pro_check,'/', project.pro_need) as pro_already_per 
+,concat(b.pro_already,'/',project.pro_need) as pro_check_per 
+,concat(a.install_data,'/',project.pro_need) as count ,a.install_data,b.pro_already
 ,p.pro_todal ,p.pro_need ,b.pro_already ,c.pro_check ,(p.pro_need - b.pro_already - c.pro_check) as left_num 
   from project as p 
 left join 

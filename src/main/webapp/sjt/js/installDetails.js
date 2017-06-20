@@ -7,7 +7,29 @@ loadCombobox("cashPort", "cash_port");
 loadCombobox("eqStyle", "equipment_type");
 loadCombobox("printerPort", "printer_port");
 loadCombobox("installState", "install");
-
+/*====安装cynthia ，获得安装编号 start0619===*/         
+function getproId()
+{  
+	
+	$.ajax({
+    url:domainName + "/hdk/project/getFormCode",
+    dataType:"jsonp",
+    jsonp:"callback",
+    data:{
+        formType:"install",
+        proId:proId_name
+    },
+   type:"get",
+   success:function(res){
+    console.log(res);
+      $("#installCode").val(res.code);
+   },
+   error:function(res){    
+	   console.log(res);
+   } 
+  });
+}           
+/*====安装cynthia ，获得安装编号 end===*/
 var time = new Date().getTime();
 $.ajax({
   url: domainName +  '/hdk/project/getSome',
@@ -171,7 +193,7 @@ var loadInstall = function(allThing){
         );
         
         
-        $('#installCode').val(isUndefined(allObjs.shop["installId"]));
+        $('#installCode').val(isUndefined(allObjs.install["installId"]));
         readOnly("installCode");
         $('#shopCode').html(isUndefined(allObjs.install["shopId"]));
         $('#cashCode').html(isUndefined(allObjs.install["cashId"]));
@@ -243,12 +265,12 @@ var loadInstall = function(allThing){
         /* $('#installTime').val(isUndefined(allObjs.equipment.installTime)); */
         
         //其他
-        if("硬件" == isUndefined(allObjs.install.installNetwork)){
-            $('#installNetworkHard').attr("class",'on'  );
-            $('#installNetworkSoft').attr("class",'off' );
-        }else{
+        
+        if(isUndefined(allObjs.install.installNetwork).indexOf('外网')){
             $('#installNetworkHard').attr("class",'off' );
-            $('#installNetworkSoft').attr("class",'on'  );
+        }
+        if(isUndefined(allObjs.install.installNetwork).indexOf('wifi')){
+        	$('#installNetworkSoft').attr("class",'off' );
         }
         
         // 附件
@@ -276,6 +298,16 @@ function loadPrinterAndCasher(surId) {
         $("#dyjxh").val(rs.printer.printerModel);
         $('#prinPort').val(rs.printer.printerPort);
       }
+      
+      if(undefined != rs.survey){
+          if(isUndefined(rs.survey.surNetwork).indexOf('外网')){
+              $('#installNetworkHard').attr("class",'on' );
+          }
+          if(isUndefined(rs.survey.surNetwork).indexOf('wifi')){
+          	$('#installNetworkSoft').attr("class",'on' );
+          }
+      }
+      
       if(undefined != rs.cash){
         $('#cashId').val(rs.cash.cashId);
         $('#cashSystem').html(rs.cash.cashSystem);
@@ -472,12 +504,12 @@ var submit = function() {
         'install.shopId': $('#shopCode').html(),
         'install.cashId': $('#cashCode').html(),
         'install.printerId': $('#printCode').html(),
-        'install.eqId': $('#equipmentCode').html(),
+        'install.eqId': $('#eqId').val(),
         'install.installData': $('#installData').html(),
         'install.installTime': $('#installTime').val()
           //,'install.installUser':''
           ,
-        'install.installNetwork': $('#installNetworkHard').attr('class') == 'on' ? "硬件" : "软件",
+        'install.installNetwork': qt.selectedItem(),
         'install.installRemote': $('#installRemote').val()
           //,'install.installEndtime':
           //,'install.install.createdAt':''
@@ -601,12 +633,12 @@ var submit = function() {
         'install.shopId': $('#shopCode').html(),
         'install.cashId': $('#cashCode').html(),
         'install.printerId': $('#printCode').html(),
-        'install.eqId': $('#equipmentCode').html(),
+        'install.eqId': $('#eqId').val(),
         'install.installData': $('#installData').html(),
         'install.installTime': $('#installTime').val()  ,
           //,'install.installUser':''
         
-        'install.installNetwork': $('#installNetworkHard').attr('class') == 'on' ? "硬件" : "软件",
+        'install.installNetwork': qt.selectedItem(),
         'install.installRemote': $('#installRemote').val() ,
           //,'install.installEndtime':
           //,'install.install.createdAt':''

@@ -239,6 +239,7 @@
 					var obj = {"proName":me.proName
 					                  ,"problemObject":delAll("order")
 					                  ,"state":delAll('surveyState')};
+					                                           $('.i-itemDetail').html('');
 					$.ajax({	
 					   url: domainName+ "/hdk/problem/getSome",
 					   data:obj,

@@ -44,7 +44,7 @@
 
     from survey
         inner join shops on shops.shop_id = survey.shop_id
-        inner join project on project.pro_id = survey.pro_id
+        inner join project on project.pro_id = survey.pro_id and shops.pro_id = project.pro_id
     <where>
     	1=1
             <if test="null != proId  and '' != proId">

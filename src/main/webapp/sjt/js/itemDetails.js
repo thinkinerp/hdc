@@ -107,9 +107,9 @@ if(undefined != allThing && null != allThing ){
 	
 	if(!!isUndefined(allObjs.check)){
       $.each(allObjs.check,function(index,item){
-			setValue('checkPercentage',isUndefined( ("" == item.proAlreadyPer? 0 : item.proAlreadyPer))+ "%");
-			setValue('certainPercentage',isUndefined((undefined == item.count ? 0 :item.count ))+ "%");
-			setValue('installPercnetage',isUndefined(("" ==item.proCheckPer ? 0 : item.proCheckPer))+ "%");
+			setValue('checkPercentage',isUndefined( ("" == item.proAlreadyPer? 0 : item.proAlreadyPer)));
+			setValue('certainPercentage',isUndefined((undefined == item.count ? 0 :item.count )));
+			setValue('installPercnetage',isUndefined(("" ==item.proCheckPer ? 0 : item.proCheckPer)));
       });
    }
 }

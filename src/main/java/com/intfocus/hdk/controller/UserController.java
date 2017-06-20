@@ -43,7 +43,7 @@ public class UserController {
     
 	@RequestMapping(value = "login" , method=RequestMethod.GET)
 	@ResponseBody
-	public  void login(HttpServletResponse res , HttpServletRequest req  , String userName , String userPass ){
+	public  void login(HttpServletResponse res , HttpServletRequest req , HttpSession session , String userName , String userPass ){
 		JSONObject rs = new JSONObject();
 		Writer w = null ;
 		try {
@@ -64,6 +64,7 @@ public class UserController {
 				return ;
 					
 			}
+			session.setAttribute("userInfo", users.get(0));
 			rs.put("message", "success");	
 			w.write(rs.toJSONString());	
 		} catch (IOException e) {
@@ -71,6 +72,24 @@ public class UserController {
 			rs.put("message", "服务器错误，请重试");
 		}			
 	}
+	
+	@RequestMapping(value = "logout" , method=RequestMethod.GET)
+	public String logout(HttpServletResponse res , HttpServletRequest req, HttpSession session , String userName ){
+		
+		JSONObject rs = new JSONObject();
+		Map<String, String> where = new HashMap<String, String>();
+		where.put("userName", userName);
+		List<User> users = usermapper.selectByWhere(where );
+		if(null == users || users.size() <= 0 ){
+			rs.put("message", "success");
+		}else{
+			rs.put("message", "success");
+		}
+		session.setAttribute("userInfo", null);
+		return "login" ;
+		
+	}
+	
 	@RequestMapping(value = "getDepartment" , method=RequestMethod.GET)
 	@ResponseBody
 	public void getDepartment(HttpServletResponse res , HttpServletRequest req ){

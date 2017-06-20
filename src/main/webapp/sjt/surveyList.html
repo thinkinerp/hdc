@@ -234,6 +234,7 @@
 					                  ,"shopNameLike":me.shopName,
 					                  "order":delAll('order'),
 					                  "shopMerStation":delAll('surveyState')};
+					                           $('.i-itemDetail').html('');
 					$.ajax({	
 					   url: domainName +   "/hdk/survey/getSome",
 					   data:obj,

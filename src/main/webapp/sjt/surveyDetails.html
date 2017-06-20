@@ -725,6 +725,7 @@
                     throw(e.name); //抛出异常 
             }
 }
+var vipinfovalue;
 			function xgid()
 			{var xgcashid=""
 				if(xg.data.cash.id)
@@ -871,6 +872,7 @@
 					$("#dyjPort").html(data.printer.printerPort);
 					xg.youzhi("dyjPort");
 					//其他
+
 					if(data.survey.surNetwork.indexOf("外网")!=-1){
 						$('#qt1').addClass('on');
 						qt.network = data.survey.surNetwork;
@@ -897,23 +899,22 @@
 						qt.vip = "否";
 					}
 					}
-					if(data.survey.vipInfo != null && data.survey.vipInfo !="未选择" ){
-						$('#qt7').addClass('on');
-						qt.note = "是";
-						$("#vipshow").css("visibility","inherit");
-						$("#subnote").css("visibility","inherit");
-						$('#vipinfo').val(data.survey.vipInfo);
-						$("#vipchkbox .i-choice-rowchk").each(function(){
-							var viptxt=$(this).find("p").html();
-							var vipchktxt=$('#vipinfo').val();
-							viparr=vipchktxt.split(",");
-						    if (vipchktxt.indexOf(viptxt)!=-1)
-						    	{$(this).find("div").addClass("on");}
-						  });
-					}else if(data.survey.vipInfo == null){
-						$('#qt8').addClass('on');
-						qt.note = "否";
-					}
+                    /*===cynthia 会员信息 start===*/
+                    vipinfovalue=data.survey.vipInfo;   
+                    console.log("test1"+vipinfovalue);      
+                    if(vipinfovalue != null && vipinfovalue !="未选择" ){
+                        $('#qt7').addClass('on');
+                        qt.note = "是";
+                        $("#vipshow").css("visibility","inherit");
+                        $("#subnote").css("visibility","inherit");
+                        viparr=vipinfovalue.split(",");
+                        $('#vipinfo').val(vipinfovalue);
+                        setTimeout('func_chkvip()',400);
+                    }else if(vipinfovalue == null){
+                        $('#qt8').addClass('on');
+                        qt.note = "否";
+                    }
+                    /*===cynthia 会员信息 end===*/
 
 					if( data.survey.attachmentUrl != '' &&  data.survey.attachmentUrl != null &&  data.survey.attachmentUrl != undefined){
 						imgs = shop.files = data.survey.attachmentUrl.split(",");
@@ -934,6 +935,17 @@
 					$("#" + id).removeClass('on');
 				}
 			}
+			/*===cynthia 会员信息 start===*/
+            function func_chkvip()
+            {   $("#vipchkbox .i-choice-rowchk").each(function(i){
+                            var viptxt=$(this).find("p").html();
+                            var vipchktxt=$('#vipinfo').val();
+                             console.log(vipinfovalue);
+                            if (vipinfovalue.indexOf(viptxt)!=-1)
+                                {$(this).find("div").addClass("on");}
+                          });
+         }
+         /*===cynthia 会员信息 end===*/
 			var proId_name="";
 			 function loadsurvey(id , table,isAll){
 				 var time = (new Date().getTime());

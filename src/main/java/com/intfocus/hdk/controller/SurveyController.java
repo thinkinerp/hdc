@@ -168,7 +168,7 @@ public class SurveyController implements ApplicationContextAware {
     	//门店
     	where.put("proId", survey1.getProId());
     	where.put("shopId", survey1.getShopId());
-    	List<Shops> shops = shopsMapper.selectByWhere(where ); 
+    	List<Shops> shops = shopsMapper.selectShops(where ); 
     	if(0<shops.size()){
     		Shops shop = shops.get(0);
     		json.put("shops", shop);
