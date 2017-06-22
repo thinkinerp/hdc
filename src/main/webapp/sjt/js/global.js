@@ -408,7 +408,9 @@ $(function(){
 	$(".i-choice-row div").click(function(){	//单选
 		$(this).addClass('on').parent('div').siblings('.i-choice-row').find('div').removeClass('on');
 	})
-
+/*===返回保存===*/
+issave();	
+/*===返回保存 end===*/
 	
 })
 buttonFixed();
@@ -432,3 +434,22 @@ function buttonFixed()
             else
             {$(".wrapbox").css({position:"absolute"});}
  }	
+  /*====cynthia返回 start=====*/
+ 			var savetxt=false;
+			function issave()
+			{
+				$("input").bind("focus",function(){
+					savetxt=true;
+				})	
+				$(".i-text,.i-xiala-list,.i-choice-row,.i-choice-rowchk").bind("click",function(){
+						savetxt=true;
+				})
+				return savetxt;
+			}
+			function appback()
+			{if(issave())
+				{
+					app.alert('单据未保存，是否保存数据？',2,submitback);
+				}
+			}
+ /*====cynthia返回 end=====*/

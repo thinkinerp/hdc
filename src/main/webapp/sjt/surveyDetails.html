@@ -981,8 +981,14 @@ var vipinfovalue;
 				 });
 				
 			 }
+			 /*===返回 start===*/
+			 var surtestId;
+			 /*===返回 end===*/
 			$(function(){				
-				var surId = app.getUrlSearch("surId");				
+				var surId = app.getUrlSearch("surId");	
+				/*===返回 start===*/
+				surtestId=surId;		
+				/*===返回 end===*/			
 				if(surId == null){	// 新建
 					shop.init();
 					syj.init();
@@ -1078,6 +1084,19 @@ var vipinfovalue;
 			     	$("#vipinfo").val(viparr.join(","));
 			     	//会员信息 end
 				 })
+				 /*===cynthia返回 start===*/
+			function submitback()
+			{
+				if(surtestId == null){
+					submit();
+				}
+				else
+				{
+					xgsubmit();
+				}
+
+			}
+/*===cynthia返回 end===*/
 		</script>
 	</body>
 <!-- <script src="js/buttonAway.js" type="text/javascript" charset="utf-8"></script> -->
