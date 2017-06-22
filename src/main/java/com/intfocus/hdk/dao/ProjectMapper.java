@@ -32,4 +32,6 @@ public interface ProjectMapper {
 
 	List<Project> getProjectProblem(Map<String,String> where);
 	
+	List<Project> getProjectSummarise(Map<String,String> where);
+	
 }

@@ -124,16 +124,77 @@ inner join cash as c on i.cash_id = c.cash_id
 group by  c.cash_port 
   </select>
 
+      <select id="getProjectSummarise" resultMap="BaseResultMap" parameterType="java.util.Map" >
+			    select
+			            p.pro_name
+			           ,p.pro_edition
+			           ,p.pro_station
+			           ,p.pro_manager_pro
+			           ,p.pro_updata_time  
+			           ,p.pro_todal 
+			           ,p.pro_need
+			           ,already.install_data as proAlready
+				   ,checked.install_data as proCheck
+				   ,offline.install_data as proNot
+			      from project as p 
+			 left join (
+				    select count(i.install_id) as install_data
+				      from project as p 
+				inner join install as i on i.pro_id = p.pro_id
+				where  i.install_station = '已安装'
+				    		<if test="null != proName  and '' != proName">
+								and p.pro_name = #{proName,jdbcType=VARCHAR}
+							</if>	
+							<if test="null != proId  and '' != proId">
+								and p.pro_id = #{proId,jdbcType=VARCHAR}
+							</if>	 
+			           ) as already on 1=1
+			 left join (
+				    select count(i.install_id) as install_data
+				      from project as p 
+				inner join install as i on i.pro_id = p.pro_id
+				where  i.install_station = '已验收' 	
+				    		<if test="null != proName  and '' != proName">
+								and p.pro_name = #{proName,jdbcType=VARCHAR}
+							</if>	
+							<if test="null != proId  and '' != proId">
+								and p.pro_id = #{proId,jdbcType=VARCHAR}
+							</if>	
+				   ) as checked on 1=1 
+			 left join (
+				    select count(i.install_id) as install_data
+				      from project as p 
+				inner join install as i on i.pro_id = p.pro_id
+				where  i.install_station &lt;&gt;  '已安装' 	
+				    		<if test="null != proName  and '' != proName">
+								and p.pro_name = #{proName,jdbcType=VARCHAR}
+							</if>	
+							<if test="null != proId  and '' != proId">
+								and p.pro_id = #{proId,jdbcType=VARCHAR}
+							</if>	
+				   ) as offline on 1=1
+					<where>
+						1=1
+				    		<if test="null != proName  and '' != proName">
+								and p.pro_name = #{proName,jdbcType=VARCHAR}
+							</if>	
+							<if test="null != proId  and '' != proId">
+								and p.pro_id = #{proId,jdbcType=VARCHAR}
+							</if>	
+	
+					</where>	
+	  </select>
+	  
       <select id="getCheck" resultMap="BaseResultMap" parameterType="java.util.Map" >
-select concat(c.pro_check,'/', project.pro_need) as pro_already_per 
-,concat(b.pro_already,'/',project.pro_need) as pro_check_per 
-,concat(a.install_data,'/',project.pro_need) as count ,a.install_data,b.pro_already
-,p.pro_todal ,p.pro_need ,b.pro_already ,c.pro_check ,(p.pro_need - b.pro_already - c.pro_check) as left_num 
-  from project as p 
-left join 
-(
-SELECT COUNT(1) as pro_need FROM INSTALL a,project b
-WHERE a.pro_id =b.pro_id
+	select concat(c.pro_check,'/', project.pro_need) as pro_already_per 
+	,concat(b.pro_already,'/',project.pro_need) as pro_check_per 
+	,concat(a.install_data,'/',project.pro_need) as count ,a.install_data,b.pro_already
+	,p.pro_todal ,p.pro_need ,b.pro_already ,c.pro_check ,(p.pro_need - b.pro_already - c.pro_check) as left_num 
+	  from project as p 
+	left join 
+	(
+	SELECT COUNT(1) as pro_need FROM INSTALL a,project b
+	WHERE a.pro_id =b.pro_id
     		<if test="null != proName  and '' != proName">
 				and b.pro_name = #{proName,jdbcType=VARCHAR}
 			</if>	
