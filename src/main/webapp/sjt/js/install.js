@@ -25,6 +25,7 @@ var params = function() {
 	}();
 var shopStateSeach = function(){
 	var shopSta = '';
+	$('.i-itemDetail-area').html('');
 	 $.ajax({ 
 	 		url:domainName + '/hdk/shops/getSome',
 	 		type:'get',
@@ -38,7 +39,6 @@ var shopStateSeach = function(){
 			},
 	 		dataType:'jsonp',
 	 		success:function(rs){
- 				$('.i-itemDetail-area').html('');
 	 			$.each(rs,function(index,item){
 	 				
 	 				if("无需安装" == item.installStation){
@@ -72,18 +72,21 @@ var shopStateSeach = function(){
 	 						"						<p>采集接口类型</p>" +
 	 						"						<p>"+(undefined == item.eqType?"":item.eqType)+"</p>" +
 	 						"					</div>" +
-//	 						"					<div class='content-row'>" +
-//	 						"						<p>收银机操作系统</p>" +
-//	 						"						<p>"+(undefined == item.cashSystem?"":item.cashSystem)+"</p>" +
-//	 						"					</div>" +
+	 						"					<div class='content-row'>" +
+	 						"						<p>收银机编号</p>" +
+	 						"						<p>"+(undefined == item.cashSystem?"":item.cashId)+"</p>" +
+	 						"					</div>" +
+	 						"					<div class='content-row'>" +
+	 						"						<p>采集方式</p>" +
+	 						"						<p>"+(undefined == item.cashSystem?"":item.eqStyle)+"</p>" +
+	 						"					</div>" +
 	 						"				</div>"
 	 					
 	 				);	
 	 			});
 	 		},
 	  		error:function(rs){
-	  			console.log(rs);
-	 		}
+	  			console.log(rs); }
 	  });	
 }
 

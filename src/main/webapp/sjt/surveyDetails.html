@@ -42,7 +42,7 @@
 					<ul class="g-importList">
 		
 						<li>
-							<div class="g-importList-title">调研编号：</div>
+							<div class="g-importList-title">调研编号</div>
 							<div class="g-importList-content">
 								<div class="i-import" style="border:none">
 									<input  type="text" id="dyid"  readonly />
@@ -50,19 +50,19 @@
 							</div>
 						</li>
 						<li>
-							<div class="g-importList-title">商铺编号：</div>
+							<div class="g-importList-title">商铺编号</div>
 							<div class="g-importList-content">
 								<div class="i-text" id="shopID"></div>
 							</div>
 						</li>
 						<li>
-							<div class="g-importList-title">收银机编号：</div>
+							<div class="g-importList-title">收银机编号</div>
 							<div class="g-importList-content">
 								<div class="i-text" id="shouyinid"></div>
 							</div>
 						</li>
 						<li>
-							<div class="g-importList-title">打印机编号：</div>
+							<div class="g-importList-title">打印机编号</div>
 							<div class="g-importList-content">
 								<div class="i-text" id="dayingid"></div>
 							</div>
@@ -712,7 +712,7 @@
         					   		if(data.message == "success"){
 
         					   			               window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功",
-                            					   			domainName + '/hdk/sjt/surveyList.html');
+                            					   			domainName + "/hdk/sjt/surveyList.html?syp_user_num="+params["userNum"]+"&syp_user_name="+params["userName"]);
 
         					   		}else if(data.message == "fail"){
         					   			app.alert('保存失败',1);
@@ -796,7 +796,9 @@ var vipinfovalue;
 					   success:function(data){
 					   		if(data.message == "success"){	
                                  window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功",
-                                                            domainName + '/hdk/sjt/surveyList.html');
+                                                            domainName + "/hdk/sjt/surveyList.html?syp_user_num="+params["userNum"]+"&syp_user_name="+params["userName"]);
+
+
 					   		}else if(data.message == "fail"){
 					   			app.alert('修改失败',1);
 					   		}
@@ -874,6 +876,7 @@ var vipinfovalue;
 					$("#dyjPort").html(data.printer.printerPort);
 					xg.youzhi("dyjPort");
 					//其他
+
 					if(data.survey.surNetwork.indexOf("外网")!=-1){
 						$('#qt1').addClass('on');
 						qt.network = data.survey.surNetwork;
@@ -900,19 +903,23 @@ var vipinfovalue;
 						qt.vip = "否";
 					}
 					}
-					vipinfovalue=data.survey.vipInfo;   
-					console.log("test1"+vipinfovalue);      
-					if(vipinfovalue != null && vipinfovalue !="未选择" ){
-						$('#qt7').addClass('on');
-						qt.note = "是";
-						$("#vipshow").css("visibility","inherit");
-						$("#subnote").css("visibility","inherit");
-						$('#vipinfo').val(vipinfovalue);
-						setTimeout('func_chkvip()',400);
-					}else if(vipinfovalue == null){
-						$('#qt8').addClass('on');
-						qt.note = "否";
-					}
+
+                    /*===cynthia 会员信息 start===*/
+                    vipinfovalue=data.survey.vipInfo;   
+                    console.log("test1"+vipinfovalue);      
+                    if(vipinfovalue != null && vipinfovalue !="未选择" ){
+                        $('#qt7').addClass('on');
+                        qt.note = "是";
+                        $("#vipshow").css("visibility","inherit");
+                        $("#subnote").css("visibility","inherit");
+                        viparr=vipinfovalue.split(",");
+                        $('#vipinfo').val(vipinfovalue);
+                        setTimeout('func_chkvip()',400);
+                    }else if(vipinfovalue == null){
+                        $('#qt8').addClass('on');
+                        qt.note = "否";
+                    }
+                    /*===cynthia 会员信息 end===*/
 					if( data.survey.attachmentUrl != '' &&  data.survey.attachmentUrl != null &&  data.survey.attachmentUrl != undefined){
 						imgs = shop.files = data.survey.attachmentUrl.split(",");
 
@@ -933,15 +940,18 @@ var vipinfovalue;
 				}
 			}
 
-			function func_chkvip()
-			{	$("#vipchkbox .i-choice-rowchk").each(function(i){
-							var viptxt=$(this).find("p").html();
-							var vipchktxt=$('#vipinfo').val();
-							 console.log(vipinfovalue);
-						    if (vipinfovalue.indexOf(viptxt)!=-1)
-						    	{$(this).find("div").addClass("on");}
-						  });
-		 }
+			/*===cynthia 会员信息 start===*/
+            function func_chkvip()
+            {   $("#vipchkbox .i-choice-rowchk").each(function(i){
+                            var viptxt=$(this).find("p").html();
+                            var vipchktxt=$('#vipinfo').val();
+                             console.log(vipinfovalue);
+                            if (vipinfovalue.indexOf(viptxt)!=-1)
+                                {$(this).find("div").addClass("on");}
+                          });
+         }
+         /*===cynthia 会员信息 end===*/
+
 			var proId_name="";
 			 function loadsurvey(id , table,isAll){
 				 var time = (new Date().getTime());

@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,7 +101,7 @@ public class ComUtil {
 	}
 	public static String dateFormat(String  date){
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		try {
 			if(null != date && !"".equalsIgnoreCase(date)){
@@ -131,5 +132,16 @@ public class ComUtil {
 			
 			return null ;
 		}
+	}
+	public static String dateFormat(Date  date, String formatter){
+		
+		SimpleDateFormat sdf = new SimpleDateFormat(formatter);
+		
+			if(null != date ){
+				return sdf.format( date);
+			}else{
+				return null ;
+			}
+		
 	}
 }

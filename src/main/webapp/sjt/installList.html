@@ -107,10 +107,9 @@
                                  }else{
                                      str = str + ","+item.proName;
                                  }
-                                 
                              });
                                 $('#itemName').attr("data-select",str);
-                                shopStateSeach();
+
                         },
                         error:function(rs){
                         }
@@ -130,7 +129,7 @@
                         success:function(rs){
 
                             //加载最后一次选择的项目信息
-                             $(".i-itemStyle-title").html(rs[0].proName);
+                             // $(".i-itemStyle-title").html(rs[0].proName);
                             $('#itemName').html(rs[0].proName);
                             $('.i-itemStyle-list').html(
                                     "               <div>" +
@@ -172,7 +171,7 @@
                         }
                     });
                     time = (new Date().getTime());
-                     $(".i-itemStyle-title").html($('#itemName').html());
+                     // $(".i-itemStyle-title").html($('#itemName').html());
                      $.ajax({ 
                             url:domainName +  '/hdk/project/getSome',
                             type:'get',

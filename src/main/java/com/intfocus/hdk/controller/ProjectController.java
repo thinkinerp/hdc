@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-import com.intfocus.hdk.dao.MessageMapper;
 import com.intfocus.hdk.dao.ProjectMapper;
-import com.intfocus.hdk.vo.Message;
+import com.intfocus.hdk.service.FormCodeService;
 import com.intfocus.hdk.vo.Project;
 
 @Controller
@@ -35,6 +34,26 @@ public class ProjectController implements ApplicationContextAware {
     @Resource
     private ProjectMapper projectmapper ;
     
+    @Resource
+    private FormCodeService formCodeService;
+    
+    
+    @RequestMapping(value = "getFormCode" , method=RequestMethod.GET)
+    @ResponseBody
+    public String getFormCode(HttpServletResponse res , HttpServletRequest req ,HttpSession session
+            , String formType , String proId , String callback){
+    	
+    	JSONObject rs = new JSONObject();
+    	try{
+    		rs.put("message", "success");
+    		rs.put("code", formCodeService.getFormCode(formType, proId));
+    		return callback + "(" + rs.toJSONString()+ ")";
+    	}catch(Exception e){
+    		rs.put("message", "fail");
+    		e.printStackTrace();
+    		return callback + "(" + rs.toJSONString() + ")";
+    	}
+    }
     @RequestMapping(value = "submit" , method=RequestMethod.POST)
     @ResponseBody
     public void submit(HttpServletResponse res , HttpServletRequest req ,HttpSession session
@@ -111,10 +130,10 @@ public class ProjectController implements ApplicationContextAware {
 		}catch(Exception e){
 			rs.put("message", "fail");
 			e.printStackTrace();
-			return rs.toJSONString() ;
+			return callback + "(" + rs.toJSONString() + ")";
 		}
     	rs.put("message", "success");
-    	return rs.toJSONString();
+    	return callback + "(" + rs.toJSONString() + ")";
     }
     
     @RequestMapping(value = "getSome" , method=RequestMethod.GET)

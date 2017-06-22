@@ -21,4 +21,6 @@ public interface ShopsMapper {
     List<Shops> selectByWhere(Map<String,String> where);
     
     List<Shops> selectForCombobox(Map<String,String>where);
+    List<Shops> selectShops(Map<String,String>where);
+    
 }

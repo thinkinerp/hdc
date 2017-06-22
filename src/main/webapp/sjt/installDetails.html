@@ -51,7 +51,7 @@
                 <div class="swiper-slide">
                     <ul class="iz-list">
                         <li>
-                            <div class="g-importList-title">安装编号：</div>
+                            <div class="g-importList-title">安装编号</div>
                             <div class="g-importList-content">
                                 <div class="i-import" style="border:none">
                                     <input  id ="installCode" type="text"  readonly />
@@ -59,23 +59,23 @@
                             </div>
                         </li>
                         <li>
-                            <div class="iz-list-title">商铺编号：</div>
+                            <div class="iz-list-title">商铺编号</div>
                             <div class="iz-list-content" id = "shopCode"></div>
                         </li>
                         <li>
-                            <div class="iz-list-title">收银机编号：</div>
+                            <div class="iz-list-title">收银机编号</div>
                             <div class="iz-list-content"  id ="cashCode" ></div>
                         </li>
                         <li>
-                            <div class="iz-list-title">打印机编号：</div>
+                            <div class="iz-list-title">打印机编号</div>
                             <div class="iz-list-content" id = "printCode"></div>
                         </li>
                         <li>
-                            <div class="iz-list-title">采集设备编号：</div>
+                            <div class="iz-list-title">采集设备编号</div>
                             <div class="iz-list-content" id = "equipmentCode"></div>
                         </li>
                         <li>
-                            <div class="iz-list-title">安装状态：</div>
+                            <div class="iz-list-title">安装状态</div>
                             <div class="iz-list-content" id = "installStation"></div>
                         </li>
                     </ul>
@@ -308,13 +308,13 @@
                             <div class="g-importList-title">客户网络情况</div>
                             <div class="g-importList-content">
                                 <div class="i-choice">
-                                    <div class="i-choice-row">
-                                        <div id="installNetworkHard" class="on"></div>
-                                        <p>硬件</p>
+                                    <div class="i-choice-rowchk">
+                                        <div id="installNetworkHard" class="on" onclick="qt.selectNetwork('installNetworkHard')"></div>
+                                        <p>外网</p>
                                     </div>
-                                    <div class="i-choice-row">
-                                        <div id="installNetworkSoft" ></div>
-                                        <p>软件</p>
+                                    <div class="i-choice-rowchk">
+                                        <div id="installNetworkSoft" onclick="qt.selectNetwork('installNetworkSoft')"></div>
+                                        <p>wifi</p>
                                     </div>
                                 </div>
                             </div>
@@ -445,25 +445,32 @@
             $(".i-choice-row div").click(function(){    //单选
                 $(this).addClass('on').parent('div').siblings('.i-choice-row').find('div').removeClass('on');
             });
-            /*====安装cynthia ，获得安装编号 start===*/         
-            function getproId()
-            {  $.ajax({
-                url:"http://www.onetoend.cn/hdk/project/getFormCode",
-                dataType:"jsonp",
-                jsonp:"callback",
-                data:{
-                    formType:"install",
-                    proId:proId_name
-                },
-               type:"get",
-               success:function(res){
-                console.log(res);
-                  $("#installCode").val(res.code);
-               },
-               error:function(res){                   
-               } 
-              });}           
-            /*====安装cynthia ，获得安装编号 end===*/
+           var qt ={
+            selectNetwork:function(obj){
+              if($("#"+obj).hasClass("on"))
+                    {
+                        $("#"+obj).removeClass("on");
+                    }
+                else
+                    {$("#"+obj).addClass('on');
+                  }  
+            },
+            selectedItem:function(){
+                var s = '';
+                if($("#installNetworkHard").hasClass("on")){
+                    s = s + $("#installNetworkHard").html();
+                }
+                
+                if($("#installNetworkSoft").hasClass("on")){
+                    if('' == s){
+                        s = $("#installNetworkSoft").html();
+                    }else {
+                        s = s + "," + $("#installNetworkSoft").html();
+                    }
+                }
+            }   
+           } ;
+           
         </script>
 <!-- <script src="js/buttonAway.js" type="text/javascript" charset="utf-8"></script> -->
 </body>

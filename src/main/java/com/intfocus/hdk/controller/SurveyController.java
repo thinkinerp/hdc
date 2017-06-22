@@ -168,7 +168,7 @@ public class SurveyController implements ApplicationContextAware {
     	//门店
     	where.put("proId", survey1.getProId());
     	where.put("shopId", survey1.getShopId());
-    	List<Shops> shops = shopsMapper.selectByWhere(where ); 
+    	List<Shops> shops = shopsMapper.selectShops(where ); 
     	if(0<shops.size()){
     		Shops shop = shops.get(0);
     		json.put("shops", shop);
@@ -189,10 +189,10 @@ public class SurveyController implements ApplicationContextAware {
     		,String userName ,String userNum){
     	
 		JSONObject rs = new JSONObject();
-		log.info("survey:"+JSONObject.toJSONString(survey));
-		log.info("printer:"+JSONObject.toJSONString(printer));
-		log.info("cash:"+JSONObject.toJSONString(cash));
-		log.info("shops:"+JSONObject.toJSONString(shops));
+//		log.info("survey:"+JSONObject.toJSONString(survey));
+//		log.info("printer:"+JSONObject.toJSONString(printer));
+//		log.info("cash:"+JSONObject.toJSONString(cash));
+//		log.info("shops:"+JSONObject.toJSONString(shops));
 //	   if(!"".equalsIgnoreCase(files)){	
 //		Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
 //		

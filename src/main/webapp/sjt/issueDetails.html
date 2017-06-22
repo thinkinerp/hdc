@@ -531,6 +531,8 @@
                 },
                 selectGs3 : function() {
                     gs.gs3 = $("#gs3").html();
+                    $("#gs4").html('');
+                       gs.gs4 = '';
                     onGs3Click();
                 },
                 gs3Fun : function() {
@@ -564,6 +566,11 @@
                             }
                             $('#gs4')[0].dataset.select = text
                             $("#gs4").click(function() {
+                               if ('海鼎' == $("#gs3").html()) {
+                                    $('#gs4').attr('data-select', '商务,运维,技术');
+                                } else if('客户' == $("#gs3").html()) {
+                                    $('#gs4').attr('data-select', '其他');
+                                }
                                 app.select(this, 2, gs.selectGs4);
                             })
                             gs.gs5Fun();
@@ -612,10 +619,13 @@
                         success : function(data) {
                             var text = ''
                             for (var i = 0; i < data.length; i++) {
+                                if(null != data[i].department && undefined != data[i].department){
                                 if (i == data.length - 1) {
                                     text += data[i].department
                                 } else {
-                                    text += data[i].department + ','
+                                 
+                                    text += data[i].department  + ','
+                                }
                                 }
                             }
                             $('#gs6')[0].dataset.select = text
@@ -786,7 +796,7 @@
                         success : function(data) {
                             if (data.message == "success") {
 
-                                window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功", domainName + "/hdk/sjt/issueList.html");
+                                window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功", domainName + "/hdk/sjt/issueList.html?syp_user_num="+params["userNum"]+"&syp_user_name="+params["userName"]);
 
                             } else if (data.message == "fail") {
                                 app.alert('保存失败', 1);
@@ -853,7 +863,7 @@
                     success : function(data) {
                         if (data.message == "success") {
 
-                            window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功", domainName + "/hdk/sjt/issueList.html");
+                            window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功", domainName + "/hdk/sjt/issueList.html?syp_user_num="+params["userNum"]+"&syp_user_name="+params["userName"]);
 
                         } else if (data.message == "fail") {
                             app.alert('修改失败', 1);
@@ -913,7 +923,7 @@
                     $("#ms1").val(data.problemHappen);
                     $("#ms2").val(data.problemPut);
                     $("#ms3").val(data.problemEstimate);
-                    $("#ms4").val(data.problemResloveUser);
+                    $("#ms4").val(data.problemResolveUser);
                     $("#ms5").val(data.problemResloveTime);
 
                     $('#asddas').html(data.eqId);

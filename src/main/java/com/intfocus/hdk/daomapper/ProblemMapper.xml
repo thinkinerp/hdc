@@ -57,10 +57,9 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    	from problem
-    inner join project on project.pro_id = problem.pro_id
-    inner join shops on shops.shop_id = problem.shop_id
-    left join equipment on equipment.eq_id = problem.eq_id
+from problem inner join project on project.pro_id = problem.pro_id 
+inner join shops on shops.shop_id = problem.shop_id and shops.pro_id = project.pro_id
+left join equipment on equipment.eq_id = problem.eq_id and equipment.pro_id = project.pro_id and equipment.shop_id = shops.shop_id
 	<where>
 		1=1
 		<if test="null != state and ''!= state">

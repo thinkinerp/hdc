@@ -9,4 +9,5 @@
 //	domainName = 'http://120.76.214.173:80';
 //}
 
-var domainName=  "http://www.onetoend.cn";
+var domainName=  "http://120.76.214.173";
+//domainName=  "http://localhost:8080";

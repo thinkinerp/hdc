@@ -1,6 +1,7 @@
 package sy.test;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class UtilTest {
 
 	@Test
 	public void comUtilDateFormat() {
-		System.out.println(ComUtil.dateFormat("2017-05-15 16:57:10"));	
+		System.out.println(ComUtil.dateFormat(new Date(), "yyMMdd"));	
 		
 	}
 	@Test
