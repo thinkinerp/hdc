@@ -434,7 +434,7 @@ function buttonFixed()
             else
             {$(".wrapbox").css({position:"absolute"});}
  }	
-  /*====cynthia返回 start=====*/
+  /*====cynthia返回 start1=====*/
  			var savetxt=false;
 			function issave()
 			{
@@ -452,4 +452,4 @@ function buttonFixed()
 					app.alert('单据未保存，是否保存数据？',2,submitback);
 				}
 			}
- /*====cynthia返回 end=====*/
+ /*====cynthia返回 end1=====*/
