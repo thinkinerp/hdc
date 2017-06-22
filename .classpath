@@ -33,6 +33,5 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/quartz-2.2.3.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/quartz-jobs-2.2.3.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/c3p0-0.9.1.1.jar"/>
-	<classpathentry kind="lib" path="/Users/wangyifei/Documents/localRep/org/springframework/spring-test/4.0.2.RELEASE/spring-test-4.0.2.RELEASE.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

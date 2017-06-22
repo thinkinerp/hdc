@@ -31,11 +31,8 @@
     from user
     	<where>
 		1=1
-		<if test="null != userName and ''!= userName">
-			and user_name = #{userName}
-		</if>
-		<if test="null != password and ''!= password ">
-			and password = md5(#{password})
+		<if test="null != name and ''!= name">
+			and name = #{name}
 		</if>
 	</where>    
 	    <if test="null != page and ''!= page">

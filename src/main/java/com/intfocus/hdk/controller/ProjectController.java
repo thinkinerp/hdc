@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.intfocus.hdk.dao.MessageMapper;
 import com.intfocus.hdk.dao.ProjectMapper;
-import com.intfocus.hdk.service.FormCodeService;
+import com.intfocus.hdk.vo.Message;
 import com.intfocus.hdk.vo.Project;
 
 @Controller
@@ -34,26 +35,6 @@ public class ProjectController implements ApplicationContextAware {
     @Resource
     private ProjectMapper projectmapper ;
     
-    @Resource
-    private FormCodeService formCodeService;
-    
-    
-    @RequestMapping(value = "getFormCode" , method=RequestMethod.GET)
-    @ResponseBody
-    public String getFormCode(HttpServletResponse res , HttpServletRequest req ,HttpSession session
-            , String formType , String proId , String callback){
-    	
-    	JSONObject rs = new JSONObject();
-    	try{
-    		rs.put("message", "success");
-    		rs.put("code", formCodeService.getFormCode(formType, proId));
-    		return callback + "(" + rs.toJSONString()+ ")";
-    	}catch(Exception e){
-    		rs.put("message", "fail");
-    		e.printStackTrace();
-    		return callback + "(" + rs.toJSONString() + ")";
-    	}
-    }
     @RequestMapping(value = "submit" , method=RequestMethod.POST)
     @ResponseBody
     public void submit(HttpServletResponse res , HttpServletRequest req ,HttpSession session
@@ -62,13 +43,9 @@ public class ProjectController implements ApplicationContextAware {
     }
     
     @RequestMapping(value = "gotoModify" , method=RequestMethod.GET)
-    public void gotoModify(HttpServletResponse res , HttpServletRequest req 
-    		,HttpSession session,Project project
-    		,String callback){
+    public String gotoModify(HttpServletResponse res , HttpServletRequest req ,HttpSession session,Project project){
         	JSONObject json = new JSONObject();
-    	    Writer w = null ;
-    	    String str ="";
-    	    try {
+        	
         	Map<String,String> where =new HashMap<String,String>(); 
         	where.put("proId", project.getProId());
         	where.put("proName", project.getProName());
@@ -79,24 +56,8 @@ public class ProjectController implements ApplicationContextAware {
         	json.put("projectProblem", projectmapper.getProjectProblem( where));
            List<Project> projects = projectmapper.selectByWhere(where);
         	json.put("project", projects.get(0));
-        	json.put("message","success");
-        	str = json.toJSONString();
-
-				w = res.getWriter();
-				w.write(callback+"("+str+")");
-			} catch (IOException e) {
-				try {
-			    if(null == w){
-						w = res.getWriter();
-			    }else{
-			    	str ="{\"message\":\"fail\"}";
-			    	w.write(callback+"("+str+")");
-			    }
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}	
-				e.printStackTrace();
-			}
+        	String str = json.toJSONString();
+    	return "forward:/itemDetails.jsp?allThing="+str;
     }
      
     @RequestMapping(value = "getCount" , method=RequestMethod.GET)
@@ -108,13 +69,10 @@ public class ProjectController implements ApplicationContextAware {
      
     @RequestMapping(value = "setLast" , method=RequestMethod.GET)
     @ResponseBody
-    public String setLast(HttpServletResponse res , HttpServletRequest req ,HttpSession session
-            , Project project , String callback){
+    public Integer setLast(HttpServletResponse res , HttpServletRequest req ,HttpSession session
+            , Project project){
     	
     	Project p =  null;
-    	
-    	JSONObject rs = new JSONObject();
-    	
     	try{
     	Map<String ,String> where = new HashMap<String,String>();
     	where.put("proName", project.getProName());
@@ -128,22 +86,19 @@ public class ProjectController implements ApplicationContextAware {
 			projectmapper.updateByPrimaryKeySelective(p);
 		}	
 		}catch(Exception e){
-			rs.put("message", "fail");
 			e.printStackTrace();
-			return callback + "(" + rs.toJSONString() + ")";
+			return 0 ;
 		}
-    	rs.put("message", "success");
-    	return callback + "(" + rs.toJSONString() + ")";
+    	return 1;
     }
     
     @RequestMapping(value = "getSome" , method=RequestMethod.GET)
     @ResponseBody
     public void getSome(HttpServletResponse res , HttpServletRequest req ,HttpSession session
-    		              , Project project ,String time,String proNameLike){
+    		              , Project project ,String time){
     	log.info("pro:"+project.getProName());
     	Map<String ,String> where = new HashMap<String,String>();
     	where.put("proName", project.getProName());
-    	where.put("proNameLike", proNameLike);
     	if(null != project.getIsLast()){
     		where.put("isLast", project.getIsLast().toString());
     	}

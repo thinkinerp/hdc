@@ -2,40 +2,6 @@ document.getElementsByTagName("html")[0].style.fontSize=Math.floor(document.docu
 var imgs = [];	//2个图片都会在这个数组里
 var swiper1 = '';
 var swiper2 = '';
-var m_loading = {
-		html:function(){
-			var html = [];
-	        html.push("<div class='m_load'>");
-	        html.push("<div class='load2'>");
-	        html.push("<span class='loading'>");
-	    	html.push("<span class='bar1'></span>");
-	    	html.push("<span class='bar2'></span>");
-	    	html.push("<span class='bar3'></span>");
-	    	html.push("<span class='bar4'></span>");
-	    	html.push("<span class='bar5'></span>");
-	    	html.push("<span class='bar6'></span>");
-	    	html.push("<span class='bar7'></span>");
-	    	html.push("<span class='bar8'></span>");
-	    	html.push("<span class='bar9'></span>");
-	    	html.push("<span class='bar10'></span>");
-	    	html.push("<span class='bar11'></span>");
-	    	html.push("<span class='bar12'></span>");
-		    html.push("</span>");
-
-	        //html.push("<span class='load_text'>加载中...</span>");
-	        html.push("</div>");
-	        html.push("</div>");
-	        $("body").append(html.join(""));
-	        $(".xxx").click(function(){
-	        	m_loading.remove();
-	        });
-
-		},
-		remove:function(){
-			$(".m_load").remove();
-
-		}
-	}
 var app ={
 	listdata:'', //选择列表数据
 	put:'', 	//选择后要显示的位置
@@ -43,9 +9,6 @@ var app ={
 	selectOverFun:'',  //选择后要执行的方法
 	alert:function(msg,style,fun){ //消息内容    状态(1为只有确定按钮 2为是否按钮)  fun点确定后要执行的方法
 		var html = [];
-		if(undefined != $('#g-popup').attr("id")){
-			return;
-		}	
 		html.push('<div class="g-popup" id="g-popup">');
 		html.push('<div class="g-popup-main">');
 		html.push('<div class="g-popup-main-title">提示</div>');
@@ -62,10 +25,10 @@ var app ={
 		html.push('</div>');
 		$("body").append(html.join(''));
 		$("#g-popupOk").click(function(){
-			$("#g-popup").remove();		
 			if(fun != undefined){
 				fun();
 			}
+			$("#g-popup").remove();		
 		})
 		$("#g-popupNo").click(function(){
 			$("#g-popup").remove();
@@ -84,17 +47,12 @@ var app ={
 		}
 		app.listdata = $(app.put)[0].dataset.select;
 		var content = $(app.put)[0].innerHTML;
-		var alertTitle = $(app.put).attr('alertTitle');
 		app.listdata = app.listdata.split(",");
         var dom = [];
         dom.push('<div class="g-select">');
-//
-//        dom.push('<div style="left:0; bottom:0; height:.8rem; width: 100%; background:white; font-size: .36rem; display: flex; justify-content: center; align-items: center;">');
-//        dom.push();
-//        dom.push('</div>');
         if(app.selecttype != 1){	//如果类型不等于1  显示搜索框
 	        dom.push('<div class="g-select-seek">');
-	        dom.push('<input placeholder="'+alertTitle+'" type="text" oninput="app.selectSeek(this)"/>');
+	        dom.push('<input placeholder="请输入" type="text" oninput="app.selectSeek(this)"/>');
 	        dom.push('<div></div>');//搜索按钮
 	        dom.push('</div>');
         }
@@ -107,8 +65,7 @@ var app ={
        		}
         }
         dom.push('</ul>');
-        //cynthia 按钮样式
-        dom.push('<div class="g-ok"><div  onclick="app.selectBack()">退出</div></div>');
+        dom.push('<div class="g-select-back" onclick="app.selectBack()">退出</div>');
         dom.push('</div>');
         $("body").append(dom.join(''));
         app.selectClick();     
@@ -174,126 +131,25 @@ var app ={
 	},
 	getImgUrl:function(){
 		var file = document.getElementById("fileImg").files;
-		
-		if((null == file) || ('' == file) || (undefined == file)){
-			return ;
-		}
 		file = file[0];
-		app.changeBlobImageQuantity(file);
-//		var reader = new FileReader(); 
-//		reader.readAsDataURL(file); 
-//		reader.onload = function(e){ 
-//			app.addImg(this.result)
-//		} 
-	},
-	changeBlobImageQuantity:function(blob){
-		//m_loading.html();
-		var format = null;
-		var quality  = format = ""
-		format =  'image/jpeg';
-		quality = 0.2; // 经测试0.9最合适
-		var fr = new FileReader();
-		fr.onload = function(e) {
-			var dataURL = e.target.result;
-			var img = new Image();
-			img.onload = function() {
-				var canvas = document.createElement('canvas');
-				var ctx = canvas.getContext('2d');
-				var oldWidth = img.width;
-				var oldHeight = img.height;
-				var newWidth = img.width; //window.screen.width;
-				var newHeight = Math.floor(oldHeight / oldWidth * newWidth);
-				canvas.width = newWidth;
-				canvas.height = newHeight;
-				ctx.drawImage(img, 0, 0, newWidth, newHeight);
-				// ctx.drawImage(img, 0, 0);
-				var newDataURL = canvas.toDataURL(format, quality);
-				var newBlob = app.convertDataURLToBlob(newDataURL);
-				var data = new FormData();
-				if(newBlob) {
-					var uploadFile = new File([newBlob], blob.name, {
-						type: newBlob.type
-					});
-					
-					if( 1048576 < uploadFile.size){
-						app.alert("图片过大，无法上传",1);
-					}
-					
-					data.append('files', newBlob, blob.name);
-				}				
-				$.ajax({
-					url:domainName + '/hdk/image/recerverImag',
-					data: data,
-					cache: false,
-					contentType: false,
-					processData: false,
-					dataType: "json",
-					type: 'post',
-				}).done(function(result) {
-					if("success" ==result.message) {
-						//alert(result.fileName);
-						imgs.push(result.fileName);
-						/*==== updatecynthia start====*/
-						// if(imgs.length >= 3){
-						// 	imgs.splice(0,1);
-						// }						
-						$("#imgShow").append('<div ></div>');
-						/*==== updatecynthia end====*/
-						app.imgsShow(uploadFile.size);
-						
-					} else {
-						app.alert("图片上传失败",1);
-					}
-					//m_loading.remove();
-				});
-				
-				canvas = null;
-			};
-			img.src = dataURL;
-		};
-		fr.readAsDataURL(blob); 
-	},
-	convertDataURLToBlob:function(dataURL) {
-		var arr = dataURL.split(',');
-		var code = window.atob(arr[1]);
-		var aBuffer = new window.ArrayBuffer(code.length);
-		var uBuffer = new window.Uint8Array(aBuffer);
-		for(var i = 0; i < code.length; i++) {
-			uBuffer[i] = code.charCodeAt(i);
-		}
-		var Builder = window.WebKitBlobBuilder || window.MozBlobBuilder;
-		if(Builder) {
-			var builder = new Builder;
-			builder.append(aBuffer);
-			return builder.getBlob(format);
-		} else {
-			// return new window.Blob([ uBuffer ]);
-			return new window.Blob([aBuffer], {
-				type: arr[0].match(/:(.*?);/)[1]
-			});
-		}
+		var reader = new FileReader(); 
+		reader.readAsDataURL(file); 
+		reader.onload = function(e){ 
+			app.addImg(this.result)
+		} 
 	},
 	addImg:function(base){
-//		imgs.push(base)
-//		if(imgs.length >= 3){
-//			imgs.splice(0,1);
-//		}
+		imgs.push(base)
+		if(imgs.length >= 3){
+			imgs.splice(0,1);
+		}
 		app.imgsShow();
 	},
-	imgsShow:function(picSize){	//显示图片
-
+	imgsShow:function(){	//显示图片
 		$("#imgShow").find('div').hide();
 		$("#imgShow").find('div').find('img').remove();
-		var isIOS = (/iphone|ipad/gi).test(navigator.appVersion);
 		for(var i = 0; i<imgs.length; i++){
-			if( isIOS){	
-				$("#imgShow").find('div').eq(i).html('<img style="-webkit-transform:rotate(90deg)" src="/hdk/upload/'+imgs[i]+'"/>');
-			}else{
-				$("#imgShow").find('div').eq(i).html('<img src="/hdk/upload/'+imgs[i]+'"/>');
-			}
-			//updatecynthia start
-		    
-						//updatecynthia end
+			$("#imgShow").find('div').eq(i).html('<img src="'+imgs[i]+'"/>');
 			$("#imgShow").find('div').eq(i).show();
 		}	
 	},
@@ -306,12 +162,7 @@ var app ={
 		dom.push('<div class="fanhui"  id="fullimgClose"> < </div>');
 		dom.push('<div class="shanchu" id="fullimgRemove"></div>');
 		dom.push('</div>');
-		var isIOS = (/iphone|ipad/gi).test(navigator.appVersion);
-		if( isIOS){	
-			dom.push('<div class="img"><img style="-webkit-transform:rotate(90deg)"  src="/hdk/upload/'+base+'"/></div>');
-		}else{
-			dom.push('<div class="img"><img  src="/hdk/upload/'+base+'"/></div>');
-		}
+		dom.push('<div class="img"><img src="'+base+'"/></div>');
 		dom.push('</div>');
 		$('body').append(dom.join(''));
 		$("#fullimgClose").click(function(){
@@ -373,28 +224,7 @@ var app ={
 	}
 	
 }
-function removeByValue(arr, val) {
-  for(var i=0; i<arr.length; i++) {
-    if(arr[i] == val) {
-      arr.splice(i, 1);
-      break;
-    }
-  }
-}
-function chk_brand(dyjbrand,dyjxh,dyjPort,obj)
-{ if((dyjbrand!=""&&dyjbrand!="未选择") || (dyjxh!=""&&dyjxh!="未选择") || (dyjPort!=""&&dyjPort!="未选择") )
-				 {
-				   if (form_empty({code:$(obj).val(), which:"收银机编号"}))
-				   {return true;}
-			     }
-}
-function chk_print(dyjbrand,dyjxh,dyjPort,obj)
-{ if((dyjbrand!=""&&dyjbrand!="未选择") || (dyjxh!=""&&dyjxh!="未选择") || (dyjPort!=""&&dyjPort!="未选择") )
-				 { 
-				   if (form_empty({code:$(obj).val(), which:"打印机编号"}))
-				   {return true;}
-			     }
-}
+
 $(function(){
 	$("#menu div").click(function() {	//顶部菜单点击下面内容区改变
 		var index = $(this).index();
@@ -408,27 +238,4 @@ $(function(){
 	$(".i-choice-row div").click(function(){	//单选
 		$(this).addClass('on').parent('div').siblings('.i-choice-row').find('div').removeClass('on');
 	})
-
-	
 })
-buttonFixed();
-function buttonFixed()
-{		 var u = navigator.userAgent;
-             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端 		   
-  				var winHeight = $(window).height();   //获取当前页面高度
-            $(window).resize(function(){
-               var thisHeight=$(this).height();
-                if(winHeight - thisHeight >50){
-                    $(".g-ok,.i-addTable").hide();
-                }else{
-                    $(".g-ok,.i-addTable").show();
-                }
-
-            }); 
-            if(isAndroid)
-            {
-            	$(".wrapbox").css({position:"static"});
-            } 
-            else
-            {$(".wrapbox").css({position:"absolute"});}
- }	

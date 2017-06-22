@@ -32,10 +32,7 @@
 				and pro_id in( select pro_id from project where pro_name =  #{proName,jdbcType=VARCHAR}) 
 			</if>	
     		<if test="null != shopId  and '' != shopId">
-				and shop_id = #{shopId,jdbcType=VARCHAR}
-			</if>	
-    		<if test="null != eqId  and '' != eqId">
-				and eq_id = #{eqId,jdbcType=VARCHAR}
+				and shop_id = #{proId,jdbcType=VARCHAR}
 			</if>	
     </where>    
     

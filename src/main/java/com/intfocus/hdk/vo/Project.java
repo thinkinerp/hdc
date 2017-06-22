@@ -27,17 +27,11 @@ public class Project {
     private String proUpdataTime;
 
     private Integer proTodal;
-    
-    private Integer leftNum;
 
     private Integer proNeed;
 
     private Integer proAlready;
-    
-    private String  proAlreadyPer;
-    
-    private String proCheckPer;
-    
+
     private Integer proCheck;
 
     private Integer proNot;
@@ -52,7 +46,7 @@ public class Project {
     
     private String problemType;
     
-    private String Count;
+    private Integer Count;
 
     public Integer getId() {
         return id;
@@ -135,7 +129,7 @@ public class Project {
     }
 
     public String getProUpdataTime() {
-        return ComUtil.dateFormat(proUpdataTime);
+        return proUpdataTime;
     }
 
     public void setProUpdataTime(String proUpdataTime) {
@@ -223,35 +217,11 @@ public class Project {
 		this.problemType = problemType;
 	}
 
-	public String getCount() {
+	public Integer getCount() {
 		return Count;
 	}
 
-	public void setCount(String count) {
+	public void setCount(Integer count) {
 		Count = count;
-	}
-
-	public String getProAlreadyPer() {
-		return proAlreadyPer;
-	}
-
-	public void setProAlreadyPer(String proAlreadyPer) {
-		this.proAlreadyPer = proAlreadyPer;
-	}
-
-	public String getProCheckPer() {
-		return proCheckPer;
-	}
-
-	public void setProCheckPer(String proCheckPer) {
-		this.proCheckPer = proCheckPer;
-	}
-
-	public Integer getLeftNum() {
-		return leftNum;
-	}
-
-	public void setLeftNum(Integer leftNum) {
-		this.leftNum = leftNum;
 	}
 }

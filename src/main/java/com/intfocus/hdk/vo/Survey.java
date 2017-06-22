@@ -1,10 +1,8 @@
 package com.intfocus.hdk.vo;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 
-import com.alibaba.fastjson.JSONArray;
 import com.intfocus.hdk.util.ComUtil;
 
 public class Survey {
@@ -25,8 +23,6 @@ public class Survey {
     private String shopMerStation;
 
     private String surNetwork;
-    
-    private String vipInfo;
 
     private String surPower;
 
@@ -42,25 +38,13 @@ public class Survey {
 
     private String surRemarks;
 
-    public  void modifyAtachement(String  files ,String picUrls ,String path){
+    public  void modifyAtachement(String picUrls){
     	
     	if(null != picUrls){
-    		JSONArray filesArray = JSONArray.parseArray(files); 
-    		String[] filesArray2 = null ;
-    		String[] temp = null;
-    		if(null !=  this.attachmentUrl && !"".equalsIgnoreCase(this.attachmentUrl)){
-	    		filesArray2 = this.attachmentUrl.split(",");
-	    		temp = filesArray2.clone();
-	    		for (int i = 0; i < filesArray2.length; i++) {
-	    			if(!filesArray.contains( filesArray2[i].replace(path, "/hdk/"))){
-	    				temp = ComUtil.remove(filesArray2[i], temp);
-	    			}
-				}
-    		}
-    		if(null != temp && 0 < temp.length ){
-    			this.attachmentUrl =   org.apache.commons.lang.StringUtils.join(temp,",") + ("".equalsIgnoreCase(picUrls)?"" :"," + picUrls);
+    		if(null == this.attachmentUrl){
+    			this.attachmentUrl = picUrls;
     		}else{
-    			this.attachmentUrl =picUrls;
+    			this.attachmentUrl = "," + picUrls;
     		}
     	}
     }
@@ -191,14 +175,6 @@ public class Survey {
 
 	public void setShopName(String shopName) {
 		this.shopName = shopName;
-	}
-
-	public String getVipInfo() {
-		return vipInfo;
-	}
-
-	public void setVipInfo(String vipInfo) {
-		this.vipInfo = vipInfo;
 	}
 
 

@@ -28,10 +28,10 @@ var app ={
 		html.push('</div>');
 		$("body").append(html.join(''));
 		$("#g-popupOk").click(function(){
-			$("#g-popup").remove();		
 			if(fun != undefined){
 				fun();
 			}
+			$("#g-popup").remove();		
 		})
 		$("#g-popupNo").click(function(){
 			$("#g-popup").remove();
@@ -44,16 +44,10 @@ var app ={
 			app.selectOverFun = fun;
 		}
 		app.listdata = $(app.put)[0].dataset.select;
-		var alertTitle = $(app.put).attr('alertTitle');
 		var content = $(app.put)[0].innerHTML;
 		app.listdata = app.listdata.split(",");
         var dom = [];
         dom.push('<div class="g-select">');
-        dom.push('<div style="left:0; bottom:0; height:.8rem; width: 100%; background:white; font-size: .36rem; display: flex; justify-content: center; align-items: center;">');
-        dom.push(alertTitle);
-        dom.push('</div>');
-        
-        
         if(app.selecttype != 1){	//如果类型不等于1  显示搜索框
 	        dom.push('<div class="g-select-seek">');
 	        dom.push('<input placeholder="请输入" type="text" oninput="app.selectSeek(this)"/>');

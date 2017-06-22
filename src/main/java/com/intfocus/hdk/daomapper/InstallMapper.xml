@@ -251,7 +251,6 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.intfocus.hdk.vo.Install" >
     update install
     set install_id = #{installId,jdbcType=VARCHAR},

@@ -26,12 +26,7 @@
 			  <if test="null != surId  and '' != surId">
 				and sur_id  = #{surId,jdbcType=VARCHAR}
 			</if>	
-			  <if test="null != cashId  and '' != cashId">
-				and cash_id  = #{cashId,jdbcType=VARCHAR}
-			</if>	
-			  <if test="null != installId  and '' != installId">
-				and install_id  = #{installId,jdbcType=VARCHAR}
-			</if>	
+
     </where>
     <if test="null != page and ''!= page">
 	    <if test="null != pageSize and ''!= pageSize">
