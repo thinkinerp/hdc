@@ -961,8 +961,10 @@
                 }
             }
             var proId_name="";
+            var problemtestId;
             $(function() {
                 var problemId = app.getUrlSearch("problemId");
+                problemtestId=problemId;
                 if (problemId == null) {// 新建
                     sp.init();
                     gs.init();
@@ -1061,6 +1063,19 @@
                } 
               });}           
             /*====安装cynthia ，获得安装编号 end===*/
+            /*===返回 start===*/
+            function submitback()
+            {
+                if(problemtestId == null){
+                    submit();
+                }
+                else
+                {
+                    submit2();
+                }
+
+            }
+       /*===返回 end===*/
         </script>
     
     </body>
