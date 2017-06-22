@@ -9,53 +9,83 @@
 		<meta name="renderer" content="webkit">
 		<title>问题列表</title>
 		<link rel="stylesheet" type="text/css" href="css/global.css"/>
+        <script src="js/config.js" type="text/javascript" charset="utf-8"></script> 
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script src="js/comUtil.js"></script>
 		<script src="js/global.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
+       <script type="text/javascript" charset="utf-8">
+                window.SYP.setBannerTitle("问题列表");
+        </script>
 	</head>
 	<body>
+	<div class="wrapbox">
 		<!-- 选择项目名称 -->
 		<div  class="i-itemName">
 			<div class="i-itemName-name">项目名称</div>
 			<div class="i-itemName-list">
-				<div id="itemName" onclick="app.select(this,1,me.selectItem)"></div>
+				<div id="itemName" alertTitle="项目名称" onclick="app.select(this,2,me.selectItem)"></div>
 			</div>
 		</div>
 		<!-- 项目状态 -->
 		<div class="i-itemStyle">
-			<div class="i-itemStyle-title">上海新天地时尚</div>
+			<div class="i-itemStyle-title"></div>
 			<div class="i-itemStyle-list"></div>
 		</div>
 		<!-- 1 -->
 		<div class="i-qk">
 			<div class="i-qk-title">海鼎</div>
 			<div class="i-qk-content">
-				<p>运维：0</p>
-				<p>技术：0</p>
-				<p>商务：0</p>
+				<p id="operation"></p>
+				<p id="tech">技术：0</p>
+				<p id="business">商务：0</p>
 			</div>
 		</div>
 		<div class="i-kh">
 			<div class="i-kh-title">客户</div>
-			<div class="i-kh-content">其他：0</div>
+			<div class="i-kh-content" id="others">其他：0</div>
 		</div>
 		<!-- 2个下拉 -->
 		<div class="i-itemXl">		
 			<div class="i-itemXl-list">
-				<div data-select="海鼎,客户" id="order" onclick="app.select(this,1,me.upOrder)">海鼎</div>
+				<div data-select="全部,海鼎,客户" defaultVal="跟进方" alertTitle="选择跟进方" id="order" onclick="app.select(this,2,me.upOrder)"></div>
 			</div>
 			<div class="i-itemXl-list">
-				<div onclick="app.select(this,1,me.upShopStation)" id="surveyState" ></div>
+				<div   defaultVal="问题状态" alertTitle="选择问题状态"  onclick="app.select(this,2,me.upShopStation)" id="surveyState" ></div>
 			</div>
 		</div>
 		<!-- 项目详情 -->
 		<div class="i-itemDetail"></div>
+		</div>
 		<!-- 新建抄表 -->
-		<a  href="javascript:void(0)" onclick="window.location='issueDetails.html'" class="i-addTable">
+		<a  href="javascript:void(0)" onclick="gotoDetails()" class="i-addTable">
 			<div class="icon"></div>
 			<div class="text">新建</div>
 		</a>
 		
 		<script type="text/javascript">
+		
+		var gotoDetails =  function(){
+		    window.SYP.pageLink("网页标题",domainName + "/hdk/sjt/issueDetails.html?"  
+		                                                          +"userNum="+params['syp_user_num']
+		                                                          +"&userName="+params['syp_user_name']
+		                                                          +"&pproName="+$("#itemName").html(),-1);
+		 // window.location="issueDetails.html?"  +"userNum="+params['syp_user_num']+"&userName="+params['syp_user_name']+"&pproName="+$("#itemName").html();
+		};
+		var params = function() {
+            var query = {},
+            search = window.location.search.substring(1),
+            parts = search.split('&'),
+            pairs = [];
+
+            for (var i = 0, len = parts.length; i < len; i++) {
+                pairs = parts[i].split('=');
+                query[pairs[0]] = (pairs.length > 1 ? decodeURIComponent(pairs[1]) : null);
+             }
+
+            return query;
+         }();
+		
 			var me  = {
 				proName:null,	
 				shopStation:null,
@@ -72,8 +102,25 @@
 					me.list();
 				},
 				selectItem:function(){	//选择项目
+				    
+				    
+				      $.ajax({
+                        url: domainName+"/hdk/project/setLast",
+                        type:"get",
+                        data:{
+                            "proName": $('#itemName').html()
+                        },
+                        dataType:'jsonp',
+                        jsonp:"callback",
+                        success:function(rs){
+                            
+                        },
+                        error:function(rs){
+                        }
+                });
+				    
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/project/getSome",
+					   url:domainName+ "/hdk/project/getSome",
 					   data:{"proName":$('#itemName').html()},
 					   type: "get",
 					   dataType:"jsonp",
@@ -81,11 +128,12 @@
 					   success:function(data){
 					   		me.upItemStyle(data);
 					   }					   
-					})
+					});
+					me.list();
 				},
 				parName:function(){	//项目名称
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/project/getSome",
+					   url: domainName+ "/hdk/project/getSome",
 					   type: "get",
 					   dataType:"jsonp",
 					   jsonpCallback:"project_null_getSome",
@@ -98,13 +146,13 @@
 					   				text += data[i].proName + ','
 					   			}
 					   		}
-					   		$('#itemName')[0].dataset.select = text
-					   		me.lastName()
+					   		$('#itemName')[0].dataset.select = text;
+					   		me.lastName();
 					   }					   
-					})
+					});
 				},lastName:function(){	//上次的项目名称
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/project/getSome",
+					   url: domainName+ "/hdk/project/getSome",
 					   data:{"isLast":1},
 					   type: "get",
 					   dataType:"jsonp",
@@ -115,7 +163,8 @@
 					})
 				},upItemStyle:function(data){	//更改显示项目信息
 					this.proName = data[0].proName;	
-					$('#itemName,.i-itemStyle-title').html(this.proName);	
+					$('#itemName').html(this.proName);
+					// $('#itemName,.i-itemStyle-title').html(this.proName);	
 					var itemStyleDom = [];
 			   		itemStyleDom.push('<div>');
 			   		itemStyleDom.push('<p>项目经理</p>');
@@ -134,27 +183,44 @@
 				},
 				issueClass:function(){	//问题分类汇总
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/problem/getCount",
+					   url: domainName+ "/hdk/problem/getCount",
 					   data:{"proName":$('#itemName').html()},
 					   type: "get",
 					   dataType:"jsonp",
 					   jsonpCallback:"problem_getCount",
 					   success:function(data){
-					   		console.log(data);
+					       $('#operation').html("运维：0" );
+					       $('#tech').html("技术：0");
+					       $('#business').html("商务：0");
+					       $('#others').html("其他：0");
+					       for(var i = 0 ; i < data.length ;i++){
+					       if(data[i].problemType =="运维"){
+                                $('#operation').html("运维：" + data[i].count);
+					   		}
+					       if(data[i].problemType =="技术"){
+					   		  $('#tech').html("技术：" + data[i].count);
+					   		}
+					       if(data[i].problemType =="商务"){
+					   		  $('#business').html("商务：" + data[i].count);
+					   		}
+					       if(data[i].problemType =="其他"){
+					   		  $('#others').html("其他：" + data[i].count);
+					   		}
+					   		}
 					   		me.staName();
 					   }					   
 					})
 				},
 				staName:function(){
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/state/getSome",
-					   data:{"ownerTable":'shop_mer_station'},
+					   url: domainName+ "/hdk/state/getSome",
+					   data:{"ownerTable":'problem_station',"isAll":1},
 					   type: "get",
 					   dataType:"jsonp",
 					   jsonpCallback:"state_null_getSome",
 					   success:function(data){
 					   		me.shopStation = data[0].staName;
-					   		$('#surveyState').html(me.shopStation);
+					   		//$('#surveyState').html(me.shopStation);
 					   		var text = ''
 					   		for(var i = 0 ; i<data.length; i++){
 					   			if(i == data.length -1){
@@ -170,9 +236,12 @@
 				},
 				list:function(){
 					this.shopName = $('#mendian').val();
-					var obj = {"proName":me.proName,"order":me.order,"shopMerStation":me.shopStation};
+					var obj = {"proName":me.proName
+					                  ,"problemObject":delAll("order")
+					                  ,"state":delAll('surveyState')};
+					                                           $('.i-itemDetail').html('');
 					$.ajax({	
-					   url: "http://www.onetoend.cn/hdk/problem/getSome",
+					   url: domainName+ "/hdk/problem/getSome",
 					   data:obj,
 					   type: "get",
 					   dataType:"jsonp",
@@ -208,12 +277,19 @@
 					})
 				},
 				tz:function(id){
-					window.location = "issueDetails.html?problemId=" + id;
+				    window.SYP.pageLink("网页标题",
+				    domainName + "/hdk/sjt/issueDetails.html?problemId=" + id + "&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'],-1);
+					//window.location = "issueDetails.html?problemId=" + id + "&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 				}
 			}
 			
 			$(function(){
-				me.init()
+				me.init();
+				 for(var i = 0 ; i < $('div').length;i++ ){
+                    if(undefined != $($('div')[i]).attr('defaultVal')){
+                        $($('div')[i]).html($($('div')[i]).attr('defaultVal'));
+                    }
+                }
 				/*
 				 *	弹窗的使用方法  代码在global.js  app.alert
 				*/
@@ -227,5 +303,6 @@
 				//app.alert("确定要退出吗？",2,ls)		//有确定取消按钮		点击确定关闭弹窗执行方法	点击取消弹窗关闭不执行方法
 			})
 		</script>
+		<!-- <script src="js/buttonAway.js" type="text/javascript" charset="utf-8"></script> -->
 	</body>
 </html>

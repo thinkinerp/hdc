@@ -26,6 +26,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.intfocus.hdk.dao.CashMapper;
 import com.intfocus.hdk.dao.EquipmentMapper;
 import com.intfocus.hdk.dao.MessageMapper;
+import com.intfocus.hdk.dao.Operation_historyMapper;
 import com.intfocus.hdk.dao.PrinterMapper;
 import com.intfocus.hdk.dao.ProblemMapper;
 import com.intfocus.hdk.dao.ProjectMapper;
@@ -33,7 +34,9 @@ import com.intfocus.hdk.dao.ShopsMapper;
 import com.intfocus.hdk.util.ComUtil;
 import com.intfocus.hdk.vo.Equipment;
 import com.intfocus.hdk.vo.Message;
+import com.intfocus.hdk.vo.Operation_history;
 import com.intfocus.hdk.vo.Problem;
+import com.intfocus.hdk.vo.Project;
 
 @Controller
 @RequestMapping("/problem")
@@ -57,6 +60,8 @@ public class ProblemController implements ApplicationContextAware {
     private ShopsMapper shopsMapper;
     @Resource
     private MessageMapper messageMapper ; 
+    @Resource
+    private Operation_historyMapper ohm ; 
     
     @RequestMapping(value = "getEquipmentList " , method=RequestMethod.GET)
     @ResponseBody     
@@ -86,18 +91,27 @@ public class ProblemController implements ApplicationContextAware {
     	JSONObject rs = new JSONObject();
     	try{
 
-    		if(null != files && !"".equalsIgnoreCase(files)){
-				Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
-				
-				if(!"ok".equalsIgnoreCase(result.get("message"))){
-					rs.put("message",  result.get("message"));
-					return rs.toJSONString();
-				}
-				
-				problem.setProblemEnclosure(result.get("urls"));
-    		}
+//    		if(null != files && !"".equalsIgnoreCase(files)){
+//				Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
+//				
+//				if(!"ok".equalsIgnoreCase(result.get("message"))){
+//					rs.put("message",  result.get("message"));
+//					return rs.toJSONString();
+//				}
+//				
+//				problem.setProblemEnclosure(result.get("urls"));
+//    		}
+        	if(null != files && !"".equals(files)){
+            	
+        		problem.setProblemEnclosure(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
+        	}
     		problemMapper.insertSelective(problem);
     		rs.put("message", "success");
+	    	Operation_history record = new Operation_history();
+	    	record.setUserId(userNum);
+	    	record.setFormType("问题");
+	    	record.setAction("新建问题编号为："+problem.getProblemId());
+			ohm.insertSelective(record );
 	    	return rs.toJSONString();
 	  }catch(Exception e){
 		  e.printStackTrace();
@@ -111,17 +125,37 @@ public class ProblemController implements ApplicationContextAware {
     		, Problem problem ,String callback ,String files
     		,String userName ,String userNum){
        JSONObject rs = new JSONObject();
+       String path = req.getSession().getServletContext().getRealPath("upload") ;
     	try{
-    		if(null != files && !"".equalsIgnoreCase(files)){
-				Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
-				
-				if(!"ok".equalsIgnoreCase(result.get("message"))){
-					rs.put("message", result.get("message"));
-					return rs.toJSONString();
-				}
-				problem.modifyAtachement((result.get("urls")));
-    		}
+//    		if(null != files && !"".equalsIgnoreCase(files)){
+//				Map<String,String> result = ComUtil.savePicture(files,path);
+//				
+//				if(!"ok".equalsIgnoreCase(result.get("message"))){
+//					rs.put("message", result.get("message"));
+//					return rs.toJSONString();
+//				}
+//				Map<String,String> where = new HashMap<String, String>();
+//				where.put("problemId", problem.getProblemId());
+//				List<Problem> ps = problemMapper.selectByWhere(where);
+//				if(null != ps && ps.size() > 0){
+//					problem.setProblemEnclosure(ps.get(0).getProblemEnclosure());
+//				}
+//				problem.modifyAtachement(files,(result.get("urls")),path.substring(0,path.indexOf("upload")));
+//    		}
+    		
+        	if(null != files && !"".equals(files)){
+            	
+        		problem.setProblemEnclosure(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
+        	}
+    		
     		problemMapper.updateByPrimaryKeySelective(problem);
+    		
+	    	Operation_history record = new Operation_history();
+	    	record.setUserId(userNum);
+	    	record.setFormType("问题");
+	    	record.setAction("修改问题编号为："+problem.getProblemId());
+			ohm.insertSelective(record );
+    		
     		rs.put("message", "success");
     		return rs.toJSONString();
     	}catch(Exception e){
@@ -215,9 +249,9 @@ public class ProblemController implements ApplicationContextAware {
         	    	   messageMapper.insertSelective(message); 
         	       }catch(Exception e ){
         	    	   e.printStackTrace();
-        	    	  return  callback + "({'message':'fail'})";
+        	    	  return  callback + "({\"message\":\"fail\"})";
         	       }
-    			 return callback + "({'message':'success'})";
+    			 return callback + "({\"message\":\"success\"})";
         }
         @RequestMapping(value = "getMessageSome" , method=RequestMethod.GET)
         @ResponseBody
@@ -235,17 +269,28 @@ public class ProblemController implements ApplicationContextAware {
         		e.printStackTrace();
         		  try {
         			  if(w != null ){
-        				  w.write("{'message':'fail'}");
+        				  w.write("{\"message\":\"fail\"}");
         			  }else{
 						 w = res.getWriter();
-						 w.write("{'message':'fail'}");
+						 w.write("{\"message\":\"fail\"}");
         			  }
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
         	}
         }
-         
+     @RequestMapping(value="codeUnique",method=RequestMethod.GET)
+     @ResponseBody
+     public String codeUnique(HttpServletResponse res , HttpServletRequest req ,HttpSession session
+     		,String tableName,String codeField ,String callback,String code){
+    	 Map<String,String> where = new HashMap<String,String>();
+    	 
+    	 where.put("tableName",tableName);
+    	 where.put("codeField",codeField);
+    	 where.put("code",code);
+    	 
+    	 return callback+"(" +JSONObject.toJSONString(problemMapper.codeUnique(where))+")"; 
+     }
 	@Override
 	public void setApplicationContext(ApplicationContext ctx)
 			throws BeansException {

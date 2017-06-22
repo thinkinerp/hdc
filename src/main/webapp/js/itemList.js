@@ -3,51 +3,66 @@
  */
 $(function(){
 	search();
+	
+	$('#indexSeek').click(function(){//点击搜索图标
+		search();
+	});
+	$("#proName").keydown(function(e) { //输入完按键盘确定
+        if (e.keyCode == 13) {  
+        	search();
+	       }  
+	    });
 	var time =  (new Date().getTime());
 	$.ajax({
-		url:ctx+'/project/getCount',
+		url:'/hdk/project/getCount',
 		type:'get',
 		dataType:'json',
 		success:function(rs){
 			
 			$('.i-itemStyle-list').html('');	
 			$.each(rs,function(index,item){
-				if('all' == item.count_type){
-					$('.i-itemStyle-list').append(
-							"				<div>" +
-							"					<p>合计项目</p>" +
-							"					<p>"+item.pro_count+"</p>" +
-							"				</div>"
-					);	
-				}else if('实施' == item.count_type){
-					$('.i-itemStyle-list').append(
-							"				<div>" +
-							"					<p>实施项目</p>" +
-							"					<p>"+item.pro_count+"</p>" +
-							"				</div>"
-					);	
-				}else if('待启动' == item.count_type){
-					$('.i-itemStyle-list').append(
-							"				<div>" +
-							"					<p>待启动项目</p>" +
-							"					<p>"+item.pro_count+"</p>" +
-							"				</div>"
-					);	
-				}else if('维护' == item.count_type){
-					$('.i-itemStyle-list').append(
-							"				<div>" +
-							"					<p>维护项目</p>" +
-							"					<p>"+item.pro_count+"</p>" +
-							"				</div>"	
-					);	
-				}else if('停止' == item.count_type){
-					$('.i-itemStyle-list').append(
-							"				<div>" +
-							"					<p>停止项目</p>" +
-							"					<p>"+item.pro_count+"</p>" +
-							"				</div>"	
-					);	
-				}
+				$('.i-itemStyle-list').append(
+				"				<div>" +
+				"					<p>"+ item.count_type+"项目</p>" +
+				"					<p>"+item.pro_count+"</p>" +
+				"				</div>"
+		);				
+//				if('all' == item.count_type){
+//					$('.i-itemStyle-list').append(
+//							"				<div>" +
+//							"					<p>合计项目</p>" +
+//							"					<p>"+item.pro_count+"</p>" +
+//							"				</div>"
+//					);	
+//				}else if('实施' == item.count_type){
+//					$('.i-itemStyle-list').append(
+//							"				<div>" +
+//							"					<p>实施项目</p>" +
+//							"					<p>"+item.pro_count+"</p>" +
+//							"				</div>"
+//					);	
+//				}else if('待启动' == item.count_type){
+//					$('.i-itemStyle-list').append(
+//							"				<div>" +
+//							"					<p>待启动项目</p>" +
+//							"					<p>"+item.pro_count+"</p>" +
+//							"				</div>"
+//					);	
+//				}else if('维护' == item.count_type){
+//					$('.i-itemStyle-list').append(
+//							"				<div>" +
+//							"					<p>维护项目</p>" +
+//							"					<p>"+item.pro_count+"</p>" +
+//							"				</div>"	
+//					);	
+//				}else if('停止' == item.count_type){
+//					$('.i-itemStyle-list').append(
+//							"				<div>" +
+//							"					<p>停止项目</p>" +
+//							"					<p>"+item.pro_count+"</p>" +
+//							"				</div>"	
+//					);	
+//				}
 			});
 			
 		},
@@ -60,10 +75,10 @@ $(function(){
 var search = function(){
 	var time =  (new Date().getTime());
 	 $.ajax({ 
-	 		url:ctx + '/project/getSome',
+	 		url: '/hdk/project/getSome',
 	 		type:'get',
 			data:{
-					proName:$('#proName').val(),
+					proNameLike:$('#proName').val(),
 					time:time
 					},
 	 		dataType:'jsonp',
@@ -89,7 +104,7 @@ var search = function(){
 	  						"						<p>"+item.proStation+"</p>" +
 	  						"					</div>" +
 	  						"					<div class='content-row'>" +
-	  						"						<p>项目状态</p>" +
+	  						"						<p>更新时间</p>" +
 	  						"						<p>"+item.updatedAt+"</p>" +
 	  						"					</div>" +
 	  						"</div>"+
@@ -106,9 +121,11 @@ var search = function(){
 
 
 function gotoModify(proId){
-	location.href = ctx + '/project/gotoModify?proId=' + proId;
+	
+	window.SYP.pageLink("项目详情",domainName +'/hdk/itemDetails.html?proId=' + proId,-1);
+	//location.href ='/hdk/itemDetails.html?proId=' + proId;
 }
 
 function create(){
-	location.href = ctx + "/itemDetails.jsp";	
+	location.href =  "/hdk/itemDetails.html";	
 }

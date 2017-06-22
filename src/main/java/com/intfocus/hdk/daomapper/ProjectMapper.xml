@@ -18,8 +18,11 @@
     <result column="pro_todal" property="proTodal" jdbcType="INTEGER" />
     <result column="pro_need" property="proNeed" jdbcType="INTEGER" />
     <result column="pro_already" property="proAlready" jdbcType="INTEGER" />
+    <result column="pro_already_per" property="proAlreadyPer" jdbcType="VARCHAR" />
     <result column="pro_check" property="proCheck" jdbcType="INTEGER" />
-    <result column="count" property="Count" jdbcType="INTEGER" />
+    <result column="pro_check_per" property="proCheckPer" jdbcType="VARCHAR" />
+    <result column="left_num" property="leftNum" jdbcType="INTEGER" />
+    <result column="count" property="Count" jdbcType="VARCHAR" />
     <result column="pro_not" property="proNot" jdbcType="INTEGER" />
     <result column="is_last" property="isLast" jdbcType="INTEGER" />
     <result column="created_at" property="createdAt" jdbcType="VARCHAR" />
@@ -48,8 +51,17 @@
     		<if test="null != proName  and '' != proName">
 				and pro_name = #{proName,jdbcType=VARCHAR}
 			</if>	
+			
+    		<if test="null != proNameLike  and '' != proNameLike">
+				and pro_name rlike #{proNameLike,jdbcType=VARCHAR}
+			</if>	
+			
+			
     		<if test="null != proManagerPro  and '' != proManagerPro">
 				and pro_manager_pro = #{proManagerPro,jdbcType=VARCHAR}
+			</if>	
+    		<if test="null != proId  and '' !=  proId">
+				and pro_id = #{ proId,jdbcType=VARCHAR}
 			</if>	
     </where>    
     
@@ -98,7 +110,7 @@ inner join equipment as e on p.pro_id = e.pro_id
    select  c.cash_port as problem_object , count(c.cash_id) as count
     from project as p 
 inner join install as i on i.pro_id = p.pro_id
-inner join cash as c on i.install_id = c.install_id
+inner join cash as c on i.cash_id = c.cash_id
 	<where>
     	1=1
     		<if test="null != proName  and '' != proName">
@@ -113,15 +125,22 @@ group by  c.cash_port
   </select>
 
       <select id="getCheck" resultMap="BaseResultMap" parameterType="java.util.Map" >
-  select (pro_already/pro_check)*100 as pro_already 
-  			,(pro_check/pro_todal)*100 as pro_check
-  			,  (a.install_data/pro_check)*100 as count
-  			,pro_todal 
-  			,pro_need
-  			,pro_already
-  			,pro_check
-  			,pro_not
-  from project
+select concat(c.pro_check,'/', project.pro_need) as pro_already_per 
+,concat(b.pro_already,'/',project.pro_need) as pro_check_per 
+,concat(a.install_data,'/',project.pro_need) as count ,a.install_data,b.pro_already
+,p.pro_todal ,p.pro_need ,b.pro_already ,c.pro_check ,(p.pro_need - b.pro_already - c.pro_check) as left_num 
+  from project as p 
+left join 
+(
+SELECT COUNT(1) as pro_need FROM INSTALL a,project b
+WHERE a.pro_id =b.pro_id
+    		<if test="null != proName  and '' != proName">
+				and b.pro_name = #{proName,jdbcType=VARCHAR}
+			</if>	
+			<if test="null != proId  and '' != proId">
+				and b.pro_id = #{proId,jdbcType=VARCHAR}
+			</if>	
+) as project on 1=1
 left join (
     select count(i.install_id) as install_data
       from project as p 
@@ -130,10 +149,34 @@ where  i.install_data = '准确'
     		<if test="null != proName  and '' != proName">
 				and p.pro_name = #{proName,jdbcType=VARCHAR}
 			</if>	
-									    <if test="null != proId  and '' != proId">
+			<if test="null != proId  and '' != proId">
 				and p.pro_id = #{proId,jdbcType=VARCHAR}
 			</if>	
 ) as a on 1=1
+left join (
+    select count(i.install_id) as pro_already
+      from project as p
+inner join install as i on i.pro_id = p.pro_id
+where  i.install_station   &lt;&gt; '未安装'
+    		<if test="null != proName  and '' != proName">
+				and p.pro_name = #{proName,jdbcType=VARCHAR}
+			</if>	
+			<if test="null != proId  and '' != proId">
+				and p.pro_id = #{proId,jdbcType=VARCHAR}
+			</if>	
+) as b on 1=1 
+left join (
+    select count(i.install_id) as pro_check
+      from project as p
+inner join install as i on i.pro_id = p.pro_id
+where  i.install_station = '已验收' 
+    		<if test="null != proName  and '' != proName">
+				and p.pro_name = #{proName,jdbcType=VARCHAR}
+			</if>	
+									    <if test="null != proId  and '' != proId">
+				and p.pro_id = #{proId,jdbcType=VARCHAR}
+			</if>	
+) as c on 1=1 
 	<where>
     	1=1
     		<if test="null != proName  and '' != proName">
@@ -150,24 +193,12 @@ where  i.install_data = '准确'
 select count_type , pro_count
   from 
 	(
-		select 'all' as count_type , count(distinct pro_name) as pro_count
+		select '合计' as count_type , count(distinct pro_name) as pro_count
 		  from project 
 		union
-		select '实施' as count_type,count(distinct pro_name) as pro_count
-		  from project 
-		 where pro_station = '实施'
-		UNION
-		select '待启动' as count_type,count(distinct pro_name) as pro_count
-		  from project 
-		 where pro_station = '待启动'  
-		union 
-		select '维护' as count_type,count(distinct pro_name) as pro_count
-		  from project 
-		 where pro_station = '维护'  
-		union 
-		select '停止' as count_type,count(distinct pro_name) as pro_count
-		  from project 
-		 where pro_station = '停止'  
+		select pro_station , count(distinct pro_name)
+		from project
+		group by pro_station
 	) as a
   </select>
   

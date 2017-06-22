@@ -2,6 +2,8 @@ package com.intfocus.hdk.vo;
 
 import java.util.Date;
 
+import com.intfocus.hdk.util.ComUtil;
+
 public class Message {
     private Integer id;
 
@@ -50,7 +52,7 @@ public class Message {
     }
 
     public String getCreatedAt() {
-        return createdAt;
+        return ComUtil.dateFormat(createdAt);
     }
 
     public void setCreatedAt(String createdAt) {
@@ -58,7 +60,7 @@ public class Message {
     }
 
     public String getUpdatedAt() {
-        return updatedAt;
+        return ComUtil.dateFormat(updatedAt);
     }
 
     public void setUpdatedAt(String updatedAt) {

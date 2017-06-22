@@ -10,10 +10,11 @@
     <result column="shop_mer_station" property="shopMerStation" jdbcType="VARCHAR" />
     <result column="sur_power" property="surPower" jdbcType="VARCHAR" />
     <result column="sur_vip" property="surVip" jdbcType="VARCHAR" />
+    <result column="vip_info" property="vipInfo" jdbcType="VARCHAR" />
     <result column="sur_vip_data" property="surVipData" jdbcType="VARCHAR" />
     <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
     <result column="created_at" property="createdAt" jdbcType="VARCHAR" />
-    <result column="attachment_url" property="attachmentUrl" jdbcType="VARCHAR" />
+    <result column="attachement_url" property="attachmentUrl" jdbcType="VARCHAR" />
     <result column="sur_id" property="surId" jdbcType="VARCHAR" />
     <result column="updated_at" property="updatedAt" jdbcType="VARCHAR" />
   </resultMap>
@@ -23,7 +24,7 @@
 
   <sql id="Base_Column_List" >
       survey.id, survey.pro_id, survey.shop_id, survey.sur_network, survey.sur_power, survey.sur_vip, survey.sur_vip_data
-      , survey.created_at, survey.updated_at,survey.sur_id,shops.shop_name,shops.shop_mer_station,project.pro_name,survey.attachement_url
+      , survey.created_at, survey.updated_at,survey.sur_id,shops.shop_name,shops.shop_mer_station,project.pro_name,survey.attachement_url,survey.vip_info
   </sql>
   
   <sql id="extra_Column_List" >
@@ -43,7 +44,7 @@
 
     from survey
         inner join shops on shops.shop_id = survey.shop_id
-        inner join project on project.pro_id = survey.pro_id
+        inner join project on project.pro_id = survey.pro_id and shops.pro_id = project.pro_id
     <where>
     	1=1
             <if test="null != proId  and '' != proId">
@@ -55,9 +56,14 @@
     		<if test="null != shopId  and '' != shopId">
 				and shop_id  = #{shopId,jdbcType=VARCHAR}
 			</if>	
+			
     		<if test="null != shopName  and '' != shopName">
 				and shops.shop_id in (  select shop_id from shops where shop_mer_name = #{shopName,jdbcType=VARCHAR})
-			</if>	
+			</if>
+    		<if test="null != shopNameLike  and '' != shopNameLike">
+				and shops.shop_id in (  select shop_id from shops where shop_mer_name rlike #{shopNameLike,jdbcType=VARCHAR})
+			</if>
+				
     		<if test="null != surNetwork  and '' != surNetwork">
 				and sur_network  = #{surNetwork,jdbcType=VARCHAR}
 			</if>	
@@ -81,6 +87,9 @@
 			</if>	
     		<if test="null != surId  and '' != surId">
 				and survey.sur_id   = #{surId,jdbcType=VARCHAR}
+			</if>	
+    		<if test="null != shopMerStation  and '' != shopMerStation">
+				and shops.shop_mer_station   = #{shopMerStation,jdbcType=VARCHAR}
 			</if>	
  
     </where>  
@@ -184,11 +193,11 @@
       <if test="surPower != null" >
         sur_power,
       </if>
-      <if test="surVip != null" >
-        sur_vip,
-      </if>
       <if test="surVipData != null" >
         sur_vip_data,
+      </if>
+      <if test="surVip != null" >
+        sur_vip,
       </if>
       <if test="createdAt != null" >
         created_at,
@@ -198,6 +207,12 @@
       </if>
       <if test="surRemarks != null" >
         sur_remarks,
+      </if>
+      <if test="attachmentUrl != null" >
+        attachement_url,
+      </if>
+      <if test="vipInfo != null" >
+        vip_info,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -234,6 +249,12 @@
       <if test="surRemarks != null" >
         #{surRemarks,jdbcType=LONGVARCHAR},
       </if>
+      <if test="attachmentUrl != null" >
+        #{attachmentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="vipInfo != null" >
+        #{vipInfo,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.intfocus.hdk.vo.Survey" >
@@ -261,13 +282,19 @@
         sur_vip_data = #{surVipData,jdbcType=VARCHAR},
       </if>
       <if test="createdAt != null" >
-        created_at = #{createdAt,jdbcType=TIMESTAMP},
+        created_at = #{createdAt,jdbcType=VARCHAR},
       </if>
       <if test="updatedAt != null" >
-        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+        updated_at = #{updatedAt,jdbcType=VARCHAR},
       </if>
       <if test="surRemarks != null" >
         sur_remarks = #{surRemarks,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="attachmentUrl != null" >
+        attachement_url = #{attachmentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="vipInfo != null" >
+      vip_info=   #{vipInfo,jdbcType=VARCHAR},
       </if>
     </set>
     where sur_id = #{surId,jdbcType=INTEGER}
@@ -280,8 +307,8 @@
       sur_power = #{surPower,jdbcType=VARCHAR},
       sur_vip = #{surVip,jdbcType=VARCHAR},
       sur_vip_data = #{surVipData,jdbcType=VARCHAR},
-      created_at = #{createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      attachement_url = #{attachmentUrl,jdbcType=VARCHAR},
+      vip_info = #{vipInfo,jdbcType=VARCHAR},
       sur_remarks = #{surRemarks,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -1,7 +1,9 @@
 package com.intfocus.hdk.vo;
 
+import java.util.Arrays;
 import java.util.Date;
 
+import com.alibaba.fastjson.JSONArray;
 import com.intfocus.hdk.util.ComUtil;
 
 public class Install {
@@ -40,14 +42,28 @@ public class Install {
 
     private String installRemarks;
 
-    public  void modifyAtachement(String picUrls){
+    public  void modifyAtachement(String files,String picUrls,String path){
     	
     	if(null != picUrls){
-    		if(null == this.attachmentUrl){
-    			this.attachmentUrl = picUrls;
-    		}else{
-    			this.attachmentUrl = "," + picUrls;
+    		
+    		JSONArray filesArray = JSONArray.parseArray(files); 
+    		String[] filesArray2 = null ;
+    		String[] temp = null;
+    		if(null !=  this.attachmentUrl && !"".equalsIgnoreCase(this.attachmentUrl)){
+	    		filesArray2 = this.attachmentUrl.split(",");
+	    		temp = filesArray2.clone();
+	    		for (int i = 0; i < filesArray2.length; i++) {
+	    			if(!filesArray.contains( filesArray2[i])){
+	    				temp = ComUtil.remove(filesArray2[i], temp);
+	    			}
+				}
     		}
+    		if(null != temp && 0 < temp.length ){
+    			this.attachmentUrl =   org.apache.commons.lang.StringUtils.join(temp,",") + ("".equalsIgnoreCase(picUrls)?"" :"," + picUrls);
+    		}else{
+    			this.attachmentUrl =picUrls;
+    		}
+
     	}
     }
     public Integer getId() {

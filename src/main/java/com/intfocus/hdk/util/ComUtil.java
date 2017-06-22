@@ -4,11 +4,12 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.util.Base64Utils;
@@ -18,22 +19,31 @@ import com.alibaba.fastjson.JSONArray;
 public class ComUtil {
 	
 	public static String getRandomFileName(){
-		
-        SimpleDateFormat simpleDateFormat;  
+  
+         return UUID.randomUUID().toString();// 当前时间  
         
-        simpleDateFormat = new SimpleDateFormat("yyyyMMdd");  
-  
-        Date date = new Date();  
-  
-        String str = simpleDateFormat.format(date);  
-  
-        Random random = new Random();  
-  
-        int rannum = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;// 获取5位随机数  
-  
-        return rannum + str;// 当前时间  
 	}
 
+	public static String getRandomFileNameWithsuffix(String oFileName){
+		if(null != oFileName && !"".equalsIgnoreCase(oFileName)){
+			return getRandomFileName() + oFileName.substring(oFileName.indexOf("."));
+		}else{
+			return null;
+		}
+	}
+	
+	public static String[] remove( String target , String[] list ){
+		String[] rs = list.clone() ;
+		for(int i = 0 ; i < rs.length;i++){
+			if(target.equalsIgnoreCase(rs[i])){
+				rs[i] = rs[list.length -1];
+				rs = Arrays.copyOf(rs, rs.length - 1);
+				break;
+			}
+		}
+		return rs ;
+	}
+	
 	public static Map<String,String> savePicture(String files ,String url ){
 	       String dataPrix = "";
 	       String data = "";
@@ -43,6 +53,9 @@ public class ComUtil {
 	       List<String> urls = new ArrayList<String>();
 		   if(null != jsonArray && 0 != jsonArray.size()){ 
 			   for(int i =0 ; i < jsonArray.size();i = i +1){
+				   if(!jsonArray.getString(i).startsWith("data:image")){
+					   continue;
+				   }
 				    d = jsonArray.getString(i).split("base64,"); 
 				    if(d != null && d.length == 2){
 				    	
@@ -88,10 +101,10 @@ public class ComUtil {
 	}
 	public static String dateFormat(String  date){
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		try {
-			if(null != date){
+			if(null != date && !"".equalsIgnoreCase(date)){
 				return sdf.format( sdf.parse(date));
 			}else{
 				return null ;
@@ -108,7 +121,7 @@ public class ComUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat(formatter);
 		
 		try {
-			if(null != date){
+			if(null != date && !"".equalsIgnoreCase(date)){
 				return sdf.format( sdf.parse(date));
 			}else{
 				return null ;
@@ -119,5 +132,16 @@ public class ComUtil {
 			
 			return null ;
 		}
+	}
+	public static String dateFormat(Date  date, String formatter){
+		
+		SimpleDateFormat sdf = new SimpleDateFormat(formatter);
+		
+			if(null != date ){
+				return sdf.format( date);
+			}else{
+				return null ;
+			}
+		
 	}
 }

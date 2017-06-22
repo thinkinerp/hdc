@@ -3,8 +3,8 @@
  */
 //shopStateSeach();
 
- loadCombobox("installState","install");			
- loadCombobox("eqType","equipment_type");					
+ loadCombobox("installState","install",1);			
+ loadCombobox("eqType","equipment_eq_style",1);					
 
 $('#middle').bind('click',function(){
 	shopStateSeach();
@@ -26,14 +26,14 @@ var params = function() {
 var shopStateSeach = function(){
 	var shopSta = '';
 	 $.ajax({ 
-	 		url:ctx + '/shops/getSome',
+	 		url:'/hdk/shops/getSome',
 	 		type:'get',
-	 		jsonpCallback:"shops_getSome",
+	 		//jsonpCallback:"shops_getSome",
 	 		jsonp: "callback",
 			data:{
 				"proId":$('#itemName').html(),
-				'shopName':$('#middle').val(),
-				"installStation":delAll('installState' ),
+				'shopNameLike':$('#middle').val(),
+				"installStation":delAll('installState'),
 				"eqType":delAll('eqType')
 			},
 	 		dataType:'jsonp',
@@ -58,7 +58,7 @@ var shopStateSeach = function(){
 	 				$('.i-itemDetail-area').append(
 	 						"				<div class='i-itemDetail-area-title'>" +
 	 						"					<div>"+item.shopName+"("+item.shopPosition+")</div>" +
-	 						(undefined == item.installId ? "" : "					<p><a href = 'javascript:void(0)' onClick='gotoModify("+item.installId+")' target='_self'>详情</a></p>")
+	 						(undefined == item.installId ? "" : "					<p><a href = 'javascript:void(0)' onClick='gotoModify(\""+item.installId+"\")' target='_self'>详情</a></p>")
 	 						 +
 	 						"				</div>" +
 	 						"				<div class='i-itemDetail-area-content'>" +
@@ -82,6 +82,7 @@ var shopStateSeach = function(){
 	 			});
 	 		},
 	  		error:function(rs){
+	  			console.log(rs);
 	 		}
 	  });	
 }
@@ -90,7 +91,11 @@ var equipmentTypeSeach = function(){
 	shopStateSeach();
 }
 var gotoModify = function(link){
-	location.href = ctx + "/install/gotoModify?installId=" +link;
+	window.SYP.pageLink("新建详情",domainName +"/hdk/installDetails.html?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'],-1);
+
+	//location.href =  "installDetails.html?installId=" +link+"&userNum="+params['syp_user_num']+"&userName="+params['syp_user_name'];
 }
 
-
+var searche = function(){
+	shopStateSeach();
+}

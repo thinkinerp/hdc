@@ -21,6 +21,10 @@ public class Shops {
 
     private String proId;
     
+    private String cashId;
+    
+    private String eqStyle;
+    
     private String eqType;
     
     private String cashSystem;
@@ -149,5 +153,21 @@ public class Shops {
 
 	public void setEqId(String eqId) {
 		this.eqId = eqId;
+	}
+
+	public String getCashId() {
+		return cashId;
+	}
+
+	public void setCashId(String cashId) {
+		this.cashId = cashId;
+	}
+
+	public String getEqStyle() {
+		return eqStyle;
+	}
+
+	public void setEqStyle(String eqStyle) {
+		this.eqStyle = eqStyle;
 	}
 }

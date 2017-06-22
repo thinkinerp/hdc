@@ -17,12 +17,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSONObject;
+import com.intfocus.hdk.dao.FormCodeMapper;
+import com.intfocus.hdk.dao.MessageMapper;
 import com.intfocus.hdk.dao.ProblemMapper;
 import com.intfocus.hdk.dao.ProjectMapper;
 import com.intfocus.hdk.dao.SurveyMapper;
 import com.intfocus.hdk.dao.UserMapper;
+import com.intfocus.hdk.service.FormCodeService;
 import com.intfocus.hdk.util.StaticVariableUtil;
-import com.intfocus.hdk.vo.Project;
+import com.intfocus.hdk.vo.Message;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/applicationContext.xml")
 public class CheckTest {
@@ -41,6 +44,52 @@ public class CheckTest {
     private UserMapper userMapper;
     @Resource
     private SurveyMapper surveyMapper;
+    @Resource
+    private MessageMapper messageMapper;
+    @Resource
+    private FormCodeMapper formCodeMapper;
+    @Resource
+    private FormCodeService formCodeService;
+    @Test
+    public void testFormCodeService(){
+    	System.out.println(formCodeService.getFormCode("install", "pro_001"));
+    }
+    @Test
+    public void testFormCodeMapper(){
+    	
+    	formCodeMapper.updateMaxCode("install");
+    	Map<String, String> where = new HashMap<String,String>();
+    	where.put("formType", "install");
+		System.out.println(JSONObject.toJSONString(formCodeMapper.selectByWhere(where )));
+		
+		
+		
+    }
+    @Test
+    public void testProblemMapperCodeUnique(){
+    	Map<String, String> where = new HashMap<String,String>();
+    	where.put("code", "1233455");
+    	where.put("tableName", "problem");
+    	where.put("codeField", "problem_id");
+		System.out.println(JSONObject.toJSONString(pblm.codeUnique(where )));
+    }
+    
+    @Test
+    public void testMessageMapperSelect(){
+    	
+    	Map<String, String> where = new HashMap<String,String>();
+    	where.put("problemId", "123456");
+		System.out.println(JSONObject.toJSONString(messageMapper.selectByWhere(where )));
+    }
+    @Test
+    public void testMessageMapperInsert(){
+    	Message m = new Message();
+    	
+    	m.setMesContent("");
+    	m.setMesUser("wangyifei");
+    	m.setProblemId("123456");    	
+    	messageMapper.insertSelective(m);
+    }
     
     @Test
     public void testSurveyMapperSelectByWhere(){

@@ -125,5 +125,6 @@ var loadSurvey = function(){
 	
 }
 var gotoModify = function(link){
-	location.href = ctx + "/survey/gotoModify?surveyId=" +link;
+	window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "创建成功",domainName + "/survey/gotoModify?surveyId=" +link);
+	
 }

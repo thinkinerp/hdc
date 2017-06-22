@@ -6,9 +6,11 @@ loadCombobox("cashBrand", "cash_brand");
 loadCombobox("cashPort", "cash_port");
 loadCombobox("eqStyle", "equipment_type");
 loadCombobox("printerPort", "printer_port");
+loadCombobox("installState", "install");
+
 var time = new Date().getTime();
 $.ajax({
-  url: ctx + '/project/getSome',
+  url:  '/hdk/project/getSome',
   type: 'get',
   data: {
     time: time
@@ -36,7 +38,7 @@ $.ajax({
 });
 
 $.ajax({
-  url: ctx + '/state/getSome',
+  url:  '/hdk/state/getSome',
   type: 'get',
   data: {
     'ownerTable': "install"
@@ -62,9 +64,16 @@ $.ajax({
   error: function(rs) {}
 });
 
+
 Window.selected = function() {
+	$("#shopName").html('');
+    $("#shopState").html('');
+    $('#shopPosition').html('');
+    $('#shopType').html('');
+    $('#shopSecType').html('');
+    $('#shopCode').html('');
   $.ajax({
-    url: ctx + '/shops/selectForCombobox',
+    url: '/hdk/shops/selectForCombobox',
     type: 'get',
     data: {
       'proId': $('#proName').html()
@@ -94,8 +103,11 @@ Window.selected = function() {
   });
 }
 Window.shopSelected = function() {
+	if(""==$('#shopName').html()){
+		return;
+	}
   $.ajax({
-    url: ctx + '/shops/selectForCombobox',
+    url:  '/hdk/shops/selectForCombobox',
     type: 'get',
     data: {
       'shopName': $('#shopName').html()
@@ -111,7 +123,6 @@ Window.shopSelected = function() {
         $('#shopPosition').html(item.shopPosition);
         $('#shopType').html(item.shopType);
         $('#shopSecType').html(item.shopSecType);
-
         $('#shopCode').html(item.shopId);
       });
 
@@ -121,16 +132,20 @@ Window.shopSelected = function() {
   //如果这个门店已经调研了，与此门店相关的打印机和收银机信息都已经存在，所以在这样情况下
   //需要将收银机和打印机的信息加载过来。
   $.ajax({
-    url: ctx + '/survey/getSome',
+    url: '/hdk/survey/getSome',
     type: 'get',
     data: {
       'shopName': $('#shopName').html(),
       'proName': $('#proName').html()
     },
-    dataType: 'json',
+    dataType: 'jsonp',
+    jsonpCallback: "getSome",
+    jsonp: "callback",
     success: function(rs) {
       if (null != rs && undefined != rs && rs.length > 0) {
-        loadPrinterAndCasher();
+    	  if( 1 ==rs.length ){
+    		  loadPrinterAndCasher(rs[0].surId);
+    	  }
       } else {
         $.each(rs, function(index, item) {
           surId = item.surId
@@ -140,73 +155,212 @@ Window.shopSelected = function() {
     error: function(rs) {}
   });
 }
+var loadInstall = function(allThing){       
+    if(null != allThing && undefined !=allThing){
+        
+        allObjs =allThing;
+        $('#proNameDiv').html(
+                '<div class="g-importList-content">'+
+                '<div class="i-text" id = "proName" >未选择</div>'+
+        '</div>'
+        );
+        $('#shopNameDiv').html(
+                '<div class="g-importList-content">'+
+                '<div class="i-text" id = "shopName" >未选择</div>'+
+        '</div>'
+        );
+        
+        
+        $('#installCode').val(isUndefined(allObjs.shop["installId"]));
+        $('#shopCode').html(isUndefined(allObjs.install["shopId"]));
+        $('#cashCode').html(isUndefined(allObjs.install["cashId"]));
+        $('#printCode').html(isUndefined(allObjs.install["printerId"]));
+        $('#equipmentCode').html(isUndefined(allObjs.install["eqId"]));
+        $('#installStation').html(isUndefined(allObjs.install["installStation"]));
+        $('#installData').html(isUndefined(allObjs.install["installData"]));
+        
+        if(!!isUndefined(allObjs.install['attachmentUrl'])){
+         files = allObjs.install['attachmentUrl'].split(',');
+            
+            for(var i = 0 ; i <files.length ; i ++){
+                app.addImg(files[i]);
+            }
+            
+            $('.fullimg').remove();
+        }
+        
+        //var i = new Date(isUndefined()).Format("yyyy-MM-dd");
+        
+        $("#installCode").attr("readonly","readonly"); 
 
+        
+        $('#proName').html(isUndefined(allObjs.project.proName));
+        $('#installRemote').val(isUndefined(allObjs.install.installRemote));
+        $('#installTime').val(allObjs.install["installTime"]);
+        // 门店信息     
+        $('#shopName').html(isUndefined(allObjs.shop.shopName));
+        $('#shopState').html(isUndefined(allObjs.shop.shopMerStation));
+        $('#shopPosition').html(isUndefined(allObjs.shop.shopPosition));
+        $('#shopType').html(isUndefined(allObjs.shop.shopType));
+        $('#shopSecType').html(isUndefined(allObjs.shop.shopSecType));
+        $('#installState').html(isUndefined(allObjs.install.installStation));
+        
+        //收银机信息
+        $('#cashId').val(isUndefined(allObjs.cash.cashId));
+        $('#cashSystem').html(isUndefined(allObjs.cash.cashSystem));
+        
+        $('#cashBrand').html(isUndefined(allObjs.cash.cashBrand));
+        $('#cashPort').html(isUndefined(allObjs.cash.cashPort));
+        if( "是" == isUndefined(allObjs.cash.printerDriver)){
+            $('#f').attr('class','off');
+            $('#t').attr('class','on');
+        }else{
+            $('#t').attr('class','off');
+            $('#f').attr('class','on');
+        }
+        
+        // 打印机
+        
+        $('#priId').val(isUndefined(allObjs.printer.printerId));
+        $('#priBrand').val(isUndefined(allObjs.printer.printerBrand));
+        $('#printerPort').html(isUndefined(allObjs.printer.printerPort));
+
+        // 采集点
+        
+        $('#eqId').val(isUndefined(allObjs.equipment.eqId));
+        if("硬件" == isUndefined(allObjs.equipment.eqType)){
+            $('#eqTypeHard').attr("class",'on');
+            $('#eqTypeSoft').attr("class",'off');
+        }else{
+            $('#eqTypeHard').attr("class",'off');
+            $('#eqTypeSoft').attr("class",'on');
+        }
+        $('#eqStyle').html(isUndefined(allObjs.equipment.eqStyle));
+        $('#softwareVersion').val(isUndefined(allObjs.equipment.softwareVersion));
+        /* $('#installTime').val(isUndefined(allObjs.equipment.installTime)); */
+        
+        //其他
+        if("硬件" == isUndefined(allObjs.install.installNetwork)){
+            $('#installNetworkHard').attr("class",'on'  );
+            $('#installNetworkSoft').attr("class",'off' );
+        }else{
+            $('#installNetworkHard').attr("class",'off' );
+            $('#installNetworkSoft').attr("class",'on'  );
+        }
+        
+        // 附件
+        //$('#installNetworkHard').val(isUndefined(allObjs.equipment.installTime));
+    }
+}      
+    
 function loadPrinterAndCasher(surId) {
+	
+	
   $.ajax({
-    url: ctx + '/printer/getSome',
-    type: 'post',
-    data: {
-      'surId': surId,
-    },
-    jsonpCallback: "printer_getSome",
-    jsonp: "callback",
-    dataType: 'jsonp',
-    success: function(rs) {
-      if (null != rs && undefined != rs && rs.length > 0) {
-        $.each(rs, function(index, item) {
-          $('#priId').html(item.printerId);
-          $('#priBrand').html(item.printerBrand);
-          $('#prinPort').html(item.printerPort);
-        });
+  url:  '/hdk/survey/gotoModify',
+  type: 'get',
+  data: {
+    'surId': surId,
+  },
+  jsonp: "callback",
+  dataType: 'jsonp',
+  success: function(rs) {
+      console.log(rs);
+      
+      if(undefined != rs.printer){
+        $('#priId').val(rs.printer.printerId);
+        $('#priBrand').val(rs.printer.printerBrand);
+        $('#prinPort').val(rs.printer.printerPort);
       }
-    },
-    error: function(rs) {}
-  });
-  $.ajax({
-    url: ctx + '/cash/getSome',
-    type: 'post',
-    data: {
-      'surId': surId,
-    },
-    jsonpCallback: "cash_getSome",
-    jsonp: "callback",
-    dataType: 'jsonp',
-    success: function(rs) {
-      if (null != rs && undefined != rs && rs.length > 0) {
-        $.each(rs, function(index, item) {
-          $('#cashId').html(item.cashId);
-          $('#cashSystem').html(item.cashSystem);
-          $('#cashBrand').html(item.cashBrand);
-          $('#cashPort').html(item.cashPort);
+      if(undefined != rs.cash){
+        $('#cashId').val(rs.cash.cashId);
+        $('#cashSystem').html(rs.cash.cashSystem);
+        $('#cashBrand').html(rs.cash.cashBrand);
+        $('#cashPort').html(rs.cash.cashPort);
 
-          if (undefined == item.printerDriver || "" == item.printerDriver) {
-            $('#t').attr("class", "off");
-            $('#f').attr("class", "on");
-          } else {
-            $('#t').attr("class", "on");
-            $('#f').attr("class", "off");
+        if (undefined == rs.cash.printerDriver || "" == rs.cash.printerDriver) {
+          $('#t').attr("class", "off");
+          $('#f').attr("class", "on");
+        } else {
+          $('#t').attr("class", "on");
+          $('#f').attr("class", "off");
 
-          }
-
-        });
+        }
       }
-    },
-    error: function(rs) {}
+      
+  },
+  error:function(rs){
+	  app.alert("网络出错",1);
+  }	
   });
+//  $.ajax({
+//    url: ctx + '/printer/getSome',
+//    type: 'post',
+//    data: {
+//      'surId': surId,
+//    },
+//    jsonpCallback: "printer_getSome",
+//    jsonp: "callback",
+//    dataType: 'jsonp',
+//    success: function(rs) {
+//      if (null != rs && undefined != rs && rs.length > 0) {
+//        $.each(rs, function(index, item) {
+//          $('#priId').val(item.printerId);
+//          $('#priBrand').val(item.printerBrand);
+//          $('#prinPort').val(item.printerPort);
+//        });
+//      }
+//    },
+//    error: function(rs) {}
+//  });
+//  $.ajax({
+//    url: ctx + '/cash/getSome',
+//    type: 'post',
+//    data: {
+//      'surId': surId,
+//    },
+//    jsonpCallback: "cash_getSome",
+//    jsonp: "callback",
+//    dataType: 'jsonp',
+//    success: function(rs) {
+//      if (null != rs && undefined != rs && rs.length > 0) {
+//        $.each(rs, function(index, item) {
+//          $('#cashId').html(item.cashId);
+//          $('#cashSystem').html(item.cashSystem);
+//          $('#cashBrand').html(item.cashBrand);
+//          $('#cashPort').html(item.cashPort);
+//
+//          if (undefined == item.printerDriver || "" == item.printerDriver) {
+//            $('#t').attr("class", "off");
+//            $('#f').attr("class", "on");
+//          } else {
+//            $('#t').attr("class", "on");
+//            $('#f').attr("class", "off");
+//
+//          }
+//
+//        });
+//      }
+//    },
+//    error: function(rs) {}
+//  });
 }
 
 
-function setCashidOnInstall() {
+function setCashidOnInstall(obj,label) {
+	checkCode(obj,label);
   $('#cashCode').html($('#cashId').val());
 }
 
 
-function setpriIdOnInstall() {
+function setpriIdOnInstall(obj,label) {
+	checkCode(obj,label);
   $('#printCode').html($('#priId').val());
 
 }
 
-function seteqIdOnInstall() {
+function seteqIdOnInstall(obj,label) {
+	checkCode(obj,label);
   $('#equipmentCode').html($('#eqId').val());
 
 }
@@ -225,6 +379,30 @@ var params = function() {
   return query;
 }();
 
+if(undefined != params["installId"] && "" != params["installId"]){
+	$.ajax({
+		url:"/hdk/install/gotoModify",
+		data:{
+			installId:params["installId"]
+		},
+		dataType:'jsonp',
+		type:'get',
+		jsonp:"callback",
+		success:function(res){
+			if(undefined !=res && null != res && 'success' == res.message){
+				allThing = res;
+				loadInstall(res);
+			}else{
+				app.alert("网络出现问题",1);
+			}
+		},
+		error:function(rs){
+			console.log(rs);
+		}
+	});
+}
+
+
 var submit = function() {
   //  app.saveDate();
   // 在没有调研的情况下要进行一下动作
@@ -233,13 +411,16 @@ var submit = function() {
   // 保存打印机
 
   // 采集点
-  if ('{}' != allThing && "" != allThing) {
+  if (null != allThing && undefined !=allThing) {
 
     $.ajax({
-      url: ctx + '/install/modify',
+      url: '/hdk/install/modify',
       type: 'post',
+      beforeSend:ajaxLoading(),
+      complete:ajaxLoadEnd(),
+      dataType: 'json',
       data: {
-    	  files:JSON.stringify(imgs),
+    	  files:(JSON.stringify(imgs) != JSON.stringify(files)?(JSON.stringify(imgs,files)):""),	
         'install.installId': $("#installCode").val(),
         'install.id': allObjs.install.id,
         'install.installStation': $('#installStation').html(),
@@ -301,20 +482,55 @@ var submit = function() {
         //          ,'updatedAt':''
       },
       success: function(result) {
-
-        location.href = ctx + "/installList.jsp";
+    	  if("success" == result.message){
+     
+    			  window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功",domainName+"/hdk/installList.html");
+ 
+    	  }else{
+    		  app.alert("保存失败，请重试",1);
+    		  
+    	  }
       },
       error: function(result) {
-        console.log(result)
+    	  app.alert("保存失败，请重试",1);
       }
     });
 
 
   } else {
+	  
+	 $.when(codeUnique({
+		 tableName:"install"
+								         ,codeField:"install_id"
+								         ,code:$('#installCode').val()
+								         , which:"安装编码"
+	 				} )
+			      ,codeUnique({
+			 		 tableName:"cash"
+				         ,codeField:"cash_id"
+				         ,code:$('#cashId').val()
+				         , which:"收银机编号"
+		} )
+			      ,codeUnique({
+			 		 tableName:"printer"
+				         ,codeField:"printer_id"
+				         ,code:$('#priId').val()
+				         , which:"打印机编号"
+		} )
+			      ,codeUnique({
+			 		 tableName:"equipment"
+				         ,codeField:"eq_id"
+				         ,code:$('#eqId').val()
+				         , which:"采集点编码"
+		} ))
+	 .done(function(){ 
+
     $.ajax({
-      url: ctx + '/install/submit', //用于文件上传的服务器端请求地址
+      url:  '/hdk/install/submit', //用于文件上传的服务器端请求地址
       dataType: 'json', //返回值类型 一般设置为json
       type:'post',
+      beforeSend:ajaxLoading(),
+      complete:ajaxLoadEnd(),
       data: {
     	  files:JSON.stringify(imgs),
         'install.installId': $("#installCode").val(),
@@ -380,7 +596,17 @@ var submit = function() {
       success: function(data, status) //服务器成功响应处理函数
       {
         console.log(data);
-       location.href = ctx + "/installList.jsp";
+        
+        if(data.message == "success"){
+   
+  
+  			window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功",domainName+"/hdk/installList.html");
+ 
+        }else{
+        	app.alert("保存失败",1);
+        	
+        }
+        
       },
       error: function(data, status, e) //服务器响应失败处理函数
       {
@@ -389,7 +615,12 @@ var submit = function() {
         console.log(status);
 
       }
+      //ajax end
     });
+   //done end 
+	 }).fail(function(){alert("网路原因未请求成功")});
+	 
+	 
   }
 }
 

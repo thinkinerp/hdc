@@ -23,4 +23,6 @@ public interface ProblemMapper {
     List<Problem> getCount( Map<String,String>where);
     
     List<Problem> selectByWhere(Map<String,String>where);
+    
+    List<Map<String,String>> codeUnique(Map<String,String>where);
 }

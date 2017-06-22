@@ -1,15 +1,64 @@
 /**
  * 加载下拉框选项和默认值
  */
+function onlyEnglishAndDecimal(field){
+	var a = /^[0-9a-zA-Z]*$/g;
+	
+	return a.test(field);
+} 
+var checkCode = function(obj,label){
+	if(!onlyEnglishAndDecimal($(obj).val())){
+		app.alert(label+"编码:" + $(obj).val() +",只能有数字和英文字母组成",1,null);
 
- function loadCombobox(id , table){
+	}
+}
+
+function codeUnique(config){
+	var dtd = $.Deferred(); 
+	
+	if('' == config.code ){
+		app.alert(config.which+":"+config.code + ",不能为空",1);
+		return dtd.promise();
+	}
+	if(!onlyEnglishAndDecimal(config.code)){
+		app.alert("编码:" + config.code +",只能有数字和英文字母组成",1);
+		return dtd.promise();
+		
+	}
+				$.ajax({	
+					   url: "/hdk/problem/codeUnique",
+					   data:{
+					   	      tableName:config.tableName
+					         ,codeField:config.codeField
+					         ,code:config.code
+					   },
+					   type: "get",
+					   dataType:"jsonp",
+					   jsonp:"callback",
+					   success:function(data){
+						   var i = data[0];
+						   if(i.count > 0 ){
+							   app.alert(config.which+":"+config.code+"重复，请重新编码",1);
+						   }else{
+							   dtd.resolve();
+						   }
+					   },
+					   error:function(rs){
+					   	console.log(rs);
+					   }				   
+				});
+				return dtd.promise();
+}
+
+ function loadCombobox(id , table,isAll){
 	 var time = (new Date().getTime());
 	 $.ajax({ 
-		 url:ctx + '/state/getSome',
+		 url: '/hdk/state/getSome',
 		 type:'get',
 		 data:{
 				'ownerTable':table,
-				'time':time
+				'time':time,
+				'isAll':isAll
 		 },
 	 		jsonpCallback:"state_"+time+"_getSome",
 	 		jsonp: "callback",
@@ -57,9 +106,9 @@ function setValue(id,value){
 
 function getValue(id){
 	 if($('#'+id).is('div')){
-		return $('#'+id).html();
+		return ($('#'+id).html() != $('#'+id).attr('defaultVal'))?$('#'+id).html():"";
 	 }else if($('#'+id).is('input')){
-		 return $('#'+id).val();
+		 return ($('#'+id).val() != $('#'+id).attr('defaultVal'))?$('#'+id).val():"";
 	 }	
 }
 
@@ -77,7 +126,7 @@ function getValue(id){
 			 if( -1 != $.inArray($('#'+id).html(),exclude) ){
 				 return '';
 			 }else{
-				return  $('#'+id).html();
+				return  ($('#'+id).html() != $('#'+id).attr('defaultVal'))?$('#'+id).html():"";
 			 }
 		 
 		 
@@ -86,7 +135,7 @@ function getValue(id){
 		 if(-1 != $.inArray($('#'+id).val(),exclude)){
 				 return ''; 
 		 }else{
-			 return $('#'+id).val();
+			 return ($('#'+id).html() != $('#'+id).attr('defaultVal'))?$('#'+id).html():"";
 		 }
 	 }
  }
@@ -99,4 +148,25 @@ function getValue(id){
 	   });
 	   return false;
  }
+ function dellExist(ls1 , ls2){
+	 
+	 for(var i = 0 ; i < ls1.length ; i++){
+		 if($.inArray(ls1[i],ls2)!=-1){
+			 ls1.splice(i,1);
+		 }
+	 }
+	 return ls1;
+ }
+ 
+ function ajaxLoading(){
+	 $('body').append(
+	'<div id="loading" class="loading"><img src="/hdk/image/1111.gif" alt=""/>正在加载数据,请稍候...</div>'		 
+	 );
+	 $("#loading").show();	 
+}
+function ajaxLoadEnd(){
+	$("#loading").hide();    
+	$("#loading").remove();    
+	
+	}
  

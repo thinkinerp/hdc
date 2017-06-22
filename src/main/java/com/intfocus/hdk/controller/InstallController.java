@@ -1,7 +1,6 @@
 package com.intfocus.hdk.controller;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,26 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.intfocus.hdk.dao.CashMapper;
 import com.intfocus.hdk.dao.EquipmentMapper;
 import com.intfocus.hdk.dao.InstallMapper;
+import com.intfocus.hdk.dao.Operation_historyMapper;
 import com.intfocus.hdk.dao.PrinterMapper;
 import com.intfocus.hdk.dao.ProjectMapper;
 import com.intfocus.hdk.dao.ShopsMapper;
@@ -38,6 +34,7 @@ import com.intfocus.hdk.util.ComUtil;
 import com.intfocus.hdk.vo.Cash;
 import com.intfocus.hdk.vo.Equipment;
 import com.intfocus.hdk.vo.Install;
+import com.intfocus.hdk.vo.Operation_history;
 import com.intfocus.hdk.vo.Printer;
 import com.intfocus.hdk.vo.Project;
 import com.intfocus.hdk.vo.Shops;
@@ -60,6 +57,9 @@ public class InstallController implements ApplicationContextAware {
     private ProjectMapper projectMapper;
     
     @Resource
+    private Operation_historyMapper ohm ;
+    
+    @Resource
     private ShopsMapper shopsMapper;
     
     @RequestMapping(value = "test" ,method=RequestMethod.POST)
@@ -80,14 +80,16 @@ public class InstallController implements ApplicationContextAware {
     	
     	log.info("userName:"+userName+"userNum:"+userNum);
     	Map<String,String> rs = null ;
+    	JSONObject result = new JSONObject();
     	try{
-	    	if(null != files && !"".equalsIgnoreCase(files)){
-	    		rs = new HashMap<String,String>();
-	    		rs = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
-	    		if(!"ok".equalsIgnoreCase(rs.get("message"))){
-	    			return "{'message':'"+rs.get("message")+"'}";
-	    		}
-	    	}
+//	    	if(null != files && !"".equalsIgnoreCase(files)){
+//	    		rs = new HashMap<String,String>();
+//	    		rs = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
+//	    		if(!"ok".equalsIgnoreCase(rs.get("message"))){
+//	    			result.put("message", rs.get("message"));
+//	    			return result.toJSONString();
+//	    		}
+//	    	}
 	    	Map<String, String> where = new HashMap<String,String>();
 		   where.put("proName",install.getProId());
 		   
@@ -95,16 +97,28 @@ public class InstallController implements ApplicationContextAware {
 			Project i = projects.get(0);
 			install.setProId(i.getProId());	
 			equipment.setProId(i.getProId());
-			
-			install.setAttachment_url(null != rs ? rs.get("urls") :null );
+			if(null != files && !"".equals(files)){
+				install.setAttachment_url(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
+			}
 	    	installmapper.insertSelective(install);
 	    	printerMapper.insertSelective(printer);
 	    	cashMapper.insertSelective(cash);
 	    	equipmentMapper.insertSelective(equipment);
-	    	return "{'message':'success'}";
+	    	
+	    	Operation_history record = new Operation_history();
+	    	
+	    	record.setUserId(userNum);
+	    	record.setFormType("安装");
+	    	record.setAction("新建安装编号为："+install.getInstallId());
+			ohm.insertSelective(record );
+	    	
+	    	result.put("message", "success");
+	    	return result.toJSONString() ;
 	  }catch(Exception e){
 		  e.printStackTrace();
-		  return "{'message':'fail'}";
+		  result.put("message", "fail");
+		  
+		  return result.toJSONString();
 	  }
 	  
     }
@@ -125,11 +139,9 @@ public class InstallController implements ApplicationContextAware {
 	   binder.setFieldDefaultPrefix("equipment.");    
    } 
    
-   
-   
    @RequestMapping(value = "gotoModify" , method=RequestMethod.GET)
-   public String gotoModify(HttpServletResponse res , HttpServletRequest req ,HttpSession session
-		   , Install install ){
+   public void gotoModify(HttpServletResponse res , HttpServletRequest req ,HttpSession session
+		   , Install install ,String callback){
 	   
 	   JSONObject json = new JSONObject();
 	   Map<String, String> where = new HashMap<String,String>();
@@ -139,21 +151,20 @@ public class InstallController implements ApplicationContextAware {
 	   if(null != installs && installs.size() > 0 ){
 		   
 		   Install i = installs.get(0);
-		   if( null != i.getAttachmentUrl() && !"".equalsIgnoreCase(i.getAttachmentUrl())){
-			   i.setAttachment_url(i.getAttachmentUrl().replace(path.substring(0,path.indexOf("upload")), "/hdk/"));
-		   }
+//		   if( null != i.getAttachmentUrl() && !"".equalsIgnoreCase(i.getAttachmentUrl())){
+//			   i.setAttachment_url(i.getAttachmentUrl().replace(path.substring(0,path.indexOf("upload")), "/hdk/"));
+			 //  i.setAttachment_url(    i.getAttachmentUrl() );
+//		   }
 		   json.put("install", i);
-		   where.clear();
 		   //找到门店
 		   where.put("shopId", installs.get(0).getShopId());
-		   List<Shops> shopss = shopsMapper.selectByWhere(where);
+		   List<Shops> shopss = shopsMapper.selectShops(where);
 		   
 		   if(null != shopss && shopss.size()>0){
 			   json.put("shop",shopss.get(0));
 		   }
 		   
 		   //找到收款机
-		   where.clear();
 		   where.put("cashId", installs.get(0).getCashId());
 		   List<Cash> cashes = cashMapper.selectByWhere(where);
 		   
@@ -161,7 +172,6 @@ public class InstallController implements ApplicationContextAware {
 			   json.put("cash",cashes.get(0));
 		   }
 		   //打印机
-		   where.clear();
 		   where.put("printerId", installs.get(0).getPrinterId());
 		   List<Printer> printers = printerMapper.selectByWhere(where);
 		   
@@ -169,7 +179,6 @@ public class InstallController implements ApplicationContextAware {
 			   json.put("printer",printers.get(0));
 		   }
 		   //采集点
-		   where.clear();
 		   where.put("eqId", installs.get(0).getEqId());
 		   List<Equipment> equipments = equipmentMapper.selectByWhere(where);
 		   
@@ -177,17 +186,25 @@ public class InstallController implements ApplicationContextAware {
 			   json.put("equipment",equipments.get(0));
 		   }
 		   //项目
-		   where.clear();
 		   where.put("proId", installs.get(0).getProId());
 		   List<Project> projects = projectMapper.selectByWhere(where);
 		   
 		   if(null != projects && projects.size() > 0 ){
 			   json.put("project",projects.get(0));
 		   }
-		   
-		   
+		   json.put("message","success");
 	   }
-	   return "forward:/installDetails.jsp?allThing=" + json.toJSONString();
+	   
+	  
+	   Writer w = null ;
+	   try {
+		w = res.getWriter();
+		w.write(callback+"("+json.toJSONString()+")");
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	    
    }
     @RequestMapping(value = "getSome" , method=RequestMethod.POST)
     @ResponseBody
@@ -200,27 +217,52 @@ public class InstallController implements ApplicationContextAware {
     public String modify(HttpServletResponse res , HttpServletRequest req ,HttpSession session
     ,  Install install,Printer printer,Cash cash,Equipment equipmengt ,String files 
     ,String userName ,String userNum){
+    	JSONObject ret = new JSONObject();
     	try{
-    		
+    		log.info(JSONObject.toJSON(install));
+    		String path = req.getSession().getServletContext().getRealPath("upload"); 
         	Map<String,String> rs = null ;
-    	    	if(null != files && !"".equalsIgnoreCase(files)){
-    	    		rs = new HashMap<String,String>();
-    	    		rs = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
-    	    		if(!"ok".equalsIgnoreCase(rs.get("message"))){
-    	    			return "{'message':'"+rs.get("message")+"'}";
-    	    		}
-    	    	}
-    		install.modifyAtachement(rs.get("urls"));
+        	if(null != files && !"".equals(files)){
+        	
+        		install.setAttachment_url(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
+        	}
+//        	install.modifyAtachement(files , null,null);
+//    	    	if(null != files && !"".equalsIgnoreCase(files)){
+//    	    		rs = new HashMap<String,String>();
+//    	    		rs = ComUtil.savePicture(files, path);
+//    	    		if(!"ok".equalsIgnoreCase(rs.get("message"))){
+//    	    			ret.put("message", rs.get("message"));
+//    	    			return ret.toJSONString();
+//    	    		}
+//    	    	    Map<String, String> where = new HashMap<String, String>();
+//    	    	    where.put("installId", install.getInstallId());
+//    				List<Install> installs = installmapper.selectByWhere(where );
+//    	    	    if(0 < installs.size()){
+//    	    	    	install.setAttachment_url(installs.get(0).getAttachmentUrl());
+//    	    	    }
+//    	    		install.modifyAtachement(files , rs.get("urls"),path.substring(0,path.indexOf("upload")));
+//    	    	}
+    	    
+
 			installmapper.updateByPrimaryKeySelective(install);
 			printerMapper.updateByPrimaryKeySelective(printer);
 			cashMapper.updateByPrimaryKeySelective(cash);
 			equipmentMapper.updateByPrimaryKeySelective(equipmengt);
 
+	    	Operation_history record = new Operation_history();
+	    	
+	    	record.setUserId(userNum);
+	    	record.setFormType("安装");
+	    	record.setAction("修改安装编号为："+install.getInstallId());
+			ohm.insertSelective(record );
+			
     	}catch(Exception e){
 			e.printStackTrace();
-			return "fail" ;
+			ret.put("message", "fail");
+			return ret.toJSONString();
     	}
-		return "{'message':'success'}" ;
+    	ret.put("message", "success");
+		return ret.toJSONString();
     }
 	@Override
 	public void setApplicationContext(ApplicationContext ctx)

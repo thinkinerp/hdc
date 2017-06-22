@@ -11,8 +11,16 @@
         <title>问题详情</title>
         <link rel="stylesheet" type="text/css" href="css/global.css" />
         <link rel="stylesheet" href="css/swiper.css">
+        <link rel="stylesheet" href="css/loading.css">
         <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
         <script src="js/global.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/config.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/comUtil.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/syp_v1.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" charset="utf-8">
+            window.SYP.setBannerTitle("问题详情");
+
+        </script>
     </head>
 
     <body>
@@ -40,6 +48,8 @@
             </div>
         </div>
         <!-- 内容区 -->
+        <!-- <div class="wrapbox"> -->
+        <div >
         <div class="swiper-container swiper-container2">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -49,8 +59,8 @@
                                 问题编号
                             </div>
                             <div class="g-importList-content">
-                                <div class="i-import">
-                                    <input id="gs1" type="text" placeholder="请输入" />
+                                <div class="i-import" style="border:none">
+                                    <input  id="gs1" type="text"  readonly/>
                                 </div>
                             </div>
                         </li>
@@ -60,7 +70,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div id="gs2"class="on">
+                                    <div id="gs2"class="on" alertTitle="问题状态" placeholder="下拉">
                                         未选择
                                     </div>
                                 </div>
@@ -72,8 +82,8 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div id="gs3" data-select="海鼎,客户" >
-                                        海鼎
+                                    <div id="gs3" alertTitle="跟踪方" data-select="海鼎,客户">
+
                                     </div>
                                 </div>
                             </div>
@@ -84,8 +94,8 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div  id="gs4" class="on">
-                                        未选择
+                                    <div  id="gs4" class="on"  alertTitle="问题类型">
+
                                     </div>
                                 </div>
                             </div>
@@ -96,8 +106,8 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div id="gs5" class="on">
-                                        未选择
+                                    <div id="gs5" class="on" alertTitle="跟进人">
+
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +118,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div  id="gs6" class="on">
+                                    <div  id="gs6" class="on" alertTitle="跟进部门">
                                         未选择
                                     </div>
                                 </div>
@@ -120,7 +130,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div  id="gs7" class="on">
+                                    <div  id="gs7" class="on"  alertTitle="问题标签">
                                         可多选
                                     </div>
                                 </div>
@@ -138,11 +148,13 @@
                                 项目名称
                             </div>
                             <div class="g-importList-content">
-                                <div class="i-xiala-list">
-                                    <div id="sp1" class="on">
-                                        未选择
+                            <!-- 项目名称不能点击 start -->
+                                <div class="i-text">
+                                    <div id="sp1" class="on" alertTitle="项目名称">
+                                        
                                     </div>
                                 </div>
+                                <!-- 项目名称不能点击 end -->
                             </div>
                         </li>
                         <li>
@@ -151,7 +163,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div id="sp2" class="on">
+                                    <div id="sp2" class="on" alertTitle="商铺名称">
                                         未选择
                                     </div>
                                 </div>
@@ -177,7 +189,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-date">
-                                    <input id="ms1" type="date" placeholder="未选择" onchange="app.dateVerify(this,1)"/>
+                                    <input id="ms1" type="date" placeholder="未选择" onblur="app.dateVerify(this,1)"/>
                                 </div>
                             </div>
                         </li>
@@ -187,7 +199,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-date">
-                                    <input  id="ms2" type="date" placeholder="未选择" onchange="app.dateVerify(this,1)"/>
+                                    <input  id="ms2" type="date" placeholder="未选择" onblur="app.dateVerify(this,1)"/>
                                 </div>
                             </div>
                         </li>
@@ -197,7 +209,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-date">
-                                    <input  id="ms3" type="date" placeholder="未选择" onchange="app.dateVerify(this,2)"/>
+                                    <input  id="ms3" type="date" placeholder="未选择" onblur="app.dateVerify(this,2)"/>
                                 </div>
                             </div>
                         </li>
@@ -217,7 +229,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-date">
-                                    <input  id="ms5" type="date" placeholder="未选择" onchange="app.dateVerify(this,2)"/>
+                                    <input  id="ms5" type="date"  placeholder="未选择" onblur="app.dateVerify(this,2)"/>
                                 </div>
                             </div>
                         </li>
@@ -227,7 +239,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div  id="asddas" class="on">
+                                    <div  id="asddas" class="on" alertTitle="采集点">
                                         未选择
                                     </div>
                                 </div>
@@ -251,15 +263,15 @@
                         </li>
 
                     </ul>
-                    <div style="-webkit-user-select:text" class="g-fa" placeholder="请输入问题描述" id="wtms" contenteditable="true" style="margin-top:0; height: 1.4rem;"></div>
+                    <div  class="g-fa" placeholder="请输入问题描述" id="wtms" contenteditable="true" style="margin-top:0; height: 1.4rem;-webkit-user-select:text"></div>
                 </div>
                 <div class="swiper-slide">
                     <ul class="g-importList">
                         <div class="swiper-slide">
                             <div class="i-addImg">
                                 <div class="img" id="imgShow">
-                                    <div onclick="app.fullImg(0)"></div>
-                                    <div onclick="app.fullImg(1)"></div>
+                                  <!--  <div style="display:block"></div>
+                                    <div style="display:block" ></div> -->
                                 </div>
                                 <div class="add">
                                     <input type="file" id="fileImg" onchange="app.getImgUrl();"/>
@@ -269,12 +281,17 @@
                     </ul>
                 </div>
                 <div class="swiper-slide">
-                    <div class="g-fa" placeholder="请输入解决方案" style="-webkit-user-select:auto" id="jjfa" contenteditable="true"></div>
+                    <textarea class="i-contenteditable textarea-text1" placeholder="请输入解决方案"  id="jjfa" contenteditable="true"></textarea>
                 </div>
                 <div class="swiper-slide">
-                    <div class="i-contenteditable" contenteditable="true" style="-webkit-user-select:text" placeholder="输入"></div>
+                    <textarea class="i-contenteditable textarea-text1" contenteditable="true"  placeholder="输入" id ="messageContext"></textarea>
+                    <div class="i-contenteditable-ok" id = "saveMessage">
+                        添加批注
+                    </div>
+                    <div class="i-itemDetail" id ="messageArea"></div>
                 </div>
             </div>
+        </div>
         </div>
         <!-- 保存按钮 -->
         <div class="g-ok">
@@ -285,6 +302,85 @@
 
         <script src="js/swiper.js"></script>
         <script>
+            $('#saveMessage').bind('click', function() {
+                if(''==$('#messageContext').val()){
+                    return ;
+                }
+                $.ajax({
+                    url :domainName +  '/hdk/problem/saveMessage',
+                    type : 'get',
+                    dataType : 'jsonp',
+                    jsonp : "callback",
+                    data : {
+                        'mesUser' : params['userName']//添加批注的用户 ID，功能还未实现，暂时不用传入
+                        ,
+                        'problemId' : $('#gs1').val()//问题编号
+                        ,
+                        'mesContent' : $('#messageContext').val()//批注内容
+                    },
+                    success : function(rs) {
+                        if (rs.message == "success") {
+                            app.alert("批注保存成功", 1);
+                            loadMessage($('#gs1').val(),0);
+                        } else if (rs.message == "fail") {
+                            app.alert("批注保存失败", 1);
+                        }
+                    },
+                    error : function(rs) {
+                        console.log(rs);
+                    }
+                });
+            });
+
+            var loadMessage = function(id,toHome) {
+                $.ajax({
+                    url :domainName +  '/hdk/problem/getMessageSome',
+                    type : 'get',
+                    dataType : 'jsonp',
+                    jsonp : "callback",
+                    data : {
+                        'problemId' : id//问题编号
+                    },
+                    success : function(rs) {
+                        $("#messageContext").val("");
+                        $('#messageArea').empty();
+                        $.each(rs, function(index, item) {
+                            $('#messageArea').append(
+                                "<div class='i-itemDetail-area'>" + 
+                                "               <div class='i-itemDetail-area-title'>" + 
+                                "                   <div>" + item.mesUser + "</div>" + 
+                                "                   <p>" + item.updatedAt + "</p>" + "               </div>" +
+                                 "               <div class='i-itemDetail-area-content'>" 
+                                 + "                   <div class='content-row'>" + 
+                                 "                       <span>" + item.mesContent + "</span>" + 
+                                 "                   </div>" + 
+                                 "               </div>" + 
+                                 "           </div>");
+                                 
+                        });
+                        swiper2.slideTo(5, 0, false);
+                       if(1 == toHome){
+                        swiper2.slideTo(0, 0, false);
+                       }
+                        $('#messageArea').trigger('create');
+                    },
+                    error : function(rs) {
+                        console.log(rs);
+                    }
+                });
+            };
+
+            var params = function() {
+                var query = {}, search = window.location.search.substring(1), parts = search.split('&'), pairs = [];
+
+                for (var i = 0, len = parts.length; i < len; i++) {
+                    pairs = parts[i].split('=');
+                    query[pairs[0]] = (pairs.length > 1 ? decodeURIComponent(pairs[1]) : null);
+                }
+
+                return query;
+            }();
+
             var sp = {//商铺信息
                 sp1 : null, //项目名称
                 sp2 : null, //商铺名称
@@ -293,23 +389,27 @@
                 proData : null,
                 proid : null,
                 shopid : null,
+                files : null,
                 init : function() {
                     sp.sp1Fun()
                 },
                 selectSp1 : function() {
                     sp.sp1 = $("#sp1").html();
+                    $('#sp2').html('');
+                    $('#sp3').html('');
                     sp.sp2Fun();
-                    for (var i = 0; i < sp.proData.length; i++) {
-                        if (sp.proData[i].proName == sp.sp1) {
-                            sp.proid = sp.proData[i].proId;
-                            return;
+                    if (null != sp.proData && undefined != sp.proData) {
+                        for (var i = 0; i < sp.proData.length; i++) {
+                            if (sp.proData[i].proName == sp.sp1) {
+                                sp.proid = sp.proData[i].proId;
+                                return;
+                            }
                         }
                     }
-
                 },
                 sp1Fun : function() {
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/project/getSome",
+                        url :domainName +  "/hdk/project/getSome",
                         type : "get",
                         dataType : "jsonp",
                         jsonpCallback : "project_null_getSome",
@@ -324,9 +424,9 @@
                                 }
                             }
                             $('#sp1')[0].dataset.select = text
-                            $("#sp1").click(function() {
-                                app.select(this, 1, sp.selectSp1);
-                            })
+                            //cynthia 项目名称不能点击 $("#sp1").click(function() {
+                            //     app.select(this, 2, sp.selectSp1);
+                            // })
                         }
                     })
                 },
@@ -352,10 +452,10 @@
                     $('#asddas').addClass('on')
                     $('#asddas').html('未选择');
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/shops/selectForCombobox",
+                        url :domainName +  "/hdk/shops/selectForCombobox",
                         type : "get",
                         data : {
-                            "proName" : sp.sp1
+                            "proId" : sp.sp1
                         },
                         dataType : "jsonp",
                         jsonpCallback : "shops_selectForCombobox",
@@ -371,7 +471,8 @@
                             }
                             $('#sp2')[0].dataset.select = text
                             $("#sp2").click(function() {
-                                app.select(this, 1, sp.selectSp2);
+                                app.select(this, 2, sp.selectSp2);
+                                sp.init();
                             })
                         }
                     })
@@ -403,14 +504,14 @@
                 gs2Fun : function() {
                     var time = new Date().getTime();
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/state/getSome",
+                        url :domainName +  "/hdk/state/getSome",
                         type : "get",
                         data : {
                             "ownerTable" : "problem_station",
-                            time :time
+                            time : time
                         },
                         dataType : "jsonp",
-                        jsonpCallback : "state_"+time+"_getSome",
+                        jsonpCallback : "state_" + time + "_getSome",
                         success : function(data) {
                             var text = ''
                             for (var i = 0; i < data.length; i++) {
@@ -422,7 +523,7 @@
                             }
                             $('#gs2')[0].dataset.select = text
                             $("#gs2").click(function() {
-                                app.select(this, 1, gs.selectGs2);
+                                app.select(this, 2, gs.selectGs2);
                             })
                             gs.gs3Fun();
                         }
@@ -430,10 +531,14 @@
                 },
                 selectGs3 : function() {
                     gs.gs3 = $("#gs3").html();
+                    $("#gs4").html('');
+                       gs.gs4 = '';
+                    onGs3Click();
                 },
                 gs3Fun : function() {
                     $("#gs3").click(function() {
-                        app.select(this, 1, gs.selectGs3);
+                        app.select(this, 2, gs.selectGs3);
+
                     })
                     gs.gs4Fun();
                 },
@@ -442,7 +547,7 @@
                 },
                 gs4Fun : function() {
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/state/getSome",
+                        url :domainName +  "/hdk/state/getSome",
                         type : "get",
                         dataType : "jsonp",
                         data : {
@@ -461,7 +566,12 @@
                             }
                             $('#gs4')[0].dataset.select = text
                             $("#gs4").click(function() {
-                                app.select(this, 1, gs.selectGs4);
+                               if ('海鼎' == $("#gs3").html()) {
+                                    $('#gs4').attr('data-select', '商务,运维,技术');
+                                } else if('客户' == $("#gs3").html()) {
+                                    $('#gs4').attr('data-select', '其他');
+                                }
+                                app.select(this, 2, gs.selectGs4);
                             })
                             gs.gs5Fun();
                         }
@@ -473,7 +583,7 @@
                 },
                 gs5Fun : function() {
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/user/getSome",
+                        url :domainName +  "/hdk/user/getSome",
                         type : "get",
                         dataType : "jsonp",
                         jsonpCallback : "getSome",
@@ -489,7 +599,7 @@
                             }
                             $('#gs5')[0].dataset.select = text
                             $("#gs5").click(function() {
-                                app.select(this, 1, gs.selectGs5);
+                                app.select(this, 2, gs.selectGs5);
                             })
                             gs.gs6Fun();
                         }
@@ -501,7 +611,7 @@
                 gs6Fun : function() {
 
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/user/getDepartment",
+                        url :domainName +  "/hdk/user/getDepartment",
                         type : "get",
                         dataType : "jsonp",
                         jsonpCallback : "getDepartment",
@@ -509,15 +619,18 @@
                         success : function(data) {
                             var text = ''
                             for (var i = 0; i < data.length; i++) {
+                                if(null != data[i].department && undefined != data[i].department){
                                 if (i == data.length - 1) {
                                     text += data[i].department
                                 } else {
-                                    text += data[i].department + ','
+                                 
+                                    text += data[i].department  + ','
+                                }
                                 }
                             }
                             $('#gs6')[0].dataset.select = text
                             $("#gs6").click(function() {
-                                app.select(this, 1, gs.selectGs6);
+                                app.select(this, 2, gs.selectGs6);
                             })
                             gs.gs7Fun();
                         }
@@ -543,7 +656,7 @@
                 },
                 gs7Fun : function() {
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/state/getSome",
+                        url :domainName +  "/hdk/state/getSome",
                         type : "get",
                         data : {
                             'ownerTable' : 'problem_table'
@@ -562,7 +675,7 @@
                             }
                             $('#gs7')[0].dataset.select = text
                             $("#gs7").click(function() {
-                                app.select(this, 3, gs.selectGs7);
+                                app.select(this, 2, gs.selectGs7);
                             })
                         }
                     })
@@ -573,7 +686,7 @@
                 data : null,
                 init : function() {
                     $.ajax({
-                        url : "http://www.onetoend.cn/hdk/problem/getEquipmentList",
+                        url :domainName +  "/hdk/problem/getEquipmentList",
                         type : "get",
                         data : {
                             'proName' : sp.sp1,
@@ -600,7 +713,7 @@
                             //					   		$('#ms7')[0].dataset.select = text2
                             $("#asddas").unbind('click');
                             $("#asddas").click(function() {
-                                app.select(this, 1, ms.selectcj);
+                                app.select(this, 2, ms.selectcj);
                             })
                         }
                     })
@@ -618,6 +731,12 @@
                 }
             }
             function submit() {//新建保存
+                for (var i = 0; i < sp.proData.length; i++) {
+                    if (sp.proData[i].proName == sp.sp1) {
+                        sp.proid = sp.proData[i].proId;
+                    }
+                }
+
                 var obj = {
                     'problem.state' : gs.gs2//问题状态
                     ,
@@ -627,7 +746,7 @@
                     ,
                     'problem.eqId' : $('#asddas').html()//采集点编号
                     ,
-                    'problem.problemId' : gs.gs1//跟踪编号?
+                    'problem.problemId' : $("#gs1").val()//跟踪编号?
                     ,
                     'problem.problemType' : gs.gs4//问题类型
                     ,
@@ -653,28 +772,47 @@
                     ,
                     'problem.problemTable' : gs.gs7String//标签
                     ,
-                    'problem.problemPlan' : $('#jjfa').html()	//解决方案
-                }
-                $.ajax({
-                    url : "http://www.onetoend.cn/hdk/problem/submit",
-                    type : "post",
-                    data : obj,
-                    dataType : "json",
-                    success : function(data) {
-                        if (data.message == "success") {
-                            app.alert('保存成功', 1)
-                            window.location = 'issueList.html'
-                        } else if (data.message == "fail") {
+                    'problem.problemPlan' : $('#jjfa').val()	//解决方案
+                };
+                    if(form_empty({code:$('#gs1').val(), which:"问题编号"}))
+                        {return;}
+                    if(form_empty({code:$('#sp1').html(), which:"项目名称"}))
+                        {return;}
+                    if(form_empty({code:$('#sp2').html(), which:"商铺名称"}))
+                        {return;}
+                $.when(codeUnique({
+                    tableName : "problem",
+                    codeField : "problem_id",
+                    code : $('#gs1').val(),
+                    which : "问题编码"
+                })).done(function() {
+                    $.ajax({
+                        url :domainName +  "/hdk/problem/submit",
+                        type : "post",
+                        data : obj,
+                        beforeSend : ajaxLoading(),
+                        complete : ajaxLoadEnd(),
+                        dataType : "json",
+                        success : function(data) {
+                            if (data.message == "success") {
+
+                                window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功", domainName + "/hdk/sjt/issueList.html?syp_user_num="+params["userNum"]+"&syp_user_name="+params["userName"]);
+
+                            } else if (data.message == "fail") {
+                                app.alert('保存失败', 1);
+                            }
+                        },
+                        error : function(res) {
                             app.alert('保存失败', 1);
                         }
-                    }
-                })
-            }
+                    });
+                });
+            };
 
             function submit2() {//修改保存
 
                 var obj = {
-                    'problem.id' : xg.data.eqId//问题表自增id
+                    'problem.id' : xg.data.id//问题表自增id
                     ,
                     'problem.problemId' : $('#gs1').val()//问题编号
                     ,
@@ -690,7 +828,7 @@
                     ,
                     'problem.problemType' : $('#gs4').html()//问题类型
                     ,
-                    'problem.problemObject' : $('#gs5').html()//跟踪方
+                    'problem.problemObject' : $('#gs3').html()//跟踪方
                     ,
                     'problem.problemDepartment' : $('#gs6').html()//跟踪部门
                     ,
@@ -708,30 +846,33 @@
                     ,
                     'problem.problemDetails' : $('#wtms').html()//问题描述
                     ,
-                    'files' : JSON.stringify(imgs)//附件信息
+                    'files' :JSON.stringify(imgs) //附件信息
                     ,
                     'problem.problemTable' : gs.gs7String//标签
                     ,
-                    'problem.problemPlan' : $('#jjfa').html()	//解决方案
-                }
+                    'problem.problemPlan' : $('#jjfa').val()	//解决方案
+                };
                 $.ajax({
-                  // url : "http://www.onetoend.cn/hdk/problem/modify",
-                    url : "/hdk/problem/modify",
+                    url :domainName +  "/hdk/problem/modify",
+                    //url : "/hdk/problem/modify",
                     type : "post",
                     data : obj,
+                    beforeSend : ajaxLoading(),
+                    complete : ajaxLoadEnd(),
                     dataType : "json",
                     success : function(data) {
                         if (data.message == "success") {
-                            app.alert('修改成功', 1);
-                            window.location = 'issueList.html'
+
+                            window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功", domainName + "/hdk/sjt/issueList.html?syp_user_num="+params["userNum"]+"&syp_user_name="+params["userName"]);
+
                         } else if (data.message == "fail") {
                             app.alert('修改失败', 1);
                         }
                     },
-                    error:function(rs){
-                      console.log(rs);  
+                    error : function(rs) {
+                        console.log(rs);
                     }
-                })
+                });
             }
 
             var xg = {
@@ -743,21 +884,21 @@
                 },
                 getData : function() {
                     $.ajax({
-                       url : "http://www.onetoend.cn/hdk/problem/gotoModify",
+                        url :domainName +  "/hdk/problem/gotoModify",
                         // url : "http://localhost:8080/hdk/problem/gotoModify",
                         type : "get",
-                        jsonp:'callback',
+                        jsonp : 'callback',
                         data : {
-                            problemId: xg.problemId
+                            problemId : xg.problemId
                         },
                         dataType : "jsonp",
                         // jsonpCallback:"forword:/surveyDetails.jsp",
                         success : function(data) {
-                           // console.log(data);
+                            // console.log(data);
                             xg.data = data;
                             xg.upStyle(data);
                         }
-                    })
+                    });
                 },
                 upStyle : function(data) {
                     $("#sp1").html(data.proName);
@@ -766,6 +907,7 @@
                     xg.zhidu('sp1');
                     xg.zhidu('sp2');
                     $("#gs1").val(data.problemId);
+                    loadMessage(data.problemId,1);
                     xg.zhidu('gs1');
                     $("#gs2").html(data.state);
                     xg.youzhi('gs2');
@@ -781,7 +923,7 @@
                     $("#ms1").val(data.problemHappen);
                     $("#ms2").val(data.problemPut);
                     $("#ms3").val(data.problemEstimate);
-                    $("#ms4").val(data.problemResloveUser);
+                    $("#ms4").val(data.problemResolveUser);
                     $("#ms5").val(data.problemResloveTime);
 
                     $('#asddas').html(data.eqId);
@@ -790,12 +932,13 @@
                     $("#ms7").html(data.eqType);
                     $("#wtms").html(data.problemDetails);
 
-                    $("#jjfa").html(data.problemPlan);
-
+                    $("#jjfa").val(data.problemPlan);
+                    
                     if (data.problemEnclosure != '' && data.problemEnclosure != null && data.problemEnclosure != undefined) {
-                        data.problemEnclosure = data.problemEnclosure.split(",");
-                        for (var i = 0; i < data.problemEnclosure.length; i++) {
-                            app.addImg(data.problemEnclosure[i]);
+                        imgs = sp.files = data.problemEnclosure.split(",");
+                        for (var i = 0; i < sp.files.length; i++) {
+                            $("#imgShow").append('<div ></div>');
+                            app.addImg(sp.files[i]);
                         }
                     }
 
@@ -817,11 +960,36 @@
                     $("#" + id).removeClass('on');
                 }
             }
+            var proId_name="";
             $(function() {
                 var problemId = app.getUrlSearch("problemId");
                 if (problemId == null) {// 新建
                     sp.init();
                     gs.init();
+                    var time = new Date().getTime();                    
+                    $.ajax({
+                      url: domainName +  '/hdk/project/getSome',
+                      type: 'get',
+                      data: {
+                        time: time
+                      },
+                      jsonpCallback: "project_" + time + "_getSome",
+                      jsonp: "callback",
+                      dataType: 'jsonp',
+                      success: function(rs) {
+                        var str = '';
+                        var i = 0;
+                        $.each(rs, function(index, item) {
+                          if(item.proName==params["pproName"])
+                           {proId_name=item.proId;}
+                        });
+                   getproId();
+                    /*====获得编号 end=====*/
+                      },
+                      error: function(rs) {
+                        console.log(rs);
+                      }
+                    });   
                     //ms.init();
                     $("#save").click(function() {//保存按钮
                         app.alert("确定要保存吗？", 2, submit)
@@ -835,7 +1003,12 @@
                         app.alert("确定要保存吗？", 2, submit2)
                     })
                 }
-
+                //img start
+                $("#imgShow").on("click","div",function(){
+                    var i=$(this).index();
+                    app.fullImg(i);
+                })
+                //img end
             })
             swiper1 = new Swiper('.swiper-container1', {//菜单区滑块
                 paginationClickable : true,
@@ -852,7 +1025,44 @@
                     app.upStyle(swiper.activeIndex);
                 }
             });
-        </script>
-    </body>
 
+            var onGs3Click = function() {
+                if ('海鼎' == $("#gs3").html()) {
+                    $('#gs4').attr('data-select', '商务,运维,技术');
+                } else {
+                    $('#gs4').attr('data-select', '其他');
+                }
+            };
+
+            if (undefined != params["pproName"] && "" != params["pproName"]) {
+                $('#sp1').html(params["pproName"]);
+                sp.sp1 = params["pproName"];
+                $('#sp1').attr("class", "");
+                sp.selectSp1();
+            }
+
+             /*====安装cynthia ，获得安装编号 start===*/           
+               /*====获得编号 start=====*/
+             
+            function getproId()
+            {  $.ajax({
+                url:"http://www.onetoend.cn/hdk/project/getFormCode",
+                dataType:"jsonp",
+                jsonp:"callback",
+                data:{
+                    formType:"problem",
+                    proId:proId_name
+                },
+               type:"get",
+               success:function(res){
+                  $("#gs1").val(res.code);
+               },
+               error:function(res){                   
+               } 
+              });}           
+            /*====安装cynthia ，获得安装编号 end===*/
+        </script>
+    
+    </body>
+<!-- <script src="js/buttonAway.js" type="text/javascript" charset="utf-8"></script> -->
 </html>
