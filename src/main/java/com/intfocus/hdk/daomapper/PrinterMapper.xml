@@ -31,12 +31,6 @@
     		<if test="null != printerId  and '' != printerId">
 				and printer_id = #{printerId,jdbcType=VARCHAR}
 			</if>	
-    		<if test="null != installId  and '' != installId">
-				and install_id = #{installId,jdbcType=VARCHAR}
-			</if>	
-    		<if test="null != surId  and '' != surId">
-				and sur_id = #{surId,jdbcType=VARCHAR}
-			</if>	
  
     </where>  
     <if test="null != page and ''!= page">

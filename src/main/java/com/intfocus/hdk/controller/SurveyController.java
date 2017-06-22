@@ -1,3 +1,4 @@
+
 package com.intfocus.hdk.controller;
 import java.io.IOException;
 import java.io.Writer;
@@ -55,40 +56,27 @@ public class SurveyController implements ApplicationContextAware {
     public String modify(HttpServletResponse res , HttpServletRequest req ,HttpSession session
     		, Survey survey , Printer printer , Cash cash , Shops shops,String callback, String files
     		,String userName ,String userNum){
-    	JSONObject rs = new JSONObject();
-    	String path = req.getSession().getServletContext().getRealPath("upload") ;
+    	
 		try {
-//			   if(!"".equalsIgnoreCase(files) && null != files){	
-//					Map<String,String> result = ComUtil.savePicture(files, path );
-//					if(!"ok".equalsIgnoreCase(result.get("message"))){
-//						rs.put("message", result.get("message"));
-//						return rs.toJSONString();
-//					}
-//					
-//					Map<String, String> where = new HashMap<String, String>();
-//					where.put("surId", survey.getSurId());
-//					List<Survey> ss = surveymapper.selectByWhere(where );
-//					if(null != ss && 0 < ss.size()){
-//						survey.setAttachmentUrl(ss.get(0).getAttachmentUrl());
-//					}
-//					survey.modifyAtachement(files ,((result.get("urls")).toString()) , path.substring(0,path.indexOf("upload")));
-//			   }
-	    	if(null != files && !"".equals(files)){
-	        	
-	    		survey.setAttachmentUrl(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
-	    	}
+			   if("".equalsIgnoreCase(files)){	
+					Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
+					if(!"ok".equalsIgnoreCase(result.get("message"))){
+						return result.get("message");
+					}
+					survey.modifyAtachement(((result.get("urls")).toString()));
+			   }
+
 				surveymapper.updateByPrimaryKeyWithBLOBs(survey);
 				printerMapper.updateByPrimaryKeySelective(printer);
 				cashMapper.updateByPrimaryKeySelective(cash);
 				shopsMapper.updateByPrimaryKeySelective(shops);
 		}catch(Exception e){
 			e.printStackTrace();
-			rs.put("message", "fail");
-			return rs.toJSONString();
+//			return callback+"({'message':'fail'})";
+			return "{'message':'fail'}";
 		}
-		
-		rs.put("message", "success");
-		return rs.toJSONString();
+//		return callback+"({'message':'success'})";
+		return "{'message':'success'}";
     	
     	
     	
@@ -103,13 +91,12 @@ public class SurveyController implements ApplicationContextAware {
     @RequestMapping(value = "getSome" , method=RequestMethod.GET)
     @ResponseBody
     public void getSome(HttpServletResponse res , HttpServletRequest req ,HttpSession session
-    		              , Survey survey ,String callback,String shopNameLike){
+    		              , Survey survey ){
     	
     	Map<String,String> where = new HashMap<String,String>();
-		where.put("proName", survey.getProName());	
-		where.put("shopName", survey.getShopName());	
-		where.put("shopNameLike", shopNameLike);	
-		where.put("shopMerStation", survey.getShopMerStation());
+		where.put("proName", survey.getProId());	
+		where.put("shopName", survey.getShopId());	
+		where.put("shopStation", survey.getShopMerStation());
     	try {
 			Writer w = res.getWriter();
 
@@ -120,7 +107,7 @@ public class SurveyController implements ApplicationContextAware {
 		}
     	List<Survey> surveys = surveymapper.selectByWhere(where);
     	
-		w.write( callback + "("+JSONObject.toJSONString(surveys) +")");	
+		w.write( "getSome("+JSONObject.toJSONString(surveys) +")");	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -136,43 +123,27 @@ public class SurveyController implements ApplicationContextAware {
     	// 取出相关的信息
     	JSONObject json = new JSONObject();
     	Map<String, String> where = new HashMap<String,String>();
-    	 String path = req.getSession().getServletContext().getRealPath("upload");
     	where.put("surId", surId);
 		// 调研
     	List<Survey> surveys = surveymapper.selectByWhere(where ); 
-    	Survey survey1 = null ;
-    	if( 0 < surveys.size() ){
-	    	survey1 = surveys.get(0);
-	    	
-			   if( null != survey1.getAttachmentUrl() && !"".equalsIgnoreCase(survey1.getAttachmentUrl())){
-				   survey1.setAttachmentUrl(survey1.getAttachmentUrl().replace(path.substring(0,path.indexOf("upload")), "/hdk/"));
-			   }
-	    	
-	    	json.put("survey", survey1);
-    	}
+    	Survey survey1 = surveys.get(0);
+    	json.put("survey", survey1);
     	// 收银机 
     	List<Printer> printers = printerMapper.selectByWhere(where ); 
-    	Printer printer = null ;
-    	if(0<printers.size()){
-	    	printer = printers.get(0);
-	    	json.put("printer", printer);
-    	}
+    	Printer printer = printers.get(0);
+    	json.put("printer", printer);
+    	
+
     	
     	// 打印机
     	List<Cash> cashes = cashMapper.selectByWhere(where ); 
-    	if(0<cashes.size()){
-	    	Cash cash = cashes.get(0);
-	    	json.put("cash", cash);
-    	}
+    	Cash cash = cashes.get(0);
+    	json.put("cash", cash);
     	
     	//门店
-    	where.put("proId", survey1.getProId());
-    	where.put("shopId", survey1.getShopId());
-    	List<Shops> shops = shopsMapper.selectShops(where ); 
-    	if(0<shops.size()){
-    		Shops shop = shops.get(0);
-    		json.put("shops", shop);
-    	}
+    	List<Shops> shops = shopsMapper.selectByWhere(where ); 
+    	Shops shop = shops.get(0);
+    	json.put("shops", shop);
     	where.clear();  	
     	Writer w = null;
 		try {
@@ -188,47 +159,37 @@ public class SurveyController implements ApplicationContextAware {
     		, Survey survey , Printer printer , Cash cash , Shops shops ,String callback, String files
     		,String userName ,String userNum){
     	
-		JSONObject rs = new JSONObject();
-//		log.info("survey:"+JSONObject.toJSONString(survey));
-//		log.info("printer:"+JSONObject.toJSONString(printer));
-//		log.info("cash:"+JSONObject.toJSONString(cash));
-//		log.info("shops:"+JSONObject.toJSONString(shops));
-//	   if(!"".equalsIgnoreCase(files)){	
-//		Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
-//		
-//		
-//		if(!"ok".equalsIgnoreCase(result.get("message"))){
-//			rs.put("message", result.get("message"));
-//			return rs.toJSONString();
-//		}
-//		survey.setAttachmentUrl((result.get("urls")).toString());
-//	   }
-    	if(null != files && !"".equals(files)){
-        	
-    		survey.setAttachmentUrl(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
-    	}
+	   if("".equalsIgnoreCase(files)){	
+		Map<String,String> result = ComUtil.savePicture(files, req.getSession().getServletContext().getRealPath("upload"));
+		
+		
+		if(!"ok".equalsIgnoreCase(result.get("message"))){
+			return result.get("message");
+		}
+		survey.setAttachmentUrl((result.get("urls")).toString());
+	   }
 		try {
 
 				surveymapper.insertSelective(survey);
 				printerMapper.insertSelective(printer);
 				cashMapper.insertSelective(cash);
 				
-//				Map<String, String> where = new HashMap<String , String >();
-//				where.put("shopId", shops.getShopId());
-//				Shops s = new Shops();
-//				List<Shops> shopss = shopsMapper.selectByWhere(where );
-//				if(0 < shopss.size()){
-//					s = shopss.get(0);	
-//				}
-//			    shops.setId(s.getId());
-//				shopsMapper.updateByPrimaryKeySelective(shops);
+				Map<String, String> where = new HashMap<String , String >();
+				where.put("shopId", shops.getShopId());
+				Shops s = new Shops();
+				List<Shops> shopss = shopsMapper.selectByWhere(where );
+				if(0 < shopss.size()){
+					s = shopss.get(0);	
+				}
+			    shops.setId(s.getId());
+				shopsMapper.updateByPrimaryKeySelective(shops);
 		}catch(Exception e){
 			e.printStackTrace();
-			rs.put("message", "fail");
-			return rs.toJSONString();
+//			return callback+"({'message':'fail'})";
+			return "{'message':'fail'}";
 		}
-		rs.put("message", "success");
-		return rs.toJSONString();
+//		return callback+"({'message':'success'})";
+		return "{'message':'success'}";
     }
 	
 	   @InitBinder("survey")    

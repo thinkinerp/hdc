@@ -62,11 +62,10 @@ public class ShopController implements ApplicationContextAware {
     @RequestMapping(value = "getSome" , method=RequestMethod.GET)
     @ResponseBody
     public void getSome(HttpServletResponse res , HttpServletRequest req ,HttpSession session
-    		              , Shops shops,String callback ,String shopNameLike){
+    		              , Shops shops ){
 		
     	Map<String, String> where = new HashMap<String,String>();
     	where.put("shopName", shops.getShopName());
-    	where.put("shopNameLike", shopNameLike);
     	where.put("installStation", shops.getInstallStation());
     	where.put("eqType", shops.getEqType());
     	where.put("proName", shops.getProId());
@@ -74,7 +73,7 @@ public class ShopController implements ApplicationContextAware {
 		Writer w;
 		try {
 			w = res.getWriter();
-			w.write(callback+"("+JSONObject.toJSONString(shopss)+")");
+			w.write("shops_getSome("+JSONObject.toJSONString(shopss)+")");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

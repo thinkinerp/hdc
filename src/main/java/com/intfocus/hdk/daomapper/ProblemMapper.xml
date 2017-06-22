@@ -57,9 +57,10 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-from problem inner join project on project.pro_id = problem.pro_id 
-inner join shops on shops.shop_id = problem.shop_id and shops.pro_id = project.pro_id
-left join equipment on equipment.eq_id = problem.eq_id and equipment.pro_id = project.pro_id and equipment.shop_id = shops.shop_id
+    	from problem
+    inner join project on project.pro_id = problem.pro_id
+    inner join shops on shops.shop_id = problem.shop_id
+    inner join equipment on equipment.eq_id = problem.eq_id
 	<where>
 		1=1
 		<if test="null != state and ''!= state">
@@ -83,25 +84,16 @@ left join equipment on equipment.eq_id = problem.eq_id and equipment.pro_id = pr
 	    </if>
     </if>
   </select>
-  
-  
-  <select id="codeUnique" resultType="java.util.Map" parameterType="java.util.Map">
-  
-  select count(distinct ${codeField}) as count from ${tableName} where   ${codeField} = #{code}
-  
-   </select>
   <select id="getCount" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
-    select problem.problem_object ,problem.problem_type,count(problem.problem_id) as count
-    from problem     inner join project on project.pro_id = problem.pro_id
-    inner join shops on shops.shop_id = problem.shop_id
-    left join equipment on equipment.eq_id = problem.eq_id
+    select problem_object ,problem_type,count(problem_id) as count
+    from problem  
     <where>
     	1=1
     	<if test="null != proName and '' != proName">
-    		  and problem.pro_id in (select pro_id from project where pro_name =#{proName} )
+    		  and pro_id in (select pro_id from project where pro_name =#{proName} )
  	   </if>
     </where>
-     group by problem.problem_object ,problem.problem_type
+     order by problem_object ,problem_type
 
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -150,7 +142,7 @@ left join equipment on equipment.eq_id = problem.eq_id and equipment.pro_id = pr
       <if test="mesId != null" >
         mes_id,
       </if>
-      <if test="problemType != null " >
+      <if test="problemType != null" >
         problem_type,
       </if>
       <if test="problemObject != null" >
@@ -162,16 +154,16 @@ left join equipment on equipment.eq_id = problem.eq_id and equipment.pro_id = pr
       <if test="problemUser != null" >
         problem_user,
       </if>
-      <if test="problemHappen != null and '' != problemHappen" >
+      <if test="problemHappen != null" >
         problem_happen,
       </if>
-      <if test="problemPut != null and '' != problemPut" >
+      <if test="problemPut != null" >
         problem_put,
       </if>
-      <if test="problemEstimate != null and '' !=problemEstimate " >
+      <if test="problemEstimate != null" >
         problem_estimate,
       </if>
-      <if test="problemResloveTime != null and ''!= problemResloveTime" >
+      <if test="problemResloveTime != null" >
         problem_reslove_time,
       </if>
       <if test="problemResolveUser != null" >
@@ -230,16 +222,16 @@ left join equipment on equipment.eq_id = problem.eq_id and equipment.pro_id = pr
       <if test="problemUser != null" >
         #{problemUser,jdbcType=VARCHAR},
       </if>
-      <if test="problemHappen != null and '' != problemHappen" >
+      <if test="problemHappen != null" >
         #{problemHappen,jdbcType=TIMESTAMP},
       </if>
-      <if test="problemPut != null and '' != problemPut" >
+      <if test="problemPut != null" >
         #{problemPut,jdbcType=TIMESTAMP},
       </if>
-      <if test="problemEstimate != null and '' != problemEstimate" >
+      <if test="problemEstimate != null" >
         #{problemEstimate,jdbcType=TIMESTAMP},
       </if>
-      <if test="problemResloveTime != null and '' != problemResloveTime" >
+      <if test="problemResloveTime != null" >
         #{problemResloveTime,jdbcType=TIMESTAMP},
       </if>
       <if test="problemResolveUser != null" >
@@ -298,16 +290,16 @@ left join equipment on equipment.eq_id = problem.eq_id and equipment.pro_id = pr
       <if test="problemUser != null" >
         problem_user = #{problemUser,jdbcType=VARCHAR},
       </if>
-      <if test="problemHappen != null and '' != problemHappen" >
+      <if test="problemHappen != null" >
         problem_happen = #{problemHappen,jdbcType=TIMESTAMP},
       </if>
-      <if test="problemPut != null and '' !=  problemPut" >
+      <if test="problemPut != null" >
         problem_put = #{problemPut,jdbcType=TIMESTAMP},
       </if>
-      <if test="problemEstimate != null  and '' != problemEstimate" >
+      <if test="problemEstimate != null" >
         problem_estimate = #{problemEstimate,jdbcType=TIMESTAMP},
       </if>
-      <if test="problemResloveTime != null and '' != problemResloveTime" >
+      <if test="problemResloveTime != null" >
         problem_reslove_time = #{problemResloveTime,jdbcType=TIMESTAMP},
       </if>
       <if test="problemResolveUser != null" >
