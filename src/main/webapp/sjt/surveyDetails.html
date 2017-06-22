@@ -626,11 +626,14 @@
 				if(chk_print(dyjbrand_txt,dyjxh_txt,dyjPort_txt,"#dyjId"))
 					{return;}
                  //验证收银机编号和打印机编号 end  
+                 if(shop.item)
+                 {
 			       for(var i = 0 ; i<shop.item.length; i++){
                         if(shop.itemName == shop.item[i].proName){
                             shop.itemId =  shop.item[i].proId;
                         }
                     }
+                   }
 				var obj = {
 					//调研
 					'survey.proId':shop.itemId,		//项目编号
@@ -795,6 +798,7 @@ var vipinfovalue;
                                  window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功",
                                                             domainName + "/hdk/sjt/surveyList.html?syp_user_num="+params["userNum"]+"&syp_user_name="+params["userName"]);
 
+
 					   		}else if(data.message == "fail"){
 					   			app.alert('修改失败',1);
 					   		}
@@ -899,6 +903,7 @@ var vipinfovalue;
 						qt.vip = "否";
 					}
 					}
+
                     /*===cynthia 会员信息 start===*/
                     vipinfovalue=data.survey.vipInfo;   
                     console.log("test1"+vipinfovalue);      
@@ -915,7 +920,6 @@ var vipinfovalue;
                         qt.note = "否";
                     }
                     /*===cynthia 会员信息 end===*/
-
 					if( data.survey.attachmentUrl != '' &&  data.survey.attachmentUrl != null &&  data.survey.attachmentUrl != undefined){
 						imgs = shop.files = data.survey.attachmentUrl.split(",");
 
@@ -935,6 +939,7 @@ var vipinfovalue;
 					$("#" + id).removeClass('on');
 				}
 			}
+
 			/*===cynthia 会员信息 start===*/
             function func_chkvip()
             {   $("#vipchkbox .i-choice-rowchk").each(function(i){
@@ -946,6 +951,7 @@ var vipinfovalue;
                           });
          }
          /*===cynthia 会员信息 end===*/
+
 			var proId_name="";
 			 function loadsurvey(id , table,isAll){
 				 var time = (new Date().getTime());
@@ -975,8 +981,14 @@ var vipinfovalue;
 				 });
 				
 			 }
+			 /*===返回2 start===*/
+			 var surtestId;
+			 /*===返回2 end===*/
 			$(function(){				
-				var surId = app.getUrlSearch("surId");				
+				var surId = app.getUrlSearch("surId");	
+				/*===返回2 start===*/
+				surtestId=surId;		
+				/*===返回2 end===*/			
 				if(surId == null){	// 新建
 					shop.init();
 					syj.init();
@@ -1072,6 +1084,19 @@ var vipinfovalue;
 			     	$("#vipinfo").val(viparr.join(","));
 			     	//会员信息 end
 				 })
+				 /*===cynthia返回 start2===*/
+			function submitback()
+			{
+				if(surtestId == null){
+					submit();
+				}
+				else
+				{
+					xgsubmit();
+				}
+
+			}
+/*===cynthia返回 end2===*/
 		</script>
 	</body>
 <!-- <script src="js/buttonAway.js" type="text/javascript" charset="utf-8"></script> -->
