@@ -77,6 +77,9 @@ var app ={
 		if (r != null) return unescape(r[2]); return null;
 	},
 	select:function(obj,type,fun){ //obj(有data-select的那个标签,传this 例如 app.select(this))    type: 1只能选择   2可以选择也可以输入 输入匹配   3可以选择可以输入 输入匹配 并可选择没匹配项
+		/*===隐藏原生标题栏 start===*/
+		window.SYP.toggleShowBanner('hidden');
+		/*===隐藏原生标题栏 end===*/
 		app.put = obj;
 		app.selecttype = type;
 		if(fun != undefined && fun != '' && fun != null){	
@@ -135,6 +138,9 @@ var app ={
     },
     selectBack:function(){
     	$(".g-select").remove();
+    	/*===显示原生标题栏 start===*/
+		window.SYP.toggleShowBanner('show');
+		/*===显示原生标题栏 end===*/
     },
     selectClick:function(){
     	$("#g-select-list li").click(function(){
@@ -149,6 +155,9 @@ var app ={
 				}
         	},300)
         })
+        /*===显示原生标题栏 start===*/
+		window.SYP.toggleShowBanner('show');
+		/*===显示原生标题栏 end===*/
     },
     dateVerify:function(obj,type){	//1为不能选择大于当前日期    2为必须大于当前日期
     	var selectDate = $(obj).val();
