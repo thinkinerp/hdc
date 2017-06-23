@@ -631,6 +631,7 @@
 			       for(var i = 0 ; i<shop.item.length; i++){
                         if(shop.itemName == shop.item[i].proName){
                             shop.itemId =  shop.item[i].proId;
+                            break;
                         }
                     }
                    }
@@ -685,18 +686,21 @@
                                          ,codeField:"sur_id"
                                          ,code:$('#dyid').val()
                                          , which:"调研编码"
+                                         ,extra:true
                     } ),
                     codeUnique({
                                            tableName:"cash"
                                          ,codeField:"cash_id"
                                          ,code:$('#syjId').val()
                                          , which:"收银机编码"
+                                         ,extra:chk_brand(syjSystem_txt,syjBrand_txt,syjPort_txt,"#syjId")
                     } ),
                     codeUnique({
                                            tableName:"printer"
                                          ,codeField:"printer_id"
                                          ,code:$('#dyjId').val()
                                          , which:"打印机编码"
+                                         ,extra:chk_print(dyjbrand_txt,dyjxh_txt,dyjPort_txt,"#dyjId")
                     } )
                     ).done(function(){
 					   

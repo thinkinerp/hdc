@@ -8,5 +8,6 @@
 </head>
 <body>
 操作失败了
+${requestScope.message}
 </body>
 </html>

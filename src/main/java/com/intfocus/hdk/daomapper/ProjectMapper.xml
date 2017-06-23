@@ -130,6 +130,8 @@ group by  c.cash_port
 			           ,p.pro_edition
 			           ,p.pro_station
 			           ,p.pro_manager_pro
+			           ,p.pro_coordination
+			           ,p.pro_coordination_phone
 			           ,p.pro_updata_time  
 			           ,p.pro_todal 
 			           ,p.pro_need

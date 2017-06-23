@@ -589,6 +589,11 @@ var submit = function() {
          var dyjPort_txt=$("#printerPort").html();
         if(chk_print(priBrand_txt,dyjxh_txt,dyjPort_txt,"#priId"))
           {return;}
+        
+        if(chk_equipment()){
+        	return ;
+        }
+        
          //验证收银机编号和打印机编号 end 
 	 $.when(
     codeUnique({
@@ -596,24 +601,28 @@ var submit = function() {
 								         ,codeField:"install_id"
 								         ,code:$('#installCode').val()
 								         , which:"安装编码"
+								        ,extra:true
 	 				} )
 			      ,codeUnique({
 			 		 tableName:"cash"
 				         ,codeField:"cash_id"
 				         ,code:$('#cashId').val()
 				         , which:"收银机编号"
+				        ,extra:chk_brand(cashSystem_txt,cashBrand_txt,cashPort_txt,"#cashId")
 		} )
 			      ,codeUnique({
 			 		 tableName:"printer"
 				         ,codeField:"printer_id"
 				         ,code:$('#priId').val()
 				         , which:"打印机编号"
+				        ,extra:chk_print(priBrand_txt,dyjxh_txt,dyjPort_txt,"#priId")
 		} )
 			      ,codeUnique({
 			 		 tableName:"equipment"
 				         ,codeField:"eq_id"
 				         ,code:$('#eqId').val()
 				         , which:"采集点编码"
+				         ,extra:chk_equipment()
 		} )
             )
 	 .done(function(){ 
@@ -731,7 +740,7 @@ $(function(){
 /*====安装cynthia ，获得安装编号 start0619===*/         
             function getproId()
             {  $.ajax({
-                url:domainName + "hdk/project/getFormCode",
+                url:domainName + "/hdk/project/getFormCode",
                 dataType:"jsonp",
                 jsonp:"callback",
                 data:{

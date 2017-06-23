@@ -123,11 +123,13 @@
 					me.list();
 				},
 				parName:function(){	//项目名称
+				    var time = new Date().getTime();
 					$.ajax({	
 					   url: domainName +   "/hdk/project/getSome",
 					   type: "get",
+					   data:{time:time},
 					   dataType:"jsonp",
-					   jsonpCallback:"project_null_getSome",
+					   jsonpCallback:"project_"+time+"_getSome",
 					   success:function(data){
 					   		var text = ''
 					   		for(var i = 0 ; i<data.length; i++){

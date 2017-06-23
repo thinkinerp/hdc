@@ -33,6 +33,10 @@ public class Shops {
     
     private String installStation;
 
+    private String surveyExist;
+
+    private String installExist;
+
     private String eqId ;
     
     public Integer getId() {
@@ -169,5 +173,21 @@ public class Shops {
 
 	public void setEqStyle(String eqStyle) {
 		this.eqStyle = eqStyle;
+	}
+
+	public String getSurveyExist() {
+		return surveyExist;
+	}
+
+	public void setSurveyExist(String surveyExist) {
+		this.surveyExist = surveyExist;
+	}
+
+	public String getInstallExist() {
+		return installExist;
+	}
+
+	public void setInstallExist(String installExist) {
+		this.installExist = installExist;
 	}
 }
