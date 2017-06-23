@@ -204,8 +204,9 @@
 				</div>
 				<div class="swiper-slide">
 					<ul class="g-importList">
-				    	<li>
-				    		<div class="g-importList-title" style="width: 3.1rem;">客户网络情况</div>
+					<!-- 添加商场内网 start-->
+				    	<li style="height:auto;margin-bottom:0em;">
+				    		<div class="g-importList-title2" style="width: 3.1rem;">客户网络情况</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-choicechk">
 				    				<div class="i-choice-rowchk">
@@ -216,9 +217,14 @@
 				    					<div id="qt2" onclick="qt.selectNetwork('wifi','qt2')"></div>
 				    					<p>wifi</p>
 				    				</div>
+				    				<div class="i-choice-rowchk">
+				    					<div id="qt3" onclick="qt.selectNetwork('商场内网','qt3')"></div>
+				    					<p>商场内网</p>
+				    				</div>
 				    			</div>
 				    		</div>
 				    	</li>
+				    	<!-- 添加商场内网 end-->
 				    	<li>
 				    		<div class="g-importList-title" style="width: 3.1rem;">空余电源插口情况</div>
 				    		<div class="g-importList-content">
@@ -679,6 +685,7 @@
 //					'shops.installStation':'',		//安装状态？
 //					'shops.eqId':''				//采集点编号？ 
 				};
+				console.log(obj);
 				try{
 				$.when(codeUnique({
                                            tableName:"survey"
@@ -1055,6 +1062,7 @@ var vipinfovalue;
 				}
 			});
 			
+
             if(undefined != params["pproName"] && "" !=params["pproName"] ){
                 $('#itemName').html(params["pproName"]);
                 $('#itemName').attr("class","");
@@ -1096,6 +1104,10 @@ var vipinfovalue;
 				}
 
 			}
+			$(".g-importList-title").bind("click",function(){
+
+
+			})
 /*===cynthia返回 end2===*/
 		</script>
 	</body>
