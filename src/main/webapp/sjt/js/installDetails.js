@@ -486,7 +486,6 @@ var submit = function() {
   // 保存打印机
   // 采集点
   //验证
- 
   if (null != allThing && undefined !=allThing) {
 
     $.ajax({

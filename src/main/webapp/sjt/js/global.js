@@ -425,7 +425,7 @@ $(function(){
 /*===返回保存===*/
 issave();	
 /*===返回保存 end===*/
-	
+$(".swiper-container2 .swiper-wrapper").css("min-height",$(window).height()-70);	
 })
 buttonFixed();
 function buttonFixed()

@@ -304,10 +304,10 @@
                 <!-- 安装详情6(其他信息) -->
                 <div class="swiper-slide">
                     <ul class="g-importList">
-                        <li>
-                            <div class="g-importList-title">客户网络情况</div>
+                        <li style="height:auto;margin-bottom:0em;">
+                            <div class="g-importList-title2">客户网络情况</div>
                             <div class="g-importList-content">
-                                <div class="i-choice">
+                                <div class="i-choicechk">
                                     <div class="i-choice-rowchk">
                                         <div id="installNetworkHard" class="on" onclick="qt.selectNetwork('installNetworkHard')"></div>
                                         <p>外网</p>
@@ -315,6 +315,10 @@
                                     <div class="i-choice-rowchk">
                                         <div id="installNetworkSoft" onclick="qt.selectNetwork('installNetworkSoft')"></div>
                                         <p>wifi</p>
+                                    </div>
+                                    <div class="i-choice-rowchk">
+                                        <div id="qt3" onclick="qt.selectNetwork('qt3')"></div>
+                                        <p>商场内网</p>
                                     </div>
                                 </div>
                             </div>
@@ -458,16 +462,28 @@
             selectedItem:function(){
                 var s = '';
                 if($("#installNetworkHard").hasClass("on")){
-                    s = s + $("#installNetworkHard").html();
+                    if('' == s){
+                        s = $("#installNetworkHard").next("p").html();
+                    }else {
+                        s = s + "," + $("#installNetworkHard").next("p").html();
+                    }
                 }
                 
                 if($("#installNetworkSoft").hasClass("on")){
                     if('' == s){
-                        s = $("#installNetworkSoft").html();
+                        s = $("#installNetworkSoft").next("p").html();
                     }else {
-                        s = s + "," + $("#installNetworkSoft").html();
+                        s = s + "," + $("#installNetworkSoft").next("p").html();
                     }
                 }
+                 if($("#qt3").hasClass("on")){
+                    if('' == s){
+                        s = $("#qt3").next("p").html();
+                    }else {
+                        s = s + "," + $("#qt3").next("p").html();
+                    }
+                }
+                return s;
             }   
            } ;
                       /*===返回 start===*/
