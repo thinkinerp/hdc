@@ -650,8 +650,19 @@
                     gs.gs7String = gs.gs7Arr.join(",");
                     var dom = [];
                     for (var i = 0; i < gs.gs7Arr.length; i++) {
-                        dom.push('<p>' + gs.gs7Arr[i] + '</p>');
+                        dom.push('<p>' + gs.gs7Arr[i] + '<icon class="icondel"></icon></p>');
                     }
+                    /*====问题标签删除 start====*/
+                    $(".g-importList-zp").on("click",".icondel",function()
+                            {
+                                $(this).parents("p").remove();
+                                removeByValue(gs7selarr,$(this).parents("p").text());
+                                removeByValue(gs.gs7Arr,$(this).parents("p").text());
+                                 gs.gs7String = gs.gs7Arr.join(",");
+                                gs7selarr.push($(this).parents("p").text());
+                            }
+                        )
+                     /*====问题标签删除 end====*/
                     $('.g-importList-zp').html(dom.join(''));
                 },
                 gs7Fun : function() {
@@ -674,9 +685,14 @@
                                 }
                             }
                             $('#gs7')[0].dataset.select = text
+                            /*====问题列表 start===*/
                             $("#gs7").click(function() {
-                                app.select(this, 2, gs.selectGs7);
+                                if(isgs7==true && gs7selarr.length==0)
+                                {app.alert("选择项为空");}
+                                else
+                                {app.select(this, 2, gs.selectGs7);}
                             })
+                            /*====问题列表 end===*/
                         }
                     })
                 }
@@ -684,7 +700,7 @@
 
             var ms = {//问题描述
                 data : null,
-                init : function() {
+                init : function() {                  
                     $.ajax({
                         url :domainName +  "/hdk/problem/getEquipmentList",
                         type : "get",
@@ -697,7 +713,6 @@
                         jsonp : "callback",
                         success : function(data) {
                             ms.data = data;
-                            console.log(data);
                             var text = ''
                             //					   		var text2 = ''
                             for (var i = 0; i < data.length; i++) {
@@ -712,15 +727,27 @@
                             $('#asddas')[0].dataset.select = text
                             //					   		$('#ms7')[0].dataset.select = text2
                             $("#asddas").unbind('click');
-                            $("#asddas").click(function() {
-                                app.select(this, 2, ms.selectcj);
+                          
+                             $("#asddas").click(function() {
+                             /*====采集点 start====*/       
+                             if(data.length>1 && sp.sp2!="")
+                                {
+                                  app.select(this, 2, ms.selectcj);  
+                                }
+                              else if(sp.sp2=="")
+                              {app.alert("请选择商铺名称");}
+                              else if(sp.sp2!="" &&data.length==1)
+                              {$("#asddas").html(text);}
+                              else
+                                {app.alert("采集点为空");}
+                            /*====采集点 end====*/ 
                             })
+                           
                         }
                     })
                 },
                 selectcj : function() {
                     var type = $('#asddas').html();
-                    console.log(type);
                     for (var i = 0; i < ms.data.length; i++) {
                         if (type == ms.data[i].eqId) {
                             $('#ms6').html(ms.data[i].eqType);
@@ -736,7 +763,6 @@
                         sp.proid = sp.proData[i].proId;
                     }
                 }
-
                 var obj = {
                     'problem.state' : gs.gs2//问题状态
                     ,
@@ -992,14 +1018,14 @@
                         console.log(rs);
                       }
                     });   
-                    //ms.init();
+                    ms.init();
                     $("#save").click(function() {//保存按钮
                         app.alert("确定要保存吗？", 2, submit)
                     })
                 } else {//修改
 
                     gs.init();
-                    //ms.init();
+                    ms.init();
                     xg.init(problemId);
                     $("#save").click(function() {//保存按钮
                         app.alert("确定要保存吗？", 2, submit2)
@@ -1048,7 +1074,7 @@
              
             function getproId()
             {  $.ajax({
-                url:"http://www.onetoend.cn/hdk/project/getFormCode",
+                url:domainName+ "/hdk/project/getFormCode",
                 dataType:"jsonp",
                 jsonp:"callback",
                 data:{
@@ -1076,6 +1102,25 @@
 
             }
        /*===返回 end===*/
+
+     Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+           "d+": this.getDate(), //日
+             "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+             "s+": this.getSeconds(), //秒
+           "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+           "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+         for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+         return fmt;
+    }
+   var time1 = new Date().Format("yyyy-MM-dd");
+    $("#ms1,#ms2").val(time1);
+
         </script>
     
     </body>
