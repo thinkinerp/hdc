@@ -726,7 +726,6 @@
                             }
                             $('#asddas')[0].dataset.select = text
                             //					   		$('#ms7')[0].dataset.select = text2
-                            
                             $("#asddas").unbind('click');
                           
                              $("#asddas").click(function() {
@@ -737,6 +736,8 @@
                                 }
                               else if(sp.sp2=="")
                               {app.alert("请选择商铺名称");}
+                              else if(sp.sp2!="" &&data.length==1)
+                              {$("#asddas").html(text);}
                               else
                                 {app.alert("采集点为空");}
                             /*====采集点 end====*/ 
@@ -747,7 +748,6 @@
                 },
                 selectcj : function() {
                     var type = $('#asddas').html();
-                    console.log(type);
                     for (var i = 0; i < ms.data.length; i++) {
                         if (type == ms.data[i].eqId) {
                             $('#ms6').html(ms.data[i].eqType);
