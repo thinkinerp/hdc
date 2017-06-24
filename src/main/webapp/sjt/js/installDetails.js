@@ -12,7 +12,7 @@ function getproId()
 {  
 	
 	$.ajax({
-    url:domainName + "/hdk/project/getFormCode",
+    url:domainName+"/hdk/project/getFormCode",
     dataType:"jsonp",
     jsonp:"callback",
     data:{
@@ -32,7 +32,7 @@ function getproId()
 /*====安装cynthia ，获得安装编号 end===*/
 var time = new Date().getTime();
 $.ajax({
-  url: domainName +  '/hdk/project/getSome',
+  url: domainName +'/hdk/project/getSome',
   type: 'get',
   data: {
     time: time
@@ -107,6 +107,17 @@ Window.selected = function() {
       var str = '';
       var i = 0;
       var has = new Array();
+      /*====数组排序 start====*/
+       rs.sort(function(a,b){  
+         if(a.installExist<b.installExist){  
+              return -1;  
+           }else if(a.installExist>b.installExist){  
+              return 1;  
+          }  
+              return 0;  
+      });  
+       installexArr=rs;
+      /*====数组排序 end====*/
       $.each(rs, function(index, item) {
         if (-1 == $.inArray(item.shopName, has)) {
           has.push(item.shopName);
@@ -129,7 +140,7 @@ Window.shopSelected = function() {
 		return;
 	}
   $.ajax({
-    url:domainName +   '/hdk/shops/selectForCombobox',
+    url:domainName +'/hdk/shops/selectForCombobox',
     type: 'get',
     data: {
       'shopName': $('#shopName').html()
@@ -140,6 +151,16 @@ Window.shopSelected = function() {
     success: function(rs) {
       var str = '';
       var i = 0;
+       /*====数组排序 start====*/
+       rs.sort(function(a,b){  
+         if(a.installExist<b.installExist){  
+              return -1;  
+           }else if(a.installExist>b.installExist){  
+              return 1;  
+          }  
+              return 0;  
+      });  
+      /*====数组排序 end====*/
       $.each(rs, function(index, item) {
         $("#shopState").html(item.shopMerStation);
         $('#shopPosition').html(item.shopPosition);
@@ -154,7 +175,7 @@ Window.shopSelected = function() {
   //如果这个门店已经调研了，与此门店相关的打印机和收银机信息都已经存在，所以在这样情况下
   //需要将收银机和打印机的信息加载过来。
   $.ajax({
-    url:domainName +  '/hdk/survey/getSome',
+    url:domainName+'/hdk/survey/getSome',
     type: 'get',
     data: {
       'shopName': $('#shopName').html(),
@@ -265,14 +286,22 @@ var loadInstall = function(allThing){
         /* $('#installTime').val(isUndefined(allObjs.equipment.installTime)); */
         
         //其他
-        
+        console.log(allObjs.install.installNetwork);
         if(isUndefined(allObjs.install.installNetwork).indexOf('外网')){
             $('#installNetworkHard').attr("class",'off' );
         }
         if(isUndefined(allObjs.install.installNetwork).indexOf('wifi')){
         	$('#installNetworkSoft').attr("class",'off' );
         }
-        
+        if(allObjs.install.installNetwork.indexOf("外网")!=-1){
+           $('#installNetworkHard').attr("class",'on' );
+          }
+          if(allObjs.install.installNetwork.indexOf("wifi")!=-1){
+            $('#installNetworkSoft').addClass('on');
+          }
+          if(allObjs.install.installNetwork.indexOf("商场内网")!=-1){
+            $('#qt3').addClass('on');
+          }
         // 附件
         //$('#installNetworkHard').val(isUndefined(allObjs.equipment.installTime));
     }
