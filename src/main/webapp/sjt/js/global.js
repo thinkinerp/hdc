@@ -1,7 +1,10 @@
+var installexArr=new Array();
+var surveryexArr=new Array();
 document.getElementsByTagName("html")[0].style.fontSize=Math.floor(document.documentElement.clientWidth*100000/750)/1000+"px";
 var imgs = [];	//2个图片都会在这个数组里
 var swiper1 = '';
 var swiper2 = '';
+var objid,gs7selarr=[],isgs7=false;
 var m_loading = {
 		html:function(){
 			var html = [];
@@ -36,6 +39,7 @@ var m_loading = {
 
 		}
 	}
+
 var app ={
 	listdata:'', //选择列表数据
 	put:'', 	//选择后要显示的位置
@@ -81,17 +85,26 @@ var app ={
 		window.SYP.toggleShowBanner('hidden');
 		/*===隐藏原生标题栏 end===*/
 		app.put = obj;
+		objid=obj.id;
 		app.selecttype = type;
 		if(fun != undefined && fun != '' && fun != null){	
 			app.selectOverFun = fun;
 		}
+		var bnrtitle=$(document).attr("title");
 		app.listdata = $(app.put)[0].dataset.select;
 		var content = $(app.put)[0].innerHTML;
 		var alertTitle = $(app.put).attr('alertTitle');
 		app.listdata = app.listdata.split(",");
+		/*===gs7 start===*/
+		if(isgs7==true)
+		{app.listdata=gs7selarr;}
+	    /*===gs7 end===*/
         var dom = [];
+        /*====弹框返回 start====*/
         dom.push('<div class="g-select">');
-//
+        dom.push('<div class="selectfix">'+bnrtitle+'<div class="icon_return" onclick="app.selectBack()"></div><div class="icon_refresh" onclick="window.location.reload(); "></div>');
+		dom.push('</div>');
+		/*====弹框返回 end====*/
 //        dom.push('<div style="left:0; bottom:0; height:.8rem; width: 100%; background:white; font-size: .36rem; display: flex; justify-content: center; align-items: center;">');
 //        dom.push();
 //        dom.push('</div>');
@@ -106,10 +119,28 @@ var app ={
         	if(app.listdata[i] == content){
        			dom.push('<li class="on">'+app.listdata[i]+'</li>');
        		}else{
-       			dom.push('<li>'+app.listdata[i]+'</li>');
+       			/*===区分单据 start===*/
+       			if(surveryexArr.length!=0)
+       			{
+	       			if(obj.id=="shopName" &&(surveryexArr[i].surveyExist!=0))
+	       			{dom.push('<li style="background#ccc">'+app.listdata[i]+'</li>');}
+		       		else
+	       			{dom.push('<li>'+app.listdata[i]+'</li>');}
+       		    }
+       		    else if(installexArr.length!=0)
+       			{
+	       			if(obj.id=="shopName" &&(installexArr[i].installExist!=0))
+	       			{dom.push('<li style="background#ccc">'+app.listdata[i]+'</li>');}
+		       		else
+	       			{dom.push('<li>'+app.listdata[i]+'</li>');}
+       		   }
+       		   else
+       			{dom.push('<li>'+app.listdata[i]+'</li>');}
+       		/*===区分单据 end===*/
        		}
         }
         dom.push('</ul>');
+
         //cynthia 按钮样式
         dom.push('<div class="g-ok"><div  onclick="app.selectBack()">退出</div></div>');
         dom.push('</div>');
@@ -143,9 +174,10 @@ var app ={
 		/*===显示原生标题栏 end===*/
     },
     selectClick:function(){
+    	var ls;
     	$("#g-select-list li").click(function(){
         	$(this).addClass('on').siblings('li').removeClass('on');
-        	var ls = $(this).html();
+        	 ls = $(this).html();        	   
         	setTimeout(function(){
         		$(app.put).html(ls);
         		$(app.put).removeClass('on');
@@ -154,6 +186,18 @@ var app ={
 					app.selectOverFun();
 				}
         	},300)
+        	/*===问题列表 start===*/
+
+			if(objid=="gs7")
+			{//var arrA = app.listdata.split(",");
+				//arrA.remove(ls);
+				removeByValue(app.listdata,ls);
+				gs7selarr=app.listdata;
+				isgs7=true;
+
+
+			}
+	      /*===问题列表 end===*/
         })
         /*===显示原生标题栏 start===*/
 		window.SYP.toggleShowBanner('show');
