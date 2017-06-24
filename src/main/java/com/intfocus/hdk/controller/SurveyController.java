@@ -78,9 +78,15 @@ public class SurveyController implements ApplicationContextAware {
 	    		survey.setAttachmentUrl(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
 	    	}
 				surveymapper.updateByPrimaryKeyWithBLOBs(survey);
-				printerMapper.updateByPrimaryKeySelective(printer);
-				cashMapper.updateByPrimaryKeySelective(cash);
-				shopsMapper.updateByPrimaryKeySelective(shops);
+				if(null != printer.getPrinterId() && !"".equalsIgnoreCase(printer.getPrinterId())){
+					printerMapper.updateByPrimaryKeySelective(printer);
+				}
+				if(null != printer.getPrinterId() && !"".equalsIgnoreCase(printer.getPrinterId())){
+					cashMapper.updateByPrimaryKeySelective(cash);
+				}
+				if(null != shops.getShopId() && !"".equalsIgnoreCase(shops.getShopId())){
+					shopsMapper.updateByPrimaryKeySelective(shops);
+				}
 		}catch(Exception e){
 			e.printStackTrace();
 			rs.put("message", "fail");
@@ -208,10 +214,16 @@ public class SurveyController implements ApplicationContextAware {
     		survey.setAttachmentUrl(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
     	}
 		try {
-
+			   
 				surveymapper.insertSelective(survey);
-				printerMapper.insertSelective(printer);
-				cashMapper.insertSelective(cash);
+				
+				if(null != printer.getPrinterId() && !"".equalsIgnoreCase(printer.getPrinterId())){
+					printerMapper.insertSelective(printer);
+				}
+				
+				if(null != cash.getCashId() && !"".equalsIgnoreCase(cash.getCashId())){
+					cashMapper.insertSelective(cash);
+				}
 				
 //				Map<String, String> where = new HashMap<String , String >();
 //				where.put("shopId", shops.getShopId());

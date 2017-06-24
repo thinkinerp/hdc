@@ -25,6 +25,11 @@ public class ColumnLoader {
         path = StringUtils.replace(path, StringUtils.replace(className , clazz.getPackage().getName() + ".", "") + ".class", "");
         return path;
     }
+   
+public String checkCols(String xmlFileName , Class clazz , String insertTable){
+	
+	return null;
+}
     
 public static List<ColProperty> sqlGenerator(String xmlFileName , Class clazz , String insertTable){
 	

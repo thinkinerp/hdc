@@ -7,8 +7,8 @@ public class ColProperty {
 	String col ;
 	String defaults ;
 	String ctype ;
-	String foreign ;
-	int      excelIndex ;
+	String foreign ;       
+	Integer excelIndex ;
 	String  primary ;
 	public String getExcelCol() {
 		return excelCol;
@@ -40,16 +40,17 @@ public class ColProperty {
 	public void setForeign(String foreign) {
 		this.foreign = foreign;
 	}
-	public int getExcelIndex() {
-		return excelIndex;
-	}
-	public void setExcelIndex(int excelIndex) {
-		this.excelIndex = excelIndex;
-	}
+
 	public String getPrimary() {
 		return primary;
 	}
 	public void setPrimary(String primary) {
 		this.primary = primary;
+	}
+	public Integer getExcelIndex() {
+		return excelIndex;
+	}
+	public void setExcelIndex(Integer excelIndex) {
+		this.excelIndex = excelIndex;
 	}
 }

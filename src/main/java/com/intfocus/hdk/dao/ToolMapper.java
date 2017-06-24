@@ -6,5 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface ToolMapper {
 
-	int excute(@Param("list") List<String> list  );
+	int excuteBatche(@Param("list") List<String> list  );
+
+	int excuteOneByOne(String sql);
 }

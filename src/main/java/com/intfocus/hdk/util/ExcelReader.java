@@ -49,6 +49,20 @@ public class ExcelReader {
         path = StringUtils.replace(path, StringUtils.replace(className , clazz.getPackage().getName() + ".", "") + ".class", "");
         return path;
     }
+    
+    public String checkCols(InputStream is , String tableName){
+        List<ColProperty> cols = ColumnLoader.sqlGenerator("importSome.xml", ColumnLoader.class, tableName);
+        this.readExcelTitle(0, is, cols);
+        List<String> notExistsCols = new ArrayList<String>();
+        for(ColProperty c : cols){
+        	if(null == c.getExcelIndex()){
+        		notExistsCols.add(c.getExcelIndex()+"");
+        	}
+        }
+        
+    	return (notExistsCols.size() ==0 ? "" : org.apache.commons.lang.StringUtils.join(notExistsCols, ","));
+    }
+    
     /**
      * 读取Excel表格表头的内容
      * @param InputStream
@@ -73,7 +87,7 @@ public class ExcelReader {
         	
             title[i] = getCellFormatValue(row.getCell((short) i));
             for( ColProperty col  :  list){
-            	     if(null != title[i] && title[i].endsWith(col.getExcelCol())){
+            	     if(null != title[i] && title[i].equalsIgnoreCase(col.getExcelCol())){
             	    	      col.setExcelIndex(i);
             	     }
             }    
