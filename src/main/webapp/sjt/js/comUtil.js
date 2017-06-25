@@ -34,12 +34,16 @@ function form_empty(config){
     {return false;}
 }
 function codeUnique(config){
-	if(''!= config.code ){
+//	if(''!= config.code ){
 		var dtd = $.Deferred(); 
 	if(!onlyEnglishAndDecimal(config.code)){
 		app.alert("编码:" + config.code +",只能有数字和英文字母组成",1);
-		return dtd.promise();
+		return dtd.reject();
 		
+	}
+	
+	if(  !config.extra){
+		return dtd.resolve();
 	}
 	
 				$.ajax({	
@@ -56,6 +60,7 @@ function codeUnique(config){
 						   var i = data[0];
 						   if(i.count > 0 ){
 							   app.alert(config.which+":"+config.code+"重复，请重新编码",1);
+							   dtd.reject();
 						   }else{
 							   dtd.resolve();
 						   }
@@ -65,7 +70,7 @@ function codeUnique(config){
 					   }				   
 				});
 				return dtd.promise();
-	}
+//	}
 				
 }
 function codeUnique2(config){

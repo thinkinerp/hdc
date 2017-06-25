@@ -18,7 +18,7 @@ public class Problem {
 
     private String shopName;
     
-    private String shopPostion;
+    private String shopPosition;
     
     private String shopId;
 
@@ -287,12 +287,12 @@ public class Problem {
 		this.shopName = shopName;
 	}
 
-	public String getShopPostion() {
-		return shopPostion;
+	public String getShopPosition() {
+		return shopPosition;
 	}
 
-	public void setShopPostion(String shopPostion) {
-		this.shopPostion = shopPostion;
+	public void setShopPosition(String shopPosition) {
+		this.shopPosition = shopPosition;
 	}
 
 	public String getEqType() {

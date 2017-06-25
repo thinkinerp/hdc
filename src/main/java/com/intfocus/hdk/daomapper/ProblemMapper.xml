@@ -9,7 +9,7 @@
     <result column="pro_name" property="proName" jdbcType="VARCHAR" />
     <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
     <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
-    <result column="shop_postion" property="shopPostion" jdbcType="VARCHAR" />
+    <result column="shop_position" property="shopPosition" jdbcType="VARCHAR" />
     <result column="eq_id" property="eqId" jdbcType="VARCHAR" />
     <result column="eq_style" property="eqStyle" jdbcType="VARCHAR" />
     <result column="eq_type" property="eqType" jdbcType="VARCHAR" />

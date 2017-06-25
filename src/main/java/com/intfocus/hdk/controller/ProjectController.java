@@ -77,7 +77,7 @@ public class ProjectController implements ApplicationContextAware {
         	json.put("cashCount", projectmapper.getCashCount( where));
         	json.put("equipment", projectmapper.getEquipment( where));
         	json.put("projectProblem", projectmapper.getProjectProblem( where));
-           List<Project> projects = projectmapper.selectByWhere(where);
+           List<Project> projects = projectmapper.getProjectSummarise(where);
         	json.put("project", projects.get(0));
         	json.put("message","success");
         	str = json.toJSONString();

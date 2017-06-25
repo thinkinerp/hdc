@@ -19,6 +19,8 @@
     <result column="install_station" property="installStation" jdbcType="VARCHAR" />
     <result column="eq_id" property="eqId" jdbcType="VARCHAR" />
     <result column="cash_system" property="cashSystem" jdbcType="VARCHAR" />
+    <result column="install_exist" property="installExist" jdbcType="VARCHAR" />
+    <result column="survey_exist" property="surveyExist" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     shops.id, shops.shop_id, shops.shop_position, shops.shop_floor
@@ -30,18 +32,31 @@
     shops.id, shops.shop_id, shops.shop_position, shops.shop_floor
     , shops.shop_mer_name, shops.shop_mer_station, shops.shop_type, 
     shops.shop_sec_type, shops.shop_name, shops.pro_id
-    
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
-    <include refid="origin_Column_List" />
-    from shops
+ <include refid="origin_Column_List" />
+    from shops 
     where id = #{id,jdbcType=INTEGER}
   </select>
   
   <select id = "selectForCombobox" resultMap="BaseResultMap"  parameterType="java.util.Map">
     select 
-    <include refid="origin_Column_List" />
+        shops.id, shops.shop_id, shops.shop_position, shops.shop_floor
+    , shops.shop_mer_name, shops.shop_mer_station, shops.shop_type, 
+    shops.shop_sec_type, shops.shop_name, shops.pro_id
+    , case when exists( select 1 
+			   from install as i 
+			   where i.shop_id = shops.shop_id) 
+            then 1 
+	    else 0 
+	     end as install_exist
+    , case when exists( select 1 
+			   from survey as i 
+			   where i.shop_id = shops.shop_id) 
+            then 1 
+	    else 0 
+	     end as survey_exist
         from shops 
         <where>
     	1=1

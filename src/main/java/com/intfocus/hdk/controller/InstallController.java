@@ -100,10 +100,19 @@ public class InstallController implements ApplicationContextAware {
 			if(null != files && !"".equals(files)){
 				install.setAttachment_url(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
 			}
+
 	    	installmapper.insertSelective(install);
-	    	printerMapper.insertSelective(printer);
-	    	cashMapper.insertSelective(cash);
-	    	equipmentMapper.insertSelective(equipment);
+	    	if(null != printer.getPrinterId() && !"".equalsIgnoreCase(printer.getPrinterId()) ){
+	    		printerMapper.insertSelective(printer);
+	    	}
+
+	    	if(null != cash.getCashId() && !"".equalsIgnoreCase(cash.getCashId())){
+	    		cashMapper.insertSelective(cash);
+	    	}
+
+	    	if(null != equipment.getEqId()&& !"".equalsIgnoreCase(equipment.getEqId())){
+				equipmentMapper.insertSelective(equipment);
+	    	}
 	    	
 	    	Operation_history record = new Operation_history();
 	    	
@@ -223,7 +232,6 @@ public class InstallController implements ApplicationContextAware {
     		String path = req.getSession().getServletContext().getRealPath("upload"); 
         	Map<String,String> rs = null ;
         	if(null != files && !"".equals(files)){
-        	
         		install.setAttachment_url(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
         	}
 //        	install.modifyAtachement(files , null,null);
@@ -245,9 +253,15 @@ public class InstallController implements ApplicationContextAware {
     	    
 
 			installmapper.updateByPrimaryKeySelective(install);
-			printerMapper.updateByPrimaryKeySelective(printer);
-			cashMapper.updateByPrimaryKeySelective(cash);
-			equipmentMapper.updateByPrimaryKeySelective(equipmengt);
+			if(null != printer.getPrinterId() && !"".equalsIgnoreCase(printer.getPrinterId())){
+				printerMapper.updateByPrimaryKeySelective(printer);
+			}
+			if(null != cash.getCashId() && !"".equalsIgnoreCase(cash.getCashId())){
+				cashMapper.updateByPrimaryKeySelective(cash);
+			}
+			if(null != equipmengt.getEqId() && !"".equalsIgnoreCase(equipmengt.getEqId())){
+				equipmentMapper.updateByPrimaryKeySelective(equipmengt);
+			}
 
 	    	Operation_history record = new Operation_history();
 	    	

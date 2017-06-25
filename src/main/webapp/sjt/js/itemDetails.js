@@ -47,6 +47,8 @@ if(undefined != allThing && null != allThing ){
 	setValue("proEdition",allObjs.project.proEdition);
 	setValue("proStation",allObjs.project.proStation);
 	setValue("proManagerPro",allObjs.project.proManagerPro);
+	setValue("proCoordination",allObjs.project.proCoordination);
+	setValue("proCoordinationPhone",allObjs.project.proCoordinationPhone);
 	setValue("proManagerPro1",allObjs.project.proManagerPro);
 	setValue("proUpdataTime",allObjs.project.proUpdataTime);
 	var sum= 0 ;

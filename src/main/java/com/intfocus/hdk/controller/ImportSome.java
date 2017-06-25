@@ -36,6 +36,8 @@ public class ImportSome {
 		
           String filePath  = request.getSession().getServletContext().getRealPath("/") + "/uploadXML/" ;
 		  JSONObject rs = new JSONObject();	 
+		  int row = 0 ;
+		  List<String> sqllist = null ;
       	try {
       		// MultipartFile是对当前上传的文件的封装，当要同时上传多个文件时，可以给定多个MultipartFile参数(数组)
       		if (!file.isEmpty()) {
@@ -43,23 +45,28 @@ public class ImportSome {
       		 String type = file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
       		 String filename = System.currentTimeMillis() + type;		 
       		
-      		File destFile = new File(filePath + filename);
-      		
-      	// FileUtils.copyInputStreamToFile()这个方法里对IO进行了自动操作，不需要额外的再去关闭IO流
-      		
-      		FileUtils.copyInputStreamToFile(file.getInputStream(), destFile);// 复制临时文件到指定目录下
+			  File destFile = new File(filePath + filename);
+			  FileUtils.copyInputStreamToFile(file.getInputStream(), destFile);// 复制临时文件到指定目录下
 
                ExcelReader excelReader = new ExcelReader();
+               
                // 对读取Excel表格内容测试
                InputStream f = new BufferedInputStream( new FileInputStream(filePath + filename));
+               String str = excelReader.checkCols(f, tableName);
+               if(!"".equalsIgnoreCase(str)){
+             		request.setAttribute("message", "您传的文档中缺少以下几列数据：" + str );
+            	   return "fail";
+               }
       
-               List<String> sqllist = excelReader.sqlGennerater(f, tableName);
-               
-               toolMapper.excute(sqllist);
-//               tm.excute(sqllist);
+               sqllist = excelReader.sqlGennerater(f, tableName);
+               for(String sql : sqllist){
+            	   row++;
+            	   toolMapper.excuteOneByOne(sql);
+               }
       		}
       	} catch (Exception e) {
       		e.printStackTrace();
+      		request.setAttribute("message", "第" + row + "行出现错误，请参考下面的信息" +  sqllist.get(row- 1) );
       		return "fail";
 		}
 		return "success";

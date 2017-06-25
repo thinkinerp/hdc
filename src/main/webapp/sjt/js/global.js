@@ -449,6 +449,20 @@ function chk_print(dyjbrand,dyjxh,dyjPort,obj)
 				   {return true;}
 			     }
 }
+
+function chk_equipment(){
+	if( ($("#eqTypeHard").attr("class")== 'on' || $("#eqTypeSoft").attr("class")== 'on' ) 
+			|| ($("#eqStyle").html() == "" && $("#eqStyle").html() == "未选择" )
+			|| ($("softwareVersion").html() == "未选择" &&  $("softwareVersion").html() == "")
+			|| ("" == $("#installTime").val() && "未选择" == $("#installTime").val())){
+		  if(form_empty({code:$("#eqId").val(), which:"采集点编号"})){
+			  return true ;
+		  }else{
+			  return false;
+		  }
+	}
+}
+
 $(function(){
 	$("#menu div").click(function() {	//顶部菜单点击下面内容区改变
 		var index = $(this).index();
