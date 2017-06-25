@@ -83,6 +83,7 @@ var app ={
 	select:function(obj,type,fun){ //obj(有data-select的那个标签,传this 例如 app.select(this))    type: 1只能选择   2可以选择也可以输入 输入匹配   3可以选择可以输入 输入匹配 并可选择没匹配项
 		/*===隐藏原生标题栏 start===*/
 		window.SYP.toggleShowBanner('hidden');
+		window.SYP.toggleShowBanner('hide');
 		/*===隐藏原生标题栏 end===*/
 		app.put = obj;
 		objid=obj.id;
@@ -96,7 +97,7 @@ var app ={
 		var alertTitle = $(app.put).attr('alertTitle');
 		app.listdata = app.listdata.split(",");
 		/*===gs7 start===*/
-		if(isgs7==true)
+		if(isgs7==true &&objid=="gs7")
 		{app.listdata=gs7selarr;}
 	    /*===gs7 end===*/
         var dom = [];

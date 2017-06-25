@@ -257,7 +257,7 @@ bottom:0.01rem;
 textarea.textarea-text1{width:75%;}
 
 #jjfa{border: solid 1px #1F4BA4; }
-.itemfixbox{position:fixed;left:0px;top:0px;width:100%;background:#fff;}
+.itemfixbox{position:fixed;left:0px;top:0px;width:100%;background:#fff;height:2.6rem;transform: translate3d(0, 0, 0);}
 .selectfix{position:fixed;left:0px;top:0px;background:#0068dd;height:1rem;line-height:1rem;text-align:center;color:#000;width:100%;text-align:center;font-size:16px;font-family:"Microsoft Yahei"; }
 .g-select{padding-top:40px;}
 .icon_return{position:absolute;
