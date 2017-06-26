@@ -253,7 +253,7 @@ position: absolute;
 top:0px;
 bottom:0.01rem;
  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;  width:100%;z-index:1;padding-bottom:5rem;}
+  -webkit-overflow-scrolling: touch;  width:100%;z-index:1;}
 textarea.textarea-text1{width:75%;}
 
 #jjfa{border: solid 1px #1F4BA4; }

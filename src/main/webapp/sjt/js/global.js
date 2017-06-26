@@ -1,3 +1,4 @@
+var app_isback=true;
 var installexArr=new Array();
 var surveryexArr=new Array();
 document.getElementsByTagName("html")[0].style.fontSize=Math.floor(document.documentElement.clientWidth*100000/750)/1000+"px";
@@ -170,7 +171,8 @@ var app ={
     selectBack:function(){
     	$(".g-select").remove();
     	/*===显示原生标题栏 start===*/
-		window.SYP.toggleShowBanner('show');
+    	if(app_isback)
+		{window.SYP.toggleShowBanner('show');}
 		/*===显示原生标题栏 end===*/
     },
     selectClick:function(){
@@ -182,6 +184,10 @@ var app ={
         		$(app.put).html(ls);
         		$(app.put).removeClass('on');
         		$(".g-select").remove();
+		        /*===显示原生标题栏 start===*/
+		        if(app_isback)
+				{window.SYP.toggleShowBanner('show');}
+				/*===显示原生标题栏 end===*/
         		if(app.selectOverFun != undefined && app.selectOverFun != '' && app.selectOverFun != null){
 					app.selectOverFun();
 				}
@@ -212,9 +218,7 @@ var app ={
                             })
 		      }
 	      /*===问题列表 end===*/
-	       /*===显示原生标题栏 start===*/
-		window.SYP.toggleShowBanner('show');
-		/*===显示原生标题栏 end===*/
+
         })
        
     },
