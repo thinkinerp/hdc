@@ -157,7 +157,7 @@ input[type=button] {width: auto; overflow: visible;}
 .i-choice-rowchk p{float:left; font-size: .24rem; color: #333;padding-top:2px;}
 .i-choice-rowchk .on{background: url(../images/iocn-chk-on.png);width: .4rem; height: .4rem;background-size:100% 100%;}
 .i-import{position: relative;  border: solid 1px #e4e4e6; border-radius: .2rem; width: 100%;   }
-.i-import input{ height: .76rem; border: none ; background: none; color: #1f4ba4; width: 100%; padding-left: .55rem; padding-right: .4rem; box-sizing: border-box;}
+.i-import input,.i-importtxt{ height: .76rem; line-height:0.76rem;border: none ; background: none; color: #1f4ba4; width: 100%; padding-left: .55rem; padding-right: .4rem; box-sizing: border-box;}
 
 .i-date{position: relative;  border: solid 1px #e4e4e6; border-radius: .2rem; width: 100%; 
 background: url(../images/icon-calendar.png) 95% center no-repeat;background-size:auto 0.4rem;}
