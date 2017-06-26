@@ -303,6 +303,10 @@
 
         <script src="js/swiper.js"></script>
         <script>
+        /*===隐藏原生标题栏 start1===*/
+        window.SYP.toggleShowBanner('hidden');
+        /*===隐藏原生标题栏 end1===*/
+        var selectdeparr=[];
             $('#saveMessage').bind('click', function() {
                 if(''==$('#messageContext').val()){
                     return ;
@@ -597,8 +601,10 @@
                                 } else {
                                     text += data[i].userName + ','
                                 }
+                                selectdeparr.push(data[i].department);
                             }
                             $('#gs5')[0].dataset.select = text
+
                             $("#gs5").click(function() {
                                 app.select(this, 2, gs.selectGs5);
                             })
@@ -749,8 +755,9 @@
                                 }
                               else if(sp.sp2=="")
                               {app.alert("请选择商铺名称");}
+                          //只有一条商户默认第一条
                               else if(sp.sp2!="" &&data.length==1)
-                              {$("#asddas").html(text);}
+                              {$("#asddas").html(data[0].eqId);}
                               else
                                 {app.alert("采集点为空");}
                             /*====采集点 end====*/ 
