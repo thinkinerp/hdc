@@ -26,7 +26,7 @@
         <div  class="i-itemName">
             <div class="i-itemName-name">项目名称</div>
             <div class="i-itemName-list">
-                <div id="itemName" data-select="" onclick="app.select(this,2,Window.selected)"  alertTitle="请选择项目" ></div>
+                <div id="itemName" data-select="" onclick="app.select(this,2,Window.selected)"  alertTitle="请输入项目名称进行搜索" ></div>
             </div>
         </div>
         <!-- 项目状态 -->
@@ -48,7 +48,7 @@
         </div>
         <!-- 搜索 -->
         <div class="i-itemSeek">
-            <input placeholder="请输入商铺名称进行搜索" type="text" id="middle" />
+            <input placeholder="请输入商铺简称进行搜索" type="text" id="middle" />
             <div onclick="searche()"></div>
         </div>
         <!-- 2个下拉 -->
@@ -138,13 +138,13 @@
                                     "                   <p>项目经理</p>" +
                                     "                   <p>"+rs[0].proManagerPro+"</p>" +
                                     "                   <p>项目版本</p>" +
-                                    "                   <p>"+rs[0].proEdition+"</p>" +
+                                    "                   <p style='flex:1.5'>"+rs[0].proEdition+"</p>" +
                                     "               </div>" +
                                     "               <div>" +
                                     "                   <p>项目状态</p>" +
                                     "                   <p>"+rs[0].proStation+"</p>" +
                                     "                   <p>更新时间</p>" +
-                                    "                   <p>"+rs[0].updatedAt+"</p>" +
+                                    "                   <p style='flex:1.5;font-size:0.7em;'>"+rs[0].updatedAt+"</p>" +
                                     "               </div>"
                             );
                             shopStateSeach();

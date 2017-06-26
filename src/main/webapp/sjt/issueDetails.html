@@ -24,6 +24,7 @@
     </head>
 
     <body>
+    <div class="selectfix">问题详情<div class="icon_return" onclick="appback('issueList.html');"></div><div class="icon_refresh" onclick="window.location.reload(); "></div></div>
         <!-- 顶部菜单  -->
         <div class="swiper-container swiper-container1">
             <div class="swiper-wrapper" id="menu">
@@ -163,7 +164,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div id="sp2" class="on" alertTitle="商铺名称">
+                                    <div id="sp2" class="on" alertTitle="请输入商铺名称进行搜索">
                                         未选择
                                     </div>
                                 </div>
@@ -637,11 +638,11 @@
                     })
                 },
                 selectGs7 : function() {
-                    gs.gs7 = $("#gs7").html();
-                    gs.gs7Arr.push(gs.gs7);
-                    gs.gs7Man();
-                    $("#gs7").html('可多选');
-                    $("#gs7").addClass('on');
+                        gs.gs7 = $("#gs7").html();
+                        gs.gs7Arr.push(gs.gs7);                   
+                        gs.gs7Man();
+                        $("#gs7").html('可多选');
+                        $("#gs7").addClass('on');
                 },
                 gs7Man : function() {
                     if (gs.gs7Arr.length > 3) {
@@ -652,16 +653,17 @@
                     for (var i = 0; i < gs.gs7Arr.length; i++) {
                         dom.push('<p>' + gs.gs7Arr[i] + '<icon class="icondel"></icon></p>');
                     }
+
                     /*====问题标签删除 start====*/
-                    $(".g-importList-zp").on("click",".icondel",function()
-                            {
-                                $(this).parents("p").remove();
-                                removeByValue(gs7selarr,$(this).parents("p").text());
-                                removeByValue(gs.gs7Arr,$(this).parents("p").text());
-                                 gs.gs7String = gs.gs7Arr.join(",");
-                                gs7selarr.push($(this).parents("p").text());
-                            }
-                        )
+                        $(".g-importList-zp").on("click",".icondel",function()
+                                {
+                                    $(this).parents("p").remove();
+                                    removeByValue(gs7selarr,$(this).parents("p").text());
+                                    removeByValue(gs.gs7Arr,$(this).parents("p").text());
+                                     gs.gs7String = gs.gs7Arr.join(",");
+                                    gs7selarr.push($(this).parents("p").text());
+                                }
+                            )
                      /*====问题标签删除 end====*/
                     $('.g-importList-zp').html(dom.join(''));
                 },
@@ -675,16 +677,27 @@
                         dataType : "jsonp",
                         jsonpCallback : "state_null_getSome",
                         jsonp : "callback",
-                        success : function(data) {
+                        success : function(data) {                            
                             var text = ''
                             for (var i = 0; i < data.length; i++) {
+                                var staexist=false;
+                             $(".g-importList-zp p").each(function(j){
+                                if($(this).text()==data[i].staName)
+                                {staexist=true;}
+                              })
+                              if(!staexist)
+                               {
                                 if (i == data.length - 1) {
                                     text += data[i].staName
                                 } else {
                                     text += data[i].staName + ','
                                 }
+                                gs7selarr.push(data[i].staName);
+                              }
                             }
-                            $('#gs7')[0].dataset.select = text
+                            
+                            $('#gs7')[0].dataset.select = text;
+
                             /*====问题列表 start===*/
                             $("#gs7").click(function() {
                                 if(isgs7==true && gs7selarr.length==0)
@@ -1023,7 +1036,7 @@
                         app.alert("确定要保存吗？", 2, submit)
                     })
                 } else {//修改
-
+                     isgs7=true;
                     gs.init();
                     ms.init();
                     xg.init(problemId);

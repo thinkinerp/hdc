@@ -81,71 +81,71 @@ var app ={
 		if (r != null) return unescape(r[2]); return null;
 	},
 	select:function(obj,type,fun){ //obj(有data-select的那个标签,传this 例如 app.select(this))    type: 1只能选择   2可以选择也可以输入 输入匹配   3可以选择可以输入 输入匹配 并可选择没匹配项
-		/*===隐藏原生标题栏 start===*/
+		/*===隐藏原生标题栏 start1===*/
 		window.SYP.toggleShowBanner('hidden');
-		/*===隐藏原生标题栏 end===*/
-		app.put = obj;
-		objid=obj.id;
-		app.selecttype = type;
-		if(fun != undefined && fun != '' && fun != null){	
-			app.selectOverFun = fun;
-		}
-		var bnrtitle=$(document).attr("title");
-		app.listdata = $(app.put)[0].dataset.select;
-		var content = $(app.put)[0].innerHTML;
-		var alertTitle = $(app.put).attr('alertTitle');
-		app.listdata = app.listdata.split(",");
-		/*===gs7 start===*/
-		if(isgs7==true)
-		{app.listdata=gs7selarr;}
-	    /*===gs7 end===*/
-        var dom = [];
-        /*====弹框返回 start====*/
-        dom.push('<div class="g-select">');
-        dom.push('<div class="selectfix">'+bnrtitle+'<div class="icon_return" onclick="app.selectBack()"></div><div class="icon_refresh" onclick="window.location.reload(); "></div>');
-		dom.push('</div>');
-		/*====弹框返回 end====*/
-//        dom.push('<div style="left:0; bottom:0; height:.8rem; width: 100%; background:white; font-size: .36rem; display: flex; justify-content: center; align-items: center;">');
-//        dom.push();
-//        dom.push('</div>');
-        if(app.selecttype != 1){	//如果类型不等于1  显示搜索框
-	        dom.push('<div class="g-select-seek">');
-	        dom.push('<input placeholder="'+alertTitle+'" type="text" oninput="app.selectSeek(this)"/>');
-	        dom.push('<div></div>');//搜索按钮
-	        dom.push('</div>');
-        }
-        dom.push('<ul class="g-select-list" id="g-select-list">');    //选项列表  选中状态给li添加class="on"
-        for(var i = 0; i<app.listdata.length; i++){
-        	if(app.listdata[i] == content){
-       			dom.push('<li class="on">'+app.listdata[i]+'</li>');
-       		}else{
-       			/*===区分单据 start===*/
-       			if(surveryexArr.length!=0)
-       			{
-	       			if(obj.id=="shopName" &&(surveryexArr[i].surveyExist!=0))
-	       			{dom.push('<li style="background#ccc">'+app.listdata[i]+'</li>');}
-		       		else
+		/*===隐藏原生标题栏 end1===*/
+			app.put = obj;
+			objid=obj.id;
+			app.selecttype = type;
+			if(fun != undefined && fun != '' && fun != null){	
+				app.selectOverFun = fun;
+			}
+			var bnrtitle=$(document).attr("title");
+			app.listdata = $(app.put)[0].dataset.select;
+			var content = $(app.put)[0].innerHTML;
+			var alertTitle = $(app.put).attr('alertTitle');
+			app.listdata = app.listdata.split(",");
+			/*===gs7 start===*/
+			if(isgs7==true &&objid=="gs7")
+			{app.listdata=gs7selarr;}
+		    /*===gs7 end===*/
+	        var dom = [];
+	        /*====弹框返回 start====*/
+	        dom.push('<div class="g-select">');
+	        dom.push('<div class="selectfix">'+bnrtitle+'<div class="icon_return" onclick="app.selectBack()"></div><div class="icon_refresh" onclick="window.location.reload(); "></div>');
+			dom.push('</div>');
+			/*====弹框返回 end====*/
+	//        dom.push('<div style="left:0; bottom:0; height:.8rem; width: 100%; background:white; font-size: .36rem; display: flex; justify-content: center; align-items: center;">');
+	//        dom.push();
+	//        dom.push('</div>');
+	        if(app.selecttype != 1){	//如果类型不等于1  显示搜索框
+		        dom.push('<div class="g-select-seek">');
+		        dom.push('<input placeholder="'+alertTitle+'" type="text" oninput="app.selectSeek(this)"/>');
+		        dom.push('<div></div>');//搜索按钮
+		        dom.push('</div>');
+	        }
+	        dom.push('<ul class="g-select-list" id="g-select-list">');    //选项列表  选中状态给li添加class="on"
+	        for(var i = 0; i<app.listdata.length; i++){
+	        	if(app.listdata[i] == content){
+	       			dom.push('<li class="on">'+app.listdata[i]+'</li>');
+	       		}else{
+	       			/*===区分单据 start===*/
+	       			if(surveryexArr.length!=0)
+	       			{
+		       			if(obj.id=="shopName" &&(surveryexArr[i].surveyExist!=0))
+		       			{dom.push('<li style="background:#eeebeb;border-bottom:1px solid #fff;">'+app.listdata[i]+'</li>');}
+			       		else
+		       			{dom.push('<li>'+app.listdata[i]+'</li>');}
+	       		    }
+	       		    else if(installexArr.length!=0)
+	       			{
+		       			if(obj.id=="shopName" &&(installexArr[i].installExist!=0))
+		       			{dom.push('<li style="background:#eeebeb;border-bottom:1px solid #fff;">'+app.listdata[i]+'</li>');}
+			       		else
+		       			{dom.push('<li>'+app.listdata[i]+'</li>');}
+	       		   }
+	       		   else
 	       			{dom.push('<li>'+app.listdata[i]+'</li>');}
-       		    }
-       		    else if(installexArr.length!=0)
-       			{
-	       			if(obj.id=="shopName" &&(installexArr[i].installExist!=0))
-	       			{dom.push('<li style="background#ccc">'+app.listdata[i]+'</li>');}
-		       		else
-	       			{dom.push('<li>'+app.listdata[i]+'</li>');}
-       		   }
-       		   else
-       			{dom.push('<li>'+app.listdata[i]+'</li>');}
-       		/*===区分单据 end===*/
-       		}
-        }
-        dom.push('</ul>');
+	       		/*===区分单据 end===*/
+	       		}
+	        }
+	        dom.push('</ul>');
 
-        //cynthia 按钮样式
-        dom.push('<div class="g-ok"><div  onclick="app.selectBack()">退出</div></div>');
-        dom.push('</div>');
-        $("body").append(dom.join(''));
-        app.selectClick();     
+	        //cynthia 按钮样式
+	        dom.push('<div class="g-ok" style="z-index:99"><div  onclick="app.selectBack()">退出</div></div>');
+	        dom.push('</div>');
+	        $("body").append(dom.join(''));
+	        app.selectClick();     
     },
     selectSeek:function(obj){
     	var con = $(obj).val();		//输入的内容
@@ -198,10 +198,11 @@ var app ={
 
 			}
 	      /*===问题列表 end===*/
-        })
-        /*===显示原生标题栏 start===*/
+	       /*===显示原生标题栏 start===*/
 		window.SYP.toggleShowBanner('show');
 		/*===显示原生标题栏 end===*/
+        })
+       
     },
     dateVerify:function(obj,type){	//1为不能选择大于当前日期    2为必须大于当前日期
     	var selectDate = $(obj).val();
@@ -513,10 +514,20 @@ function buttonFixed()
 				})
 				return savetxt;
 			}
-			function appback()
+			function appback(url)
 			{if(issave())
 				{
 					app.alert('单据未保存，是否保存数据？',2,submitback);
+					$("#g-popupNo").click(function(){
+						location.href=url;
+						//window.SYP.showAlertAndRedirectWithCleanStack('列表','返回列表',domainName + "/hdk/sjt/"+url);
+					})
+				}
+				else
+				{
+					location.href=url;
+					//window.SYP.showAlertAndRedirectWithCleanStack('列表','返回列表',domainName + "/hdk/sjt/"+url);
+
 				}
 			}
  /*====cynthia返回 end1=====*/
