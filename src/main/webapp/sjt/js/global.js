@@ -142,7 +142,7 @@ var app ={
 	        dom.push('</ul>');
 
 	        //cynthia 按钮样式
-	        dom.push('<div class="g-ok"><div  onclick="app.selectBack()">退出</div></div>');
+	        dom.push('<div class="g-ok" style="z-index:99"><div  onclick="app.selectBack()">退出</div></div>');
 	        dom.push('</div>');
 	        $("body").append(dom.join(''));
 	        app.selectClick();     
@@ -514,10 +514,20 @@ function buttonFixed()
 				})
 				return savetxt;
 			}
-			function appback()
+			function appback(url)
 			{if(issave())
 				{
 					app.alert('单据未保存，是否保存数据？',2,submitback);
+					$("#g-popupNo").click(function(){
+						location.href=url;
+						//window.SYP.showAlertAndRedirectWithCleanStack('列表','返回列表',domainName + "/hdk/sjt/"+url);
+					})
+				}
+				else
+				{
+					location.href=url;
+					//window.SYP.showAlertAndRedirectWithCleanStack('列表','返回列表',domainName + "/hdk/sjt/"+url);
+
 				}
 			}
  /*====cynthia返回 end1=====*/

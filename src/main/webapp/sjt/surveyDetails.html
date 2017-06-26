@@ -22,6 +22,7 @@
         </script>
 	</head>
 	<body>
+	<div class="selectfix">调研详情<div class="icon_return" onclick="appback('surveyList.html');"></div><div class="icon_refresh" onclick="window.location.reload(); "></div></div>
 		<!-- 顶部菜单  -->
 		<div class="swiper-container swiper-container1">
 			<div class="swiper-wrapper" id="menu">
@@ -82,7 +83,7 @@
 							<div class="g-importList-title">商铺名称</div>
 							<div class="g-importList-content">
 								<div class="i-xiala-list">
-									<div id="shopName" alertTitle="商铺名称" onclick="app.select(this,2,shop.selectShopName)" class="on">未选择</div>
+									<div id="shopName" alertTitle="请输入商铺名称进行搜索" onclick="app.select(this,2,shop.selectShopName)" class="on">未选择</div>
 								</div>
 							</div>
 						</li>

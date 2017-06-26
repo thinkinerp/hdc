@@ -224,13 +224,13 @@
                            itemStyleDom.push('<div>');
                            itemStyleDom.push('<p>项目经理</p>');
                            itemStyleDom.push('<p>'+data[0].proManagerPro+'</p>');
-                           itemStyleDom.push('<p style="flex:1.1">项目版本</p>');
+                           itemStyleDom.push('<p >项目版本</p>');
                            itemStyleDom.push('<p style="flex:1.5">'+data[0].proEdition+'</p>');
                            itemStyleDom.push('</div>');
                            itemStyleDom.push('<div>');
                            itemStyleDom.push('<p>项目状态</p>');
                            itemStyleDom.push('<p>'+data[0].proStation+'</p>');
-                           itemStyleDom.push('<p style="flex:1.1">最后调研时间</p>');
+                           itemStyleDom.push('<p >更新时间</p>');
                            itemStyleDom.push('<p style="flex:1.5;font-size:0.7em;">'+data[0].updatedAt+'</p>');
                            itemStyleDom.push('</div>');
                            $('.i-itemStyle-list').html(itemStyleDom.join(''));
@@ -250,10 +250,11 @@
 					   jsonp:"callback",
 					   success:function(data){
 					   		var dom = [];
+					   		console.log(data);
 					   		for(var i = 0; i<data.length; i++){
 					   			dom.push('<div class="i-itemDetail-area">');
 					   			dom.push('<div class="i-itemDetail-area-title">');
-					   			dom.push('<div>'+data[i].shopName+'</div>');
+					   			dom.push('<div>'+data[i].shopName+data[i].shopPosition+'</div>');
 					   			dom.push('<p onclick="me.tz(\''+data[i].surId+'\')">详情</p>');
 					   			dom.push('</div>');
 					   			dom.push('<div class="i-itemDetail-area-content">');
