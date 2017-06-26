@@ -71,7 +71,7 @@
                             <div class="iz-list-content" id = "printCode"></div>
                         </li>
                         <li>
-                            <div class="iz-list-title">采集设备编号</div>
+                            <div class="iz-list-title">采集点编号</div>
                             <div class="iz-list-content" id = "equipmentCode"></div>
                         </li>
                         <li>
@@ -167,10 +167,10 @@
                         
                         </li>
                         <li>
-                    <div class="g-importList-title">账户收银系统品牌</div>
+                    <div class="g-importList-title">商户收银系统品牌</div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div id= "cashBrand" alertTitle="账户收银系统品牌"  data-select=""  onclick="app.select(this,2,null)" ></div>
+                                    <div id= "cashBrand" alertTitle="商户收银系统品牌"  data-select=""  onclick="app.select(this,2,null)" ></div>
                                 </div>
                             </div>  
                         </li>
@@ -305,11 +305,11 @@
                 <div class="swiper-slide">
                     <ul class="g-importList">
                         <li style="height:auto;margin-bottom:0em;">
-                            <div class="g-importList-title2">客户网络情况</div>
+                            <div class="g-importList-title2">商户网络情况</div>
                             <div class="g-importList-content">
                                 <div class="i-choicechk">
                                     <div class="i-choice-rowchk">
-                                        <div id="installNetworkHard" class="on" onclick="qt.selectNetwork('installNetworkHard')"></div>
+                                        <div id="installNetworkHard"  onclick="qt.selectNetwork('installNetworkHard')"></div>
                                         <p>外网</p>
                                     </div>
                                     <div class="i-choice-rowchk">
@@ -326,8 +326,8 @@
                         <li>
                             <div class="g-importList-title">远程连接方式</div>
                             <div class="g-importList-content">
-                                <div class="i-import">
-                                    <input id = "installRemote" type="text" placeholder="请输入" />
+                                <div >
+                                    <textarea id = "installRemote" placeholder="请输入" class="i-import" style="height:1rem"></textarea>
                                 </div>
                             </div>
                         </li>

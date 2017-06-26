@@ -107,19 +107,16 @@ Window.selected = function() {
       var str = '';
       var i = 0;
       var has = new Array();
-      /*====数组排序 start====*/
-       rs.sort(function(a,b){  
-         if(a.installExist<b.installExist){  
-              return -1;  
-           }else if(a.installExist>b.installExist){  
-              return 1;  
-          }  
-              return 0;  
-      });  
-       installexArr=rs;
+      /*====数组排序 start====*/ 
+      var result = rs.sort(function(a,b){  
+                    return a.installExist-b.installExist;  
+       });   
+       installexArr=result;
+       console.log(result.length);
       /*====数组排序 end====*/
       $.each(rs, function(index, item) {
-        if (-1 == $.inArray(item.shopName, has)) {
+        //去重数据 start
+         // if (-1 == $.inArray(item.shopName, has)) {
           has.push(item.shopName);
           if (0 == i) {
             i++;
@@ -127,7 +124,7 @@ Window.selected = function() {
           } else {
             str = str + "," + item.shopName;
           }
-        }
+         // }
       });
       $("#shopName").attr("data-select", str);
 
@@ -293,15 +290,17 @@ var loadInstall = function(allThing){
         if(isUndefined(allObjs.install.installNetwork).indexOf('wifi')){
         	$('#installNetworkSoft').attr("class",'off' );
         }
-        if(allObjs.install.installNetwork.indexOf("外网")!=-1){
-           $('#installNetworkHard').attr("class",'on' );
-          }
-          if(allObjs.install.installNetwork.indexOf("wifi")!=-1){
-            $('#installNetworkSoft').addClass('on');
-          }
-          if(allObjs.install.installNetwork.indexOf("商场内网")!=-1){
-            $('#qt3').addClass('on');
-          }
+        /*====安装详情  客户网络情况 start====*/
+          if(allObjs.install.installNetwork.indexOf("外网")!=-1){
+             $('#installNetworkHard').attr("class",'on' );
+            }
+            if(allObjs.install.installNetwork.indexOf("wifi")!=-1){
+              $('#installNetworkSoft').addClass('on');
+            }
+            if(allObjs.install.installNetwork.indexOf("商场内网")!=-1){
+              $('#qt3').addClass('on');
+            }
+         /*====安装详情  客户网络情况 end====*/
         // 附件
         //$('#installNetworkHard').val(isUndefined(allObjs.equipment.installTime));
     }

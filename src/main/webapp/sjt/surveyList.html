@@ -18,6 +18,9 @@
                 window.SYP.setBannerTitle("调研列表");
         </script>
 	</head>
+	    <style>
+.i-itemDetail-area-content .content-row p:nth-child(2){ width:4rem;}
+    </style>
 	<body>
 	 <div class="wrapbox">
 	 <div class="itemfixbox">
@@ -25,7 +28,7 @@
 		<div  class="i-itemName">
 			<div class="i-itemName-name">项目名称</div>
 			<div class="i-itemName-list">
-				<div id="itemName" alertTitle="项目名称" onclick="app.select(this,2,me.selectItem)"></div>
+				<div id="itemName" alertTitle="请输入项目名称进行搜索" onclick="app.select(this,2,me.selectItem)"></div>
 			</div>
 		</div>
 		<!-- 项目状态 -->
@@ -36,7 +39,7 @@
 		
 		<!-- 搜索 -->
 		<div class="i-itemSeek">
-			<input id="mendian" type="text" placeholder="请输入商铺名称进行搜索"/>
+			<input id="mendian" type="text" placeholder="请输入商铺简称进行搜索"/>
 			<div onclick="me.list()"></div>
 		</div>
 		<!-- 2个下拉 -->
@@ -45,7 +48,7 @@
 				<div id='order' alertTitle="排序" defaultVal="排序" data-select="倒序,正序" onclick="app.select(this,2,me.upOrder)"></div>
 			</div>
 			<div class="i-itemXl-list">
-				<div id='surveyState'  alertTitle="门店状态" defaultVal="门店状态" onclick="app.select(this,2,me.upShopStation)" ></div>
+				<div id='surveyState'  alertTitle="商铺状态" defaultVal="商铺状态" onclick="app.select(this,2,me.upShopStation)" ></div>
 			</div>
 		</div>
 		</div>
@@ -221,14 +224,14 @@
                            itemStyleDom.push('<div>');
                            itemStyleDom.push('<p>项目经理</p>');
                            itemStyleDom.push('<p>'+data[0].proManagerPro+'</p>');
-                           itemStyleDom.push('<p>项目版本</p>');
-                           itemStyleDom.push('<p>'+data[0].proEdition+'</p>');
+                           itemStyleDom.push('<p style="flex:1.1">项目版本</p>');
+                           itemStyleDom.push('<p style="flex:1.5">'+data[0].proEdition+'</p>');
                            itemStyleDom.push('</div>');
                            itemStyleDom.push('<div>');
                            itemStyleDom.push('<p>项目状态</p>');
                            itemStyleDom.push('<p>'+data[0].proStation+'</p>');
-                           itemStyleDom.push('<p>更新时间</p>');
-                           itemStyleDom.push('<p>'+data[0].updatedAt+'</p>');
+                           itemStyleDom.push('<p style="flex:1.1">最后调研时间</p>');
+                           itemStyleDom.push('<p style="flex:1.5;font-size:0.7em;">'+data[0].updatedAt+'</p>');
                            itemStyleDom.push('</div>');
                            $('.i-itemStyle-list').html(itemStyleDom.join(''));
 				},
@@ -264,7 +267,7 @@
 					   			dom.push('<p>'+data[i].shopMerStation+'</p>');
 					   			dom.push('</div>');
 					   			dom.push('<div class="content-row">');
-					   			dom.push('<p>更新时间</p>');
+					   			dom.push('<p>最后调研时间</p>');
 					   			dom.push('<p>'+data[i].updatedAt+'</p>');
 					   			dom.push('</div>');
 					   			dom.push('</div>');

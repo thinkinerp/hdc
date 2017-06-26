@@ -637,11 +637,11 @@
                     })
                 },
                 selectGs7 : function() {
-                    gs.gs7 = $("#gs7").html();
-                    gs.gs7Arr.push(gs.gs7);                   
-                    gs.gs7Man();
-                    $("#gs7").html('可多选');
-                    $("#gs7").addClass('on');
+                        gs.gs7 = $("#gs7").html();
+                        gs.gs7Arr.push(gs.gs7);                   
+                        gs.gs7Man();
+                        $("#gs7").html('可多选');
+                        $("#gs7").addClass('on');
                 },
                 gs7Man : function() {
                     if (gs.gs7Arr.length > 3) {
@@ -654,15 +654,15 @@
                     }
 
                     /*====问题标签删除 start====*/
-                    $(".g-importList-zp").on("click",".icondel",function()
-                            {
-                                $(this).parents("p").remove();
-                                removeByValue(gs7selarr,$(this).parents("p").text());
-                                removeByValue(gs.gs7Arr,$(this).parents("p").text());
-                                 gs.gs7String = gs.gs7Arr.join(",");
-                                gs7selarr.push($(this).parents("p").text());
-                            }
-                        )
+                        $(".g-importList-zp").on("click",".icondel",function()
+                                {
+                                    $(this).parents("p").remove();
+                                    removeByValue(gs7selarr,$(this).parents("p").text());
+                                    removeByValue(gs.gs7Arr,$(this).parents("p").text());
+                                     gs.gs7String = gs.gs7Arr.join(",");
+                                    gs7selarr.push($(this).parents("p").text());
+                                }
+                            )
                      /*====问题标签删除 end====*/
                     $('.g-importList-zp').html(dom.join(''));
                 },
@@ -1035,7 +1035,7 @@
                         app.alert("确定要保存吗？", 2, submit)
                     })
                 } else {//修改
-                    isgs7=true;
+                     isgs7=true;
                     gs.init();
                     ms.init();
                     xg.init(problemId);
