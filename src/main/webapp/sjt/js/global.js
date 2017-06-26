@@ -194,9 +194,23 @@ var app ={
 				removeByValue(app.listdata,ls);
 				gs7selarr=app.listdata;
 				isgs7=true;
-
-
 			}
+			var sellidex=$(this).index();
+			if(objid=="gs5" &&selectdeparr.length!=0 && selectdeparr[sellidex]!="")
+				{
+					$("#gs6").html(selectdeparr[sellidex]);
+					$("#gs6").attr("class","i-importtxt");
+					$("#gs6").parent("div").attr("class","");
+					$("#gs6").unbind("click");
+		       }
+		      else
+		      {$("#gs6").html('未选择');
+			   $("#gs6").attr("class","on");
+			   $("#gs6").parent("div").attr("class","i-xiala-list");
+			    $("#gs6").click(function() {
+                                app.select(this, 2, gs.selectGs6);
+                            })
+		      }
 	      /*===问题列表 end===*/
 	       /*===显示原生标题栏 start===*/
 		window.SYP.toggleShowBanner('show');
@@ -515,18 +529,20 @@ function buttonFixed()
 				return savetxt;
 			}
 			function appback(url)
-			{if(issave())
+			{
+				if(issave())
 				{
 					app.alert('单据未保存，是否保存数据？',2,submitback);
 					$("#g-popupNo").click(function(){
-						location.href=url;
-						//window.SYP.showAlertAndRedirectWithCleanStack('列表','返回列表',domainName + "/hdk/sjt/"+url);
+						//location.href=url;
+						//window.SYP.pageLink("调研详情",domainName + "/hdk/sjt/surveylist.html");
+						window.SYP.showAlertAndRedirectWithCleanStack('列表','返回列表',domainName+"/hdk/sjt/"+url);
 					})
 				}
 				else
 				{
-					location.href=url;
-					//window.SYP.showAlertAndRedirectWithCleanStack('列表','返回列表',domainName + "/hdk/sjt/"+url);
+				//window.SYP.pageLink("调研详情",domainName + "/hdk/sjt/surveylist.html");	
+					window.SYP.showAlertAndRedirectWithCleanStack('列表','返回列表',domainName+"/hdk/sjt/"+url);
 
 				}
 			}
