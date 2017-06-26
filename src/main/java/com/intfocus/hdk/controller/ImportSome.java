@@ -52,11 +52,11 @@ public class ImportSome {
                
                // 对读取Excel表格内容测试
                InputStream f = new BufferedInputStream( new FileInputStream(filePath + filename));
-               String str = excelReader.checkCols(f, tableName);
-               if(!"".equalsIgnoreCase(str)){
-             		request.setAttribute("message", "您传的文档中缺少以下几列数据：" + str );
-            	   return "fail";
-               }
+//               String str = excelReader.checkCols(f, tableName);
+//               if(!"".equalsIgnoreCase(str)){
+//             		request.setAttribute("message", "您传的文档中缺少以下几列数据：" + str );
+//            	   return "fail";
+//               }
       
                sqllist = excelReader.sqlGennerater(f, tableName);
                for(String sql : sqllist){
