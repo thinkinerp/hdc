@@ -125,9 +125,9 @@ public class ExcelReader {
 	 	       for(int j = 0 ; j  < cols.size() ; j ++ ){
 		    	   colProperty = cols.get(j);
 				   if("int".equalsIgnoreCase(colProperty.getCtype())) {
-					   value =  getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim() ;
+					   value =  getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim() ;
 		    	   }else if("varchar".equalsIgnoreCase(colProperty.getCtype())){
-		    		   value = "'" + getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim() +"'";
+		    		   value = "'" + getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim() +"'";
 		    	   }
 		    	     sql = sql.replaceAll("@"+colProperty.getCol()+"@",  value);
 	 	       }
@@ -210,19 +210,19 @@ public class ExcelReader {
 	       
 	       for( ; j  < userList.size() ; j ++ ){
 	    	     colProperty = userList.get(j);
-             groupInsertSql =	groupInsertSql.replaceAll("@"+colProperty.getCol()+"@", getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim());
-             roleInsertSql     = roleInsertSql.replaceAll("@"+colProperty.getCol()+"@", getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim());
+             groupInsertSql =	groupInsertSql.replaceAll("@"+colProperty.getCol()+"@", getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim());
+             roleInsertSql     = roleInsertSql.replaceAll("@"+colProperty.getCol()+"@", getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim());
 	      
    	       if("int".equalsIgnoreCase(colProperty.getCtype()) && "0".equalsIgnoreCase(colProperty.getForeign())){
                str                     = str.replaceAll("@"+colProperty.getCol()+"@", 
-            		                                                            "".equalsIgnoreCase(getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim())?
+            		                                                            "".equalsIgnoreCase(getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim())?
             		                                                            		!"".equalsIgnoreCase(colProperty.getDefaults())?colProperty.getDefaults():"NULL" 
-            		                                                                  :getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim() ) ;
+            		                                                                  :getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim() ) ;
            } else if("varchar".equalsIgnoreCase(colProperty.getCtype()) && "0".equalsIgnoreCase(colProperty.getForeign())){
                str                     = str.replaceAll("@"+colProperty.getCol()+"@", 
-            		         							"".equalsIgnoreCase(getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim())? 
+            		         							"".equalsIgnoreCase(getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim())? 
             		         							!"".equalsIgnoreCase(colProperty.getDefaults())? "'" + colProperty.getDefaults() + "'":"NULL" 
-            		         						    : "'" + getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim() + "'") ;
+            		         						    : "'" + getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim() + "'") ;
           }
 	       
 	       }
@@ -251,14 +251,14 @@ public class ExcelReader {
 
   	       if("int".equalsIgnoreCase(colProperty.getCtype()) && "0".equalsIgnoreCase(colProperty.getForeign())){
               str                     = str.replaceAll("@"+colProperty.getCol()+"@", 
-           		                                                            "".equalsIgnoreCase(getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim())?
+           		                                                            "".equalsIgnoreCase(getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim())?
            		                                                            		!"".equalsIgnoreCase(colProperty.getDefaults())?colProperty.getDefaults():"NULL" 
-           		                                                                  :getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim() ) ;
+           		                                                                  :getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim() ) ;
           } else if("varchar".equalsIgnoreCase(colProperty.getCtype()) && "0".equalsIgnoreCase(colProperty.getForeign())){
               str                     = str.replaceAll("@"+colProperty.getCol()+"@", 
-           		         							"".equalsIgnoreCase(getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim())? 
+           		         							"".equalsIgnoreCase(getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim())? 
            		         							!"".equalsIgnoreCase(colProperty.getDefaults())? "'" + colProperty.getDefaults() + "'":"NULL" 
-           		         						    : "'" + getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim() + "'") ;
+           		         						    : "'" + getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim() + "'") ;
          }
             }
             content.put(content.size() + 1, str);     
@@ -282,14 +282,14 @@ public class ExcelReader {
 
   	       if("int".equalsIgnoreCase(colProperty.getCtype()) && "0".equalsIgnoreCase(colProperty.getForeign())){
               str                     = str.replaceAll("@"+colProperty.getCol()+"@", 
-           		                                                            "".equalsIgnoreCase(getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim())?
+           		                                                            "".equalsIgnoreCase(getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim())?
            		                                                            		!"".equalsIgnoreCase(colProperty.getDefaults())?colProperty.getDefaults():"NULL" 
-           		                                                                  :getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim() ) ;
+           		                                                                  :getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim() ) ;
           } else if("varchar".equalsIgnoreCase(colProperty.getCtype()) && "0".equalsIgnoreCase(colProperty.getForeign())){
               str                     = str.replaceAll("@"+colProperty.getCol()+"@", 
-           		         							"".equalsIgnoreCase(getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim())? 
+           		         							"".equalsIgnoreCase(getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim())? 
            		         							!"".equalsIgnoreCase(colProperty.getDefaults())? "'" + colProperty.getDefaults() + "'":"NULL" 
-           		         						    : "'" + getCellFormatValue(row.getCell((short) colProperty.getExcelIndex())).trim() + "'") ;
+           		         						    : "'" + getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim() + "'") ;
          }
             }
             content.put(content.size() + 1, str);     
