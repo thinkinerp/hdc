@@ -34,6 +34,9 @@
     		<if test="null != shopId  and '' != shopId">
 				and shop_id = #{shopId,jdbcType=VARCHAR}
 			</if>	
+    		<if test="null != shopName and '' != shopName ">
+				and shop_id = (select shop_id from shops where shop_name = #{shopName,jdbcType=VARCHAR})
+			</if>	
     		<if test="null != eqId  and '' != eqId">
 				and eq_id = #{eqId,jdbcType=VARCHAR}
 			</if>	

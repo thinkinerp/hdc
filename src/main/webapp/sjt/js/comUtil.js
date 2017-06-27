@@ -107,7 +107,7 @@ function codeUnique2(config){
 				 }else{
 					 str = str + ","+item.staName;
 				 }
-				 if(includeDefault){
+				 if(includeDefault == true || undefined == includeDefault ){
 				 if(undefined!=item.isDefault&& 1==item.isDefault){
 					 if($('#'+id).is('div')){
 						 $('#'+id).html(item.staName);
