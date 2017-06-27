@@ -139,6 +139,13 @@ window.SYPWithinAndroid = {
       alert("Error 未定义接口(Android): showAlertAndRedirect");
     }
   },
+    cleanUrlStack: function(redirectUrl) {
+    if(window.AndroidJSBridge && typeof(window.AndroidJSBridge.cleanUrlStack) === "function") {
+      window.AndroidJSBridge.cleanUrlStack(redirectUrl);
+    } else {
+      alert("Error 未定义接口(Android): cleanUrlStack");
+    }
+  },
   /*
    * 控制原生标题栏的隐藏及显示
    *
@@ -254,6 +261,11 @@ window.SYPWithinIOS = {
       bridge.callHandler('showAlertAndRedirect', {'title': title, 'content': message, 'redirectUrl': redirectUrl, 'cleanStack': 'yes'}, function(response) {});
     })
   },
+cleanUrlStack: function(redirectUrl) {
+    SYPWithinIOS.connectWebViewJavascriptBridge(function(bridge){
+      bridge.callHandler('cleanUrlStack', {'redirectUrl': redirectUrl}, function(response) {});
+    })
+  },
   toggleShowBanner: function(state) {
     SYPWithinIOS.connectWebViewJavascriptBridge(function(bridge){
       bridge.callHandler('toggleShowBanner', {'state': state}, function(response) {});
@@ -304,6 +316,9 @@ window.SYP = {
   },
   showAlertAndRedirectWithCleanStack: function(title, message, redirectUrl) {
     alert(message);
+    window.SYP.pageLink(redirectUrl.split('@')[1]);
+  },
+cleanUrlStack: function(redirectUrl) {
     window.SYP.pageLink(redirectUrl.split('@')[1]);
   },
   toggleShowBanner: function(state) {
