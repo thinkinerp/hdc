@@ -214,7 +214,7 @@
 				    		<div class="g-importList-content">
 				    			<div class="i-choicechk">
 				    				<div class="i-choice-rowchk">
-				    					<div id="qt1" onclick="qt.selectNetwork('外网','qt1')"></div>
+				    					<div id="qt1" onclick="qt.selectNetwork('外网','qt1')" class="on"></div>
 				    					<p>外网</p>
 				    				</div>
 				    				<div class="i-choice-rowchk">
@@ -234,7 +234,7 @@
 				    		<div class="g-importList-content">
 				    			<div class="i-choice">
 				    				<div class="i-choice-row">
-				    					<div id="qt3" onclick="qt.selectPlug('有')"></div>
+				    					<div id="qt3" onclick="qt.selectPlug('有')" class="on"></div>
 				    					<p>有</p>
 				    				</div>
 				    				<div class="i-choice-row">
@@ -249,7 +249,7 @@
 				    		<div class="g-importList-content">
 				    			<div class="i-choice">
 				    				<div class="i-choice-row">
-				    					<div id="qt5" onclick="qt.selectVip('是')"></div>
+				    					<div id="qt5" onclick="qt.selectVip('是')" class="on"></div>
 				    					<p>是</p>
 				    				</div>
 				    				<div class="i-choice-row">
@@ -259,12 +259,12 @@
 				    			</div>
 				    		</div>
 				    	</li>
-				    	<li id="vipshow" style="visibility: hidden;">
+				    	<li id="vipshow">
 				    		<div class="g-importList-title" style="width: 3.1rem;">会员信息是否小票上体现</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-choice">
 				    				<div class="i-choice-row">
-				    					<div id="qt7" onclick="qt.selectNote('是')"></div>
+				    					<div id="qt7" onclick="qt.selectNote('是')" class="on"></div>
 				    					<p>是</p>
 				    				</div>
 				    				<div class="i-choice-row">
@@ -275,7 +275,7 @@
 				    		</div>
 
 				    	</li>
-				    	<li style="visibility: hidden;height:auto" id="subnote">
+				    	<li style="height:auto" id="subnote">
 				    		<div class="g-importList-title2" style="width: 3.1rem;">会员信息</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-choicechk" id="vipchkbox">
@@ -577,10 +577,10 @@
 			}
 			
 			var qt = {//其他
-				network:"",	//网络情况
-				plug:null,		//电源插口情况 
-				vip:null,       //租户是否有会员系统
-				note:null,		//是否小票
+				network:"外网",	//网络情况
+				plug:"有",		//电源插口情况 
+				vip:"是",       //租户是否有会员系统
+				note:"是",		//是否小票
 				selectNetwork:function(data,obj){
 					if($("#"+obj).hasClass("on"))
 					{
@@ -914,40 +914,48 @@ var vipinfovalue;
 					if(data.survey.surNetwork.indexOf("商场内网")!=-1){
 						$('#qtnetwork').addClass('on');
 						qt.network = data.survey.surNetwork;
-					}
-
-					if(data.survey.surPower == "有"){
-						$('#qt3').addClass('on');
-						qt.plug = "有";
-					}else if(data.survey.surPower == "无"){
-						$('#qt4').addClass('on');
-						qt.plug = "无";
-					}
-					
-					if(data.survey.surVip == "是"){
-						$('#qt5').addClass('on');
-						$("#vipshow").css("visibility","inherit");
-						qt.vip = "是";
-					}else if(data.survey.surVip == "否"){
-						$('#qt6').addClass('on');
-						$("#vipshow").css("visibility","hidden;");
-						$("#subnote").css("visibility","hidden");
-						qt.vip = "否";
-					}
-					
-
-                    /*===cynthia 会员信息 start===*/
-                    vipinfovalue=data.survey.vipInfo;   
-                    console.log(vipinfovalue);
-                    if(data.survey.surVipInfoTicket=="是")
+					}				
+					console.log("test"+data.survey.surVip );					
+					if(data.survey.surVipInfoTicket=="是")
                     { $("#subnote").css("visibility","inherit");
                 	  $('#qt7').addClass('on');
+                	  $('#qt8').removeClass('on');
                     }
                     else
                     {
                       $("#subnote").css("visibility","hidden");
                 	  $('#qt8').addClass('on');
+                	  $('#qt7').removeClass('on');
                     }
+                    console.log("survip "+data.survey.surVip);
+                    if(data.survey.surVip == "是"){
+						$('#qt5').addClass('on');
+						$('#qt6').removeClass('on');
+						$("#vipshow").css("visibility","inherit");
+						qt.vip = "是";
+					}else if(data.survey.surVip == "否"){
+						$('#qt6').addClass('on');
+						$('#qt5').removeClass('on');
+						$("#vipshow").css("visibility","hidden");
+						$("#subnote").css("visibility","hidden");
+						qt.vip = "否";
+					}
+						if(data.survey.surPower == "有"){
+						$('#qt3').addClass('on');
+						$('#qt4').removeClass('on');
+						qt.plug = "有";
+					}else if(data.survey.surPower == "无"){
+						$('#qt4').addClass('on');
+						$('#qt3').removeClass('on');
+						qt.plug = "无";
+					}
+					
+					
+
+                    /*===cynthia 会员信息 start===*/
+                    vipinfovalue=data.survey.vipInfo;   
+                    console.log(vipinfovalue);
+                    
                     if(vipinfovalue != null && vipinfovalue !="未选择" ){
                         //$('#qt7').addClass('on');
                         qt.note = "是";
