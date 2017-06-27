@@ -21,13 +21,13 @@
         app_isback=false;
         window.SYP.setBannerTitle("问题详情");
         /*===隐藏原生标题栏 start1===*/
-        window.SYP.toggleShowBanner('hidden');
+        /*window.SYP.toggleShowBanner('hidden');*/
         /*===隐藏原生标题栏 end1===*/
         </script>
     </head>
 
     <body>
-    <div class="selectfix">问题详情<div class="icon_return" onclick="appback('issueList.html');"></div><div class="icon_refresh" onclick="window.location.reload(); "></div></div>
+  <!--   <div class="selectfix">问题详情<div class="icon_return" onclick="appback('issueList.html');"></div><div class="icon_refresh" onclick="window.location.reload(); "></div></div> -->
         <!-- 顶部菜单  -->
         <div class="swiper-container swiper-container1">
             <div class="swiper-wrapper" id="menu">
@@ -288,7 +288,7 @@
                     <textarea class="i-contenteditable textarea-text1" placeholder="请输入解决方案"  id="jjfa" contenteditable="true"></textarea>
                 </div>
                 <div class="swiper-slide">
-                    <textarea class="i-contenteditable textarea-text1" contenteditable="true"  placeholder="输入" id ="messageContext"></textarea>
+                    <textarea class="i-contenteditable textarea-text1" contenteditable="true"  placeholder="请输入批注" id ="messageContext"></textarea>
                     <div class="i-contenteditable-ok" id = "saveMessage">
                         添加批注
                     </div>
@@ -306,9 +306,6 @@
 
         <script src="js/swiper.js"></script>
         <script>
-        /*===隐藏原生标题栏 start1===*/
-        window.SYP.toggleShowBanner('hidden');
-        /*===隐藏原生标题栏 end1===*/
         var selectdeparr=[];
             $('#saveMessage').bind('click', function() {
                 if(''==$('#messageContext').val()){
