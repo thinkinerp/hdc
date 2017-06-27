@@ -261,7 +261,7 @@ window.SYPWithinIOS = {
       bridge.callHandler('showAlertAndRedirect', {'title': title, 'content': message, 'redirectUrl': redirectUrl, 'cleanStack': 'yes'}, function(response) {});
     })
   },
-cleanUrlStack: function(title, message, redirectUrl) {
+cleanUrlStack: function(redirectUrl) {
     SYPWithinIOS.connectWebViewJavascriptBridge(function(bridge){
       bridge.callHandler('cleanUrlStack', {'redirectUrl': redirectUrl}, function(response) {});
     })
