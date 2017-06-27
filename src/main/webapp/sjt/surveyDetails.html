@@ -21,12 +21,12 @@
        	app_isback=false;
         window.SYP.setBannerTitle("调研详情");
 		/*===隐藏原生标题栏 start1===*/
-		window.SYP.toggleShowBanner('hidden');
+		/*window.SYP.toggleShowBanner('hidden');*/
 		/*===隐藏原生标题栏 end1===*/
         </script>
 	</head>
 	<body>
-	<div class="selectfix">调研详情<div class="icon_return" onclick="appback('surveyList.html');"></div><div class="icon_refresh" onclick="window.location.reload(); "></div></div>
+	<!-- <div class="selectfix">调研详情<div class="icon_return" onclick="appback('surveyList.html');"></div><div class="icon_refresh" onclick="window.location.reload(); "></div></div> -->
 		<!-- 顶部菜单  -->
 		<div class="swiper-container swiper-container1">
 			<div class="swiper-wrapper" id="menu">
@@ -662,6 +662,7 @@
 					'survey.surVip':qt.vip,					//会员系统
 					'survey.vipInfo':$("#vipinfo").val(),	//会员信息
 					'survey.surId':$("#dyid").val(),		  //调研编号
+					'survey.surVipInfoTicket':qt.note,//会员信息是否小票上体现
 //					'survey.attachmentUrl':JSON.stringify(imgs),
 //					'survey.surRemarks':'',				 //备注？
 					//收银机
@@ -671,7 +672,9 @@
 					'cash.cashSystem':syj.system,		//收银操作系统
 					'cash.cashPort':syj.port,			//收银机端口
 					'cash.printerDriver':syj.drive,		//是否有驱动
-					'cash.surId':$("#dyid").val(),		//调研编号
+					'cash.surId'
+
+					:$("#dyid").val(),		//调研编号
 //					'cash.installId':'',				//安装编号？
 					//打印机
 					'printer.printerId':dyj.id,			//打印机编号
@@ -772,6 +775,7 @@ var vipinfovalue;
 					'survey.surNetwork':qt.network,	//商户网络环境
 					'survey.surPower':qt.plug,		//电源插卡
 					'survey.surVip':qt.vip,		//会员系统
+					'survey.surVipInfoTicket':qt.note,//会员信息是否小票上体现
 					'survey.vipInfo':$("#vipinfo").val(),	//会员信息
 //					'survey.createdAt':'',	//创建时间？
 					'survey.surId':$('#dyid').val(),		//调研编码
@@ -926,6 +930,8 @@ var vipinfovalue;
 						qt.vip = "是";
 					}else if(data.survey.surVip == "否"){
 						$('#qt6').addClass('on');
+						$("#vipshow").css("visibility","hidden;");
+						$("#subnote").css("visibility","hidden");
 						qt.vip = "否";
 					}
 					
@@ -933,19 +939,23 @@ var vipinfovalue;
                     /*===cynthia 会员信息 start===*/
                     vipinfovalue=data.survey.vipInfo;   
                     console.log(vipinfovalue);
+                    if(data.survey.surVipInfoTicket=="是")
+                    { $("#subnote").css("visibility","inherit");
+                	  $('#qt7').addClass('on');
+                    }
+                    else
+                    {
+                      $("#subnote").css("visibility","hidden");
+                	  $('#qt8').addClass('on');
+                    }
                     if(vipinfovalue != null && vipinfovalue !="未选择" ){
-                        $('#qt7').addClass('on');
+                        //$('#qt7').addClass('on');
                         qt.note = "是";
-                        $("#vipshow").css("visibility","inherit");
-                        $("#subnote").css("visibility","inherit");
+                        // $("#vipshow").css("visibility","inherit");
+                        // $("#subnote").css("visibility","inherit");
                         viparr=vipinfovalue.split(",");
                         $('#vipinfo').val(vipinfovalue);
                         setTimeout('func_chkvip()',400);
-                    }
-                    // }else if(vipinfovalue == null){
-                    else{
-                        $('#qt8').addClass('on');
-                        qt.note = "否";
                     }
                     /*===cynthia 会员信息 end===*/
 					if( data.survey.attachmentUrl != '' &&  data.survey.attachmentUrl != null &&  data.survey.attachmentUrl != undefined){
@@ -1132,5 +1142,4 @@ var vipinfovalue;
 /*===cynthia返回 end2===*/
 		</script>
 	</body>
-<!-- <script src="js/buttonAway.js" type="text/javascript" charset="utf-8"></script> -->
 </html>
