@@ -18,11 +18,15 @@
         <script src="js/installDetails.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
         <script type="text/javascript" charset="utf-8">
-            window.SYP.setBannerTitle("安装详情");
+        app_isback=false;
+        window.SYP.setBannerTitle("安装详情");
+        /*===隐藏原生标题栏 start1===*/
+        window.SYP.toggleShowBanner('hidden');
+        /*===隐藏原生标题栏 end1===*/
         </script> 
 </head>
 <body>
-<script type="text/javascript" >
+<script type="text/javascript" >    
     var surId = "";
     var proId = '';
     var allThing = null;
@@ -354,9 +358,7 @@
         </div>
 <script src="js/swiper.js" type="text/javascript" charset="utf-8"></script>
         <script>
-        /*===隐藏原生标题栏 start1===*/
-        window.SYP.toggleShowBanner('hidden');
-        /*===隐藏原生标题栏 end1===*/
+
             //var imgs = [];    //2个图片都会在这个数组里
             var files =[];
             var swiper1 = new Swiper('.swiper-container1', {    //菜单区滑块

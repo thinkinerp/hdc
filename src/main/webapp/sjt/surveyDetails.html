@@ -18,7 +18,11 @@
 		<script src="js/comUtil.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
        <script type="text/javascript" charset="utf-8">
-                window.SYP.setBannerTitle("调研详情");
+       	app_isback=false;
+        window.SYP.setBannerTitle("调研详情");
+		/*===隐藏原生标题栏 start1===*/
+		window.SYP.toggleShowBanner('hidden');
+		/*===隐藏原生标题栏 end1===*/
         </script>
 	</head>
 	<body>
@@ -218,7 +222,7 @@
 				    					<p>wifi</p>
 				    				</div>
 				    				<div class="i-choice-rowchk">
-				    					<div id="qt3" onclick="qt.selectNetwork('商场内网','qt3')"></div>
+				    					<div id="qtnetwork" onclick="qt.selectNetwork('商场内网','qtnetwork')"></div>
 				    					<p>商场内网</p>
 				    				</div>
 				    			</div>
@@ -300,9 +304,6 @@
 		
 		<script src="js/swiper.js"></script>
 		<script>
-		/*===隐藏原生标题栏 start1===*/
-        window.SYP.toggleShowBanner('hidden');
-        /*===隐藏原生标题栏 end1===*/
 		  /*====安装cynthia ，获得安装编号 start===*/ 
             function getproId()
             {  $.ajax({
@@ -907,7 +908,7 @@ var vipinfovalue;
 						qt.network = data.survey.surNetwork;
 					}
 					if(data.survey.surNetwork.indexOf("商场内网")!=-1){
-						$('#qt3').addClass('on');
+						$('#qtnetwork').addClass('on');
 						qt.network = data.survey.surNetwork;
 					}
 
@@ -940,7 +941,9 @@ var vipinfovalue;
                         viparr=vipinfovalue.split(",");
                         $('#vipinfo').val(vipinfovalue);
                         setTimeout('func_chkvip()',400);
-                    }else if(vipinfovalue == null){
+                    }
+                    // }else if(vipinfovalue == null){
+                    else{
                         $('#qt8').addClass('on');
                         qt.note = "否";
                     }
