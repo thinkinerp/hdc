@@ -441,14 +441,26 @@
 				id:null,	//收银机编号
 				drive:'是',	//有无驱动
 				init:function(){
-					syj.syjSystem();
-					syj.syjBrand();
-					syj.syjPort();
+					//syj.syjSystem();
+					//syj.syjBrand();
+					//syj.syjPort();
+					loadCombobox("syjSystem","cash_system",1);	
+					$('#syjSystem').click(function(){
+					   			app.select(this,2,syj.selectSyjSystem)
+					   		})	
+					loadCombobox("syjBrand","cash_brand",1);	
+					$('#syjBrand').click(function(){
+					   			app.select(this,2,syj.selectSyjBrand)
+					   		})	
+					loadCombobox("syjPort","cash_port",1);	
 			
 					$('#syjId').on('input propertychange', function() { 
 						syj.id = $(this).val();
 						$("#shouyinid").html(syj.id);
 					});
+					$('#syjPort').click(function(){
+					   			app.select(this,2,syj.selectSyjPort)
+					   		})
 				},
 				qudong:function(data){
 					syj.drive = data;
@@ -540,7 +552,11 @@
 				port:null,	//打印机端口
 				id:null,	//打印机ID
 				init:function(){
-					dyj.dyjPort();
+					//dyj.dyjPort();
+					loadCombobox("dyjPort","printer_port",1);	
+					$('#dyjPort').click(function(){
+					   			app.select(this,2,syj.selectDyjPort)
+					   		})
 					$('#dyjId').on('input propertychange', function() { 
 						dyj.id = $(this).val();
 						$("#dayingid").html(dyj.id);
