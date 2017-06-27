@@ -83,7 +83,7 @@ var app ={
 	},
 	select:function(obj,type,fun){ //obj(有data-select的那个标签,传this 例如 app.select(this))    type: 1只能选择   2可以选择也可以输入 输入匹配   3可以选择可以输入 输入匹配 并可选择没匹配项
 		/*===隐藏原生标题栏 start1===*/
-		window.SYP.toggleShowBanner('hidden');
+		// window.SYP.toggleShowBanner('hidden');
 		/*===隐藏原生标题栏 end1===*/
 			app.put = obj;
 			objid=obj.id;
@@ -103,8 +103,8 @@ var app ={
 	        var dom = [];
 	        /*====弹框返回 start====*/
 	        dom.push('<div class="g-select">');
-	        dom.push('<div class="selectfix">'+bnrtitle+'<div class="icon_return" onclick="app.selectBack()"></div><div class="icon_refresh" onclick="window.location.reload(); "></div>');
-			dom.push('</div>');
+	  //       dom.push('<div class="selectfix">'+bnrtitle+'<div class="icon_return" onclick="app.selectBack()"></div><div class="icon_refresh" onclick="window.location.reload(); "></div>');
+			// dom.push('</div>');
 			/*====弹框返回 end====*/
 	//        dom.push('<div style="left:0; bottom:0; height:.8rem; width: 100%; background:white; font-size: .36rem; display: flex; justify-content: center; align-items: center;">');
 	//        dom.push();
@@ -171,8 +171,8 @@ var app ={
     selectBack:function(){
     	$(".g-select").remove();
     	/*===显示原生标题栏 start===*/
-    	if(app_isback)
-		{window.SYP.toggleShowBanner('show');}
+  //   	if(app_isback)
+		// {window.SYP.toggleShowBanner('show');}
 		/*===显示原生标题栏 end===*/
     },
     selectClick:function(){
@@ -185,8 +185,8 @@ var app ={
         		$(app.put).removeClass('on');
         		$(".g-select").remove();
 		        /*===显示原生标题栏 start===*/
-		        if(app_isback)
-				{window.SYP.toggleShowBanner('show');}
+		  //       if(app_isback)
+				// {window.SYP.toggleShowBanner('show');}
 				/*===显示原生标题栏 end===*/
         		if(app.selectOverFun != undefined && app.selectOverFun != '' && app.selectOverFun != null){
 					app.selectOverFun();

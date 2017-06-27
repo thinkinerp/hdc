@@ -65,8 +65,8 @@ var shopStateSeach = function(){
 	 						"					<div class='content-row'>" +
 	 						"						<p>采集点编号</p>" +
 	 						"						<p>"+item.eqId+"</p>" +
-	 						"						<!-- i标签 on1无需安装   on2已安装   on3安装失败  on4未安装   on5未开业  on6已拆除 -->" +
-	 						"						<p><i class='"+shopSta+"'></i>"+item.installStation+"</p>" +
+	 						"<!-- i标签 on1无需安装   on2已安装   on3安装失败  on4未安装   on5未开业  on6已拆除 -->" +(""== item.installStation ? "" : 
+	 						"						<p><i class='"+shopSta+"'></i>"+item.installStation+"</p>") +
 	 						"					</div>" +
 	 						"					<div class='content-row'>" +
 	 						"						<p>采集接口类型</p>" +
