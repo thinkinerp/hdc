@@ -201,7 +201,7 @@ var app ={
 				gs7selarr=app.listdata;
 				isgs7=true;
 			}
-			var sellidex=$(this).index();
+			var sellidex=$(this).index();			
 			if(objid=="gs5" &&selectdeparr.length!=0 && selectdeparr[sellidex]!="")
 				{
 					$("#gs6").html(selectdeparr[sellidex]);
@@ -209,7 +209,7 @@ var app ={
 					$("#gs6").parent("div").attr("class","");
 					$("#gs6").unbind("click");
 		       }
-		      else
+		      else if(objid=="gs5" &&selectdeparr.length!=0)
 		      {$("#gs6").html('未选择');
 			   $("#gs6").attr("class","on");
 			   $("#gs6").parent("div").attr("class","i-xiala-list");
