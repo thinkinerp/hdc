@@ -322,7 +322,8 @@
       sur_vip_data = #{surVipData,jdbcType=VARCHAR},
       attachement_url = #{attachmentUrl,jdbcType=VARCHAR},
       vip_info = #{vipInfo,jdbcType=VARCHAR},
-      sur_remarks = #{surRemarks,jdbcType=LONGVARCHAR}
+      sur_remarks = #{surRemarks,jdbcType=LONGVARCHAR},
+      sur_vip_info_ticket = #{surVipInfoTicket,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.intfocus.hdk.vo.Survey" >
