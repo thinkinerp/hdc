@@ -540,13 +540,13 @@ function buttonFixed()
 					$("#g-popupNo").click(function(){
 						//location.href=url;
 						//window.SYP.pageLink("调研详情",domainName + "/hdk/sjt/surveylist.html");
-						window.SYP.showAlertAndRedirectWithCleanStack('列表','返回列表',domainName+"/hdk/sjt/"+url);
+						window.SYP.cleanUrlStack(domainName+"/hdk/sjt/"+url);
 					})
 				}
 				else
 				{
 				//window.SYP.pageLink("调研详情",domainName + "/hdk/sjt/surveylist.html");	
-					window.SYP.showAlertAndRedirectWithCleanStack('列表','返回列表',domainName+"/hdk/sjt/"+url);
+					window.SYP.cleanUrlStack(domainName+"/hdk/sjt/"+url);
 
 				}
 			}
