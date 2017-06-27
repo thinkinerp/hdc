@@ -4,7 +4,7 @@
 //shopStateSeach();
 
  loadCombobox("installState","install",1);			
- loadCombobox("eqType","equipment_eq_style",1);					
+ loadCombobox("eqType","equipment_eq_style",1,false);					
 
 $('#middle').bind('click',function(){
 	shopStateSeach();

@@ -77,6 +77,8 @@ left join equipment on equipment.eq_id = problem.eq_id and equipment.pro_id = pr
 		</if>
 		
 	</where>    
+	     order by problem.updated_at desc
+	     
 	    <if test="null != page and ''!= page">
 	    <if test="null != pageSize and ''!= pageSize">
 			limit 	#{page,jdbcType=VARCHAR}, #{pageSize,jdbcType=VARCHAR}		    	

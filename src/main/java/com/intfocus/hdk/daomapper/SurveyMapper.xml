@@ -100,6 +100,9 @@
     <if test="null != order and '' != order ">
 			order by survey.updated_at ${order}
     </if>
+    <if test="null != order and '' != order ">
+			order by survey.updated_at desc 
+    </if>
     
       <if test="null != page and ''!= page">	 
       	   <if test="null != pageSize and ''!= pageSize">			

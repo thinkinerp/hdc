@@ -83,7 +83,7 @@ function codeUnique2(config){
 				return dtd.promise();
 }
 
- function loadCombobox(id , table,isAll){
+ function loadCombobox(id , table,isAll,includeDefault){
 	 var time = (new Date().getTime());
 	 $.ajax({ 
 		 url: '/hdk/state/getSome',
@@ -107,7 +107,7 @@ function codeUnique2(config){
 				 }else{
 					 str = str + ","+item.staName;
 				 }
-				 
+				 if(includeDefault){
 				 if(undefined!=item.isDefault&& 1==item.isDefault){
 					 if($('#'+id).is('div')){
 						 $('#'+id).html(item.staName);
@@ -115,7 +115,7 @@ function codeUnique2(config){
 						 $('#'+id).val(item.staName);
 					 }
 				 }
-				 
+				 }
 			 });
 			 $('#'+id).attr("data-select",str);
 			 state_getSome = null ;
