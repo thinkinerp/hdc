@@ -86,7 +86,7 @@ function codeUnique2(config){
  function loadCombobox(id , table,isAll){
 	 var time = (new Date().getTime());
 	 $.ajax({ 
-		 url: '/hdk/state/getSome',
+		 url: domainName + '/hdk/state/getSome',
 		 type:'get',
 		 data:{
 				'ownerTable':table,
