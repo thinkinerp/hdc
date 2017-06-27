@@ -43,6 +43,8 @@ public class Survey {
     private String surRemarks;
 
     private String shopPosition;
+
+    private String surVipInfoTicket;
     
     public  void modifyAtachement(String  files ,String picUrls ,String path){
     	
@@ -209,6 +211,14 @@ public class Survey {
 
 	public void setShopPosition(String shopPosition) {
 		this.shopPosition = shopPosition;
+	}
+
+	public String getSurVipInfoTicket() {
+		return surVipInfoTicket;
+	}
+
+	public void setSurVipInfoTicket(String surVipInfoTicket) {
+		this.surVipInfoTicket = surVipInfoTicket;
 	}
 
 

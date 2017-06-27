@@ -18,6 +18,7 @@
     <result column="attachement_url" property="attachmentUrl" jdbcType="VARCHAR" />
     <result column="sur_id" property="surId" jdbcType="VARCHAR" />
     <result column="updated_at" property="updatedAt" jdbcType="VARCHAR" />
+    <result column="sur_vip_info_ticket" property="surVipInfoTicket" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.intfocus.hdk.vo.Survey" extends="BaseResultMap" >
     <result column="sur_remarks" property="surRemarks" jdbcType="LONGVARCHAR" />
@@ -26,7 +27,7 @@
   <sql id="Base_Column_List" >
       survey.id, survey.pro_id, survey.shop_id, survey.sur_network, survey.sur_power, survey.sur_vip, survey.sur_vip_data
       , survey.created_at, survey.updated_at,survey.sur_id,shops.shop_name,shops.shop_mer_station,project.pro_name,survey.attachement_url,survey.vip_info
-      ,shops.shop_position
+      ,shops.shop_position,survey.sur_vip_info_ticket
   </sql>
   
   <sql id="extra_Column_List" >
@@ -216,6 +217,9 @@
       <if test="vipInfo != null" >
         vip_info,
       </if>
+      <if test="surVipInfoTicket != null" >
+        sur_vip_info_ticket,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -256,6 +260,9 @@
       </if>
       <if test="vipInfo != null" >
         #{vipInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="surVipInfoTicket != null" >
+        #{surVipInfoTicket,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -298,6 +305,10 @@
       <if test="vipInfo != null" >
       vip_info=   #{vipInfo,jdbcType=VARCHAR},
       </if>
+      <if test="surVipInfoTicket != null" >
+        sur_vip_info_ticket = #{surVipInfoTicket,jdbcType=VARCHAR},
+      </if>
+      
     </set>
     where sur_id = #{surId,jdbcType=INTEGER}
   </update>
