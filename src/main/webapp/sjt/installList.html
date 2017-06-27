@@ -19,6 +19,9 @@
 	window.SYP.setBannerTitle("安装列表");
         window.SYP.toggleShowBanner('show');
 </script>
+    <style>
+        .wrapbox{padding-bottom:5em;}
+    </style>
 </head>
 <body>        
         <div class="wrapbox">
@@ -145,7 +148,7 @@
                                     "                   <p>项目状态</p>" +
                                     "                   <p>"+rs[0].proStation+"</p>" +
                                     "                   <p>更新时间</p>" +
-                                    "                   <p style='flex:1.5;font-size:0.7em;'>"+rs[0].updatedAt+"</p>" +
+                                    "                   <p style='flex:1.5;'>"+rs[0].updatedAt+"</p>" +
                                     "               </div>"
                             );
                             shopStateSeach();

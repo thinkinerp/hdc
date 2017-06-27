@@ -18,7 +18,10 @@
                 window.SYP.setBannerTitle("问题列表");
                         window.SYP.toggleShowBanner('show');
         </script>
-	</head>
+		</head>
+	    <style>
+        .wrapbox{padding-bottom:5em;}
+    </style>
 	<body>
 	<div class="wrapbox">
 		<!-- 选择项目名称 -->
@@ -179,7 +182,7 @@
 			   		itemStyleDom.push('<p>项目状态</p>');
 			   		itemStyleDom.push('<p>'+data[0].proStation+'</p>');
 			   		itemStyleDom.push('<p >更新时间</p>');
-			   		itemStyleDom.push('<p style="flex:1.5;font-size:0.7em;">'+data[0].updatedAt+'</p>');
+			   		itemStyleDom.push('<p style="flex:1.5;">'+data[0].updatedAt+'</p>');
 			   		itemStyleDom.push('</div>');
 			   		$('.i-itemStyle-list').html(itemStyleDom.join(''));
 			   		me.issueClass();
