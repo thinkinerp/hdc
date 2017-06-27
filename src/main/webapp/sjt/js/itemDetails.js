@@ -55,19 +55,17 @@ if(undefined != allThing && null != allThing ){
 	$.each(allObjs.projectProblem,function(index,item){
 		 if('商务'==isUndefined(item.problemType) && '海鼎'==isUndefined(item.problemObject)){
 			setValue('haidingSale',item.count);
-			sum = sum + item.count;
+			sum = sum + Number(item.count);
 		}else if('技术'==isUndefined(item.problemType) && '海鼎'==isUndefined(item.problemObject)){
 			setValue('haidingTec',item.count);
-			sum = sum + item.count;
-		}else if('运维'==isUndefined(item.problemType) && '海鼎'==isUndefined(item.problemObject)){
-			setValue('haidingOperation',item.count);
+			sum = sum + Number(item.count);
 		}else if('运维'==isUndefined(item.problemType )&& '海鼎'==isUndefined(item.problemObject)){
 			setValue('haidingOperation',item.count);
-			sum = sum + item.count;
+			sum = sum + Number(item.count);
 		}else if('其他'==isUndefined(item.problemType )&& '客户'==isUndefined(item.problemObject)){
 			setValue('customer',item.count);
 			setValue('customerOther',item.count);
-			sum = sum + item.count;
+			sum = sum + Number(item.count);
 		}
 	});
 	setValue('haiding',sum);

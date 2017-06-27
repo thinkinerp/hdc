@@ -42,6 +42,8 @@ public class Survey {
 
     private String surRemarks;
 
+    private String shopPosition;
+    
     public  void modifyAtachement(String  files ,String picUrls ,String path){
     	
     	if(null != picUrls){
@@ -199,6 +201,14 @@ public class Survey {
 
 	public void setVipInfo(String vipInfo) {
 		this.vipInfo = vipInfo;
+	}
+
+	public String getShopPosition() {
+		return shopPosition;
+	}
+
+	public void setShopPosition(String shopPosition) {
+		this.shopPosition = shopPosition;
 	}
 
 

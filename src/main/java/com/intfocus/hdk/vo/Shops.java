@@ -34,7 +34,7 @@ public class Shops {
     private String installStation;
 
     private String surveyExist;
-
+    
     private String installExist;
 
     private String eqId ;

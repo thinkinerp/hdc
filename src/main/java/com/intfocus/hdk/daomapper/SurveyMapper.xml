@@ -6,6 +6,7 @@
     <result column="pro_id" property="proId" jdbcType="VARCHAR" />
     <result column="pro_name" property="proName" jdbcType="VARCHAR" />
     <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
+    <result column="shop_position" property="shopPosition" jdbcType="VARCHAR" />
     <result column="sur_network" property="surNetwork" jdbcType="VARCHAR" />
     <result column="shop_mer_station" property="shopMerStation" jdbcType="VARCHAR" />
     <result column="sur_power" property="surPower" jdbcType="VARCHAR" />
@@ -25,6 +26,7 @@
   <sql id="Base_Column_List" >
       survey.id, survey.pro_id, survey.shop_id, survey.sur_network, survey.sur_power, survey.sur_vip, survey.sur_vip_data
       , survey.created_at, survey.updated_at,survey.sur_id,shops.shop_name,shops.shop_mer_station,project.pro_name,survey.attachement_url,survey.vip_info
+      ,shops.shop_position
   </sql>
   
   <sql id="extra_Column_List" >
