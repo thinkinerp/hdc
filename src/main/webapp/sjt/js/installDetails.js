@@ -1,6 +1,8 @@
 /**
  *
  */
+
+var domainName=  "http://www.onetoend.cn";
 loadCombobox("cashSystem", "cash_system");
 loadCombobox("cashBrand", "cash_brand");
 loadCombobox("cashPort", "cash_port");
@@ -262,13 +264,15 @@ var loadInstall = function(allThing){
         // 采集点
         
         $('#eqId').val(isUndefined(allObjs.equipment.eqId));
-        if("硬件" == isUndefined(allObjs.equipment.eqType)){
-            $('#eqTypeHard').attr("class",'on');
-            $('#eqTypeSoft').attr("class",'off');
-        }else{
-            $('#eqTypeHard').attr("class",'off');
-            $('#eqTypeSoft').attr("class",'on');
-        }
+        // if("硬件" == isUndefined(allObjs.equipment.eqType)){
+        //     $('#eqTypeHard').attr("class",'on');
+        //     $('#eqTypeSoft').attr("class",'off');
+        // }else{
+        //     $('#eqTypeHard').attr("class",'off');
+        //     $('#eqTypeSoft').attr("class",'on');
+        // }
+        console.log(allObjs.equipment.eqType);
+        $("#eqTypeHard").html(isUndefined(allObjs.equipment.eqType));
         $('#eqStyle').html(isUndefined(allObjs.equipment.eqStyle));
         $('#softwareVersion').val(isUndefined(allObjs.equipment.softwareVersion));
         /* $('#installTime').val(isUndefined(allObjs.equipment.installTime)); */
@@ -560,7 +564,7 @@ var submit = function() {
           ,
         'equipment.id': allObjs.equipment.id,
         'equipment.eqId': $("#eqId").val(),
-        'equipment.eqType': $('#eqTypeHard').attr('class') == "on" ? "硬件" : "软件",
+        'equipment.eqType': $('#eqTypeHard').html(),
         'equipment.eqStyle': $("#eqStyle").html()
           //          ,'hardwareId':
           ,
@@ -701,7 +705,7 @@ var submit = function() {
           //          ,'equipment.id':allObjs.equipment.id
      
         'equipment.eqId': $("#eqId").val(),
-        'equipment.eqType': $('#eqTypeHard').attr('class') == "on" ? "硬件" : "软件",
+        'equipment.eqType': $('#eqTypeHard').html(),
         'equipment.eqStyle': $("#eqStyle").html()
           //          ,'hardwareId':
           ,
