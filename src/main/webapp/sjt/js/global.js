@@ -209,7 +209,7 @@ var app ={
 					$("#gs6").parent("div").attr("class","");
 					$("#gs6").unbind("click");
 		       }
-		      else if(objid=="gs5" &&selectdeparr.length!=0)
+		      else if(objid=="gs5" && selectdeparr[sellidex]=="")
 		      {$("#gs6").html('未选择');
 			   $("#gs6").attr("class","on");
 			   $("#gs6").parent("div").attr("class","i-xiala-list");
