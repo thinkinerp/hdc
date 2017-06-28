@@ -174,26 +174,34 @@ public class InstallController implements ApplicationContextAware {
 		   }
 		   
 		   //找到收款机
-		   where.put("cashId", installs.get(0).getCashId());
-		   List<Cash> cashes = cashMapper.selectByWhere(where);
-		   
-		   if(null != cashes && cashes.size() > 0 ){
-			   json.put("cash",cashes.get(0));
+		   if(!"".equalsIgnoreCase(installs.get(0).getCashId())){
+			   where.put("cashId", installs.get(0).getCashId());
+			   List<Cash> cashes = cashMapper.selectByWhere(where);
+			   
+			   if(null != cashes && cashes.size() > 0 ){
+				   json.put("cash",cashes.get(0));
+			   }
 		   }
 		   //打印机
-		   where.put("printerId", installs.get(0).getPrinterId());
-		   List<Printer> printers = printerMapper.selectByWhere(where);
 		   
-		   if(null != printers && printers.size() > 0 ){
-			   json.put("printer",printers.get(0));
+		   if(!"".equalsIgnoreCase(installs.get(0).getPrinterId())){
+			   where.put("printerId", installs.get(0).getPrinterId());
+			   List<Printer> printers = printerMapper.selectByWhere(where);
+			   
+			   if(null != printers && printers.size() > 0 ){
+				   json.put("printer",printers.get(0));
+			   }
 		   }
 		   //采集点
+		   if(!"".equalsIgnoreCase(installs.get(0).getEqId())){
+			
 		   where.put("eqId", installs.get(0).getEqId());
-		   List<Equipment> equipments = equipmentMapper.selectByWhere(where);
-		   
-		   if(null != equipments && equipments.size() > 0 ){
-			   json.put("equipment",equipments.get(0));
+			   List<Equipment> equipments = equipmentMapper.selectByWhere(where);
+			   if(null != equipments && equipments.size() > 0 ){
+				   json.put("equipment",equipments.get(0));
+			   }
 		   }
+		   
 		   //项目
 		   where.put("proId", installs.get(0).getProId());
 		   List<Project> projects = projectMapper.selectByWhere(where);
