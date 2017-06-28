@@ -456,15 +456,19 @@ function removeByValue(arr, val) {
 function chk_brand(dyjbrand,dyjxh,dyjPort,obj)
 { if((dyjbrand!=""&&dyjbrand!="未选择") || (dyjxh!=""&&dyjxh!="未选择") || (dyjPort!=""&&dyjPort!="未选择") )
 				 {
-				   if (form_empty({code:$(obj).val(), which:"收银机编号"}))
-				   {return true;}
+				   if (form_empty({code:$(obj).val(),which:"收银机编号"}))
+				   {swiper2.slideTo(2, 0, true);
+				   	$("#g-popupOk").bind("click",function(){ $(obj).focus();})           			
+				   	return true;}
 			     }
 }
 function chk_print(dyjbrand,dyjxh,dyjPort,obj)
 { if((dyjbrand!=""&&dyjbrand!="未选择") || (dyjxh!=""&&dyjxh!="未选择") || (dyjPort!=""&&dyjPort!="未选择") )
 				 { 
 				   if (form_empty({code:$(obj).val(), which:"打印机编号"}))
-				   {return true;}
+				   {swiper2.slideTo(3, 0, true);
+           			$("#g-popupOk").bind("click",function(){ $(obj).focus();})          
+				   	return true;}
 			     }
 }
 
@@ -474,6 +478,8 @@ function chk_equipment(){
 			|| ($("softwareVersion").html() == "未选择" &&  $("softwareVersion").html() == "")
 			|| ("" == $("#installTime").val() && "未选择" == $("#installTime").val())){
 		  if(form_empty({code:$("#eqId").val(), which:"采集点编号"})){
+		  	 swiper2.slideTo(4, 0, true);
+		  	 $("#g-popupOk").bind("click",function(){   $("#eqId").focus();}) 
 			  return true ;
 		  }else{
 			  return false;

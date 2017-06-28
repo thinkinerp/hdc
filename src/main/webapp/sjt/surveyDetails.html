@@ -646,7 +646,8 @@
 				 if(form_empty({code:$('#itemName').html(), which:"项目名称"}))
 				 	{return;}
 				 if(form_empty({code:$('#shopName').html(), which:"商铺名称"}))
-				 	{return;}
+				 	 {swiper2.slideTo(1, 0, true);
+        		return;}
 				 //验证收银机编号和打印机编号 start
 				 var syjSystem_txt=$("#syjSystem").html();
 				 var syjBrand_txt=$("#syjBrand").html();

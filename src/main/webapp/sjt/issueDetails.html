@@ -825,7 +825,8 @@
                     if(form_empty({code:$('#sp1').html(), which:"项目名称"}))
                         {return;}
                     if(form_empty({code:$('#sp2').html(), which:"商铺名称"}))
-                        {return;}
+                        {swiper2.slideTo(1, 0, true);
+                         return;}
                 $.when(codeUnique({
                     tableName : "problem",
                     codeField : "problem_id",
