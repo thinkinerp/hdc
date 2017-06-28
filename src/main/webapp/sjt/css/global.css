@@ -139,7 +139,7 @@ input[type=button] {width: auto; overflow: visible;}
 .i-xiala-list div{ color:#1f4ba4; height:.76rem; padding-left: .55rem; display: flex; justify-content: flex-start; align-items: center; margin-right: .4rem; background: url(../images/icon1.png) no-repeat right 50%; background-size:.24rem .16rem;}
 .i-xiala-list div#proName{background:none;}
 /*.i-xiala-list .on{ color: #e4e4e4;}*/
-#shopName,#sp2,#gs2,#gs6,#gs7,#asddas{color:#e4e4e4;}
+.i-xiala-list #shopName.on,.i-xiala-list #sp2.on,.i-xiala-list #gs2.on,.i-xiala-list #gs6.on,.i-xiala-list #gs7.on,.i-xiala-list #asddas.on{color:#e4e4e4;}
 .g-ok{ height: 1.2rem; width: 100%; background: #fff; position: fixed; z-index:3; left:0; bottom:0; border-top:solid 1px #eee; display: flex; justify-content: center; align-items: center;}
 .g-ok div{ width: 5rem; height: .8rem; border-radius: .4rem; background: #1f4ba5; color: #fff; display: flex; justify-content: center; align-items: center;}
 .g-importList{font-size: .24rem; padding-top: .3rem;}
