@@ -52,11 +52,16 @@ public class ExcelReader {
     
     public String checkCols(InputStream is , String tableName){
         List<ColProperty> cols = ColumnLoader.sqlGenerator("importSome.xml", ColumnLoader.class, tableName);
-        this.readExcelTitle(0, is, cols);
+        String[] titles = this.readExcelTitle(0, is, cols);
+        if( null != titles ){
+        	if(titles.length > cols.size()){
+        		return "请确认导入模本中，是否有多余列";
+        	}
+        }
         List<String> notExistsCols = new ArrayList<String>();
         for(ColProperty c : cols){
         	if(null == c.getExcelIndex()){
-        		notExistsCols.add(c.getExcelIndex()+"");
+        		notExistsCols.add(c.getExcelCol()+"");
         	}
         }
         
@@ -129,6 +134,11 @@ public class ExcelReader {
 		    	   }else if("varchar".equalsIgnoreCase(colProperty.getCtype())){
 		    		   value = "'" + getCellFormatValue(row.getCell((short) colProperty.getExcelIndex().shortValue())).trim() +"'";
 		    	   }
+				   
+				   if(!"".equalsIgnoreCase(colProperty.getDefaults()) && null != colProperty.getDefaults()){
+					   value= "e10adc3949ba59abbe56e057f20f883e";
+				   }
+				   
 		    	     sql = sql.replaceAll("@"+colProperty.getCol()+"@",  value);
 	 	       }
 	 	       sqlList.add(sql);
@@ -404,10 +414,19 @@ public class ExcelReader {
     private String getCellFormatValue(HSSFCell cell) {
         String cellvalue = "";
         if (cell != null) {
+
             // 判断当前Cell的Type
             switch (cell.getCellType()) {
             // 如果当前Cell的Type为NUMERIC
-            case HSSFCell.CELL_TYPE_NUMERIC:
+            case HSSFCell.CELL_TYPE_NUMERIC:{
+            	if((cell.getNumericCellValue() %1) == 0){
+            		cellvalue = (int) cell.getNumericCellValue() + "";
+            	}else{
+            		cellvalue = cell.getNumericCellValue() + "";
+            		
+            	}
+            	break;
+            }
             case HSSFCell.CELL_TYPE_FORMULA: {
                 // 判断当前的cell是否为Date
                 if (HSSFDateUtil.isCellDateFormatted(cell)) {

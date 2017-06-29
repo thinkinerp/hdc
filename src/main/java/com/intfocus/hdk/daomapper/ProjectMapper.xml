@@ -21,6 +21,7 @@
     <result column="pro_already_per" property="proAlreadyPer" jdbcType="VARCHAR" />
     <result column="pro_check" property="proCheck" jdbcType="INTEGER" />
     <result column="pro_check_per" property="proCheckPer" jdbcType="VARCHAR" />
+    <result column="pro_customer_relationship" property="proCustomerRelationship" jdbcType="VARCHAR" />
     <result column="left_num" property="leftNum" jdbcType="INTEGER" />
     <result column="count" property="Count" jdbcType="VARCHAR" />
     <result column="pro_not" property="proNot" jdbcType="INTEGER" />
@@ -31,7 +32,7 @@
   <sql id="Base_Column_List" >
     id, pro_id, pro_name, pro_edition, pro_station, pro_manager_pro, pro_manager_acc, 
     pro_engineer, pro_coordination, pro_coordination_phone, pro_updata_time, pro_todal, 
-    pro_need, pro_already, pro_check, pro_not, created_at, updated_at,is_last
+    pro_need, pro_already, pro_check, pro_not, created_at, updated_at,is_last,pro_customer_relationship
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -135,6 +136,7 @@ group by  c.cash_port
 			           ,p.pro_updata_time  
 			           ,p.pro_todal 
 			           ,p.pro_need
+			           ,pro_customer_relationship
 			           ,already.install_data as proAlready
 				   ,checked.install_data as proCheck
 				   ,offline.install_data as proNot

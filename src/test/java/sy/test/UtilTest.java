@@ -12,6 +12,10 @@ import com.intfocus.hdk.util.ComUtil;
 public class UtilTest {
 
 	@Test
+	public void StringIndex(){
+		System.out.println("门店信息导入模板.xls".indexOf("项目"));
+	}
+	@Test
 	public void comUtilDateFormat() {
 		System.out.println(ComUtil.dateFormat(new Date(), "yyMMdd"));	
 		

@@ -1,5 +1,7 @@
 package com.intfocus.hdk.vo;
 
+import com.intfocus.hdk.util.ComUtil;
+
 public class Shops {
     private Integer id;
 
@@ -10,7 +12,9 @@ public class Shops {
     private String shopFloor;
 
     private String shopMerName;
-
+    
+    private String installEndtim;
+    
     private String shopMerStation;
 
     private String shopType;
@@ -32,7 +36,9 @@ public class Shops {
     private String installId;
     
     private String installStation;
-
+    
+    private String installEndtime;
+    
     private String surveyExist;
     
     private String installExist;
@@ -189,5 +195,21 @@ public class Shops {
 
 	public void setInstallExist(String installExist) {
 		this.installExist = installExist;
+	}
+
+	public String getInstallEndtim() {
+		return installEndtim;
+	}
+
+	public void setInstallEndtim(String installEndtim) {
+		this.installEndtim = installEndtim;
+	}
+
+	public String getInstallEndtime() {
+		return ComUtil.dateFormat(installEndtime);
+	}
+
+	public void setInstallEndtime(String installEndtime) {
+		this.installEndtime = installEndtime;
 	}
 }

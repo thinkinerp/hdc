@@ -8,7 +8,7 @@
         </foreach>
     </insert>
     <insert id="excuteOneByOne" parameterType="java.lang.String">
-           ${item}
+           ${_parameter}
     </insert>
 	
 	

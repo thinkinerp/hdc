@@ -17,6 +17,7 @@
     <result column="eq_type" property="eqType" jdbcType="VARCHAR" />
     <result column="install_id" property="installId" jdbcType="VARCHAR" />
     <result column="install_station" property="installStation" jdbcType="VARCHAR" />
+    <result column="install_endtime" property="installEndtime" jdbcType="VARCHAR" />
     <result column="eq_id" property="eqId" jdbcType="VARCHAR" />
     <result column="cash_system" property="cashSystem" jdbcType="VARCHAR" />
     <result column="install_exist" property="installExist" jdbcType="VARCHAR" />
@@ -27,6 +28,7 @@
     , shops.shop_mer_name, shops.shop_mer_station, shops.shop_type, 
     shops.shop_sec_type, shops.shop_name, shops.pro_id
     ,equipment.eq_type,cash.cash_system,install.install_id,install.install_station,equipment.eq_id,cash.cash_id,equipment.eq_style
+    ,install.updated_at as install_endtime
   </sql>
   <sql id="origin_Column_List" >
     shops.id, shops.shop_id, shops.shop_position, shops.shop_floor

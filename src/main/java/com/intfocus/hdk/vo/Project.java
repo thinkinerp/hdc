@@ -7,7 +7,9 @@ public class Project {
     private Integer id;
 
     private String proId;
-
+    
+    private String proCustomerRelationship;
+    
     private String proName;
 
     private String proEdition;
@@ -254,4 +256,15 @@ public class Project {
 	public void setLeftNum(Integer leftNum) {
 		this.leftNum = leftNum;
 	}
+
+	public String getProCustomerRelationship() {
+		return proCustomerRelationship;
+	}
+
+	public void setProCustomerRelationship(String proCustomerRelationship) {
+		this.proCustomerRelationship = proCustomerRelationship;
+	}
+
+
+
 }

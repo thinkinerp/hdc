@@ -150,9 +150,9 @@
                           <span class="help-inline">请上传文件</span> </div>
                       </div>
                       <div class="control-group">
-                        <label class="control-label">选择<span class="required">*</span></label>
+                   <!--        <label class="control-label">选择<span class="required">*</span></label>
                         <div class="controls">
-                          <select id="tableName" name ="tableName"  class="span6 m-wrap" >
+                        <select id="tableName" name ="tableName"  class="span6 m-wrap" >
                             <option value="user" >用户
                             </option>
                             <option value="project" >项目
@@ -162,12 +162,12 @@
                             <option value="shops" >门店信息
                              </option>
                           </select>
-                          <span class="help-inline">请选择</span> </div>
+                          <span class="help-inline">请选择</span> </div -->
                       </div>
                     </div>
                   </div>
                   <div class="form-actions clearfix">
-                    <input type="submit" class="btn blue button-next" value="上传"/>
+                    <input type="submit" class="btn blue button-next" value="上传" onclick="return check(this.form)"/>
                   </div>
                 </div>
               </form>
@@ -210,7 +210,15 @@
 		   App.init();
 		   $(".page-content").css("height",$(window).height());
 		});
+        function check(form) {
 
+            if(form.file_upload.value=='') {
+                  alert("请选择 excel 文件!");
+                  form.file_upload.focus();
+                  return false;
+             }
+           return true;
+           }
 	</script> 
 
 <!-- END JAVASCRIPTS -->
