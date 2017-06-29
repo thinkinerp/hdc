@@ -7,22 +7,36 @@
 </head>
 <body>
 <script type="text/javascript" charset="utf-8">
+	// $.ajax({
+	    // url:"http://localhost:8070/yhportal/userapi/login",
+	    // dataType:"json",
+	    // data:{
+	        // password:"123456",
+	        // jobnumber:"80666444"
+	    // },
+	   // type:"post",
+	   // success:function(res){
+	      // console.log(res); 
+	   // },
+	   // error:function(res){
+// 	       
+	   // } 
+	// });
 	$.ajax({
-	    url:"http://localhost:8070/yhportal/userapi/login",
-	    dataType:"json",
+	    url:'http://localhost:8080/hdk/problem/deleteMessage',
 	    data:{
-	        password:"123456",
-	        jobnumber:"80666444"
+	        id:1
 	    },
-	   type:"post",
-	   success:function(res){
-	      console.log(res); 
-	   },
-	   error:function(res){
-	       
-	   } 
+	    dataType:'json',
+	    type:'get',
+	    success:function(rs){
+	        console.log(rs);
+	    },
+	    error:function(rs){
+	        console.log(rs);
+	    }
+	    
 	});
-	
 </script>
 </body>
 </html>

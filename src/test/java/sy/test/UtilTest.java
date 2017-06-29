@@ -8,9 +8,20 @@ import org.junit.Test;
 
 import com.alibaba.fastjson.JSONObject;
 import com.intfocus.hdk.util.ComUtil;
+import com.intfocus.hdk.vo.Project;
 
 public class UtilTest {
 
+	@Test 
+	public void Null(){
+		Project p = new Project();
+		p.setCount(null);
+		p.setCreatedAt(null);
+		p.setId(null);
+		p.setIsLast(1);
+		p.setLeftNum(null);
+		System.out.println(ComUtil.reflect(p));
+	}
 	@Test
 	public void StringIndex(){
 		System.out.println("门店信息导入模板.xls".indexOf("项目"));

@@ -26,6 +26,7 @@
 		<c col = "pro_need" excelCol = "" default = ""  ctype="int" foreign = "0" primary = "0">需要安装的数量</c>
 		<c col = "pro_already" excelCol = "" default = ""  ctype="int" foreign = "0" primary = "0">已安装的数量</c>
 		<c col = "pro_check" excelCol = "" default = ""  ctype="int" foreign = "0" primary = "0">验收的数量</c>
+		<c col = "pro_customer_relationship" excelCol = "" default = ""  ctype="int" foreign = "0" primary = "0">客情关系</c>
 		<c col = "pro_not" excelCol = "" default = ""  ctype="int" foreign = "0" primary = "0">未上线的数量</c>
 	</table>
 

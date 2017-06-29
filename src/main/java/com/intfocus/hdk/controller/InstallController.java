@@ -4,6 +4,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -102,15 +103,18 @@ public class InstallController implements ApplicationContextAware {
 			}
 
 	    	installmapper.insertSelective(install);
-	    	if(null != printer.getPrinterId() && !"".equalsIgnoreCase(printer.getPrinterId()) ){
+	    	if(ComUtil.reflect(printer)){
+	    		printer.setPrinterId(UUID.randomUUID().toString());
 	    		printerMapper.insertSelective(printer);
 	    	}
 
-	    	if(null != cash.getCashId() && !"".equalsIgnoreCase(cash.getCashId())){
+	    	if(ComUtil.reflect(cash)){
+	    		cash.setCashId(UUID.randomUUID().toString());
 	    		cashMapper.insertSelective(cash);
 	    	}
 
-	    	if(null != equipment.getEqId()&& !"".equalsIgnoreCase(equipment.getEqId())){
+	    	if(ComUtil.reflect(equipment)){
+	    		equipment.setEqId(UUID.randomUUID().toString());
 				equipmentMapper.insertSelective(equipment);
 	    	}
 	    	

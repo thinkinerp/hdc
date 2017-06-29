@@ -48,6 +48,7 @@ if(undefined != allThing && null != allThing ){
 	setValue("proStation",allObjs.project.proStation);
 	setValue("proManagerPro",allObjs.project.proManagerPro);
 	setValue("proCoordination",allObjs.project.proCoordination);
+	$("#proCustomerRelationship").html(allObjs.project.proCustomerRelationship);
 	setValue("proCoordinationPhone",allObjs.project.proCoordinationPhone);
 	setValue("proManagerPro1",allObjs.project.proCoordination);
 	setValue("proUpdataTime",allObjs.project.proUpdataTime);

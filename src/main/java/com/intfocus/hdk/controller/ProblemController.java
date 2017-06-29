@@ -240,6 +240,20 @@ public class ProblemController implements ApplicationContextAware {
 			}
 		}
     }
+        @RequestMapping(value = "deleteMessage" , method=RequestMethod.GET)
+        @ResponseBody
+        public String deleteMessage(HttpServletResponse res , HttpServletRequest req ,HttpSession session
+        		, Message message ,String callback){
+        	JSONObject rs = new JSONObject();
+        	try{
+        		messageMapper.deleteByPrimaryKey(message.getId());	
+        		rs.put("message", "success");
+        	}catch(Exception e){
+        		e.printStackTrace();
+        		rs.put("message", "fail");
+        	}
+        	return rs.toJSONString(); 
+        }
         @RequestMapping(value = "saveMessage" , method=RequestMethod.GET)
         @ResponseBody
         public String saveMessage(HttpServletResponse res , HttpServletRequest req ,HttpSession session
