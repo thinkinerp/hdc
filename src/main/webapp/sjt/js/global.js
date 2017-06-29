@@ -40,7 +40,7 @@ var m_loading = {
 
 		}
 	}
-
+var hasperson=false;
 var app ={
 	listdata:'', //选择列表数据
 	put:'', 	//选择后要显示的位置
@@ -84,10 +84,12 @@ var app ={
 	select:function(obj,type,fun){ //obj(有data-select的那个标签,传this 例如 app.select(this))    type: 1只能选择   2可以选择也可以输入 输入匹配   3可以选择可以输入 输入匹配 并可选择没匹配项
 		/*===隐藏原生标题栏 start1===*/
 		// window.SYP.toggleShowBanner('hidden');
-		/*===隐藏原生标题栏 end1===*/
+		/*===隐藏原生标题栏 end1===*/		    
 			app.put = obj;
 			objid=obj.id;
 			app.selecttype = type;
+			if($(obj).hasClass("gs-selperson"))
+			{hasperson=true;}
 			if(fun != undefined && fun != '' && fun != null){	
 				app.selectOverFun = fun;
 			}
@@ -179,7 +181,10 @@ var app ={
     	var ls;
     	$("#g-select-list li").click(function(){
         	$(this).addClass('on').siblings('li').removeClass('on');
-        	 ls = $(this).html();        	   
+        	 ls = $(this).html(); 
+        	 if(hasperson)
+        	 {ls=ls.split("-")[0];}
+
         	setTimeout(function(){
         		$(app.put).html(ls);
         		$(app.put).removeClass('on');
@@ -190,7 +195,14 @@ var app ={
 				/*===显示原生标题栏 end===*/
         		if(app.selectOverFun != undefined && app.selectOverFun != '' && app.selectOverFun != null){
 					app.selectOverFun();
-				}
+				}				
+				if(objid=="eqTypeHard")
+				{
+					if ($("#eqTypeHard").html()=="硬件数据通")
+		             {$("#softCodeOrVersion").html("硬件编号"); }
+		           else
+		          	{$("#softCodeOrVersion").html("软件版本"); }
+		      }
         	},300)
         	/*===问题列表 start===*/
 
@@ -456,15 +468,19 @@ function removeByValue(arr, val) {
 function chk_brand(dyjbrand,dyjxh,dyjPort,obj)
 { if((dyjbrand!=""&&dyjbrand!="未选择") || (dyjxh!=""&&dyjxh!="未选择") || (dyjPort!=""&&dyjPort!="未选择") )
 				 {
-				   if (form_empty({code:$(obj).val(), which:"收银机编号"}))
-				   {return true;}
+				   if (form_empty({code:$(obj).val(),which:"收银机编号"}))
+				   {swiper2.slideTo(2, 0, true);
+				   	$("#g-popupOk").bind("click",function(){ $(obj).focus();})           			
+				   	return true;}
 			     }
 }
 function chk_print(dyjbrand,dyjxh,dyjPort,obj)
 { if((dyjbrand!=""&&dyjbrand!="未选择") || (dyjxh!=""&&dyjxh!="未选择") || (dyjPort!=""&&dyjPort!="未选择") )
 				 { 
 				   if (form_empty({code:$(obj).val(), which:"打印机编号"}))
-				   {return true;}
+				   {swiper2.slideTo(3, 0, true);
+           			$("#g-popupOk").bind("click",function(){ $(obj).focus();})          
+				   	return true;}
 			     }
 }
 
@@ -474,6 +490,8 @@ function chk_equipment(){
 			|| ($("softwareVersion").html() == "未选择" &&  $("softwareVersion").html() == "")
 			|| ("" == $("#installTime").val() && "未选择" == $("#installTime").val())){
 		  if(form_empty({code:$("#eqId").val(), which:"采集点编号"})){
+		  	 swiper2.slideTo(4, 0, true);
+		  	 $("#g-popupOk").bind("click",function(){   $("#eqId").focus();}) 
 			  return true ;
 		  }else{
 			  return false;

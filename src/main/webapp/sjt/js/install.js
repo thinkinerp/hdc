@@ -74,13 +74,18 @@ var shopStateSeach = function(){
 	 						"						<p>采集接口类型</p>" +
 	 						"						<p>"+(undefined == item.eqType?"无":item.eqType)+"</p>" +
 	 						"					</div>" +
-	 						"					<div class='content-row'>" +
-	 						"						<p>收银机编号</p>" +
-	 						"						<p>"+(undefined == item.cashSystem?"无":item.cashId)+"</p>" +
-	 						"					</div>" +
+	 						// "					<div class='content-row'>" +
+	 						// "						<p>收银机编号</p>" +
+	 						// "						<p>"+(undefined == item.cashSystem?"":item.cashId)+"</p>" +
+	 						// "					</div>" +
+
 	 						"					<div class='content-row'>" +
 	 						"						<p>采集方式</p>" +
 	 						"						<p>"+(undefined == item.eqStyle?"无":item.eqStyle)+"</p>" +
+	 						"					</div>" +
+	 						"					<div class='content-row'>" +
+	 						"						<p>最后操作时间</p>" +
+	 						"						<p>"+(undefined == item.installEndtime?"":item.installEndtime)+"</p>" +
 	 						"					</div>" +
 	 						"				</div>"
 	 					
