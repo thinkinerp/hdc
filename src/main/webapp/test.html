@@ -25,11 +25,12 @@
 	$.ajax({
 	    url:'http://localhost:8080/hdk/problem/deleteMessage',
 	    data:{
-	        id:1
+	        id:1//ID 为批注的自增 id，可以在 getMessage 接口找到
 	    },
 	    dataType:'json',
 	    type:'get',
 	    success:function(rs){
+	        //rs 为 JSON 格式，message：fail 删除失败，success 删除成功
 	        console.log(rs);
 	    },
 	    error:function(rs){
