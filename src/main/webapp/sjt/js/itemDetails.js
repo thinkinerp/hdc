@@ -48,7 +48,17 @@ if(undefined != allThing && null != allThing ){
 	setValue("proStation",allObjs.project.proStation);
 	setValue("proManagerPro",allObjs.project.proManagerPro);
 	setValue("proCoordination",allObjs.project.proCoordination);
-	$("#proCustomerRelationship").html(allObjs.project.proCustomerRelationship);
+	var starttxt="",txtship;
+	if(allObjs.project.proCustomerRelationship>=1 && allObjs.project.proCustomerRelationship<=5)
+	{
+		txtship=Math.floor(allObjs.project.proCustomerRelationship);
+	}
+	if(allObjs.project.proCustomerRelationship>5) 
+		{txtship=5;}
+	for(i=1;i<=txtship;i++)
+		{starttxt+="★"}
+	
+	$("#proCustomerRelationship").html(starttxt);
 	setValue("proCoordinationPhone",allObjs.project.proCoordinationPhone);
 	setValue("proManagerPro1",allObjs.project.proCoordination);
 	setValue("proUpdataTime",allObjs.project.proUpdataTime);
