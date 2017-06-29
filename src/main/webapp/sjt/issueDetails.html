@@ -347,8 +347,7 @@
                     dataType : 'jsonp',
                     jsonp : "callback",
                     data : {
-                        'problemId' : id,//问题编号
-                        'mesUser':params["userName"]
+                        'problemId' : id//问题编号
                     },
                     success : function(rs) {
                         $("#messageContext").val("");
@@ -358,20 +357,16 @@
                                 "<div class='i-itemDetail-area'>" + 
                                 "               <div class='i-itemDetail-area-title'>" + 
                                 "                   <div style='flex:5'>" + item.mesUser +"<span class='bluefont'>("+ item.createdAt +  ")</span></div>" + 
-                                "                   <div class='btndel_mes'>删除</div>" + "               </div>" +
+                                "                   <div class='btndel_mes' onclick='del_message("+item.createdt+","+item.id+");'>删除</div>" + "               </div>" +
                                  "               <div class='i-itemDetail-area-content'>" 
                                  + "                   <div class='content-row'>" + 
                                  "                       <span>" + item.mesContent + "</span>" + 
                                  "                   </div>" + 
                                  "               </div>" + 
                                  "           </div>");
-                         $('#messageArea').on("click",".btndel_mes",function(){
-                            // var mydate1 = new Date();
-                            // var mydate2=new Date(item.createdAt);
-                            // var m=parseInt(Math.abs(mydate1-mydate2)/1000/60);
-                            del_message(item.createdt,item.id);
-                           })
-                                 
+
+                        if(params["userName"]!=item.mesUser)
+                         {$(".btndel_mes").hide();}                                 
                         });
 
                         swiper2.slideTo(5, 0, false);
