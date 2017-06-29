@@ -357,16 +357,23 @@
                             $('#messageArea').append(
                                 "<div class='i-itemDetail-area'>" + 
                                 "               <div class='i-itemDetail-area-title'>" + 
-                                "                   <div>" + item.mesUser + "</div>" + 
-                                "                   <p>" + item.updatedAt + "</p>" + "               </div>" +
+                                "                   <div style='flex:5'>" + item.mesUser +"<span class='bluefont'>("+ item.createdAt +  ")</span></div>" + 
+                                "                   <div class='btndel_mes'>删除</div>" + "               </div>" +
                                  "               <div class='i-itemDetail-area-content'>" 
                                  + "                   <div class='content-row'>" + 
                                  "                       <span>" + item.mesContent + "</span>" + 
                                  "                   </div>" + 
                                  "               </div>" + 
                                  "           </div>");
+                         $('#messageArea').on("click",".btndel_mes",function(){
+                            // var mydate1 = new Date();
+                            // var mydate2=new Date(item.createdAt);
+                            // var m=parseInt(Math.abs(mydate1-mydate2)/1000/60);
+                            del_message(item.createdt,item.id);
+                           })
                                  
                         });
+
                         swiper2.slideTo(5, 0, false);
                        if(1 == toHome){
                         swiper2.slideTo(0, 0, false);
@@ -378,7 +385,29 @@
                     }
                 });
             };
-
+            function del_message(createdt,id)
+            {
+                $.ajax({
+                url:domainName + '/hdk/problem/deleteMessage',
+                data:{
+                    id:id//ID 为批注的自增 id，可以在 getMessage 接口找到
+                },
+                dataType:'json',
+                type:'get',
+                success:function(rs){
+                    //rs 为 JSON 格式，message：fail 删除失败，success 删除成功 expired
+                    if(rs.message=="expired")
+                    {app.alert("只能删除1分钟以内的批注",1);}
+                    else
+                    {app.alert("删除成功",1);}
+                    loadMessage(data.problemId,0);
+                    console.log(rs);
+                },
+                error:function(rs){
+                    console.log(rs);
+                }
+            });
+            }
             var params = function() {
                 var query = {}, search = window.location.search.substring(1), parts = search.split('&'), pairs = [];
 
