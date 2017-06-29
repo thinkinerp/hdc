@@ -46,7 +46,7 @@
                 <div class="swiper-slide">
                     解决方案
                 </div>
-                <div class="swiper-slide">
+                <div class="swiper-slide"  id="swiper-memo1">
                     批注
                 </div>
             </div>
@@ -86,9 +86,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div id="gs3" alertTitle="跟踪方" data-select="海鼎,客户">
-
-                                    </div>
+                                    <div id="gs3" alertTitle="跟踪方" data-select="海鼎,客户">海鼎</div>
                                 </div>
                             </div>
                         </li>
@@ -98,9 +96,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div  id="gs4" class="on"  alertTitle="问题类型">
-
-                                    </div>
+                                    <div  id="gs4" class="on"  alertTitle="问题类型">运维</div>
                                 </div>
                             </div>
                         </li>
@@ -110,7 +106,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div id="gs5" class="on" alertTitle="跟进人">
+                                    <div id="gs5" class="gs-selperson on" alertTitle="跟进人">
 
                                     </div>
                                 </div>
@@ -193,7 +189,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-date">
-                                    <input id="ms1" type="date" placeholder="未选择" onblur="app.dateVerify(this,1)"/>
+                                    <input id="ms1" type="date" placeholder="未选择"/>
                                 </div>
                             </div>
                         </li>
@@ -203,7 +199,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-date">
-                                    <input  id="ms2" type="date" placeholder="未选择" onblur="app.dateVerify(this,1)"/>
+                                    <input  id="ms2" type="date" placeholder="未选择"/>
                                 </div>
                             </div>
                         </li>
@@ -213,7 +209,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-date">
-                                    <input  id="ms3" type="date" placeholder="未选择" onblur="app.dateVerify(this,2)"/>
+                                    <input  id="ms3" type="date" placeholder="未选择"/>
                                 </div>
                             </div>
                         </li>
@@ -233,7 +229,7 @@
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-date">
-                                    <input  id="ms5" type="date"  placeholder="未选择" onblur="app.dateVerify(this,2)"/>
+                                    <input  id="ms5" type="date"  placeholder="未选择"/>
                                 </div>
                             </div>
                         </li>
@@ -287,7 +283,7 @@
                 <div class="swiper-slide">
                     <textarea class="i-contenteditable textarea-text1" placeholder="请输入解决方案"  id="jjfa" contenteditable="true" style="height:3.4rem;"></textarea>
                 </div>
-                <div class="swiper-slide">
+                <div class="swiper-slide" id="swiper-memo2">
                     <textarea class="i-contenteditable textarea-text1" contenteditable="true"  placeholder="请输入批注" id ="messageContext"></textarea>
                     <div class="i-contenteditable-ok" id = "saveMessage">
                         添加批注
@@ -496,7 +492,7 @@
                 gs1 : null, //问题编号
                 gs2 : null, //问题状态
                 gs3 : '海鼎', //跟进方
-                gs4 : null, //问题类型
+                gs4 : '运维', //问题类型
                 gs5 : null, //跟进人
                 gs6 : null, //跟进部门
                 gs7 : null, //问题标签
@@ -604,10 +600,12 @@
                         success : function(data) {
                             var text = ''
                             for (var i = 0; i < data.length; i++) {
+                                if(data[i].department!=""&&data[i].department!="undefined")
+                                {var datadep="-"+data[i].department;}
                                 if (i == data.length - 1) {
-                                    text += data[i].userName
+                                    text += data[i].userName+datadep;
                                 } else {
-                                    text += data[i].userName + ','
+                                    text += data[i].userName+datadep+ ','
                                 }
                                 selectdeparr.push(data[i].department);
                             }
@@ -806,7 +804,7 @@
                     ,
                     'problem.problemObject' : $("#gs3").html()//跟踪方
                     ,
-                    'problem.problemDepartment' : gs.gs6//跟踪部门
+                    'problem.problemDepartment' :$("#gs6").html()//跟踪部门
                     ,
                     'problem.problemUser' : gs.gs5//跟踪人
                     ,
@@ -833,7 +831,8 @@
                     if(form_empty({code:$('#sp1').html(), which:"项目名称"}))
                         {return;}
                     if(form_empty({code:$('#sp2').html(), which:"商铺名称"}))
-                        {return;}
+                        {swiper2.slideTo(1, 0, true);
+                         return;}
                 $.when(codeUnique({
                     tableName : "problem",
                     codeField : "problem_id",
@@ -1020,6 +1019,9 @@
                 var problemId = app.getUrlSearch("problemId");
                 problemtestId=problemId;
                 if (problemId == null) {// 新建
+                    $(".swiper-container1").find("#swiper-memo1").hide();
+                    $(".swiper-container2").find("#swiper-memo2").hide();
+                   // $(".swiper-container2").find(".swiper-slide").eq(5).hide();
                     sp.init();
                     gs.init();
                     var time = new Date().getTime();                    
@@ -1065,8 +1067,7 @@
                     app.fullImg(i);
                 })
                 //img end
-            })
-            swiper1 = new Swiper('.swiper-container1', {//菜单区滑块
+                 swiper1 = new Swiper('.swiper-container1', {//菜单区滑块
                 paginationClickable : true,
                 slidesPerView : 'auto',
                 freeMode : true
@@ -1081,6 +1082,8 @@
                     app.upStyle(swiper.activeIndex);
                 }
             });
+            })
+           
 
             var onGs3Click = function() {
                 if ('海鼎' == $("#gs3").html()) {
