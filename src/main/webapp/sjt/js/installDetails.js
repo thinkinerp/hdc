@@ -608,7 +608,8 @@ var submit = function() {
     if(form_empty({code:$('#proName').html(), which:"项目名称"}))
       {return;}
     if(form_empty({code:$('#shopName').html(), which:"商铺名称"}))
-      {return;}
+      {swiper2.slideTo(1, 0, true);
+        return;}
      //验证收银机编号和打印机编号 start
          var cashSystem_txt=$("#cashSystem").html();
          var cashBrand_txt=$("#cashBrand").html();
@@ -619,11 +620,7 @@ var submit = function() {
         //  var dyjxh_txt=$("#dyjxh").html();
         //  var dyjPort_txt=$("#printerPort").html();
         // if(chk_print(priBrand_txt,dyjxh_txt,dyjPort_txt,"#priId"))
-        //   {return;}
-        
-        // if(chk_equipment()){
-        // 	return ;
-        // }
+        //   {return;}    
         
          //验证收银机编号和打印机编号 end 
 	 $.when(
