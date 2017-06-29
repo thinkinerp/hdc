@@ -251,7 +251,7 @@ public class ProblemController implements ApplicationContextAware {
         			rs.put("message", "没有此批注");
         			return rs.toJSONString();
         		}else{
-        			Long plus = ComUtil.dateCompare(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date()), m.getCreatedAt());
+        			Long plus = ComUtil.dateCompare(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), m.getCreatedAt());
         			if(plus > 1){
         				rs.put("message", "expired");
         				return rs.toJSONString();

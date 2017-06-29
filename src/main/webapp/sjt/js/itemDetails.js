@@ -48,6 +48,9 @@ if(undefined != allThing && null != allThing ){
 	setValue("proStation",allObjs.project.proStation);
 	setValue("proManagerPro",allObjs.project.proManagerPro);
 	setValue("proCoordination",allObjs.project.proCoordination);
+	setValue("proManagerAcc",allObjs.project.proManagerAcc);
+	$('#proManagerPro3').html(allObjs.project.proEngineer);
+	
 	var starttxt="",txtship;
 	if(allObjs.project.proCustomerRelationship>=1 && allObjs.project.proCustomerRelationship<=5)
 	{

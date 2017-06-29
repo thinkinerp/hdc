@@ -136,6 +136,8 @@ group by  c.cash_port
 			           ,p.pro_updata_time  
 			           ,p.pro_todal 
 			           ,p.pro_need
+			           ,pro_manager_acc
+			           ,pro_engineer
 			           ,pro_customer_relationship
 			           ,already.install_data as proAlready
 				   ,checked.install_data as proCheck
