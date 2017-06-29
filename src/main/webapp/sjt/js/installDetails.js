@@ -610,6 +610,19 @@ var submit = function() {
     if(form_empty({code:$('#shopName').html(), which:"商铺名称"}))
       {swiper2.slideTo(1, 0, true);
         return;}
+      if(form_empty({code:$('#installState').html(), which:"安装状态"}))
+      {swiper2.slideTo(1, 0, true);
+        console.log("time"+$('#installTime').val());
+        return;}
+        if(form_empty({code:$('#installTime').val(), which:"安装日期"}))
+        {swiper2.slideTo(4, 0, true);
+        return;}
+         if(form_empty({code:$('#priBrand').val(), which:"打印机品牌"}))
+        {swiper2.slideTo(3, 0, true);
+        return;}
+         if(form_empty({code:$('#dyjxh').val(), which:"打印机型号"}))
+        {swiper2.slideTo(3, 0, true);
+        return;}
      //验证收银机编号和打印机编号 start
          var cashSystem_txt=$("#cashSystem").html();
          var cashBrand_txt=$("#cashBrand").html();
