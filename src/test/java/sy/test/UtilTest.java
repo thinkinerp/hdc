@@ -1,5 +1,8 @@
 package sy.test;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +15,22 @@ import com.intfocus.hdk.vo.Project;
 
 public class UtilTest {
 
+	private static final String DATE1 = "1999-12-12 15:21";
+	private static final String DATE2 = "1999-12-12 15:20";
+	@Test
+	public void dataCompare(){
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        try {
+			Date dt1 = df.parse(DATE1);
+			Date dt2 = df.parse(DATE2);
+			long d = dt1.getTime() - dt2.getTime();
+			System.out.println(d);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Test 
 	public void Null(){
 		Project p = new Project();

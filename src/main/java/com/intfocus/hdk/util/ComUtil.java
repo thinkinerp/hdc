@@ -2,6 +2,7 @@ package com.intfocus.hdk.util;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -145,6 +146,21 @@ public class ComUtil {
 			}
 		
 	}
+	public static Long dateCompare(String date1 , String date2){
+		
+	DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+    try {
+		Date dt1 = df.parse(date1);
+		Date dt2 = df.parse(date2);
+		long d = dt1.getTime() - dt2.getTime();
+		return (long)d/60000;
+	} catch (ParseException e) {
+		e.printStackTrace();
+		return null ;
+	}
+			
+	}
+	
     public static boolean reflect(Object obj) {  
         if (obj == null)  
             return false;  
