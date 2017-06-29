@@ -305,8 +305,15 @@
         var selectdeparr=[];
             $('#saveMessage').bind('click', function() {
                 if(''==$('#messageContext').val()){
+                    app.alert("批注内容不能为空",1);
                     return ;
                 }
+                
+                if(null == app.getUrlSearch("problemId")){
+                    app.alert("此单据还未保存不能添加批注",1);
+                    return ;
+                }
+                
                 $.ajax({
                     url :domainName +  '/hdk/problem/saveMessage',
                     type : 'get',

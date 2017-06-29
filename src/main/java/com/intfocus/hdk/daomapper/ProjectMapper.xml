@@ -256,10 +256,10 @@ where  i.install_station = '已验收'
 select count_type , pro_count
   from 
 	(
-		select '合计' as count_type , count(distinct pro_name) as pro_count
+		select '合计' as count_type , count(distinct pro_id) as pro_count
 		  from project 
 		union
-		select pro_station , count(distinct pro_name)
+		select pro_station , count(distinct pro_id)
 		from project
 		group by pro_station
 	) as a

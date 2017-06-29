@@ -204,6 +204,7 @@
 				and install.install_id = #{installId,jdbcType=VARCHAR}
 			</if>	
     </where>  
+    	     order by install.updated_at desc
     <if test="null != page and ''!= page">
 	    <if test="null != pageSize and ''!= pageSize">
 			limit 	#{page,jdbcType=VARCHAR}, #{pageSize,jdbcType=VARCHAR}		    	

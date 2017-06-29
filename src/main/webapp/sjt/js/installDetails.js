@@ -2,13 +2,13 @@
  *
  */
 
-var domainName=  "http://www.onetoend.cn";
 loadCombobox("cashSystem", "cash_system");
 loadCombobox("cashBrand", "cash_brand");
 loadCombobox("cashPort", "cash_port");
 loadCombobox("eqStyle", "equipment_type");
 loadCombobox("printerPort", "printer_port");
 loadCombobox("installState", "install");
+loadCombobox("installData", "install_data");
 /*====安装cynthia ，获得安装编号 start0619===*/         
 function getproId()
 {  
