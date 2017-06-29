@@ -274,7 +274,13 @@ var loadInstall = function(allThing){
         console.log(allObjs.equipment.eqType);
         $("#eqTypeHard").html(isUndefined(allObjs.equipment.eqType));
         $('#eqStyle').html(isUndefined(allObjs.equipment.eqStyle));
-        $('#softwareVersion').val(isUndefined(allObjs.equipment.softwareVersion));
+        var software_txt;
+        if(isUndefined(allObjs.equipment.softwareVersion))
+            {software_txt=allObjs.equipment.softwareVersion;}
+         if(isUndefined(allObjs.equipment.hardwareId))
+            {software_txt=allObjs.equipment.hardwareId;}
+
+        $('#softwareVersion').val(software_txt);
         /* $('#installTime').val(isUndefined(allObjs.equipment.installTime)); */
         
         //其他
@@ -568,8 +574,8 @@ var submit = function() {
         'equipment.eqStyle': $("#eqStyle").html()
           //          ,'hardwareId':
           ,
-        'equipment.softwareVersion': ($('#eqTypeSoft').attr('class') == "on" ? $('#softwareVersion').val():""),
-        'equipment.hardwareId': ($('#eqTypeHard').attr('class') == "on" ? $('#softwareVersion').val():""),
+        'equipment.softwareVersion': ($('#eqTypeHard').html()!="硬件数据通" ? $('#softwareVersion').val():""),
+        'equipment.hardwareId': ($('#eqTypeHard').html()=="硬件数据通"? $('#softwareVersion').val():""),
         'equipment.proId': allObjs.project.proId,
         'equipment.shopId': $('#shopCode').html(),
         'userName': params.userName,
@@ -607,17 +613,17 @@ var submit = function() {
          var cashSystem_txt=$("#cashSystem").html();
          var cashBrand_txt=$("#cashBrand").html();
          var cashPort_txt=$("#cashPort").html();
-        if(chk_brand(cashSystem_txt,cashBrand_txt,cashPort_txt,"#cashId"))
-          {return;}
-        var priBrand_txt=$("#priBrand").val();
-         var dyjxh_txt=$("#dyjxh").html();
-         var dyjPort_txt=$("#printerPort").html();
-        if(chk_print(priBrand_txt,dyjxh_txt,dyjPort_txt,"#priId"))
-          {return;}
+        // if(chk_brand(cashSystem_txt,cashBrand_txt,cashPort_txt,"#cashId"))
+        //   {return;}
+        // var priBrand_txt=$("#priBrand").val();
+        //  var dyjxh_txt=$("#dyjxh").html();
+        //  var dyjPort_txt=$("#printerPort").html();
+        // if(chk_print(priBrand_txt,dyjxh_txt,dyjPort_txt,"#priId"))
+        //   {return;}
         
-        if(chk_equipment()){
-        	return ;
-        }
+        // if(chk_equipment()){
+        // 	return ;
+        // }
         
          //验证收银机编号和打印机编号 end 
 	 $.when(
@@ -627,28 +633,7 @@ var submit = function() {
 								         ,code:$('#installCode').val()
 								         , which:"安装编码"
 								        ,extra:true
-	 				} )
-			      ,codeUnique({
-			 		 tableName:"cash"
-				         ,codeField:"cash_id"
-				         ,code:$('#cashId').val()
-				         , which:"收银机编号"
-				        ,extra:chk_brand(cashSystem_txt,cashBrand_txt,cashPort_txt,"#cashId")
-		} )
-			      ,codeUnique({
-			 		 tableName:"printer"
-				         ,codeField:"printer_id"
-				         ,code:$('#priId').val()
-				         , which:"打印机编号"
-				        ,extra:chk_print(priBrand_txt,dyjxh_txt,dyjPort_txt,"#priId")
-		} )
-			      ,codeUnique({
-			 		 tableName:"equipment"
-				         ,codeField:"eq_id"
-				         ,code:$('#eqId').val()
-				         , which:"采集点编码"
-				         ,extra:chk_equipment()
-		} )
+	 				} )			      
             )
 	 .done(function(){ 
 
@@ -709,7 +694,8 @@ var submit = function() {
         'equipment.eqStyle': $("#eqStyle").html()
           //          ,'hardwareId':
           ,
-        'equipment.softwareVersion': $('#softwareVersion').val(),
+         'equipment.softwareVersion': ($('#eqTypeHard').html()!="硬件数据通" ? $('#softwareVersion').val():""),
+        'equipment.hardwareId': ($('#eqTypeHard').html()=="硬件数据通"? $('#softwareVersion').val():""),
         'equipment.proId': $('#proName').html(),
         'equipment.shopId': $('#shopCode').html(),
         'userName': params.userName,

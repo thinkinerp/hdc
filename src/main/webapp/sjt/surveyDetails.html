@@ -119,7 +119,7 @@
 				</div>
 				<div class="swiper-slide">
 					<ul class="g-importList">
-						<li>
+						<li style="display:none">
 							<div class="g-importList-title">收银机编号</div>
 							<div class="g-importList-content">
 								<div class="i-import">
@@ -170,7 +170,7 @@
 				</div>
 				<div class="swiper-slide">
 					<ul class="g-importList">
-				    	<li>
+				    	<li style="display:none">
 				    		<div class="g-importList-title">打印机编号</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-import">
@@ -648,16 +648,16 @@
 				 if(form_empty({code:$('#shopName').html(), which:"商铺名称"}))
 				 	{return;}
 				 //验证收银机编号和打印机编号 start
-				 var syjSystem_txt=$("#syjSystem").html();
-				 var syjBrand_txt=$("#syjBrand").html();
-				 var syjPort_txt=$("#syjPort").html();
-				if(chk_brand(syjSystem_txt,syjBrand_txt,syjPort_txt,"#syjId"))
-					{return;}
-				var dyjbrand_txt=$("#dyjbrand").val();
-				 var dyjxh_txt=$("#dyjxh").html();
-				 var dyjPort_txt=$("#dyjPort").html();
-				if(chk_print(dyjbrand_txt,dyjxh_txt,dyjPort_txt,"#dyjId"))
-					{return;}
+				//  var syjSystem_txt=$("#syjSystem").html();
+				//  var syjBrand_txt=$("#syjBrand").html();
+				//  var syjPort_txt=$("#syjPort").html();
+				// if(chk_brand(syjSystem_txt,syjBrand_txt,syjPort_txt,"#syjId"))
+				// 	{return;}
+				// var dyjbrand_txt=$("#dyjbrand").val();
+				//  var dyjxh_txt=$("#dyjxh").html();
+				//  var dyjPort_txt=$("#dyjPort").html();
+				// if(chk_print(dyjbrand_txt,dyjxh_txt,dyjPort_txt,"#dyjId"))
+				// 	{return;}
                  //验证收银机编号和打印机编号 end  
                  if(shop.item)
                  {
@@ -723,20 +723,6 @@
                                          ,code:$('#dyid').val()
                                          , which:"调研编码"
                                          ,extra:true
-                    } ),
-                    codeUnique({
-                                           tableName:"cash"
-                                         ,codeField:"cash_id"
-                                         ,code:$('#syjId').val()
-                                         , which:"收银机编码"
-                                         ,extra:chk_brand(syjSystem_txt,syjBrand_txt,syjPort_txt,"#syjId")
-                    } ),
-                    codeUnique({
-                                           tableName:"printer"
-                                         ,codeField:"printer_id"
-                                         ,code:$('#dyjId').val()
-                                         , which:"打印机编码"
-                                         ,extra:chk_print(dyjbrand_txt,dyjxh_txt,dyjPort_txt,"#dyjId")
                     } )
                     ).done(function(){
 					   
