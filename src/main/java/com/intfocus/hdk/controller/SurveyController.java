@@ -216,18 +216,18 @@ public class SurveyController implements ApplicationContextAware {
     	}
 		try {
 			   
-				surveymapper.insertSelective(survey);
-				
+			    String printerId = 	UUID.randomUUID().toString();
 				if(ComUtil.reflect(printer)){
-					printer.setPrinterId(UUID.randomUUID().toString());
+					printer.setPrinterId(printerId);
 					printerMapper.insertSelective(printer);
 				}
-				
+				String cashId = UUID.randomUUID().toString();
 				if(ComUtil.reflect(cash)){ 
-					cash.setCashId(UUID.randomUUID().toString());
+					cash.setCashId(cashId);
 					cashMapper.insertSelective(cash);
 				}
 				
+				surveymapper.insertSelective(survey);
 //				Map<String, String> where = new HashMap<String , String >();
 //				where.put("shopId", shops.getShopId());
 //				Shops s = new Shops();

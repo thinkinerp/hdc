@@ -5,7 +5,6 @@
 		<c col = "user_name" excelCol = "" default = ""  ctype="varchar" foreign = "0" primary = "0">用户名称</c>
 		<c col = "Email" excelCol = "" default = ""  ctype="varchar" foreign = "0" primary = "0">邮箱</c>
 		<c col = "user_station" excelCol = "" default = ""  ctype="varchar" foreign = "0" primary = "0">状态</c>
-		<c col = "name" excelCol = "" default = ""  ctype="varchar" foreign = "0" primary = "0">登陆账号</c>
 		<c col = "password" excelCol = "" default = "e10adc3949ba59abbe56e057f20f883e"  ctype="varchar" foreign = "0" primary = "0">登陆密码</c>
 		<c col = "phone" excelCol = "" default = ""  ctype="varchar" foreign = "0" primary = "0">用户电话</c>
 		<c col = "department" excelCol = "" default = ""  ctype="varchar" foreign = "0" primary = "0">用户部门</c>
@@ -26,7 +25,7 @@
 		<c col = "pro_need" excelCol = "" default = ""  ctype="int" foreign = "0" primary = "0">需要安装的数量</c>
 		<c col = "pro_already" excelCol = "" default = ""  ctype="int" foreign = "0" primary = "0">已安装的数量</c>
 		<c col = "pro_check" excelCol = "" default = ""  ctype="int" foreign = "0" primary = "0">验收的数量</c>
-		<c col = "pro_customer_relationship" excelCol = "" default = ""  ctype="int" foreign = "0" primary = "0">客情关系</c>
+		<c col = "pro_customer_relationship" excelCol = "" default = ""  ctype="varchar" foreign = "0" primary = "0">客情关系</c>
 		<c col = "pro_not" excelCol = "" default = ""  ctype="int" foreign = "0" primary = "0">未上线的数量</c>
 	</table>
 
