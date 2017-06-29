@@ -400,7 +400,7 @@
                     {app.alert("只能删除1分钟以内的批注",1);}
                     else
                     {app.alert("删除成功",1);}
-                    loadMessage(data.problemId,0);
+                    loadMessage($("#gs1").val(),0);
                     console.log(rs);
                 },
                 error:function(rs){
