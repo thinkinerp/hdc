@@ -22,6 +22,8 @@ public class Project {
 
     private String proEngineer;
 
+    private String proOperator;
+
     private String proCoordination;
 
     private String proCoordinationPhone;
@@ -263,6 +265,14 @@ public class Project {
 
 	public void setProCustomerRelationship(String proCustomerRelationship) {
 		this.proCustomerRelationship = proCustomerRelationship;
+	}
+
+	public String getProOperator() {
+		return proOperator;
+	}
+
+	public void setProOperator(String proOperator) {
+		this.proOperator = proOperator;
 	}
 
 
