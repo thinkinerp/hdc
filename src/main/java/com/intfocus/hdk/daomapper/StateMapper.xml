@@ -22,7 +22,7 @@
   <select id="selectByWhere" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
     <include refid="Base_Column_List" />
-    from state
+    from state as  a
    <where>
     	1=1
     		<if test="null != ownerTable  and '' != ownerTable">
@@ -30,6 +30,11 @@
 			</if>	
     		<if test="null == isAll or '' == isAll">
 				and sta_name &lt;&gt; '全部'
+			</if>	
+    		<if test="null != parentId and '' != parentId">
+				and ( not exists(select id from state where parent_id in (select id from state where sta_name =#{parentId,jdbcType=VARCHAR} )   ) 
+				           or  a.parent_id in (select id from state where sta_name = #{parentId,jdbcType=VARCHAR})
+				        )
 			</if>	
     </where>    
     

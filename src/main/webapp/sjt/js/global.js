@@ -90,6 +90,8 @@ var app ={
 			app.selecttype = type;
 			if($(obj).hasClass("gs-selperson"))
 			{hasperson=true;}
+			
+			app.selectOverFun = null ;
 			if(fun != undefined && fun != '' && fun != null){	
 				app.selectOverFun = fun;
 			}

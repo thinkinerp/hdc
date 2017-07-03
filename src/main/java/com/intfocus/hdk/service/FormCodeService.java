@@ -21,7 +21,7 @@ public class FormCodeService {
 	public synchronized String getFormCode( String formType , String proCode){
 		String date = new SimpleDateFormat("yyyyMMdd").format(new Date()) ;  	
     	Map<String, String> where = new HashMap<String,String>();
-    	where.put("formType", "install");
+    	where.put("formType",formType );
 		FormCode formCode =  formCodeMapper.selectByWhere(where );	
 		if(null != formCode && !date.equals(formCode.getDatestime())){
 			formCode.setDatestime(date);
