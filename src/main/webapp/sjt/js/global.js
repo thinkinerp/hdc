@@ -41,6 +41,8 @@ var m_loading = {
 		}
 	}
 var hasperson=false;
+/*===保存返回默认传值====*/
+
 var app ={
 	listdata:'', //选择列表数据
 	put:'', 	//选择后要显示的位置
@@ -82,9 +84,9 @@ var app ={
 		if (r != null) return unescape(r[2]); return null;
 	},
 	select:function(obj,type,fun){ //obj(有data-select的那个标签,传this 例如 app.select(this))    type: 1只能选择   2可以选择也可以输入 输入匹配   3可以选择可以输入 输入匹配 并可选择没匹配项
-		/*===隐藏原生标题栏 start1===*/
-		// window.SYP.toggleShowBanner('hidden');
-		/*===隐藏原生标题栏 end1===*/		    
+		/*===选择开始 start===*/
+       window.SYP.saveParam (true,2);
+        /*===选择开始 end===*/	    
 			app.put = obj;
 			objid=obj.id;
 			app.selecttype = type;
@@ -172,10 +174,9 @@ var app ={
     },
     selectBack:function(){
     	$(".g-select").remove();
-    	/*===显示原生标题栏 start===*/
-  //   	if(app_isback)
-		// {window.SYP.toggleShowBanner('show');}
-		/*===显示原生标题栏 end===*/
+    	/*===结束选择 start===*/
+    	endselect();
+        /*===结束选择 end===*/	 
     },
     selectClick:function(){
     	var ls;
@@ -189,10 +190,9 @@ var app ={
         		$(app.put).html(ls);
         		$(app.put).removeClass('on');
         		$(".g-select").remove();
-		        /*===显示原生标题栏 start===*/
-		  //       if(app_isback)
-				// {window.SYP.toggleShowBanner('show');}
-				/*===显示原生标题栏 end===*/
+		       /*===结束选择 start===*/
+    			endselect();
+       			/*===结束选择 end===*/	
         		if(app.selectOverFun != undefined && app.selectOverFun != '' && app.selectOverFun != null){
 					app.selectOverFun();
 				}				
@@ -500,6 +500,7 @@ function chk_equipment(){
 }
 
 $(function(){
+	window.SYP.saveParam(false,0);
 	$("#menu div").click(function() {	//顶部菜单点击下面内容区改变
 		var index = $(this).index();
 		app.upStyle(index);
@@ -513,7 +514,7 @@ $(function(){
 		$(this).addClass('on').parent('div').siblings('.i-choice-row').find('div').removeClass('on');
 	})
 /*===返回保存===*/
-issave();	
+//issave();	
 /*===返回保存 end===*/
 $(".swiper-container2 .swiper-wrapper").css("min-height",$(window).height()-70);	
 })
@@ -539,33 +540,40 @@ function buttonFixed()
             {$(".wrapbox").css({position:"absolute"});}
  }	
   /*====cynthia返回 start1=====*/
- 			var savetxt=false;
-			function issave()
+ 		// 	var savetxt=false;
+			// function issave()
+			// {
+			// 	$("input").bind("focus",function(){
+			// 		savetxt=true;
+			// 		return savetxt;
+			// 	})	
+			// 	$(".i-text,.i-xiala-list,.i-choice-row,.i-choice-rowchk").bind("click",function(){
+			// 			savetxt=true;
+			// 			return savetxt;
+			// 	})
+				
+			// }
+			function endselect()
 			{
-				$("input").bind("focus",function(){
-					savetxt=true;
-				})	
-				$(".i-text,.i-xiala-list,.i-choice-row,.i-choice-rowchk").bind("click",function(){
-						savetxt=true;
-				})
-				return savetxt;
+				var bnrtitle=$(document).attr("title");
+		    	if(bnrtitle=="安装详情" || bnrtitle=="问题详情" || bnrtitle=="调研详情")
+		        {window.SYP.saveParam (true,1);}
+		    	else
+		    	{window.SYP.saveParam (false,0);}
 			}
-			function appback(url)
-			{
-				if(issave())
-				{
-					app.alert('单据未保存，是否保存数据？',2,submitback);
-					$("#g-popupNo").click(function(){
-						//location.href=url;
-						//window.SYP.pageLink("调研详情",domainName + "/hdk/sjt/surveylist.html");
-						window.SYP.cleanUrlStack(domainName+"/hdk/sjt/"+url);
-					})
-				}
-				else
-				{
-				//window.SYP.pageLink("调研详情",domainName + "/hdk/sjt/surveylist.html");	
-					window.SYP.cleanUrlStack(domainName+"/hdk/sjt/"+url);
+			// function appback(url)
+			// {
+			// 	if(issave())
+			// 	{
+			// 		app.alert('单据未保存，是否保存数据？',2,submitback);
+			// 		$("#g-popupNo").click(function(){
+			// 			window.SYP.cleanUrlStack(domainName+"/hdk/sjt/"+url);
+			// 		})
+			// 	}
+			// 	else
+			// 	{
+			// 		window.SYP.cleanUrlStack(domainName+"/hdk/sjt/"+url);
 
-				}
-			}
+			// 	}
+			// }
  /*====cynthia返回 end1=====*/

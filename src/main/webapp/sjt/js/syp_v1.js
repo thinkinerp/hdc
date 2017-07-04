@@ -146,6 +146,15 @@ window.SYPWithinAndroid = {
       alert("Error 未定义接口(Android): cleanUrlStack");
     }
   },
+  /*===保存返回和选择页面====*/
+  saveParam : function(save ) {
+    if(window.AndroidJSBridge && typeof(window.AndroidJSBridge.saveParam) === "function") {
+      window.AndroidJSBridge.saveParam(save,local );
+    } else {
+      alert("Error 未定义接口(Android): saveParam ");
+    }
+  },
+
   /*
    * 控制原生标题栏的隐藏及显示
    *
@@ -266,6 +275,13 @@ cleanUrlStack: function(redirectUrl) {
       bridge.callHandler('cleanUrlStack', {'redirectUrl': redirectUrl}, function(response) {});
     })
   },
+  /*===保存返回和选择返回===*/
+  saveParam : function(save) {
+    SYPWithinIOS.connectWebViewJavascriptBridge(function(bridge){
+      bridge.callHandler('saveParam', {'save ': save,'local': local }, function(response) {});
+    })
+  },
+
   toggleShowBanner: function(state) {
     SYPWithinIOS.connectWebViewJavascriptBridge(function(bridge){
       bridge.callHandler('toggleShowBanner', {'state': state}, function(response) {});
@@ -323,6 +339,9 @@ cleanUrlStack: function(redirectUrl) {
   },
   toggleShowBanner: function(state) {
     console.log({'toggleShowBanner state': state});
+  },
+   saveParam: function(save,local) {
+    console.log({'save': save, 'local': local});
   },
   appBadgeNum: function(type, num) {
     console.log({'type': type, 'num': num});
