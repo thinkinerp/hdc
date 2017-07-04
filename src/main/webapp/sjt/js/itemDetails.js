@@ -63,7 +63,10 @@ if(undefined != allThing && null != allThing ){
 	
 	$("#proCustomerRelationship").html(starttxt);
 	setValue("proCoordinationPhone",allObjs.project.proCoordinationPhone);
-	setValue("proManagerPro1",allObjs.project.proCoordination);
+	//项目实施人员 start
+	setValue("proManagerPro1",allObjs.project.proEngineer);
+	//项目维护人员 start
+	setValue("proManagerPro2",allObjs.project.proOperator);	
 	setValue("proUpdataTime",allObjs.project.proUpdataTime);
 	var sum= 0 ;
 	$.each(allObjs.projectProblem,function(index,item){

@@ -208,21 +208,8 @@
 					<!-- 添加商场内网 start-->
 				    	<li style="height:auto;margin-bottom:0em;">
 				    		<div class="g-importList-title2" style="width: 3.1rem;">商户网络情况</div>
-				    		<div class="g-importList-content">
-				    			<div class="i-choicechk">
-				    				<div class="i-choice-rowchk">
-				    					<div id="qt1" onclick="qt.selectNetwork('外网','qt1')" class="on"></div>
-				    					<p>外网</p>
-				    				</div>
-				    				<div class="i-choice-rowchk">
-				    					<div id="qt2" onclick="qt.selectNetwork('wifi','qt2')"></div>
-				    					<p>wifi</p>
-				    				</div>
-				    				<div class="i-choice-rowchk">
-				    					<div id="qtnetwork" onclick="qt.selectNetwork('商场内网','qtnetwork')"></div>
-				    					<p>商场内网</p>
-				    				</div>
-				    			</div>
+				    		<div id="install_getdata" style="display:none"></div>
+				    		<div class="g-importList-content" id="getnetwork">
 				    		</div>
 				    	</li>
 				    	<!-- 添加商场内网 end-->
@@ -301,6 +288,7 @@
 		
 		<script src="js/swiper.js"></script>
 		<script>
+		loadCombobox("install_getdata",'network_state'); 
 		  /*====安装cynthia ，获得安装编号 start===*/ 
             function getproId()
             {  $.ajax({
@@ -594,16 +582,17 @@
 				plug:"有",		//电源插口情况 
 				vip:"是",       //租户是否有会员系统
 				note:"是",		//是否小票
-				selectNetwork:function(data,obj){
-					if($("#"+obj).hasClass("on"))
+				selectNetwork:function(obj){
+					var data=$(obj).next("p").html();
+					if($(obj).hasClass("on"))
 					{
-						$("#"+obj).removeClass("on");
+						$(obj).removeClass("on");
 						var ss=qt.network.split(",")
 						removeByValue(ss, data);
 						qt.network=ss.join(",")
 			        }
 				else
-					{$("#"+obj).addClass('on');
+					{$(obj).addClass('on');
 						if(qt.network.length==0)
 						{qt.network+=data;}
 						else
