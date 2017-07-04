@@ -117,13 +117,23 @@ function codeUnique2(config){
 				 }
 			 });
 			 $('#'+id).attr("data-select",str);
+			 if(id=="install_getdata")
+			 	{getnewwork();}
 			 state_getSome = null ;
 		 },
 		 error:function(rs){
 		 }
 	 });	
  }
+function getnewwork()
+         {
+             var networkArr=$("#install_getdata").attr("data-select").split(",");
+             for(i=0;i<networkArr.length;i++)
+             {var obj="qt"+i;
+               $("#getnetwork").append('<div class="i-choice-rowchk"><div id='+obj+'  onclick="qt.selectNetwork(this)"></div><p>'+networkArr[i]+'</p></div>');
+             }
 
+         }
  function isUndefined( v ){
 	   return (undefined == v?"":v);
 }

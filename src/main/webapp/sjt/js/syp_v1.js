@@ -147,7 +147,7 @@ window.SYPWithinAndroid = {
     }
   },
   /*===保存返回和选择页面====*/
-  saveParam : function(save ) {
+  saveParam : function(save,local) {
     if(window.AndroidJSBridge && typeof(window.AndroidJSBridge.saveParam) === "function") {
       window.AndroidJSBridge.saveParam(save,local );
     } else {
@@ -276,7 +276,7 @@ cleanUrlStack: function(redirectUrl) {
     })
   },
   /*===保存返回和选择返回===*/
-  saveParam : function(save) {
+  saveParam :function(save,local) {
     SYPWithinIOS.connectWebViewJavascriptBridge(function(bridge){
       bridge.callHandler('saveParam', {'save ': save,'local': local }, function(response) {});
     })

@@ -315,7 +315,7 @@
                             <div id="install_getdata" style="display:none"></div>
                             <div class="g-importList-content">
                                 <div class="i-choicechk" id="getnetwork">
-                                   <div class="i-choice-rowchk">
+                                  <!--  <div class="i-choice-rowchk">
                                         <div id="installNetworkHard"  onclick="qt.selectNetwork('installNetworkHard')" class="on"></div>
                                         <p>外网</p>
                                     </div>
@@ -326,7 +326,7 @@
                                     <div class="i-choice-rowchk">
                                         <div id="qt3" onclick="qt.selectNetwork('qt3')"></div>
                                         <p>商场内网</p>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </li>
@@ -364,7 +364,16 @@
         <script>
          loadCombobox("eqTypeHard","equipment_eq_style"); 
          loadCombobox("install_getdata",'network_state'); 
-         //var networkArr=$("#install_getdata").dataset;
+         function getnewwork()
+         {
+             var networkArr=$("#install_getdata").attr("data-select").split(",");
+             for(i=0;i<networkArr.length;i++)
+             {var obj="qt"+i;
+               $("#getnetwork").append('<div class="i-choice-rowchk"><div id='+obj+'  onclick="qt.selectNetwork(this)"></div><p>'+networkArr[i]+'</p></div>');
+             }
+
+         }
+        
        // console.log(networkArr);
             //var imgs = [];    //2个图片都会在这个数组里
             var files =[];
@@ -463,38 +472,29 @@
             });
            var qt ={
             selectNetwork:function(obj){
-              if($("#"+obj).hasClass("on"))
+              if($(obj).hasClass("on"))
                     {
-                        $("#"+obj).removeClass("on");
+                        $(obj).removeClass("on");
                     }
                 else
-                    {$("#"+obj).addClass('on');
+                    {$(obj).addClass('on');
                   }  
             },
             selectedItem:function(){
                 var s = '';
-                if($("#installNetworkHard").hasClass("on")){
+               $("#getnetwork .i-choice-rowchk").each(function(i){
+                var objp=$(this).find("p");
+                    if($(this).find("div").hasClass("on")){
                     if('' == s){
-                        s = $("#installNetworkHard").next("p").html();
+                        s = objp.html();
                     }else {
-                        s = s + "," + $("#installNetworkHard").next("p").html();
+                        s = s + "," + objp.html();
                     }
                 }
+
+                })
                 
-                if($("#installNetworkSoft").hasClass("on")){
-                    if('' == s){
-                        s = $("#installNetworkSoft").next("p").html();
-                    }else {
-                        s = s + "," + $("#installNetworkSoft").next("p").html();
-                    }
-                }
-                 if($("#qt3").hasClass("on")){
-                    if('' == s){
-                        s = $("#qt3").next("p").html();
-                    }else {
-                        s = s + "," + $("#qt3").next("p").html();
-                    }
-                }
+                console.log(s);
                 return s;
             }   
            } ;
