@@ -612,16 +612,18 @@ var submit = function() {
         return;}
       if(form_empty({code:$('#installState').html(), which:"安装状态"}))
       {swiper2.slideTo(1, 0, true);
-        console.log("time"+$('#installTime').val());
         return;}
         if(form_empty({code:$('#installTime').val(), which:"安装日期"}))
         {swiper2.slideTo(4, 0, true);
+          $("#g-popupOk").bind("click",function(){ $('#installTime').focus();})  
         return;}
          if(form_empty({code:$('#priBrand').val(), which:"打印机品牌"}))
         {swiper2.slideTo(3, 0, true);
+           $("#g-popupOk").bind("click",function(){ $('#priBrand').focus();})  
         return;}
          if(form_empty({code:$('#dyjxh').val(), which:"打印机型号"}))
         {swiper2.slideTo(3, 0, true);
+          $("#g-popupOk").bind("click",function(){ $('#dyjxh').focus();})  
         return;}
      //验证收银机编号和打印机编号 start
          var cashSystem_txt=$("#cashSystem").html();
@@ -751,6 +753,15 @@ var onSetupState = function() {
   $('#installStation').html($('#installState').html());
 }
 $(function(){
+       /*===保存返回 start===*/
+        window.SYP.saveParam (false,1);
+        $("input,textarea").bind("focus",function(){
+             window.SYP.saveParam (true,1);
+         })  
+        $(".i-text,.i-xiala-list,.i-choice-row,.i-choice-rowchk").bind("click",function(){
+             window.SYP.saveParam (true,1);
+         })       
+        /*===保存返回 end===*/        
    //img start
                 $("#imgShow").on("click","div",function(){
                     var i=$(this).index();

@@ -21,9 +21,7 @@
         <script type="text/javascript" charset="utf-8">
         app_isback=false;
         window.SYP.setBannerTitle("安装详情");
-        /*===隐藏原生标题栏 start1===*/
-        /*window.SYP.toggleShowBanner('hidden');*/
-        /*===隐藏原生标题栏 end1===*/
+   
         </script> 
 </head>
 <body>
@@ -294,7 +292,7 @@
                             <div class="g-importList-title">安装日期<span class="redtip">*</span></div>
                             <div class="g-importList-content">
                                 <div class="i-date">
-                                    <input id = "installTime" type="date" placeholder="未选择" onblur="app.dateVerify(this,1)"/>
+                                    <input id = "installTime" type="date" placeholder="未选择"/>
                                 </div>
                             </div>
                         </li>
@@ -314,9 +312,10 @@
                     <ul class="g-importList">
                         <li style="height:auto;margin-bottom:0em;">
                             <div class="g-importList-title2">商户网络情况</div>
+                            <div id="install_getdata" style="display:none"></div>
                             <div class="g-importList-content">
-                                <div class="i-choicechk">
-                                    <div class="i-choice-rowchk">
+                                <div class="i-choicechk" id="getnetwork">
+                                   <div class="i-choice-rowchk">
                                         <div id="installNetworkHard"  onclick="qt.selectNetwork('installNetworkHard')" class="on"></div>
                                         <p>外网</p>
                                     </div>
@@ -364,7 +363,9 @@
 <script src="js/swiper.js" type="text/javascript" charset="utf-8"></script>
         <script>
          loadCombobox("eqTypeHard","equipment_eq_style"); 
-
+         loadCombobox("install_getdata",'network_state'); 
+         //var networkArr=$("#install_getdata").dataset;
+       // console.log(networkArr);
             //var imgs = [];    //2个图片都会在这个数组里
             var files =[];
             var swiper1 = new Swiper('.swiper-container1', {    //菜单区滑块
