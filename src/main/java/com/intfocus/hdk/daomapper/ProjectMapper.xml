@@ -140,6 +140,7 @@ group by  c.cash_port
 			           ,pro_manager_acc
 			           ,pro_engineer
 			           ,pro_customer_relationship
+			           ,pro_operator
 			           ,already.install_data as proAlready
 				   ,checked.install_data as proCheck
 				   ,offline.install_data as proNot
