@@ -788,3 +788,36 @@ $(function(){
                } 
               });}           
             /*====安装cynthia ，获得安装编号 end===*/
+
+
+
+var oneqTypeSelected = function(){
+	
+	
+	 $.ajax({ 
+		 url: domainName + '/hdk/state/getSome',
+		 type:'get',
+		 data:{
+				'ownerTable':'equipment_type',
+				'parentId':$('#eqTypeHard').html(),
+
+		 },
+	 		//jsonpCallback:"state_"+time+"_getSome",
+	 		jsonp: "callback",
+		 dataType:'jsonp',
+		 success:function(rs){
+			 
+			 $("#eqStyle").html("");
+			 var stack = new Array();
+			 $.each(rs ,function(index,item){
+				 stack.push(item.staName);
+			 });
+			 $("#eqStyle").attr("data-select",stack.join(","));
+		 },
+		 error:function(){
+			 
+		 }
+	 });
+}
+
+

@@ -1,7 +1,8 @@
 package com.intfocus.hdk.controller;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,6 @@ import com.intfocus.hdk.vo.Equipment;
 import com.intfocus.hdk.vo.Message;
 import com.intfocus.hdk.vo.Operation_history;
 import com.intfocus.hdk.vo.Problem;
-import com.intfocus.hdk.vo.Project;
 
 @Controller
 @RequestMapping("/problem")
@@ -246,6 +246,17 @@ public class ProblemController implements ApplicationContextAware {
         		, Message message ,String callback){
         	JSONObject rs = new JSONObject();
         	try{
+        		Message m = messageMapper.selectByPrimaryKey(message.getId());
+        		if(null == m){
+        			rs.put("message", "没有此批注");
+        			return rs.toJSONString();
+        		}else{
+        			Long plus = ComUtil.dateCompare(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), m.getCreatedAt());
+        			if(plus > 1){
+        				rs.put("message", "expired");
+        				return rs.toJSONString();
+        			}
+        		}
         		messageMapper.deleteByPrimaryKey(message.getId());	
         		rs.put("message", "success");
         	}catch(Exception e){

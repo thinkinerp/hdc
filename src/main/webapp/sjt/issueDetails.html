@@ -860,7 +860,8 @@
                     tableName : "problem",
                     codeField : "problem_id",
                     code : $('#gs1').val(),
-                    which : "问题编码"
+                    which : "问题编码",
+                    extra:true
                 })).done(function() {
                     $.ajax({
                         url :domainName +  "/hdk/problem/submit",
