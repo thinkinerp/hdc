@@ -19,10 +19,7 @@
 		<script src="js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
        <script type="text/javascript" charset="utf-8">
        	app_isback=false;
-        window.SYP.setBannerTitle("调研详情");
-		/*===隐藏原生标题栏 start1===*/
-		/*window.SYP.toggleShowBanner('hidden');*/
-		/*===隐藏原生标题栏 end1===*/
+        window.SYP.setBannerTitle("调研详情");		
         </script>
 	</head>
 	<body>
@@ -653,11 +650,13 @@
         		if(form_empty({code:$('#dyjbrand').val(), which:"打印机品牌"}))
 				 {
 				 	swiper2.slideTo(3, 0, true);
+				 	$("#g-popupOk").bind("click",function(){ $('#dyjbrand').focus();})  
         			return;
         		}
         		if(form_empty({code:$('#dyjxh').val(), which:"打印机型号"}))
 				 {
 				 	swiper2.slideTo(3, 0, true);
+				 	$("#g-popupOk").bind("click",function(){ $('#dyjxh').focus();})  
         			return;
         		}
 				 //验证收银机编号和打印机编号 start
@@ -1045,7 +1044,16 @@ var vipinfovalue;
 			 /*===返回2 start===*/
 			 var surtestId;
 			 /*===返回2 end===*/
-			$(function(){				
+			$(function(){		
+			/*===保存返回 start===*/
+	        window.SYP.saveParam (false,1);
+	        $("input,textarea").bind("focus",function(){
+	             window.SYP.saveParam (true,1);
+	         })  
+	        $(".i-text,.i-xiala-list,.i-choice-row,.i-choice-rowchk").bind("click",function(){
+	             window.SYP.saveParam (true,1);
+	         })       
+	        /*===保存返回 end===*/		
 				var surId = app.getUrlSearch("surId");	
 				/*===返回2 start===*/
 				surtestId=surId;		
