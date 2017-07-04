@@ -87,7 +87,11 @@ public class ImportSome {
       		}
       	} catch (Exception e) {
       		e.printStackTrace();
-      		request.setAttribute("message", "第" + row + "行出现错误，请参考下面的信息" +  sqllist.get(row- 1) + "<br/>发生了一下问题：<br/>" +e.getMessage());
+      		if(null == sqllist){
+      			request.setAttribute("message", "第" + row + "行出现错误，请参考下面的信息<br/>发生了以下问题：<br/>" +e.getMessage());
+      		}else{
+      			request.setAttribute("message", "第" + row + "行出现错误，请参考下面的信息" +  sqllist.get(row- 1) + "<br/>发生了以下问题：<br/>" +e.getMessage());
+      		}
       		return "fail";
 		}
 		return "success";

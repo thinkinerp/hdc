@@ -11,7 +11,7 @@
 	</table>
 
 	<table name = "project">
-		<c col = "pro_operator" excelCol = "" default = ""  ctype="varchar" foreign = "0" primary = "1">项目维护人员</c>
+		<c col = "pro_operator" excelCol = "" default = ""  ctype="varchar" foreign = "0" primary = "0">项目维护人员</c>
 		<c col = "pro_id" excelCol = "" default = ""  ctype="varchar" foreign = "0" primary = "1">项目编号</c>
 		<c col = "pro_name" excelCol = "" default = ""  ctype="varchar" foreign = "0" primary = "0">项目名称</c>
 		<c col = "pro_edition" excelCol = "" default = ""  ctype="varchar" foreign = "0" primary = "0">项目版本</c>
