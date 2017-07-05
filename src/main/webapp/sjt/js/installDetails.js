@@ -284,7 +284,7 @@ var loadInstall = function(allThing){
         /* $('#installTime').val(isUndefined(allObjs.equipment.installTime)); */
         
         //其他
-        
+        console.log(allObjs.install.installNetwork);
         if(isUndefined(allObjs.install.installNetwork).indexOf('外网')){
             $('#installNetworkHard').attr("class",'off' );
         }
@@ -292,22 +292,23 @@ var loadInstall = function(allThing){
         	$('#installNetworkSoft').attr("class",'off' );
         }
         /*====安装详情  客户网络情况 start====*/
-          if(allObjs.install.installNetwork.indexOf("外网")!=-1){
-             $('#installNetworkHard').attr("class",'on' );
-            }
-            if(allObjs.install.installNetwork.indexOf("wifi")!=-1){
-              $('#installNetworkSoft').addClass('on');
-            }
-            if(allObjs.install.installNetwork.indexOf("商场内网")!=-1){
-              $('#qt3').addClass('on');
-            }
+        window.setTimeout('loadnetwork(allObjs.install.installNetwork)',500);
          /*====安装详情  客户网络情况 end====*/
 
         // 附件
         //$('#installNetworkHard').val(isUndefined(allObjs.equipment.installTime));
     }
 }      
-    
+ function loadnetwork(network)
+ { $("#getnetwork .i-choice-rowchk").each(function(i){
+           var objp=$(this).find("p");
+           var objdiv=$(this).find("div");
+           if(network.indexOf(objp.html())!=-1){
+            objdiv.addClass('on');
+           }
+
+        })
+}   
 function loadPrinterAndCasher(surId) {
 	
 	

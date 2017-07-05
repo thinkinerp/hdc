@@ -560,7 +560,12 @@ function buttonFixed()
 		        {window.SYP.saveParam (true,1);}
 		    	else
 		    	{window.SYP.saveParam (false,0);}
-			}
+			} 
+			function APPselectBack(){
+	    	$(".g-select").remove();
+	    	/*===结束选择 start===*/
+	    	endselect(); 
+    		}
 			// function appback(url)
 			// {
 			// 	if(issave())
