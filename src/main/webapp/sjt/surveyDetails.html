@@ -588,8 +588,9 @@
 					{
 						$(obj).removeClass("on");
 						var ss=qt.network.split(",")
-						removeByValue(ss, data);
-						qt.network=ss.join(",")
+						removeByValue(ss, data);						
+						qt.network=ss.join(",");
+						
 			        }
 				else
 					{$(obj).addClass('on');
@@ -600,6 +601,7 @@
 							if(qt.network.indexOf(data)==-1)
 							qt.network+=","+data;
 						}
+
 			      }
 				},		
 				selectPlug:function(data){
@@ -905,19 +907,30 @@ var vipinfovalue;
 					$("#dyjPort").html(data.printer.printerPort);
 					xg.youzhi("dyjPort");
 					}
+					var datanetwork=data.survey.surNetwork;
+					//window.setTimeout('loadnetwork(network)',500);
+					qt.network = data.survey.surNetwork;
+					$("#getnetwork .i-choice-rowchk").each(function(i){
+			           var objp=$(this).find("p");
+			           var objdiv=$(this).find("div");
+			           if(datanetwork.indexOf(objp.html())!=-1){
+			            objdiv.addClass('on');
+			           }
+
+			        })
 					//其他 
-					if(data.survey.surNetwork.indexOf("外网")!=-1){
-						$('#qt1').addClass('on');
-						qt.network = data.survey.surNetwork;
-					}
-					if(data.survey.surNetwork.indexOf("wifi")!=-1){
-						$('#qt2').addClass('on');
-						qt.network = data.survey.surNetwork;
-					}
-					if(data.survey.surNetwork.indexOf("商场内网")!=-1){
-						$('#qtnetwork').addClass('on');
-						qt.network = data.survey.surNetwork;
-					}				
+					// if(data.survey.surNetwork.indexOf("外网")!=-1){
+					// 	$('#qt1').addClass('on');
+					// 	qt.network = data.survey.surNetwork;
+					// }
+					// if(data.survey.surNetwork.indexOf("wifi")!=-1){
+					// 	$('#qt2').addClass('on');
+					// 	qt.network = data.survey.surNetwork;
+					// }
+					// if(data.survey.surNetwork.indexOf("商场内网")!=-1){
+					// 	$('#qtnetwork').addClass('on');
+					// 	qt.network = data.survey.surNetwork;
+					// }				
 					console.log("test"+data.survey.surVip );					
 					if(data.survey.surVipInfoTicket=="是")
                     { $("#subnote").css("visibility","inherit");
