@@ -136,7 +136,7 @@ public class ExcelReader {
 		    	   }
 				   
 				   if(!"".equalsIgnoreCase(colProperty.getDefaults()) && null != colProperty.getDefaults()){
-					   value= "e10adc3949ba59abbe56e057f20f883e";
+					   value= "'e10adc3949ba59abbe56e057f20f883e'";
 				   }
 				   
 		    	     sql = sql.replaceAll("@"+colProperty.getCol()+"@",  value);
@@ -315,6 +315,8 @@ public class ExcelReader {
     	
     	    String sql = " insert into " + tableName + " (";
     	    
+    	    String deleteSql = "delete from " + tableName + " where ";
+    	    
     	    String select = "select " ;
     	    
     	    String where = " from dual where not exists ( select keyCol from " + tableName + " where keyCol = @keyCol@ ); " ;
@@ -330,7 +332,9 @@ public class ExcelReader {
     	    	      }
     	       }
     	    for (ColProperty colProperty : list) {
+    	    	
     	    	       if("1".equalsIgnoreCase(colProperty.getForeign())) continue ;
+    	    	       
     	    	        if(i ==( list.lastIndexOf(colProperty)+ 1)){
     	    	        	      sql +=  "`" + colProperty.getCol() + "`" + ")\n" ;
     	    	        	      select += "@" + colProperty.getCol()  + "@" ;
@@ -340,8 +344,9 @@ public class ExcelReader {
     	    	        	
     	    	        }
 			}
+    	    deleteSql = deleteSql + k + " = @"+k+"@;";
     	    sql += select + where.replaceAll("keyCol", k);
-    	    return sql ;
+    	    return deleteSql + sql ;
     }
     
     /**

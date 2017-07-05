@@ -10,6 +10,7 @@
     <result column="pro_manager_pro" property="proManagerPro" jdbcType="VARCHAR" />
     <result column="pro_manager_acc" property="proManagerAcc" jdbcType="VARCHAR" />
     <result column="pro_engineer" property="proEngineer" jdbcType="VARCHAR" />
+    <result column="pro_operator" property="proOperator" jdbcType="VARCHAR" />
     <result column="pro_coordination" property="proCoordination" jdbcType="VARCHAR" />
     <result column="pro_coordination_phone" property="proCoordinationPhone" jdbcType="VARCHAR" />
     <result column="pro_updata_time" property="proUpdataTime" jdbcType="VARCHAR" />
@@ -32,7 +33,7 @@
   <sql id="Base_Column_List" >
     id, pro_id, pro_name, pro_edition, pro_station, pro_manager_pro, pro_manager_acc, 
     pro_engineer, pro_coordination, pro_coordination_phone, pro_updata_time, pro_todal, 
-    pro_need, pro_already, pro_check, pro_not, created_at, updated_at,is_last,pro_customer_relationship
+    pro_need, pro_already, pro_check, pro_not, created_at, updated_at,is_last,pro_customer_relationship,pro_operator
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -136,6 +137,8 @@ group by  c.cash_port
 			           ,p.pro_updata_time  
 			           ,p.pro_todal 
 			           ,p.pro_need
+			           ,pro_manager_acc
+			           ,pro_engineer
 			           ,pro_customer_relationship
 			           ,already.install_data as proAlready
 				   ,checked.install_data as proCheck

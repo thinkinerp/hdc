@@ -37,12 +37,13 @@ function codeUnique(config){
 		var dtd = $.Deferred(); 
 	if(!onlyEnglishAndDecimal(config.code)){
 		app.alert("编码:" + config.code +",只能有数字和英文字母组成",1);
-		return dtd.reject();
-		
+		dtd.reject();
+		return dtd.promise();	
 	}
 	
 	if(  !config.extra){
-		return dtd.resolve();
+		dtd.resolve();
+		return dtd.promise();
 	}
 	
 				$.ajax({	

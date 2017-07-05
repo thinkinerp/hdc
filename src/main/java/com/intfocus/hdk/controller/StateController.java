@@ -52,6 +52,7 @@ public class StateController implements ApplicationContextAware {
     	if(null != isAll){
     		where.put("isAll", isAll);
     	}
+    	where.put("parentId", state.getParentId());
 		List<State> states = statemapper.selectByWhere(where );
 		Writer w;
 		try {

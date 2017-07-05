@@ -7,6 +7,8 @@ public class State {
     private String staId;
 
     private String staName;
+    
+    private String parentId;
 
     private String ownerTable;
 
@@ -69,5 +71,13 @@ public class State {
 
 	public void setIsDefault(String isDefault) {
 		this.isDefault = isDefault;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 }

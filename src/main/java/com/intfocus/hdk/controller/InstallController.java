@@ -102,19 +102,20 @@ public class InstallController implements ApplicationContextAware {
 				install.setAttachment_url(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
 			}
 
-	    	installmapper.insertSelective(install);
+            String printerId = UUID.randomUUID().toString();
 	    	if(ComUtil.reflect(printer)){
-	    		printer.setPrinterId(UUID.randomUUID().toString());
+	    		
+	    		printer.setPrinterId(printerId);
 	    		printerMapper.insertSelective(printer);
 	    	}
-
+	    	String cashId = UUID.randomUUID().toString();
 	    	if(ComUtil.reflect(cash)){
-	    		cash.setCashId(UUID.randomUUID().toString());
+	    		cash.setCashId(cashId);
 	    		cashMapper.insertSelective(cash);
 	    	}
-
+            String eqId = UUID.randomUUID().toString();
 	    	if(ComUtil.reflect(equipment)){
-	    		equipment.setEqId(UUID.randomUUID().toString());
+	    		equipment.setEqId(eqId);
 				equipmentMapper.insertSelective(equipment);
 	    	}
 	    	
@@ -124,7 +125,12 @@ public class InstallController implements ApplicationContextAware {
 	    	record.setFormType("安装");
 	    	record.setAction("新建安装编号为："+install.getInstallId());
 			ohm.insertSelective(record );
-	    	
+			
+			install.setEqId(eqId);
+			install.setCashId(cashId);
+			install.setPrinterId(printerId);
+			
+	    	installmapper.insertSelective(install);
 	    	result.put("message", "success");
 	    	return result.toJSONString() ;
 	  }catch(Exception e){
