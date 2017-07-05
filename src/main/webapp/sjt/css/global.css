@@ -99,7 +99,7 @@ input[type=button] {width: auto; overflow: visible;}
 .i-itemSeek{ display: flex; margin:.3rem .25rem 0 .25rem; border:solid 1px #e4e4e4; border-radius: .2rem; overflow: hidden;  height: .75rem;/*display:none;*/}
 .i-itemSeek input{ flex: 1; border:none; background:none;  padding: 0 .2rem;}
 .i-itemSeek div{ width: 1rem; background: red; background: url(../images/icon2.png) no-repeat 50% 50%; background-size: .3rem .3rem;}
-.i-itemDetail{ font-size:.24rem; margin-top:0.2rem; }
+.i-itemDetail{ font-size:.24rem; margin-top:0.2rem;width:100%;overflow-x:hidden; }
 .i-itemDetail-area-title{ display: flex; align-items: center; padding: 0 .35rem 0 .5rem; height: 1rem; background: #f9f9f9; border-top:solid 1px #e4e4e4; border-bottom: solid 1px #e4e4e4;}
 .i-itemDetail-area-title div{ flex:1;}
 .i-itemDetail-area-title p{ color: #244ba8;}
