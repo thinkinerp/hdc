@@ -257,28 +257,35 @@
 					   		var dom = [];
 					   		for(var i = 0; i<data.length; i++){
 					   			dom.push('<div class="i-itemDetail-area">');
+
 					   			dom.push('<div class="i-itemDetail-area-title">');
 					   			dom.push('<div>'+data[i].shopName+"("+data[i].shopPosition+")</div>");
 					   			dom.push('<p onclick="me.tz(\''+data[i].problemId+'\')">详情</p>');
 					   			dom.push('</div>');
+
 					   			dom.push('<div class="i-itemDetail-area-content">');
+
 					   			dom.push('<div class="content-row">');
 					   			dom.push('<p>铺位号</p>');
 					   			dom.push('<p>'+data[i].shopId+'</p>');
 					   			//dom.push('<p><i class="on1"></i>无需安装</p>');
 					   			dom.push('</div>');
+
 					   			dom.push('<div class="content-row">');
 					   			dom.push('<p>状态</p>');
 					   			dom.push('<p>'+data[i].state+'</p>');
 					   			dom.push('</div>');
+
 					   			dom.push('<div class="content-row">');
 					   			dom.push('<p>最后修改时间</p>');
 					   			dom.push('<p>'+data[i].updatedAt+'</p>');
 					   			dom.push('</div>');
+
 					   			dom.push('<div class="content-row">');
 					   			dom.push('<p>问题详情</p>');
-					   			dom.push('<p style="height:auto">'+data[i].problemDetails.substr(0,30)+'</p>');
+					   			dom.push('<p style="height:auto">'+encodeURI(data[i].problemDetails).substr(0,30)+'</p>');
 					   			dom.push('</div>');
+
 					   			dom.push('</div>');
 					   			dom.push('</div>');
 					   		}
