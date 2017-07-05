@@ -559,7 +559,8 @@ function buttonFixed()
 			{
 				var bnrtitle=$(document).attr("title");
 		    	if(bnrtitle=="安装详情" || bnrtitle=="问题详情" || bnrtitle=="调研详情")
-		        {window.SYP.saveParam (true,1);}
+		        {window.SYP.saveParam (true,1);
+		        }
 		    	else
 		    	{window.SYP.saveParam (false,0);}
 			} 
