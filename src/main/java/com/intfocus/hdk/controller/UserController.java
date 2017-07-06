@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.apache.tomcat.util.security.MD5Encoder;
-import org.eclipse.jetty.util.security.Credential.MD5;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.intfocus.hdk.dao.UserMapper;
-import com.intfocus.hdk.util.MD5Util;
 import com.intfocus.hdk.vo.User;
 
 @Controller
