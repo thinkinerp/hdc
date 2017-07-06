@@ -761,6 +761,9 @@ $(function(){
          })  
         $(".i-text,.i-choice-row,.i-choice-rowchk").bind("click",function(){
              window.SYP.saveParam (true,1);
+         }) 
+         $(".i-choicechk").on("click",".i-choice-rowchk",function(){
+             window.SYP.saveParam (true,1);
          })       
         /*===保存返回 end===*/        
    //img start

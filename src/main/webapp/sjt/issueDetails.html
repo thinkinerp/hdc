@@ -260,7 +260,7 @@
                         </li>
 
                     </ul>
-                    <div  class="g-fa" placeholder="请输入问题描述" id="wtms" contenteditable="true" style="margin-top:0; height: 1.4rem;-webkit-user-select:text"></div>
+                    <textarea class="i-contenteditable textarea-text1" contenteditable="true" placeholder="请输入问题描述" id="wtms" style="margin-top:0; height: 1.4rem;-webkit-user-select:text"></textarea>
                 </div>
                 <div class="swiper-slide">
                     <ul class="g-importList">
@@ -748,7 +748,11 @@
 
             var ms = {//问题描述
                 data : null,
-                init : function() {                  
+                init : function() {   
+                if(!sp.sp1)    
+                {sp.sp1=$("#sp1").html();} 
+                if(!sp.sp2)    
+                {sp.sp2=$("#sp2").html();}      
                     $.ajax({
                         url :domainName +  "/hdk/problem/getEquipmentList",
                         type : "get",
@@ -774,8 +778,7 @@
                             }
                             $('#asddas')[0].dataset.select = text
                             //					   		$('#ms7')[0].dataset.select = text2
-                            $("#asddas").unbind('click');
-                          
+                            $("#asddas").unbind('click');                             
                              $("#asddas").click(function() {
                              /*====采集点 start====*/       
                              if(data.length>1 && sp.sp2!="")
@@ -783,15 +786,21 @@
                                   app.select(this, 2, ms.selectcj);  
                                 }
                               else if(sp.sp2=="")
-                              {app.alert("请选择商铺名称");}
-                          //只有一条商户默认第一条
-                              else if(sp.sp2!="" &&data.length==1)
-                              {$("#asddas").html(data[0].eqId);}
+                              {app.alert("请选择商铺名称");}                          
                               else
                                 {app.alert("采集点为空");}
                             /*====采集点 end====*/ 
                             })
-                           
+                             //只有一条商户默认第一条
+                           if(sp.sp2!="" &&data.length==1)
+                              {$("#asddas").html(data[0].eqId);
+                                $("#asddas").parents(".i-xiala-list").addClass("textcont")
+                                $("#asddas").unbind('click');
+                                }
+                              else
+                              {$("#asddas").parents(".i-xiala-list").removeClass("textcont")
+                                $("#asddas").html('未选择');
+                              }
                         }
                     })
                 },
@@ -841,7 +850,7 @@
                     ,
                     'problem.problemResolveUser' : $('#ms4').val()//解决人
                     ,
-                    'problem.problemDetails' : $('#wtms').html()//问题描述
+                    'problem.problemDetails' : $('#wtms').val()//问题描述
                     ,
                     'files' : JSON.stringify(imgs)//附件信息
                     ,
@@ -921,7 +930,7 @@
                     ,
                     'problem.problemResolveUser' : $('#ms4').val()//解决人
                     ,
-                    'problem.problemDetails' : $('#wtms').html()//问题描述
+                    'problem.problemDetails' : $('#wtms').val()//问题描述
                     ,
                     'files' :JSON.stringify(imgs) //附件信息
                     ,
@@ -1002,12 +1011,12 @@
                     $("#ms3").val(data.problemEstimate);
                     $("#ms4").val(data.problemResolveUser);
                     $("#ms5").val(data.problemResloveTime);
-
+                     ms.init();
                     $('#asddas').html(data.eqId);
                     xg.zhidu('asddas');
                     $("#ms6").html(data.eqStyle);
                     $("#ms7").html(data.eqType);
-                    $("#wtms").html(data.problemDetails);
+                    $("#wtms").val(data.problemDetails);
 
                     $("#jjfa").val(data.problemPlan);
                     
@@ -1088,8 +1097,8 @@
                 } else {//修改
                      isgs7=true;
                     gs.init();
-                    ms.init();
-                    xg.init(problemId);
+                    xg.init(problemId);                    
+                   // ms.init();
                     $("#save").click(function() {//保存按钮
                         app.alert("确定要保存吗？", 2, submit2)
                     })
