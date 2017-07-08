@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.intfocus.hdk.dao.PortalReportMapper">
+  <resultMap id="BaseResultMap" type="com.intfocus.hdk.vo.PortalReport" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="execute_code" property="executeCode" jdbcType="VARCHAR" />
+    <result column="execute_type" property="executeType" jdbcType="INTEGER" />
+    <result column="report_headers_count_rows" property="reportHeadersCountRows" jdbcType="INTEGER" />
+    <result column="report_headers_count_cols" property="reportHeadersCountCols" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="disabled" property="disabled" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="BIGINT" />
+  </resultMap>
+    <select id="queryObject" resultMap="BaseResultMap">
+		select * from portal_report where id = #{id}
+	</select>
+
+    <select id="queryObjectByCode" resultMap="BaseResultMap">
+        select * from portal_report where code = #{code}
+    </select>
+
+    <select id="queryList" parameterType="map" resultType="Map">
+        select a.`code`,a.title,a.execute_code,a.execute_type,a.create_time,b.username from portal_report a
+        LEFT JOIN sys_user b ON a.creater = b.user_id
+        <where>
+            <if test="code != null and code !=''">
+                and code like concat('%',#{code},'%')
+            </if>
+            <if test="title != null and title !=''">
+                and title like concat('%',#{title},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" parameterType="map" resultType="int">
+        select count(*) from portal_report
+        <where>
+            <if test="id != null and id !=''">
+                and id = #{id}
+            </if>
+            <if test="remark != null and remark !=''">
+                and remark like concat('%',#{remark},'%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.intfocus.hdk.vo.PortalReport">
+		insert into portal_report
+		(
+			`id`,
+			`code`,
+			`title`,
+			`execute_code`,
+			`execute_type`,
+			`report_headers_count_rows`,
+			`report_headers_count_cols`,
+			`report_headers_console`,
+			`report_headers_format_console`,
+			`report_hot_data`,
+			`report_merged_cell_info_collection`,
+			`report_outer_html`,
+			`remark`,
+			`creater`,
+			`create_time`,
+			`modifier`,
+			`modify_time`,
+			`disabled`,
+			`version`
+		)
+		values
+		(
+			#{id},
+			#{code},
+			#{title},
+			#{executeCode},
+			#{executeType},
+			#{reportHeadersCountRows},
+			#{reportHeadersCountCols},
+			#{reportHeadersConsole},
+			#{reportHeadersFormatConsole},
+			#{reportHotData},
+			#{reportMergedCellInfoCollection},
+			#{reportOuterHtml},
+			#{remark},
+			#{creater},
+			#{createTime},
+			#{modifier},
+			NOW(),
+			#{disabled},
+			#{version}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.intfocus.hdk.vo.PortalReport">
+        update portal_report
+        <set>
+            <if test="code != null">`code` = #{code},</if>
+            <if test="title != null">`title` = #{title},</if>
+            <if test="executeCode != null">`execute_code` = #{executeCode},</if>
+            <if test="executeType != null">`execute_type` = #{executeType},</if>
+            <if test="reportHeadersCountRows != null">`report_headers_count_rows` = #{reportHeadersCountRows},</if>
+            <if test="reportHeadersCountCols != null">`report_headers_count_cols` = #{reportHeadersCountCols},</if>
+            <if test="reportHeadersConsole != null">`report_headers_console` = #{reportHeadersConsole},</if>
+            <if test="reportHeadersFormatConsole != null">`report_headers_format_console` =
+                #{reportHeadersFormatConsole},
+            </if>
+            <if test="reportHotData != null">`report_hot_data` = #{reportHotData},</if>
+            <if test="reportMergedCellInfoCollection != null">`report_merged_cell_info_collection` =
+                #{reportMergedCellInfoCollection},
+            </if>
+            <if test="reportOuterHtml != null">`report_outer_html` = #{reportOuterHtml},</if>
+            <if test="remark != null">`remark` = #{remark},</if>
+            <if test="creater != null">`creater` = #{creater},</if>
+            <if test="createTime != null">`create_time` = #{createTime},</if>
+            <if test="modifier != null">`modifier` = #{modifier},</if>
+            `modify_time` = NOW(),
+            <if test="disabled != null">`disabled` = #{disabled},</if>
+            <if test="version != null">`version` = #{version}</if>
+        </set>
+        where code = #{codeOld}
+    </update>
+
+    <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="int">
+        delete from portal_report where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <delete id="deleteBatchByCodes" parameterType="int">
+        delete from portal_report where code in
+        <foreach item="code" collection="array" open="(" separator="," close=")">
+            #{code}
+        </foreach>
+    </delete>
+</mapper>

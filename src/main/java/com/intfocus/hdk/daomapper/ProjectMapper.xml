@@ -141,9 +141,9 @@ group by  c.cash_port
 			           ,pro_engineer
 			           ,pro_customer_relationship
 			           ,pro_operator
-			           ,already.install_data as proAlready
-				   ,checked.install_data as proCheck
-				   ,offline.install_data as proNot
+			           ,already.install_data as pro_already
+				   ,checked.install_data as pro_check
+				   ,offline.install_data as pro_not
 			      from project as p 
 			 left join (
 				    select count(i.install_id) as install_data

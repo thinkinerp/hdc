@@ -1,0 +1,58 @@
+package com.intfocus.hdk.serviceImpl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.intfocus.hdk.dao.ReportMeasureRelationMapper;
+import com.intfocus.hdk.service.ReportMeasureRelationService;
+import com.intfocus.hdk.vo.ReportMeasureRelation;
+
+@Service("reportMeasureRelationService")
+public class ReportMeasureRelationServiceImpl implements ReportMeasureRelationService {
+    @Autowired
+    private ReportMeasureRelationMapper reportMeasureRelationMapper;
+
+    @Override
+    public ReportMeasureRelation queryObject(Long id) {
+        return reportMeasureRelationMapper.queryObject(id);
+    }
+
+    @Override
+    public List<ReportMeasureRelation> queryList(Map<String, Object> map) {
+        return reportMeasureRelationMapper.queryList(map);
+    }
+
+    @Override
+    public List<ReportMeasureRelation> queryListByReportCode(String reportcode) {
+        return reportMeasureRelationMapper.queryListByReportCode(reportcode);
+    }
+
+    @Override
+    public int queryTotal(Map<String, Object> map) {
+        return reportMeasureRelationMapper.queryTotal(map);
+    }
+
+    @Override
+    public void save(ReportMeasureRelation reportMeasureRelation) {
+        reportMeasureRelationMapper.save(reportMeasureRelation);
+    }
+
+    @Override
+    public void update(ReportMeasureRelation reportMeasureRelation) {
+        reportMeasureRelationMapper.update(reportMeasureRelation);
+    }
+
+    @Override
+    public void delete(Long id) {
+        reportMeasureRelationMapper.delete(id);
+    }
+
+    @Override
+    public void deleteBatch(Long[] ids) {
+        reportMeasureRelationMapper.deleteBatch(ids);
+    }
+
+}

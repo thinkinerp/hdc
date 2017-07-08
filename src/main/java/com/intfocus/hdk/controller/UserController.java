@@ -71,18 +71,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "logout" , method=RequestMethod.GET)
-	public String logout(HttpServletResponse res , HttpServletRequest req, HttpSession session , String userName ){
-		
-		JSONObject rs = new JSONObject();
-		Map<String, String> where = new HashMap<String, String>();
-		where.put("userName", userName);
-		List<User> users = usermapper.selectByWhere(where );
-		if(null == users || users.size() <= 0 ){
-			rs.put("message", "success");
-		}else{
-			rs.put("message", "success");
-		}
+	public String logout(HttpServletResponse res , HttpServletRequest req, HttpSession session  ){
 		session.setAttribute("userInfo", null);
+		session = null ; 
 		return "login" ;
 		
 	}

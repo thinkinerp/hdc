@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.intfocus.hdk.dao.PortalExecuteSqlMapper">
+  <resultMap id="BaseResultMap" type="com.intfocus.hdk.vo.PortalExecuteSql" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sqlcode" property="sqlcode" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="execute_sql" property="executeSql" jdbcType="VARCHAR" />
+    <result column="data_source_code" property="dataSourceCode" jdbcType="VARCHAR" />
+    <result column="parameter" property="parameter" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="disabled" property="disabled" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="BIGINT" />
+  </resultMap>
+    <select id="queryObject" resultMap="BaseResultMap">
+		select * from portal_execute_sql where id = #{id}
+	</select>
+
+    <select id="queryObjectBySqlcode" resultMap="BaseResultMap">
+        select * from portal_execute_sql where sqlcode = #{sqlcode}
+    </select>
+
+    <select id="queryList" parameterType="map" resultType="Map">
+        select a.sqlcode,a.title,a.data_source_code,a.create_time,b.username from portal_execute_sql a
+        LEFT JOIN sys_user b ON a.creater = b.user_id
+        <where>
+            <if test="sqlcode != null and sqlcode !=''">
+                and sqlcode like concat('%',#{sqlcode},'%')
+            </if>
+            <if test="title != null and title !=''">
+                and title like concat('%',#{title},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" parameterType="map" resultType="int">
+        select count(*) from portal_execute_sql
+        <where>
+            <if test="id != null and id !=''">
+                and id = #{id}
+            </if>
+            <if test="remark != null and remark !=''">
+                and remark like concat('%',#{remark},'%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.intfocus.hdk.vo.PortalExecuteSql">
+		insert into portal_execute_sql
+		(
+			`id`,
+			`sqlcode`,
+			`title`,
+			`execute_sql`,
+			`data_source_code`,
+			`parameter`,
+			`remark`,
+			`creater`,
+			`create_time`,
+			`modifier`,
+			`modify_time`,
+			`disabled`,
+			`version`
+		)
+		values
+		(
+			#{id},
+			#{sqlcode},
+			#{title},
+			#{executeSql},
+			#{dataSourceCode},
+			#{parameter},
+			#{remark},
+			#{creater},
+			#{createTime},
+			#{modifier},
+			NOW(),
+			#{disabled},
+			#{version}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.intfocus.hdk.vo.PortalExecuteSql">
+        update portal_execute_sql
+        <set>
+            <if test="sqlcode != null">`sqlcode` = #{sqlcode},</if>
+            <if test="title != null">`title` = #{title},</if>
+            <if test="executeSql != null">`execute_sql` = #{executeSql},</if>
+            <if test="dataSourceCode != null">`data_source_code` = #{dataSourceCode},</if>
+            <if test="parameter != null">`parameter` = #{parameter},</if>
+            <if test="remark != null">`remark` = #{remark},</if>
+            <if test="creater != null">`creater` = #{creater},</if>
+            <if test="createTime != null">`create_time` = #{createTime},</if>
+            <if test="modifier != null">`modifier` = #{modifier},</if>
+            `modify_time` = NOW(),
+            <if test="disabled != null">`disabled` = #{disabled},</if>
+            <if test="version != null">`version` = #{version}</if>
+        </set>
+        where sqlcode = #{sqlcodeOld}
+    </update>
+
+    <!-- 批量删除 -->
+    <delete id="deleteBatchBySqlcodes" parameterType="int">
+        delete from portal_execute_sql where sqlcode in
+        <foreach item="sqlcode" collection="array" open="(" separator="," close=")">
+            #{sqlcode}
+        </foreach>
+    </delete>
+
+</mapper>

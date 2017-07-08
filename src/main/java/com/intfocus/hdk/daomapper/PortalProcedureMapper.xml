@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.intfocus.hdk.dao.PortalProcedureMapper">
+  <resultMap id="BaseResultMap" type="com.intfocus.hdk.vo.PortalProcedure" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="procode" property="procode" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="data_source_code" property="dataSourceCode" jdbcType="VARCHAR" />
+    <result column="proname" property="proname" jdbcType="VARCHAR" />
+    <result column="parameter" property="parameter" jdbcType="VARCHAR" />
+    <result column="prodb" property="prodb" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="disabled" property="disabled" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="BIGINT" />
+  </resultMap>
+    <select id="queryObject" resultMap="BaseResultMap">
+		select * from portal_procedure where id = #{id}
+	</select>
+
+    <select id="queryObjectByProcode" resultMap="BaseResultMap">
+        select * from portal_procedure where procode = #{procode}
+    </select>
+
+    <select id="queryList" parameterType="map" resultType="Map">
+        select a.procode,a.title,a.data_source_code,a.proname,a.prodb,a.creater,a.create_time,b.username from portal_procedure a LEFT JOIN sys_user b ON a.creater = b.user_id
+        <where>
+            <if test="procode != null and procode !=''">
+                and procode like concat('%',#{procode},'%')
+            </if>
+            <if test="title != null and title !=''">
+                and title like concat('%',#{title},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" parameterType="map" resultType="int">
+        select count(*) from portal_procedure
+    </select>
+
+    <insert id="save" parameterType="com.intfocus.hdk.vo.PortalProcedure">
+		insert into portal_procedure
+		(
+			`id`,
+			`procode`,
+			`title`,
+			`data_source_code`,
+			`proname`,
+			`parameter`,
+			`prodb`,
+			`remark`,
+			`creater`,
+			`create_time`,
+			`modifier`,
+			`modify_time`,
+			`disabled`,
+			`version`
+		)
+		values
+		(
+			#{id},
+			#{procode},
+			#{title},
+			#{dataSourceCode},
+			#{proname},
+			#{parameter},
+			#{prodb},
+			#{remark},
+			#{creater},
+			#{createTime},
+			#{modifier},
+			NOW(),
+			#{disabled},
+			#{version}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.intfocus.hdk.vo.PortalProcedure">
+        update portal_procedure
+        <set>
+            <if test="procode != null">`procode` = #{procode}, </if>
+            <if test="title != null">`title` = #{title}, </if>
+            <if test="dataSourceCode != null">`data_source_code` = #{dataSourceCode}, </if>
+            <if test="proname != null">`proname` = #{proname}, </if>
+            <if test="parameter != null">`parameter` = #{parameter}, </if>
+            <if test="prodb != null">`prodb` = #{prodb}, </if>
+            <if test="remark != null">`remark` = #{remark}, </if>
+            <if test="creater != null">`creater` = #{creater}, </if>
+            <if test="createTime != null">`create_time` = #{createTime}, </if>
+            <if test="modifier != null">`modifier` = #{modifier}, </if>
+            `modify_time` = NOW(),
+            <if test="disabled != null">`disabled` = #{disabled}, </if>
+            <if test="version != null">`version` = #{version}</if>
+        </set>
+        where procode = #{procodeOld}
+	</update>
+
+    <delete id="delete">
+        delete from portal_procedure where id = #{value}
+    </delete>
+    <!-- 批量删除 -->
+    <delete id="deleteBatchByProcodes">
+        delete from portal_procedure where procode in
+        <foreach item="procode" collection="array" open="(" separator="," close=")">
+            #{procode}
+        </foreach>
+    </delete>
+
+    <!-- 通用调用存储过程 -->
+    <select id="callProResultMap" statementType="CALLABLE" resultType="map" parameterType="java.util.HashMap">
+        <![CDATA[
+
+		    {
+		      call ${proname}(${parameter})
+		    }
+
+        ]]>
+    </select>
+
+    <select id="callProListResultListMap" statementType="CALLABLE" resultType="map" parameterType="java.util.HashMap">
+        <![CDATA[
+
+		    {
+		      call ${proname}(${parameter})
+		    }
+
+        ]]>
+    </select>
+
+    <select id="callProResultMapByParam" statementType="CALLABLE" resultType="map" parameterType="java.util.HashMap">
+        <![CDATA[
+
+		    {
+		      call ${proname}(${parameter})
+		    }
+
+        ]]>
+    </select>
+
+    <select id="callProListResultListMapByParam" statementType="CALLABLE" resultType="map" parameterType="java.util.HashMap">
+        <![CDATA[
+
+		    {
+		      call ${proname}(${parameter})
+		    }
+
+        ]]>
+    </select>
+
+</mapper>

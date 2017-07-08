@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.intfocus.hdk.dao.PortalDataSourceMapper">
+  <resultMap id="BaseResultMap" type="com.intfocus.hdk.vo.PortalDataSource" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="jdbc_driver" property="jdbcDriver" jdbcType="VARCHAR" />
+    <result column="user" property="user" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="min_connections_per_partition" property="minConnectionsPerPartition" jdbcType="INTEGER" />
+    <result column="max_connections_per_partition" property="maxConnectionsPerPartition" jdbcType="INTEGER" />
+    <result column="connection_tag" property="connectionTag" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="disabled" property="disabled" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="BIGINT" />
+  </resultMap>
+    <select id="queryObject" resultMap="BaseResultMap">
+		select * from portal_data_source where id = #{id}
+	</select>
+
+    <select id="queryObjectByCode" resultMap="BaseResultMap">
+        select * from portal_data_source where code = #{code}
+    </select>
+
+    <select id="queryList" parameterType="map" resultType="Map">
+        select a.`code`,a.title,a.url,a.jdbc_driver,a.`user`,a.create_time,b.username from portal_data_source a
+        LEFT JOIN sys_user b ON a.creater = b.user_id
+        <where>
+            <if test="code != null and code !=''">
+                and code like concat('%',#{code},'%')
+            </if>
+            <if test="title != null and title !=''">
+                and title like concat('%',#{title},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" parameterType="map" resultType="int">
+        select count(*) from portal_data_source where 1 = 1
+        <if test="key != null and key.trim() != ''">
+            and `key` like concat('%',#{key},'%')
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.intfocus.hdk.vo.PortalDataSource">
+		insert into portal_data_source
+		(
+			`id`,
+			`code`,
+			`title`,
+			`url`,
+			`jdbc_driver`,
+			`user`,
+			`password`,
+			`min_connections_per_partition`,
+			`max_connections_per_partition`,
+			`connection_tag`,
+			`remark`,
+			`creater`,
+			`create_time`,
+			`modifier`,
+			`modify_time`,
+			`disabled`,
+			`version`
+		)
+		values
+		(
+			#{id},
+			#{code},
+			#{title},
+			#{url},
+			#{jdbcDriver},
+			#{user},
+			#{password},
+			#{minConnectionsPerPartition},
+			#{maxConnectionsPerPartition},
+			#{connectionTag},
+			#{remark},
+			#{creater},
+			#{createTime},
+			#{modifier},
+			NOW(),
+			#{disabled},
+			#{version}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.intfocus.hdk.vo.PortalDataSource">
+        update portal_data_source
+        <set>
+            <if test="code != null">`code` = #{code}, </if>
+            <if test="title != null">`title` = #{title}, </if>
+            <if test="url != null">`url` = #{url}, </if>
+            <if test="jdbcDriver != null">`jdbc_driver` = #{jdbcDriver}, </if>
+            <if test="user != null">`user` = #{user}, </if>
+            <if test="password != null">`password` = #{password}, </if>
+            <if test="minConnectionsPerPartition != null">`min_connections_per_partition` = #{minConnectionsPerPartition}, </if>
+            <if test="maxConnectionsPerPartition != null">`max_connections_per_partition` = #{maxConnectionsPerPartition}, </if>
+            <if test="connectionTag != null">`connection_tag` = #{connectionTag}, </if>
+            <if test="remark != null">`remark` = #{remark}, </if>
+            <if test="creater != null">`creater` = #{creater}, </if>
+            <if test="createTime != null">`create_time` = #{createTime}, </if>
+            <if test="modifier != null">`modifier` = #{modifier}, </if>
+            `modify_time` = NOW(),
+            <if test="disabled != null">`disabled` = #{disabled}, </if>
+            <if test="version != null">`version` = #{version}</if>
+        </set>
+        where code = #{codeOld}
+	</update>
+
+    <!-- 根据key，更新value -->
+    <update id="updateValueByKey" parameterType="map">
+		update Report set `value` = #{value} where `key` = #{key}
+	</update>
+
+    <!-- 根据key，查询value -->
+    <select id="queryByKey" parameterType="string" resultType="string">
+		select value from portal_data_source where `key` = #{key}
+	</select>
+
+    <delete id="delete">
+        delete from portal_data_source where id = #{value}
+    </delete>
+
+    <delete id="deleteBatch">
+        delete from portal_data_source where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBatchByCodes">
+        delete from portal_data_source where code in
+        <foreach item="code" collection="array" open="(" separator="," close=")">
+            #{code}
+        </foreach>
+    </delete>
+</mapper>
