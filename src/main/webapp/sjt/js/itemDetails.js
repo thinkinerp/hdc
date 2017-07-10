@@ -1,6 +1,7 @@
 /**
  * 
  */
+m_loading.html();
 var params = function() {
   var query = {},
     search = window.location.search.substring(1),
@@ -39,7 +40,7 @@ if(undefined != params["proId"] && "" != params["proId"]){
 }
 
 var loadItem = function(allThing){
-
+m_loading.remove();
 if(undefined != allThing && null != allThing ){
 	
 	var allObjs = allThing;

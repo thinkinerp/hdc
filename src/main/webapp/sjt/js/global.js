@@ -585,3 +585,14 @@ function buttonFixed()
 			// 	}
 			// }
  /*====cynthia返回 end1=====*/
+ var m_loading = {
+	html:function(){
+		var html = [];
+        html.push("<div class='loadingbox'><img src='background/media/image/fancybox_loading.gif'></div>");
+         $("body").append(html.join(""));
+	},
+	remove:function(){
+		$(".loadingbox").remove();
+
+	}
+}

@@ -85,7 +85,7 @@ var search = function(){
 	 		jsonpCallback:"project_"+time+"_getSome",
 	 		jsonp: "callback",
 	 		success:function(rs){
-
+	 			 m_loading.remove();
 				 $('.i-itemDetail').html('');
 	  			 $.each(rs,function(index,item){
 	  				 $('.i-itemDetail').append(

@@ -248,6 +248,7 @@
 					   dataType:"jsonp",
 					   jsonp:"callback",
 					   success:function(data){
+					   	m_loading.remove();
 					   		var dom = [];
 					   		console.log(data);
 					   		for(var i = 0; i<data.length; i++){
@@ -284,6 +285,7 @@
 				}
 			};
 			$(function(){
+				m_loading.html();
 				me.init();		
 				  for(var i = 0 ; i < $('div').length;i++ ){
                     if(undefined != $($('div')[i]).attr('defaultVal')){

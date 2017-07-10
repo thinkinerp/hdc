@@ -301,9 +301,12 @@
                 },
                type:"get",
                success:function(res){
+               	  m_loading.remove();
                   $("#dyid").val(res.code);
                },
-               error:function(res){                   
+               error:function(res){      
+               m_loading.remove();
+               app.alert("自动生成编号失败",1);             
                } 
               });}           
             /*====安装cynthia ，获得安装编号 end===*/
@@ -628,7 +631,7 @@
 				}
 			};
 			
-			function submit(){//提交
+			function submit(){//提交				
 			     if(form_empty({code:$('#dyid').val(), which:"调研编号"}))
 			     	{return;}
 				 if(form_empty({code:$('#itemName').html(), which:"项目名称"}))
@@ -727,8 +730,8 @@
                                          , which:"调研编码"
                                          ,extra:true
                     } )
-                    ).done(function(){
-					   
+                    ).done(function(){					   
+               		  m_loading.html();
         				$.ajax({	
         					   url:domainName+ "/hdk/survey/submit",
         					   type: "post",
@@ -738,6 +741,7 @@
         					   dataType:"json",			
         					  // jsonpCallback:"state_null_getSome",
         					   success:function(data){
+                 					m_loading.remove();        					  
         					   		if(data.message == "success"){
 
         					   			               window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功",
@@ -748,11 +752,15 @@
         					   		}
         					   },
         					   error:function(rs){
+        					   	  m_loading.remove();  	
         					      app.alert(rs.status,1);
         					   }				   
         					});
-					 }).fail(function(){alert("网路问题，请重试");});//done end
+					 }).fail(function(){
+					m_loading.remove();  	
+					 alert("网路问题，请重试");});//done end
 					}catch(e){  
+						m_loading.remove();  	
 					    alert(e.name);
                     throw(e.name); //抛出异常 
             }
@@ -773,6 +781,7 @@ var vipinfovalue;
 				return printerid;
 			}
 			function xgsubmit(){	//修改
+				m_loading.html();
 				var obj={
                     'files':(JSON.stringify(imgs)),
 					'survey.proId':xg.data.survey.proId,	//项目编号
@@ -825,6 +834,7 @@ var vipinfovalue;
 					   dataType:"json",			
 					  // jsonpCallback:"state_null_getSome",
 					   success:function(data){
+					   	m_loading.remove();
 					   		if(data.message == "success"){	
                                  window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功",
                                                             domainName + "/hdk/sjt/surveyList.html?syp_user_num="+params["userNum"]+"&syp_user_name="+params["userName"]);
@@ -835,6 +845,7 @@ var vipinfovalue;
 					   		}
 					   },
                        error:function(rs){
+                       	m_loading.remove();
                            app.alert(rs.status,1);
                        }    					   
 					});
@@ -856,12 +867,13 @@ var vipinfovalue;
 					   dataType:"jsonp",			
 					  // jsonpCallback:"forword:/surveyDetails.jsp",
 					   success:function(data){
+					   		m_loading.remove();	
 					   		xg.upStyle(data);
 					   		xg.data = data;					   		
 					   }					   
 					});
 				},
-				upStyle:function(data){
+				upStyle:function(data){	
 					//调研概述
 					$("#dyid").val(xg.surId);
 					xg.zhidu("dyid");
@@ -1046,7 +1058,8 @@ var vipinfovalue;
 			 /*===返回2 start===*/
 			 var surtestId;
 			 /*===返回2 end===*/
-			$(function(){		
+			$(function(){	
+			m_loading.html();	
 			/*===保存返回 start===*/
 	        window.SYP.saveParam (false,1);
 	        $("input,textarea").bind("focus",function(){

@@ -253,7 +253,7 @@
 					   dataType:"jsonp",
 					   jsonpCallback:"problem_getSome",
 					   success:function(data){
-					       console.log(data)
+					       m_loading.remove();
 					   		var dom = [];
 					   		for(var i = 0; i<data.length; i++){
 					   			dom.push('<div class="i-itemDetail-area">');
@@ -301,6 +301,7 @@
 			}
 			
 			$(function(){
+				m_loading.html();
 				me.init();
 				 for(var i = 0 ; i < $('div').length;i++ ){
                     if(undefined != $($('div')[i]).attr('defaultVal')){

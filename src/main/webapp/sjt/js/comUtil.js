@@ -19,6 +19,7 @@ var readOnly = function(id){
 	$("#" + id).attr('readonly', 'readonly');
 }
 function form_empty(config){
+	m_loading.remove();
     if(config.code==""  )
     {app.alert(config.which+":"+config.code + ",不能为空",1);
 	 return true;
@@ -33,6 +34,7 @@ function form_empty(config){
     {return false;}
 }
 function codeUnique(config){
+	m_loading.remove();
 //	if(''!= config.code ){
 		var dtd = $.Deferred(); 
 	if(!onlyEnglishAndDecimal(config.code)){

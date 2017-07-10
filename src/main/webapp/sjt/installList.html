@@ -23,7 +23,8 @@
         .wrapbox{padding-bottom:5em;}
     </style>
 </head>
-<body>        
+<body>      
+
         <div class="wrapbox">
         <div class="itemfixbox">        
         <!-- 选择项目名称 -->
@@ -80,6 +81,7 @@
         </div>
 
         <script type="text/javascript">
+       
          var gotoDetail =  function(){
         
             window.SYP.pageLink("新建详情" ,  domainName + "/hdk/sjt/installDetails.html?userNum="
@@ -89,6 +91,7 @@
         //location.href = "installDetails.html?userNum="+params['syp_user_num']+"&userName="+params['syp_user_name']                                                                   +"&pproName="+$('#itemName').html();
             } 
             $(function(){
+                 m_loading.html();
             //  comboboxForProState();
                 //comboboxForEqType();
                 var time =  (new Date().getTime());
@@ -133,7 +136,7 @@
                         jsonp: "callback",
                         dataType:'jsonp',
                         success:function(rs){
-
+                             m_loading.remove();
                             //加载最后一次选择的项目信息
                              // $(".i-itemStyle-title").html(rs[0].proName);
                             $('#itemName').html(rs[0].proName);
