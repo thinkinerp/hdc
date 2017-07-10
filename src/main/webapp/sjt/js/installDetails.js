@@ -10,27 +10,27 @@ loadCombobox("printerPort", "printer_port");
 loadCombobox("installState", "install");
 loadCombobox("installData", "install_data");
 /*====安装cynthia ，获得安装编号 start0619===*/         
-function getproId()
-{  
+// function getproId()
+// {  
 	
-	$.ajax({
-    url:domainName + "/hdk/project/getFormCode",
-    dataType:"jsonp",
-    jsonp:"callback",
-    data:{
-        formType:"install",
-        proId:proId_name
-    },
-   type:"get",
-   success:function(res){
-    console.log(res);
-      $("#installCode").val(res.code);
-   },
-   error:function(res){    
-	   console.log(res);
-   } 
-  });
-}           
+// 	$.ajax({
+//     url:domainName + "/hdk/project/getFormCode",
+//     dataType:"jsonp",
+//     jsonp:"callback",
+//     data:{
+//         formType:"install",
+//         proId:proId_name
+//     },
+//    type:"get",
+//    success:function(res){
+//     console.log(res);
+//       $("#installCode").val(res.code);
+//    },
+//    error:function(res){    
+// 	   console.log(res);
+//    } 
+//   });
+// }           
 /*====安装cynthia ，获得安装编号 end===*/
 var time = new Date().getTime();
 $.ajax({
@@ -188,7 +188,8 @@ Window.shopSelected = function() {
     error: function(rs) {}
   });
 }
-var loadInstall = function(allThing){       
+var loadInstall = function(allThing){   
+    m_loading.remove();    
     if(null != allThing && undefined !=allThing){
         
         allObjs =allThing;
@@ -517,7 +518,7 @@ var submit = function() {
   // 保存打印机
   // 采集点
   //验证
- 
+  m_loading.html();
   if (null != allThing && undefined !=allThing) {
 
     $.ajax({
@@ -587,6 +588,7 @@ var submit = function() {
         //          ,'updatedAt':''
       },
       success: function(result) {
+        m_loading.remove();
     	  if("success" == result.message){
      
     			  window.SYP.showAlertAndRedirectWithCleanStack("温馨提示", "保存成功"
@@ -598,6 +600,7 @@ var submit = function() {
     	  }
       },
       error: function(result) {
+        m_loading.remove();
     	  app.alert("保存失败，请重试",1);
       }
     });
@@ -639,6 +642,7 @@ var submit = function() {
         //   {return;}    
         
          //验证收银机编号和打印机编号 end 
+         
 	 $.when(
     codeUnique({
 		 tableName:"install"
@@ -649,6 +653,7 @@ var submit = function() {
 	 				} )			      
             )
 	 .done(function(){ 
+    m_loading.html();
 
     $.ajax({
       url:domainName +   '/hdk/install/submit', //用于文件上传的服务器端请求地址
@@ -719,7 +724,7 @@ var submit = function() {
         //          ,'updatedAt':''
       },
       success: function(data, status) //服务器成功响应处理函数
-      {
+      {m_loading.remove();
         console.log(data);
         
         if(data.message == "success"){
@@ -735,7 +740,7 @@ var submit = function() {
         
       },
       error: function(data, status, e) //服务器响应失败处理函数
-      {
+      {m_loading.remove();
         console.log(e);
         console.log(data);
         console.log(status);
@@ -744,7 +749,9 @@ var submit = function() {
       //ajax end
     });
    //done end 
-	 }).fail(function(){alert("网路原因未请求成功")});
+	 }).fail(function(){m_loading.remove();
+
+    alert("网路原因未请求成功")});
 	 
 	 
   }
@@ -754,6 +761,7 @@ var onSetupState = function() {
   $('#installStation').html($('#installState').html());
 }
 $(function(){
+        m_loading.html();
        /*===保存返回 start===*/
         window.SYP.saveParam (false,1);
         $("input,textarea").bind("focus",function(){
@@ -785,6 +793,7 @@ $(function(){
                 },
                type:"get",
                success:function(res){
+                m_loading.remove();
                 console.log(res);
                   $("#installCode").val(res.code);
                },
