@@ -1,5 +1,7 @@
 package com.intfocus.hdk.controller;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -52,12 +54,13 @@ public class ApiController {
 	
     @RequestMapping(value = "custom")
     @ResponseBody
-    public R portalCustom(HttpServletRequest req, HttpServletResponse response
+    public void portalCustom(HttpServletRequest req, HttpServletResponse response
     		                               , String reportCustomCode
     	    								, Integer draw
     	    								, Integer start
     	    								, Integer length
-    	    								, String  wher) {
+    	    								, String  wher
+    	    								,String callback) {
     	
         String parameter = null;
         JSONArray ja = JSONArray.parseArray(wher);
@@ -110,8 +113,14 @@ public class ApiController {
         	e.printStackTrace();
             R.error("执行统一报表程序异常");
         }
-
-        return R.success(list,start,draw,recordsTotal,list.size());
+        Writer w = null ;
+        try {
+			w = response.getWriter();
+			w.write(callback + "(" + JSONObject.toJSONString(R.success(list,start,draw,recordsTotal,list.size())) + ")");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 	
 }

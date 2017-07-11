@@ -51,9 +51,10 @@ var datatable = $('#attachments-table').DataTable( {
             ajax: {
                 url:"/hdk/api/custom",
                 type:'get',
-                dataType:'json',
+                dataType:'jsonp',
+                jsonp:"callback",
                 contentType:'application/json',
-                data:{wher:JSON.stringify(wher),reportCustomCode:"REP_000002"}
+                data:{wher:JSON.stringify(wher),reportCustomCode:"REP_000001"}
             },
         });
         
