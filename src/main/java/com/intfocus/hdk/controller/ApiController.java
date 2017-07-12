@@ -62,13 +62,25 @@ public class ApiController {
     	    								, String  wher
     	    								,String callback) {
     	
+    	List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+    	Integer recordsTotal = 0 ;
+    	try {
         String parameter = null;
+
+        List<ParamVo> params = new ArrayList<ParamVo>(); 
         JSONArray ja = JSONArray.parseArray(wher);
         Iterator<Object> it = ja.iterator(); 
-        List<ParamVo> params = new ArrayList<ParamVo>(); 
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        Integer recordsTotal = 0 ;
-        try {
+        while(it.hasNext()){
+        	JSONObject ob = (JSONObject) it.next();
+        	ParamVo pv = null ;
+        	if(null != ob.getString("key") && null != ob.getString("value") && null != ob.getString("operator")){
+        		pv = new ParamVo();
+        		pv.setKey(ob.getString("key"));
+        		pv.setOperator(ob.getString("operator"));
+        		pv.setValue(ob.getString("value"));
+        		params.add(pv);
+        	}
+        } 
         	
             // 找到排序字段
             // 在写 SQL 语句的时候，写字段的时候，要写表的全称 + "." + 字段名的形式
@@ -78,17 +90,6 @@ public class ApiController {
             if(null == report){
             	R.error("报表编号不存在,请输入正确的");
             }
-            while(it.hasNext()){
-            	JSONObject ob = (JSONObject) it.next();
-            	ParamVo pv = null ;
-            	if(null != ob.getString("key") && null != ob.getString("value") && null != ob.getString("operator")){
-            		pv = new ParamVo();
-            		pv.setKey(ob.getString("key"));
-            		pv.setOperator(ob.getString("operator"));
-            		pv.setValue(ob.getString("value"));
-            		params.add(pv);
-            	}
-            } 
             parameter = HttpContextUtils.getWhere(params, req);
             if(null != start && null != length){
             	parameter = parameter + " limit " + start +" , " + length;
