@@ -39,12 +39,28 @@ public class HttpContextUtils {
     		}
     	}
     	for(ParamVo p : paramters){
+    		//处理时间问题，一周、二周、一个月
+    		
+    		if("一周".equalsIgnoreCase(p.getValue().toString())){
+    			
+    			sb.append(" and " + p.getKey() + "  < DATE_ADD(now(),INTERVAL -7 DAY)");
+    			
+    		}else if("二周".equalsIgnoreCase(p.getValue().toString())){
+
+    			sb.append(" and " + p.getKey() + "  < DATE_ADD(now(),INTERVAL -14 DAY)");
+    		
+    		}else if("一月".equalsIgnoreCase(p.getValue().toString())){
+    		
+    			sb.append(" and " + p.getKey() + "  < DATE_ADD(now(),INTERVAL -30 DAY)");
+    		
+    		}else{
     		sb.append(" and " +p.getKey())
     		    .append("  ")
     		    .append(p.getOperator())
     		    .append("  ")
     		    .append(ComUtil.isInteger(p.getValue().toString()) ? p.getValue() : "'" + p.getValue() +"'")
     		    .append("  ");
+    		}
     	}
     	String str = sb.toString();
     	if (StringUtils.isEmpty(str)) {
