@@ -888,3 +888,51 @@ var App = function () {
     };
 
 }();
+var domainName=  "http://www.onetoend.cn";
+var validateform={
+    check_charnum:function(obj){
+        var b =/^[A-Za-z0-9]+$/;
+        console.log(b.test(obj));
+        if(!b.test(obj))
+        {
+            alert("请输入英文和数字")
+            return false;
+        }
+        else
+        {return true;}
+    },
+    check_per:function(obj){
+        var b=/^d+(.d+)?$/;
+         if(!b.test(obj))
+        {
+            alert("请输入非负的数字")
+            return false;
+        }
+        else
+        {return true;}
+    }
+
+}
+ function loadCombobox(id , table){
+     $.ajax({ 
+         url: domainName + '/hdk/state/getSome',
+         type:'get',
+         data:{
+                'ownerTable':table,
+         },
+            //jsonpCallback:"state_"+time+"_getSome",
+            jsonp: "callback",
+         dataType:'jsonp',
+         success:function(rs){
+           console.log(rs);
+             $.each(rs,function(index,item){
+                 var staName=item.staName;  
+                 var staId =item.staId;          
+                 $("#selstatus").append('<option value="'+staName+'">'+staName+'</option>')
+             });
+            
+         },
+         error:function(rs){
+         }
+     });    
+ }

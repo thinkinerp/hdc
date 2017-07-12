@@ -57,27 +57,7 @@
 <div class="page-container row-fluid"> 
   
   <!-- BEGIN SIDEBAR -->
-  
-  <div class="page-sidebar nav-collapse collapse"> 
-      <h3 style="color:white">欢迎登陆：${sessionScope.userInfo.userName}</h3> 
-    <!-- BEGIN SIDEBAR MENU -->
-    
-    <ul class="page-sidebar-menu">
-      <li> 
-        
-        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-        
-        <div class="sidebar-toggler hidden-phone"></div>
-        
-        <!-- BEGIN SIDEBAR TOGGLER BUTTON --> 
-        
-      </li>
-      <li class="start "> <a href="upload.html"> <i class="icon-home"></i> <span class="title">基本信息导入</span> </a> </li>
-    </ul>
-    
-    <!-- END SIDEBAR MENU --> 
-    
-  </div>
+  <!--#include file="sidebar.html"--> 
   
   <!-- END SIDEBAR --> 
   
@@ -109,8 +89,8 @@
         <div class="span12"> 
           
           <!-- BEGIN STYLE CUSTOMIZER -->
-          <div style="float:right ">
-         <a href="/hdk/user/logout"><h2>退出</h2></a> 
+          <div class="logoutbox">
+         <a href="/hdk/user/logout"><h2><i class="icon-key"></i>退出</h2></a> 
           <!-- END BEGIN STYLE CUSTOMIZER -->
           </div>
           <h3 class="page-title"> 基本信息导入 <small></small> </h3>
