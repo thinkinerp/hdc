@@ -116,6 +116,21 @@ public class ApiController {
         Writer w = null ;
         try {
 			w = response.getWriter();
+			Iterator<Map.Entry<String, Object>> entries  = null ;
+			for(Map<String,Object> m : list){
+				
+				entries = m.entrySet().iterator();  
+				  
+				while (entries.hasNext()) {  
+				  
+				    Map.Entry<String, Object> entry = entries.next();  
+				    if(null == entry.getValue()){
+				    	entry.setValue(" ");
+				    }
+				}  
+				
+			}
+			
 			w.write(callback + "(" + JSONObject.toJSONString(R.success(list,start,draw,recordsTotal,list.size())) + ")");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
