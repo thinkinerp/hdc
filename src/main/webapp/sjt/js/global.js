@@ -592,7 +592,8 @@ function buttonFixed()
          $("body").append(html.join(""));
 	},
 	remove:function(){
-		$(".loadingbox").remove();
+		$(".loadingbox").fadeOut(400,function(){$(".loadingbox").remove();});
+		
 
 	}
 }
