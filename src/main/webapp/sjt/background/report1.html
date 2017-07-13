@@ -39,7 +39,7 @@
 
 <div class="page-container row-fluid"> 
   <!-- BEGIN SIDEBAR   左边导航 start-->
-   <!--#include file="sidebar.jsp"--> 
+   <!--#include file="sidebar.html"--> 
 
   <!-- END SIDEBAR 左边导航 end--> 
   
@@ -303,14 +303,10 @@ var oTable;
           { data: 'pro_id',name:'项目编号' },
           { data: 'pro_name',name:'项目名称'},
           { data: 'pro_station',name:'项目状态' },
-          { data: "pro_todal",name:'合同数量',
-          orderable: false,
-          searchable: false,
-          defaultContent: ""
-          },
+          { data: "pro_todal",name:'合同数量',},
           { data: 'pro_need',name:'需安装数量' },
          { data: 'pro_already',name:'已安装数量' },
-          { data: 'pro_check_per',name:'安装率' },
+          { data: 'pro_already_per',name:'安装率' },
           { data: 'online_number',name:'上线数量' },
           { data: 'onlinne_number_per',name:'上线率' }, 
           { data: 'pro_check',name:'验收数量' },
