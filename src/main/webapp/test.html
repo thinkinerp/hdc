@@ -16,8 +16,8 @@
        <table id="attachments-table" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>File Ext</th>
+                <th>install_id</th>
+                <th>printer_brand</th>
                 <th>last modified</th>
                 <th>size</th>
                 <th>Actions</th>
@@ -33,28 +33,74 @@
 
 wher.push({"key":"pro_name","value":"上海新天地时尚","operator":"="});
     
+            // serverSide: true,
+            // processing: true,
+            // order: [[ 2, "asc" ]] ,
+            // columns: [
+                // {   data: 'install_id', },
+                // {   data: 'printer_brand', },
+                // {   data: 'printer_id', },
+                // {   data: 'printer_model', },
+                // {   data: "printer_port",
+                    // orderable: false,
+                    // searchable: false,
+                    // defaultContent: ""
+                 // },
+            // ],
+            // ajax: {
+                // url:"http://www.onetoend.cn/hdk/api/custom",
+                // type:'get',
+                // dataType:'jsonp',
+                // jsonp:"callback",
+                // contentType:'application/json',
+                // data:{wher:JSON.stringify(wher),reportCustomCode:"REP_000002"}
+            // },
 var datatable = $('#attachments-table').DataTable( { 
-            serverSide: true,
-            processing: true,
-            order: [[ 2, "asc" ]] ,
-            columns: [
-                {   data: 'install_id', },
-                {   data: 'printer_brand', },
-                {   data: 'printer_id', },
-                {   data: 'printer_model', },
-                {   data: "printer_port",
-                    orderable: false,
-                    searchable: false,
-                    defaultContent: ""
-                 },
-            ],
-            ajax: {
-                url:"/hdk/api/custom",
-                type:'get',
-                dataType:'json',
-                contentType:'application/json',
-                data:{wher:JSON.stringify(wher),reportCustomCode:"REP_000002"}
-            },
+                      searching:false,
+             fixedColumns: true,  
+             "sScrollX": "100%",
+             "sScrollY": "400px", 
+             "scrollX": true, 
+            "sScrollXInner": "150%",
+            "bScrollCollapse": true,
+           "bPaginate": false,"paging": true,  
+          serverSide: true,
+          processing: true,
+          order: [[ 2, "asc" ]] ,
+          columns: [
+          { data: 'install_id',name:'项目编号' },
+          { data: 'printer_brand',name:'打印机名牌' },
+          { data: 'printer_id',name:'打印机编号'},
+          { data: 'printer_model',name:'打印机型号' },
+          { data: "printer_port",name:'打印机端口',
+          orderable: false,
+          searchable: false,
+          defaultContent: ""
+          },
+          ],
+          ajax: {
+          url:"/hdk/api/custom",
+          type:'get',
+          dataType:'jsonp',
+          contentType:'application/json',
+          data:
+          {wher:JSON.stringify(wher),reportCustomCode:"REP_000002"}
+          },
+           "oLanguage": {  
+            "sLengthMenu": "每页显示 _MENU_条",  
+            "sZeroRecords": "没有找到符合条件的数据",  
+            "sProcessing": "&lt;img src=’./loading.gif’ /&gt;",  
+            "sInfo": "当前第 _START_ - _END_ 条　共计 _TOTAL_ 条",  
+            "sInfoEmpty": "没有记录",  
+            "sInfoFiltered": "(从 _MAX_ 条记录中过滤)",  
+            "sSearch": "搜索：",  
+            "oPaginate": {  
+            "sFirst": "首页",  
+            "sPrevious": "前一页",  
+            "sNext": "后一页",  
+            "sLast": "尾页"  
+            }  
+            } 
         });
         
 </script>
