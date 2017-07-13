@@ -148,7 +148,7 @@
                   </div>
                   <div class="form-actions clearfix">
                     <input type="submit" class="btn blue button-next" value="上传" onclick="return check(this.form)"/>
-                    <button class="btn-default btn" style="margin-left:10px;width:100px">取消</button>
+                    <!-- <button class="btn-default btn" style="margin-left:10px;width:100px">取消</button> -->
                   </div>
                 </div>
               </form>
