@@ -204,34 +204,52 @@ var loadInstall = function(allThing){
         '</div>'
         );
         
+        if(undefined != allObjs.install){
+        	
+	        $('#installCode').val(isUndefined(allObjs.install["installId"]));
+	        readOnly("installCode");
+	        $('#shopCode').html(isUndefined(allObjs.install["shopId"]));
+	        $('#cashCode').html(isUndefined(allObjs.install["cashId"]));
+	        $('#printCode').html(isUndefined(allObjs.install["printerId"]));
+	        $('#equipmentCode').html(isUndefined(allObjs.install["eqId"]));
+	        $('#installStation').html(isUndefined(allObjs.install["installStation"]));
+	        $('#installData').html(isUndefined(allObjs.install["installData"]));
+	        
+	        if(!!isUndefined(allObjs.install['attachmentUrl'])){
+	         imgs = files = allObjs.install['attachmentUrl'].split(',');
+	            
+	            for(var i = 0 ; i <files.length ; i ++){
+	              $("#imgShow").append('<div ></div>');
+	              app.addImg(files[i]);
+	            }
+	            
+	            $('.fullimg').remove();
+	        }
         
-        $('#installCode').val(isUndefined(allObjs.install["installId"]));
-        readOnly("installCode");
-        $('#shopCode').html(isUndefined(allObjs.install["shopId"]));
-        $('#cashCode').html(isUndefined(allObjs.install["cashId"]));
-        $('#printCode').html(isUndefined(allObjs.install["printerId"]));
-        $('#equipmentCode').html(isUndefined(allObjs.install["eqId"]));
-        $('#installStation').html(isUndefined(allObjs.install["installStation"]));
-        $('#installData').html(isUndefined(allObjs.install["installData"]));
+        	$('#installRemote').val(isUndefined(allObjs.install.installRemote));
         
-        if(!!isUndefined(allObjs.install['attachmentUrl'])){
-         imgs = files = allObjs.install['attachmentUrl'].split(',');
-            
-            for(var i = 0 ; i <files.length ; i ++){
-              $("#imgShow").append('<div ></div>');
-              app.addImg(files[i]);
+            //其他
+            console.log(allObjs.install.installNetwork);
+            if(isUndefined(allObjs.install.installNetwork).indexOf('外网')){
+                $('#installNetworkHard').attr("class",'off' );
             }
-            
-            $('.fullimg').remove();
+            if(isUndefined(allObjs.install.installNetwork).indexOf('wifi')){
+            	$('#installNetworkSoft').attr("class",'off' );
+            }
+            /*====安装详情  客户网络情况 start====*/
+            window.setTimeout('loadnetwork(allObjs.install.installNetwork)',500);
+             /*====安装详情  客户网络情况 end====*/
+
+            // 附件
+            //$('#installNetworkHard').val(isUndefined(allObjs.equipment.installTime));
+        	
         }
-        
         //var i = new Date(isUndefined()).Format("yyyy-MM-dd");
         
         $("#installCode").attr("readonly","readonly"); 
 
         
         $('#proName').html(isUndefined(allObjs.project.proName));
-        $('#installRemote').val(isUndefined(allObjs.install.installRemote));
         $('#installTime').val(allObjs.install["installTime"]);
         // 门店信息     
         $('#shopName').html(isUndefined(allObjs.shop.shopName));
@@ -242,11 +260,14 @@ var loadInstall = function(allThing){
         $('#installState').html(isUndefined(allObjs.install.installStation));
         
         //收银机信息
+        if(undefined != allObjs.cash){
+        	
         $('#cashId').val(isUndefined(allObjs.cash.cashId));
         $('#cashSystem').html(isUndefined(allObjs.cash.cashSystem));
         
         $('#cashBrand').html(isUndefined(allObjs.cash.cashBrand));
         $('#cashPort').html(isUndefined(allObjs.cash.cashPort));
+        
         if( "是" == isUndefined(allObjs.cash.printerDriver)){
             $('#f').attr('class','off');
             $('#t').attr('class','on');
@@ -255,15 +276,21 @@ var loadInstall = function(allThing){
             $('#f').attr('class','on');
         }
         
+        }
+        
         // 打印机
-        
-        $('#priId').val(isUndefined(allObjs.printer.printerId));
-        $('#priBrand').val(isUndefined(allObjs.printer.printerBrand));
-        $("#dyjxh").val(isUndefined(allObjs.printer.printerModel));
-        $('#printerPort').html(isUndefined(allObjs.printer.printerPort));
+        if(undefined != allObjs.printer){
 
+        	$('#priId').val(isUndefined(allObjs.printer.printerId));
+            $('#priBrand').val(isUndefined(allObjs.printer.printerBrand));
+            $("#dyjxh").val(isUndefined(allObjs.printer.printerModel));
+            $('#printerPort').html(isUndefined(allObjs.printer.printerPort));
+
+        }
         // 采集点
-        
+
+        if(undefined != allObjs.equipment){
+        	
         $('#eqId').val(isUndefined(allObjs.equipment.eqId));
         // if("硬件" == isUndefined(allObjs.equipment.eqType)){
         //     $('#eqTypeHard').attr("class",'on');
@@ -284,20 +311,8 @@ var loadInstall = function(allThing){
         $('#softwareVersion').val(software_txt);
         /* $('#installTime').val(isUndefined(allObjs.equipment.installTime)); */
         
-        //其他
-        console.log(allObjs.install.installNetwork);
-        if(isUndefined(allObjs.install.installNetwork).indexOf('外网')){
-            $('#installNetworkHard').attr("class",'off' );
         }
-        if(isUndefined(allObjs.install.installNetwork).indexOf('wifi')){
-        	$('#installNetworkSoft').attr("class",'off' );
-        }
-        /*====安装详情  客户网络情况 start====*/
-        window.setTimeout('loadnetwork(allObjs.install.installNetwork)',500);
-         /*====安装详情  客户网络情况 end====*/
 
-        // 附件
-        //$('#installNetworkHard').val(isUndefined(allObjs.equipment.installTime));
     }
 }      
  function loadnetwork(network)
@@ -500,14 +515,14 @@ else
 
       function xgid()
       {var xgcashid=""
-        if(allObjs.cash.id)
+        if(allObjs.cash)
         {xgcashid=allObjs.cash.id }
        return xgcashid;
       }
       function printid()
       {
         var printerid="";
-        if(allObjs.printer.id)
+        if(allObjs.printer)
         {printerid=allObjs.printer.id;}
         return printerid;
       }
@@ -530,9 +545,9 @@ var submit = function() {
       data: {
     	  files:JSON.stringify(imgs),	
         'install.installId': $("#installCode").val(),
-        'install.id': allObjs.install.id,
+        'install.id': (undefined == allObjs.install?"":allObjs.install.id),
         'install.installStation': $('#installStation').html(),
-        'install.proId': allObjs.install.proId,
+        'install.proId': (undefined == allObjs.install?"":allObjs.install.proId),
         'install.shopId': $('#shopCode').html(),
         'install.cashId': $('#cashCode').html(),
         'install.printerId': $('#printCode').html(),
@@ -570,7 +585,7 @@ var submit = function() {
           //          ,'updatedAt':''
           //采集点
           ,
-        'equipment.id': allObjs.equipment.id,
+        'equipment.id': (undefined == allObjs.equipment?"":allObjs.equipment.id),
         'equipment.eqId': $("#eqId").val(),
         'equipment.eqType': $('#eqTypeHard').html(),
         'equipment.eqStyle': $("#eqStyle").html()
@@ -578,7 +593,7 @@ var submit = function() {
           ,
         'equipment.softwareVersion': ($('#eqTypeHard').html()!="硬件数据通" ? $('#softwareVersion').val():""),
         'equipment.hardwareId': ($('#eqTypeHard').html()=="硬件数据通"? $('#softwareVersion').val():""),
-        'equipment.proId': allObjs.project.proId,
+        'equipment.proId':( undefined == allObjs.project?"":allObjs.project.proId),
         'equipment.shopId': $('#shopCode').html(),
         'userName': params.userName,
         'userNum': params.userNums

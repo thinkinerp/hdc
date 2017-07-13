@@ -28,7 +28,7 @@ public class FormCodeService {
 			formCode.setCodeMax(1);
 			formCodeMapper.updateByPrimaryKey(formCode);
 		}
-		formCodeMapper.updateMaxCode("install");
+		formCodeMapper.updateMaxCode(formType);
 		return proCode + ComUtil.dateFormat(new Date(), "yyMMdd") + ((formCode.getCodeMax() < 10000) ? 
 																				new DecimalFormat("0000").format(formCode.getCodeMax()) :formCode.getCodeMax());
 	}

@@ -62,7 +62,7 @@ public class ApiServiceImpl implements ApiService {
     @Override
     public List<Map<String, Object>> getListResultListMapBySql(PortalReport report, PortalExecuteSql portalExecuteSql, PortalDataSource portalDataSource, String parameter) {
         // 封装执行的sql语句
-        String sql = portalExecuteSql.getExecuteSql() + parameter;
+        String sql = portalExecuteSql.getExecuteSql() + (null == parameter || "".equalsIgnoreCase(parameter)?"":parameter);
         log.info("请求的参数：parameter" + parameter);
         log.info("执行的sql:" + sql);
         return apiDataBaseSqlService.queryExecuteSql(sql, portalDataSource);
