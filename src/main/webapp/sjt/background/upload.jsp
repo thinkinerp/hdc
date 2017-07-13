@@ -116,9 +116,9 @@
                     <div class="bar"></div>
                   </div>
                   <div class="tab-content">
-                    <div class="alert alert-error hide">
+                    <div class="alert alert-error hide" id="uploaderr">
                       <button class="close" data-dismiss="alert"></button>
-                      You have some form errors. Please check below. </div>
+                      操作失败了 您传的文件中不包含项目、门店、状态、用户其中之一，项目导入模本文件名中需包含项目字样，门店导入模本中需包含门店字样，状态导入模板中需包含状态字样，用户导入模板中需要包含用户导入模板</div>
                     <div class="alert alert-success hide">
                       <button class="close" data-dismiss="alert"></button>
                       Your form validation is successful! </div>
@@ -127,7 +127,7 @@
                         <label class="control-label">文件<span class="required">*</span></label>
                         <div class="controls">
                           <input id ="file" type="file" name="file_upload"  class="span6 m-wrap" />
-                          <span class="help-inline">请上传文件</span> </div>
+                          <span class="help-inline">请上传编辑好的(.xls,.xlsx)文件</span> </div>
                       </div>
                       <div class="control-group">
                    <!--        <label class="control-label">选择<span class="required">*</span></label>
@@ -148,6 +148,7 @@
                   </div>
                   <div class="form-actions clearfix">
                     <input type="submit" class="btn blue button-next" value="上传" onclick="return check(this.form)"/>
+                    <button class="btn-default btn" style="margin-left:10px;width:100px">取消</button>
                   </div>
                 </div>
               </form>
