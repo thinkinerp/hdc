@@ -58,7 +58,7 @@
   
   <!-- BEGIN SIDEBAR -->
   <!--#include file="sidebar.html"--> 
-  
+ <%@include file="sidebar.jsp"%> 
   <!-- END SIDEBAR --> 
   
   <!-- BEGIN PAGE -->

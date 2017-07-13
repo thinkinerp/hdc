@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <html lang="en"><!--<![endif]--><!-- BEGIN HEAD --><head>
 <meta charset="utf-8">
 <title>上传信息</title>
@@ -40,7 +42,7 @@
 <div class="page-container row-fluid"> 
   <!-- BEGIN SIDEBAR   左边导航 start-->
    <!--#include file="sidebar.jsp"--> 
-
+<%@include file="sidebar.jsp"%>
   <!-- END SIDEBAR 左边导航 end--> 
   
   <!-- BEGIN PAGE -->
