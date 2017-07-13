@@ -1,7 +1,5 @@
 package com.intfocus.hdk.controller;
 
-import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -54,33 +52,20 @@ public class ApiController {
 	
     @RequestMapping(value = "custom")
     @ResponseBody
-    public void portalCustom(HttpServletRequest req, HttpServletResponse response
+    public R portalCustom(HttpServletRequest req, HttpServletResponse response
     		                               , String reportCustomCode
     	    								, Integer draw
     	    								, Integer start
     	    								, Integer length
-    	    								, String  wher
-    	    								,String callback) {
+    	    								, String  wher) {
     	
-    	List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-    	Integer recordsTotal = 0 ;
-    	try {
         String parameter = null;
-
-        List<ParamVo> params = new ArrayList<ParamVo>(); 
         JSONArray ja = JSONArray.parseArray(wher);
         Iterator<Object> it = ja.iterator(); 
-        while(it.hasNext()){
-        	JSONObject ob = (JSONObject) it.next();
-        	ParamVo pv = null ;
-        	if(null != ob.getString("key") && null != ob.getString("value") && null != ob.getString("operator")){
-        		pv = new ParamVo();
-        		pv.setKey(ob.getString("key"));
-        		pv.setOperator(ob.getString("operator"));
-        		pv.setValue(ob.getString("value"));
-        		params.add(pv);
-        	}
-        } 
+        List<ParamVo> params = new ArrayList<ParamVo>(); 
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        Integer recordsTotal = 0 ;
+        try {
         	
             // 找到排序字段
             // 在写 SQL 语句的时候，写字段的时候，要写表的全称 + "." + 字段名的形式
@@ -90,6 +75,17 @@ public class ApiController {
             if(null == report){
             	R.error("报表编号不存在,请输入正确的");
             }
+            while(it.hasNext()){
+            	JSONObject ob = (JSONObject) it.next();
+            	ParamVo pv = null ;
+            	if(null != ob.getString("key") && null != ob.getString("value") && null != ob.getString("operator")){
+            		pv = new ParamVo();
+            		pv.setKey(ob.getString("key"));
+            		pv.setOperator(ob.getString("operator"));
+            		pv.setValue(ob.getString("value"));
+            		params.add(pv);
+            	}
+            } 
             parameter = HttpContextUtils.getWhere(params, req);
             if(null != start && null != length){
             	parameter = parameter + " limit " + start +" , " + length;
@@ -114,29 +110,8 @@ public class ApiController {
         	e.printStackTrace();
             R.error("执行统一报表程序异常");
         }
-        Writer w = null ;
-        try {
-			w = response.getWriter();
-			Iterator<Map.Entry<String, Object>> entries  = null ;
-			for(Map<String,Object> m : list){
-				
-				entries = m.entrySet().iterator();  
-				  
-				while (entries.hasNext()) {  
-				  
-				    Map.Entry<String, Object> entry = entries.next();  
-				    if(null == entry.getValue()){
-				    	entry.setValue(" ");
-				    }
-				}  
-				
-			}
-			
-			w.write(callback + "(" + JSONObject.toJSONString(R.success(list,start,draw,recordsTotal,list.size())) + ")");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+        return R.success(list,start,draw,recordsTotal,list.size());
     }
 	
 }
