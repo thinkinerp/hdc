@@ -889,7 +889,7 @@ var App = function () {
 
 }();
 var domainName=  "http://www.onetoend.cn";
-domainName = "http://localhost:8080";
+
 var validateform={
     check_charnum:function(obj){
         var b =/^[A-Za-z0-9]+$/;
