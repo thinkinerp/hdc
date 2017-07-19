@@ -175,6 +175,7 @@ Window.shopSelected = function() {
     jsonpCallback: "getSome",
     jsonp: "callback",
     success: function(rs) {
+      console.log("rs"+rs);
       if (null != rs && undefined != rs && rs.length > 0) {
     	  if( 1 ==rs.length ){
     		  loadPrinterAndCasher(rs[0].surId);

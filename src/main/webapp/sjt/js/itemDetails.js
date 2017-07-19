@@ -116,7 +116,7 @@ if(undefined != allThing && null != allThing ){
 		$.each(allObjs.cashCount,function(index,item){
 			$('#cashPort').append(
 					"						<li>" +
-					"							<div class='iz-list-title'>"+item.problemObject+"：</div>" +
+					"							<div class='iz-list-title'>"+item.problemObject+"</div>" +
 					"							<div class='iz-list-content'>"+item.count+"</div>" +
 					"						</li>"
 			);
