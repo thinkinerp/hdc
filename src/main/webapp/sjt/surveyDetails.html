@@ -259,22 +259,28 @@
 				    		</div>
 
 				    	</li>
-				    	<li style="height:auto" id="subnote">
+				    	<div  id="subnote">
+				    	<li style="height:auto">
 				    		<div class="g-importList-title2" style="width: 3.1rem;">会员信息</div>
 				    		<div class="g-importList-content">
 				    			<div class="i-choicechk" id="vipchkbox">
 				    				
 				    			</div>
 				    		</div>
+
 				    		<input type="hidden" id="vipinfo" value="未选择">
 				    	</li>
+				    	<li><div class="g-importList-title2" style="width: 3.1rem;"></div>
+							<div class="g-importList-content"><input type="text" id="vipinfo2" value="" style="width:120px;"></div>
+				    	</li>
+				    	</div>
 				    </ul>
 				</div>
 				<div class="swiper-slide">
 					<div class="i-addImg">
 						<div class="img" id="imgShow">
 						</div>
-						<div class="add"><input type="file" id="fileImg" onchange="app.getImgUrl();"/></div>
+						<div class="add"><input type="file" id="fileImg" onchange="app.getImgUrl();" accept="image/*"/></div>
 						<div style="clear:both"></div>
 					</div>
 				</div>
