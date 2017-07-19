@@ -93,8 +93,8 @@
             <th>需安装数量</th>
             <th>已安装数量</th>
             <th>安装率</th>
-<!--             <th>未上线数量</th> -->
-<!--             <th>上线率</th> -->
+            <th>上线数量</th>
+            <th>上线率</th>
             <th>验收数量</th>
             <th>验收率</th>
             <th>问题数量</th>
@@ -313,8 +313,8 @@ var oTable;
           { data: 'pro_need',name:'需安装数量' },
          { data: 'pro_already',name:'已安装数量' },
           { data: 'pro_check_per',name:'安装率' },
-/*           { data: 'online_number',name:'未上线数量' }, */
-          /* { data: 'onlinne_number_per',name:'上线率' }, */ 
+          { data: 'online_number',name:'上线数量' },
+          { data: 'onlinne_number_per',name:'上线率' }, 
           { data: 'pro_check',name:'验收数量' },
           { data: 'pro_already_per',name:'验收率' },  
           { data: 'problem_count',name:'问题数量' },   
