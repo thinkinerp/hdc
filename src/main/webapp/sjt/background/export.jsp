@@ -1,17 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <html lang="en">
-<!--<![endif]-->
-<!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8">
-<title>上传信息</title>
+<title>报表生成测试</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="description">
 <meta content="" name="author">
-
-<!-- BEGIN GLOBAL MANDATORY STYLES -->
-
 <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
 <link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -35,14 +30,8 @@
 /*.dataTables_length{display:none;}*/
 </style>
 </head>
-
-<!-- END HEAD -->
-
-<!-- BEGIN BODY -->
-<body class="page-header-fixed">
-
-
-	<div class="page-container row-fluid">
+<body>
+<div class="page-container row-fluid">
 		<!-- BEGIN SIDEBAR   左边导航 start-->
 		<!--#include file="sidebar.jsp"-->
 		<%@include file="sidebar.jsp"%>
@@ -86,7 +75,7 @@
 						<button type="button" class="btn red" id="btnclear">清除</button>
 						<button type="button" class="btn blue" data-toggle="modal"
 							data-target="#myModal" id="btnset">设置筛选条件</button>
-						<button type="button" class="btn green " id="exportexcel" >导出报表</button>
+						<button type="button" class="btn green " id="exportexcel" >下载报表测试</button>
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -301,10 +290,12 @@
 	<script src="datatable/js/jquery.dataTables.js" type="text/javascript"></script>
 	<script src="media/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="media/js/app.js"></script>
-	<!-- END PAGE LEVEL SCRIPTS -->
+	<script src="media/js/json2.js"></script>
+	
 	<script>
 		var oTable;
 		var wher = new Array();
+		
 		$(document).ready(function() {
 			App.init();
 			$(".page-content").css("height", $(window).height());
@@ -316,25 +307,25 @@
 				function loaddata() {
 					oTable = $('#attachments-table').DataTable({
 						searching : false,
-						"processing" : false,		
+						"processing" : false,		//DataTables载入数据时，是否显示‘进度’提示
 						fixedColumns : true,
-						"sScrollX" : "100%",		
-						"sScrollY" : "400px",   	
+						"sScrollX" : "100%",		//DataTables的宽  
+						"sScrollY" : "400px",   	//DataTables的高
 						"scrollX" : true,
 						"sScrollXInner" : "150%", 
-						"bScrollCollapse" : true,   
-						"bPaginate" : true,			
+						"bScrollCollapse" : true, 	//是否开启DataTables的高度自适应，当数据条数不够分页数据条数的时候，插件高度是否随数据条数而改变  
+						"bPaginate" : true,			//是否显示（应用）分页器  
 						"paging" : true,
 						// serverSide: true,
 						processing : true,
-						order : [ [ 0, "asc" ] ],	
+						order : [ [ 0, "asc" ] ],	//默认的排序方式，第1列，升序排列
 						columns : [ // 获取属于该表的列的集合
 									{ data : 'pro_id', name : '项目编号'},
 									{ data : 'pro_name', name : '项目名称'},
 									{ data : 'pro_station', name : '项目状态'},
 									{ data : "pro_todal", name : '合同数量',
 									  orderable : false, searchable : false,
-									  defaultContent : ""},  
+									  defaultContent : ""},//此列默认值为""，以防数据中没有此值，DataTables加载数据的时候报错  
 									{ data : 'pro_need', name : '需安装数量'},
 									{ data : 'pro_already', name : '已安装数量'},
 									{ data : 'pro_check_per', name : '安装率'},
@@ -354,7 +345,7 @@
 								contentType : 'application/json',
 								data : { wher : JSON.stringify(wher), reportCustomCode : "REP_000002"}
 						 	},
-						"oLanguage" : {	
+						"oLanguage" : {	//国际化配置  
 										"sLengthMenu" : "每页显示 _MENU_条",
 										"sZeroRecords" : "没有找到符合条件的数据",
 										"sProcessing" : "",
@@ -379,29 +370,10 @@
 					$(".searchcontainer .span_chk").each(function(i) {
 						if ($(this).find("input:checkbox").is(":checked")) {
 							/*===验证 start===*/
-							//  var charobj= $(this).next(".searchtxt").find(".inputchar");             
-							//  if(charobj.val()!="")
-							//  {
-							//   if(!validateform.check_charnum(charobj.val()))
-							//  { result = false;  
-							//     charobj.focus();}
-							//  }
-							// var perobj=$(this).next(".searchtxt").find(".inputper");
-							// if(perobj.val()!="")
-							//  {
-							//  if(isNaN(perobj.val()) )
-							//      {result = false;  
-							//       alert("请输入数字"); 
-							//       perobj.focus();}
-							//   if(!(perobj.val()>=0 && perobj.val()<100))
-							//        {result = false;  
-							//           alert("请输入大于0小于100的数字");  
-							//           perobj.focus();
-							//      }
-							//   }
 							/*===验证 end===*/
 						
-							if ($(this).next(".searchtxt").find("input[type='text'],input[type='number'],select").size() != 0) {
+							if ($(this).next(".searchtxt")
+									.find("input[type='text'],input[type='number'],select").size() != 0) {
 								$(this).next(".searchtxt")
 									.find("input[type='text'],input[type='number'],select")
 									.each(function(i) {
@@ -422,6 +394,7 @@
 				})
 				
 				$("#btnsearch").bind("click",function() {
+					
 					wher = [];
 					$("#searchbox .searchtxt").each(function(i) {
 						var key = $(this).attr("key");
@@ -454,8 +427,6 @@
 					$("#myModal .searchtxt").find("input").val("");
 				})
 				/*===报表end===*/
-				
-				/*===导出报表start===*/
 				$("#exportexcel").on("click",function() {
 					flag = confirm("确认下载报表? ");
 					if(flag == true){
@@ -479,17 +450,63 @@
 							}
 						});
 						tmp = JSON.stringify(wher);
-						tmp = encodeURIComponent(tmp);
-						window.location.href = 
-							domainName +"/hdk/api/export?reportCustomCode=REP_000002&wher="+ tmp
+						tmp = encodeURIComponent(tmp); //可把字符串作为URI 组件进行编码。其返回值URIstring 的副本，其中的某些字符将被十六进制的转义序列进行替换。
+			// 			后台返回 HSSFWorkbook 内存中的内容，以流方式回写， 即可实现下载
+						window.location.href = domainName +"/hdk/api/export?reportCustomCode=REP_000002&wher="+ tmp
+// 						 $.ajax({
+// 							url : domainName + "/hdk/api/export",
+// 							type : 'get',
+// 							dataType : 'jsonp',
+// 							contentType : 'application/json',
+// 							data : { wher : JSON.stringify(wher), reportCustomCode : "REP_000002"},
+// 						});
 					}
 				});
-				/*===导出报表end===*/
 		});
 	</script>
 	
-	<!-- END JAVASCRIPTS -->
-
-	<!-- END BODY -->
+	<!-- <script>
+	$("#exportexcel").on("click",function() {
+		console.log("123");
+		flag = confirm("请确认下载报表！");
+		if(flag == true){
+			wher = [];
+			$("#searchbox .searchtxt").each(function(i) {
+				var key = $(this).attr("key");
+				var value = $(this).find("input,select").val();
+				var operator = $(this).attr("operator");
+				if (operator == "like") {
+					value = "%" + value + "%"
+				}
+				if (operator == "") {
+					operator = $(this).find(".sel_op").val();
+					value = $(this).find("input").val();
+				}
+				if (value != "") {
+					wher.push({
+								"key" : key,
+								"value" : value,
+								"operator" : operator
+							});
+				}
+			});
+// 			后台返回 HSSFWorkbook 内存中的内容，以流方式回写， 即可实现下载
+			window.location.href = domainName +"/hdk/api/export?wher="+ JSON.stringify(wher)
+				+ "&reportCustomCode=REP_000002";				
+		}
+		
+		
+		
+		/* $.ajax({
+			url : domainName + "/hdk/api/export",
+			type : 'get',
+			dataType : 'jsonp',
+			contentType : 'application/json',
+			data : { wher : JSON.stringify(wher), reportCustomCode : "REP_000002"},
+			success : function(data){
+			}
+		}) */
+	});
+	</script> -->
 </body>
 </html>
