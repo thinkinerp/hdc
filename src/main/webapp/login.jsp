@@ -7,18 +7,33 @@
 <link rel="stylesheet" media="screen" href="/hdk/css/style.css" />
 <link rel="stylesheet" media="screen" href="/hdk/css/public.css" />
 <script type="text/javascript" src="/hdk/js/jquery.min.js"></script>
+<!--update 登陆 start  -->
+<link href="/hdk/sjt/background/media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<style>
+.loginForm li{position:relative; }
+.loginForm li i{position:absolute;right:10px;top:10px; }
+body{  background-color: #fff ;}
+
+input.fullBtn{
+	background:#7bcaff; border:none;height:40px;line-height:40px;
+}
+input.fullBtn:hover { background-color:#0362fd; }
+.loginBox{border:2px solid #cfebff;}
+.loginBox h2{border-bottom:1px solid #cfebff;color:#000;}
+</style>
 <title>登陆</title>
 </head>
 <body>
+<center><img src="/hdk/image/logo.png" ></center>
 <div class="loginBox">
 	<h2>后台管理员</h2>
 	<div class="loginCont">
 			<ul class="loginForm">
 				<li>
-					<input class="fullText" name="phone" id="userName" type="text" placeholder="请输入账号" />
+					<i class="icon-user"></i><input class="fullText" name="phone" id="userName" type="text" placeholder="请输入账号" />
 				</li>
 				<li>
-					<input class="fullText" name="pass" id="pass" type="password" placeholder="请输入密码" />
+					<i class="icon-lock"></i><input class="fullText" name="pass" id="pass" type="password" placeholder="请输入密码" />
 				</li>
 				
 				<li>
