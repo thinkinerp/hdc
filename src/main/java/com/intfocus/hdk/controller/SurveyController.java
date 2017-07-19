@@ -100,12 +100,6 @@ public class SurveyController implements ApplicationContextAware {
     	
     	
     }
-     @RequestMapping(value = "getList" , method=RequestMethod.GET)
-    @ResponseBody
-    public void getList(HttpServletResponse res , HttpServletRequest req ,HttpSession session
-    		              ,  Survey survey ){
-    	
-    }   
     
     @RequestMapping(value = "getSome" , method=RequestMethod.GET)
     @ResponseBody
