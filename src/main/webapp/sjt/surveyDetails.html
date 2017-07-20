@@ -21,6 +21,7 @@
        	app_isback=false;
         window.SYP.setBannerTitle("调研详情");		
         </script>
+        <style>.g-importList-title{min-width:2.4rem;}</style>
 	</head>
 	<body>
 	<!-- <div class="selectfix">调研详情<div class="icon_return" onclick="appback('surveyList.html');"></div><div class="icon_refresh" onclick="window.location.reload(); "></div></div> -->
@@ -135,8 +136,9 @@
 						<li>
 							<div class="g-importList-title">商户收银系统品牌</div>
 							<div class="g-importList-content">
-								<div class="i-xiala-list">
-									<div class="on" id="syjBrand" alertTitle="商户收银系统品牌">未选择</div>
+								<div class="i-import">
+								<input id="syjBrand" type="text" placeholder="请输入">
+									<!-- <div class="on" id="syjBrand" alertTitle="商户收银系统品牌">未选择</div> -->
 								</div>
 							</div>
 						</li>
@@ -442,10 +444,10 @@
 					$('#syjSystem').click(function(){
 					   			app.select(this,2,syj.selectSyjSystem)
 					   		})	
-					loadCombobox("syjBrand","cash_brand",1);	
-					$('#syjBrand').click(function(){
-					   			app.select(this,2,syj.selectSyjBrand)
-					   		})	
+					//loadCombobox("syjBrand","cash_brand",1);	
+					// $('#syjBrand').click(function(){
+					//    			app.select(this,2,syj.selectSyjBrand)
+					//    		})	
 					loadCombobox("syjPort","cash_port",1);	
 			
 					$('#syjId').on('input propertychange', function() { 
@@ -695,7 +697,7 @@
 //					'survey.surRemarks':'',				 //备注？
 					//收银机
 					'cash.cashId':syj.id,				//收银机编号
-					'cash.cashBrand':syj.brand,			//收银机品牌
+					'cash.cashBrand':$("#syjBrand").val(),			//收银机品牌
 					'cash.cashRegister':syj.system,		//收银系统
 					'cash.cashSystem':syj.system,		//收银操作系统
 					'cash.cashPort':syj.port,			//收银机端口
@@ -804,7 +806,7 @@ var vipinfovalue;
 					'survey.attachmentUrl':JSON.stringify(imgs),
 					'survey.id':xg.data.survey.id,		//自增id
 					'cash.cashId':$('#shouyinid').html(),	//收音机编号
-					'cash.cashBrand':$('#syjBrand').html(),	//收银机品牌
+					'cash.cashBrand':$('#syjBrand').val(),	//收银机品牌
 					'cash.cashRegister':$('#syjSystem').html(),	//收银机系统
 					'cash.cashSystem':$('#syjSystem').html(),		//收银机操作系统
 					'cash.cashPort':$('#syjPort').html(),	//收银机端口
@@ -904,7 +906,7 @@ var vipinfovalue;
 					$("#syjId").val(data.cash.cashId);
 					$("#syjSystem").html(data.cash.cashSystem);
 					xg.youzhi("syjSystem");
-					$("#syjBrand").html(data.cash.cashBrand);
+					$("#syjBrand").val(data.cash.cashBrand);
 					xg.youzhi("syjBrand");
 					$("#syjPort").html(data.cash.cashPort);
 					xg.youzhi("syjPort");
