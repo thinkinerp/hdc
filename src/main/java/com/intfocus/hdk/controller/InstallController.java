@@ -81,7 +81,7 @@ public class InstallController implements ApplicationContextAware {
     	
     	log.info("userName:"+userName+"userNum:"+userNum);
     	Map<String,String> rs = null ;
-    	String allNumber = null; //用于接收编号
+    	String allNumber = null;  //用于接收编号
     	JSONObject result = new JSONObject();
     	try{
 //	    	if(null != files && !"".equalsIgnoreCase(files)){

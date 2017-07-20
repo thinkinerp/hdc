@@ -196,7 +196,7 @@ public class ComUtil {
         return false;
     }  
 
-    public static boolean isNull(String value) {
+    public static boolean isNull(String value) { 
     	return "".equals(value) || "NULL".equals(value) || "null".equals(value);
     }
 }
