@@ -50,6 +50,7 @@ public class ApiServiceImpl implements ApiService {
         }
         log.info("请求的参数：parameter" + parameter);
         log.info("执行的存储过程:" + sb.toString());
+        
         return apiDataBaseSqlService.queryCallPro(sb.toString(), portalDataSource);
     }
 

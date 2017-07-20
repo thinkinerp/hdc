@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<excel id="abnormal" code="abnormal" name="">
+    <colgroup>
+        <col index="A" width='17em'></col>
+        <col index="B" width='17em'></col>
+        <col index="C" width='17em'></col>
+        <col index="D" width='17em'></col>
+        <col index="E" width='17em'></col>
+        <col index="F" width='17em'></col>        
+        <col index="G" width='17em'></col>        
+        <col index="H" width='17em'></col>          
+           
+    </colgroup>
+    <title>
+        <tr height="16px">
+            <td rowspan="1" colspan="14" value="" />
+        </tr>
+    </title>    
+    <thead>
+        <tr height="16px">             
+            <th value="项目编号" />
+            <th value="项目名称" />
+            <th value="项目状态" />
+            <th value="合同数量" />
+            <th value="需安装数量" />
+            <th value="已安装数量" />
+            <th value="安装率" />
+            <th value="上线数量" />
+            <th value="上线率" />
+            <th value="验收数量" />
+            <th value="验收率" />
+            <th value="问题数量" />
+            <th value="项目经理" />
+            <th value="客户经理" />
+            <th value="最后更新时间" />
+        </tr>
+    </thead>
+    <tbody>
+        <tr height="16px" firstrow="2" firstcol="0"  >
+            <td type="string"  isnullable="false"  column = "pro_id" />
+            <td type="string"  isnullable="false"  column = "pro_name" />
+            <td type="numeric" isnullable="false"  column = "pro_station" />
+            <td type="numeric" isnullable="false"  column = "pro_todal" />
+            <td type="numeric" isnullable="false"  column = "pro_need" />
+            <td type="numeric" isnullable="false"  column = "pro_already" />
+            <td type="numeric" isnullable="false"  column = "pro_check_per" />
+            <td type="numeric" isnullable="false"  column = "online_number" />
+            <td type="numeric" isnullable="false"  column = "onlinne_number_per" />
+            <td type="numeric" isnullable="false"  column = "pro_check" />
+            <td type="numeric" isnullable="false"  column = "pro_already_per" />
+            <td type="numeric" isnullable="false"  column = "problem_count" />
+            <td type="numeric" isnullable="false"  column = "pro_manager_pro" />
+            <td type="numeric" isnullable="false"  column = "pro_manager_acc" />
+            <td type="numeric" isnullable="false"  column = "updated_at" />
+        </tr>
+    </tbody>
+</excel>
