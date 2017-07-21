@@ -103,10 +103,8 @@ public class InstallController implements ApplicationContextAware {
 				install.setAttachment_url(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
 			}
 
-//            String printerId = UUID.randomUUID().toString();
-            allNumber = printer.getPrinterId();
-            if (ComUtil.reflect(printer) && !ComUtil.isNull(allNumber)) {
-            	install.setPrinterId(allNumber);
+            String printerId = UUID.randomUUID().toString();
+            if (ComUtil.reflect(printer)) {
 	    		printer.setPrinterId(allNumber);
 	    		printerMapper.insertSelective(printer);
 	    	}
@@ -136,7 +134,7 @@ public class InstallController implements ApplicationContextAware {
 			
 //			install.setEqId(eqId);
 //			install.setCashId(cashId);
-//			install.setPrinterId(printerId);
+			install.setPrinterId(printerId);
 			
 	    	installmapper.insertSelective(install);
 	    	result.put("message", "success");
