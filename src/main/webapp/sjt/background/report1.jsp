@@ -79,6 +79,7 @@
           <button type="button" class="btn green " id="btnsearch">搜索</button>
           <button type="button" class="btn red" id="btnclear">清除</button>
           <button type="button" class="btn blue" data-toggle="modal" data-target="#myModal" id="btnset" >设置筛选条件</button>
+          <button type="button" class="btn green " id="exportexcel" >导出数据</button>
           </div>
         </div>
       <div class="row-fluid"> 
@@ -426,6 +427,37 @@ var oTable;
            $("#myModal .searchtxt").find("input").val("");
         })
         /*===报表end===*/
+        
+        /*数据导出*/
+        $("#exportexcel").on("click",function() {
+			flag = confirm("确认下载报表? ");
+			if(flag == true){
+				$("#searchbox .searchtxt").each(function(i) {
+					var key = $(this).attr("key");
+					var value = $(this).find("input,select").val();
+					var operator = $(this).attr("operator");
+					if (operator == "like") {
+						value = "%" + value + "%"
+					}
+					if (operator == "") {
+						operator = $(this).find(".sel_op").val();
+						value = $(this).find("input").val();
+					}
+					if (value != "") {
+						wher.push({
+									"key" : key,
+									"value" : value,
+									"operator" : operator
+								});
+					}
+				});
+				tmp = JSON.stringify(wher);
+				tmp = encodeURIComponent(tmp); 
+				window.location.href = domainName +"/hdk/api/export?reportCustomCode=REP_000002&wher="+ tmp
+			}
+		});
+        
+        
 		});
         
 	</script> 
