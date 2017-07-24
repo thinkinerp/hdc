@@ -214,4 +214,7 @@ function ajaxLoadEnd(){
 	$("#loading").remove();    
 	
 	}
+function isNullOrUndefined( v ) {
+	   return ("" != v && null != v && undefined != v);
+}
  
