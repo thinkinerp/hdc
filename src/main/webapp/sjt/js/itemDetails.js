@@ -83,7 +83,7 @@ if(undefined != allThing && null != allThing ){
 		}else if('其他'==isUndefined(item.problemType )&& '客户'==isUndefined(item.problemObject)){
 			setValue('customer',item.count);
 			setValue('customerOther',item.count);
-//			sum = sum + Number(item.count);
+//			sum = sum + Number(item.count); 
 		}
 	});
 	setValue('haiding',sum);
@@ -109,11 +109,19 @@ if(undefined != allThing && null != allThing ){
 			"						</li>"
 			);
 		});
-}
+	}else if ( null == allObjs.equipment || undefined == allObjs.equipment || "" == allObjs.equipment) {
+		$('#problemObject').html('');
+		$('#problemObject').append(
+				"	<li>" +
+				"		<div class='iz-list-title'>采集接口目前无数据</div>" +
+				"	</li>"
+		);
+	}
 	
 	if(!!isUndefined(allObjs.cashCount)){
 		$('#cashPort').html('');
 		$.each(allObjs.cashCount,function(index,item){
+			console.log(item);
 			$('#cashPort').append(
 					"						<li>" +
 					"							<div class='iz-list-title'>"+item.problemObject+"</div>" +
@@ -121,11 +129,18 @@ if(undefined != allThing && null != allThing ){
 					"						</li>"
 			);
 		});
+	}else if ( null == allObjs.cashCount || undefined == allObjs.cashCount || "" == allObjs.cashCount) {
+		$('#cashPort').html('');
+		$('#cashPort').append(
+				"	<li>" +
+				"		<div class='iz-list-title'>收银机接口目前无数据</div>" +
+				"	</li>"
+		);
 	}
+	
 	
 	if(!!isUndefined(allObjs.check)){
       $.each(allObjs.check,function(index,item){
-    	  console.log(item);
 			setValue('checkPercentage',isUndefined( ("" == item.proAlreadyPer? 0 : item.proAlreadyPer)));
 			setValue('certainPercentage',isUndefined((undefined == item.count ? 0 :item.count )));
 			setValue('installPercnetage',isUndefined(("" ==item.proCheckPer ? 0 : item.proCheckPer)));

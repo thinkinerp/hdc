@@ -122,6 +122,7 @@ inner join cash as c on i.cash_id = c.cash_id
 						    <if test="null != proId  and '' != proId">
 				and p.pro_id = #{proId,jdbcType=VARCHAR}
 			</if>	
+			and length(trim(c.cash_port)) &lt;&gt; 0
 </where>    
 group by  c.cash_port 
   </select>
