@@ -25,8 +25,8 @@
             <th value="需安装数量" />
             <th value="已安装数量" />
             <th value="安装率" />
-            <th value="上线数量" />
-            <th value="上线率" />
+<!--             <th value="上线数量" /> -->
+<!--             <th value="上线率" /> -->
             <th value="验收数量" />
             <th value="验收率" />
             <th value="问题数量" />
@@ -44,8 +44,8 @@
             <td type="numeric" isnullable="false"  column = "pro_need" />
             <td type="numeric" isnullable="false"  column = "pro_already" />
             <td type="numeric" isnullable="false"  column = "pro_check_per" />
-            <td type="numeric" isnullable="false"  column = "online_number" />
-            <td type="numeric" isnullable="false"  column = "onlinne_number_per" />
+<!--             <td type="numeric" isnullable="false"  column = "online_number" /> -->
+<!--             <td type="numeric" isnullable="false"  column = "onlinne_number_per" /> -->
             <td type="numeric" isnullable="false"  column = "pro_check" />
             <td type="numeric" isnullable="false"  column = "pro_already_per" />
             <td type="numeric" isnullable="false"  column = "problem_count" />
