@@ -42,7 +42,6 @@ if(undefined != params["proId"] && "" != params["proId"]){
 var loadItem = function(allThing){
 m_loading.remove();
 if(undefined != allThing && null != allThing ){
-	
 	var allObjs = allThing;
 	setValue("proName",allObjs.project.proName);
 	setValue("proEdition",allObjs.project.proEdition);
@@ -99,7 +98,8 @@ if(undefined != allThing && null != allThing ){
 
 	// 采集接口
 	
-	if(!!isUndefined(allObjs.equipment)){
+	if(isNullOrUndefined(allObjs.equipment)){
+//	if(!!isUndefined(allObjs.equipment)){
 		$('#problemObject').html('');
 		$.each(allObjs.equipment,function(index,item){
 			$('#problemObject').append(
@@ -109,7 +109,7 @@ if(undefined != allThing && null != allThing ){
 			"						</li>"
 			);
 		});
-	}else if ( null == allObjs.equipment || undefined == allObjs.equipment || "" == allObjs.equipment) {
+	}else {
 		$('#problemObject').html('');
 		$('#problemObject').append(
 				"	<li>" +
@@ -118,7 +118,8 @@ if(undefined != allThing && null != allThing ){
 		);
 	}
 	
-	if(!!isUndefined(allObjs.cashCount)){
+	if(isNullOrUndefined(allObjs.cashCount)){
+//	if(!!isUndefined(allObjs.cashCount)){
 		$('#cashPort').html('');
 		$.each(allObjs.cashCount,function(index,item){
 			console.log(item);
@@ -129,7 +130,7 @@ if(undefined != allThing && null != allThing ){
 					"						</li>"
 			);
 		});
-	}else if ( null == allObjs.cashCount || undefined == allObjs.cashCount || "" == allObjs.cashCount) {
+	}else {
 		$('#cashPort').html('');
 		$('#cashPort').append(
 				"	<li>" +
