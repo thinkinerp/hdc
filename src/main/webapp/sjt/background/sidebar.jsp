@@ -16,7 +16,7 @@
         <!-- BEGIN SIDEBAR TOGGLER BUTTON --> 
         
       </li>
-      <li class="start "> <a href="upload.jsp"> <i class="icon-th"></i> <span class="title">基本信息导入</span> </a> </li>
+      <li class="start "> <a href="upload.jsp"> <i class="icon-home"></i> <span class="title">基本信息导入</span> </a> </li>
       <li class="start "> <a href="report1.jsp"> <i class="icon-th"></i> <span class="title">项目报表</span> </a> </li>
     </ul>    
     <!-- END SIDEBAR MENU --> 

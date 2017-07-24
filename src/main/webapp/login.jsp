@@ -24,7 +24,7 @@ input.fullBtn:hover { background-color:#0362fd; }
 <title>登陆</title>
 </head>
 <body>
-<center><img src="/hdk/image/logo.png" ></center>
+<center><img src="image/logo.png" ></center>
 <div class="loginBox">
 	<h2>后台管理员</h2>
 	<div class="loginCont">

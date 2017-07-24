@@ -81,6 +81,7 @@ public class InstallController implements ApplicationContextAware {
     	
     	log.info("userName:"+userName+"userNum:"+userNum);
     	Map<String,String> rs = null ;
+    	String allNumber = null;  //用于接收编号
     	JSONObject result = new JSONObject();
     	try{
 //	    	if(null != files && !"".equalsIgnoreCase(files)){
@@ -92,30 +93,35 @@ public class InstallController implements ApplicationContextAware {
 //	    		}
 //	    	}
 	    	Map<String, String> where = new HashMap<String,String>();
-		   where.put("proName",install.getProId());
+		    where.put("proName",install.getProId());
 		   
-			List<Project> projects = projectMapper.selectByWhere(where );
+			List<Project> projects = projectMapper.selectByWhere(where);
 			Project i = projects.get(0);
 			install.setProId(i.getProId());	
 			equipment.setProId(i.getProId());
-			if(null != files && !"".equals(files)){
+			if (null != files && !"".equals(files)) {
 				install.setAttachment_url(files.replace("[", "").replace("]", "").replace("\"", "").replace("/hdk/upload/", ""));
 			}
 
             String printerId = UUID.randomUUID().toString();
-	    	if(ComUtil.reflect(printer)){
-	    		
-	    		printer.setPrinterId(printerId);
+            if (ComUtil.reflect(printer)) {
+	    		printer.setPrinterId(allNumber);
 	    		printerMapper.insertSelective(printer);
 	    	}
-	    	String cashId = UUID.randomUUID().toString();
-	    	if(ComUtil.reflect(cash)){
-	    		cash.setCashId(cashId);
+            
+//	    	String cashId = UUID.randomUUID().toString();
+            allNumber = cash.getCashId();
+	    	if (ComUtil.reflect(cash) && !ComUtil.isNull(allNumber)) {
+	    		install.setCashId(allNumber);
+	    		cash.setCashId(allNumber);
 	    		cashMapper.insertSelective(cash);
 	    	}
-            String eqId = UUID.randomUUID().toString();
-	    	if(ComUtil.reflect(equipment)){
-	    		equipment.setEqId(eqId);
+	    	
+//            String eqId = UUID.randomUUID().toString();
+	    	allNumber = equipment.getEqId();
+	    	if (ComUtil.reflect(equipment) && !ComUtil.isNull(allNumber)) {
+	    		install.setEqId(allNumber);
+	    		equipment.setEqId(allNumber);
 				equipmentMapper.insertSelective(equipment);
 	    	}
 	    	
@@ -126,8 +132,8 @@ public class InstallController implements ApplicationContextAware {
 	    	record.setAction("新建安装编号为："+install.getInstallId());
 			ohm.insertSelective(record );
 			
-			install.setEqId(eqId);
-			install.setCashId(cashId);
+//			install.setEqId(eqId);
+//			install.setCashId(cashId);
 			install.setPrinterId(printerId);
 			
 	    	installmapper.insertSelective(install);
