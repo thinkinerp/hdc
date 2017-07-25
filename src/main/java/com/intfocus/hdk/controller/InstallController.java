@@ -292,6 +292,7 @@ public class InstallController implements ApplicationContextAware {
 				String oldCashId = insList.get(0).getCashId();
 				if (!ComUtil.isNull(oldCashId)) {
 					cash.setCashId(oldCashId);
+					install.setCashId(oldCashId);
 					cashMapper.updateByPrimaryKeySelective(cash);
 				}
 			}
@@ -311,6 +312,7 @@ public class InstallController implements ApplicationContextAware {
 				String oldEqId = insList.get(0).getEqId();
 				if (!ComUtil.isNull(oldEqId)) { //有数据
 					equipmengt.setEqId(oldEqId);
+					install.setCashId(oldEqId);
 					equipmentMapper.updateByPrimaryKeySelective(equipmengt);
 				}
 			}
