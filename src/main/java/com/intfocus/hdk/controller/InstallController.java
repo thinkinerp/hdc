@@ -312,7 +312,7 @@ public class InstallController implements ApplicationContextAware {
 				String oldEqId = insList.get(0).getEqId();
 				if (!ComUtil.isNull(oldEqId)) { 
 					equipmengt.setEqId(oldEqId);
-					install.setEqId(oldEqId);//
+					install.setEqId(oldEqId);  //
 					equipmentMapper.updateByPrimaryKeySelective(equipmengt);
 				}
 			}
