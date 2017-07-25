@@ -89,7 +89,7 @@
                         </li>
                         <li>
                             <div class="g-importList-title">
-                                问题类型
+                                问题类型<span class="redtip">*</span>
                             </div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
@@ -680,9 +680,10 @@
                         $("#gs7").addClass('on');
                 },
                 gs7Man : function() {
-                    if (gs.gs7Arr.length > 3) {
-                        gs.gs7Arr.splice(0, 1);
-                    }
+                    // 去掉3个问题标签的限制
+                    // if (gs.gs7Arr.length > 3) {
+                    //     gs.gs7Arr.splice(0, 1);
+                    // }
                     gs.gs7String = gs.gs7Arr.join(",");
                     var dom = [];
                     for (var i = 0; i < gs.gs7Arr.length; i++) {
@@ -865,6 +866,9 @@
                         {return;}
                     if(form_empty({code:$('#sp2').html(), which:"商铺名称"}))
                         {swiper2.slideTo(1, 0, true);
+                         return;}
+                    if(form_empty({code:$('#gs4').html(), which:"问题类型"}))
+                        {swiper2.slideTo(0, 0, true);
                          return;}
                 $.when(codeUnique({
                     tableName : "problem",
