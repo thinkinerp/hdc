@@ -105,7 +105,7 @@ public class InstallController implements ApplicationContextAware {
 
             String printerId = UUID.randomUUID().toString();
             if (ComUtil.reflect(printer)) {
-	    		printer.setPrinterId(allNumber);
+	    		printer.setPrinterId(printerId);
 	    		printerMapper.insertSelective(printer);
 	    	}
             
@@ -274,19 +274,49 @@ public class InstallController implements ApplicationContextAware {
 //    	    	    }
 //    	    		install.modifyAtachement(files , rs.get("urls"),path.substring(0,path.indexOf("upload")));
 //    	    	}
-    	    
-
-			installmapper.updateByPrimaryKeySelective(install);
+        	Map<String,String> where = new HashMap<String,String>();
+        	where.put("installId", install.getInstallId());
+			List<Install> insList = installmapper.selectByWhere(where);
+			
 			if(null != printer.getPrinterId() && !"".equalsIgnoreCase(printer.getPrinterId())){
 				printerMapper.updateByPrimaryKeySelective(printer);
 			}
 			if(null != cash.getCashId() && !"".equalsIgnoreCase(cash.getCashId())){
-				cashMapper.updateByPrimaryKeySelective(cash);
+				String oldCashId = insList.get(0).getCashId();
+				if (!ComUtil.isNull(oldCashId)) {
+					cashMapper.updateByPrimaryKeySelective(cash);
+				} else {
+					cashMapper.insertSelective(cash);
+				}
+			} else {
+				String oldCashId = insList.get(0).getCashId();
+				if (!ComUtil.isNull(oldCashId)) {
+					cash.setCashId(oldCashId);
+					cashMapper.updateByPrimaryKeySelective(cash);
+				}
 			}
-			if(null != equipmengt.getEqId() && !"".equalsIgnoreCase(equipmengt.getEqId())){
-				equipmentMapper.updateByPrimaryKeySelective(equipmengt);
+			/*
+			 * 1. equipmengt 表中无数据
+			 * 2. equipmengt表中有数据，eqId不变，内容变，则update
+			 * 3. equipmengt表中有数据，eqId变，内容不变， 则update
+			 * */
+			if(null != equipmengt.getEqId() && !"".equalsIgnoreCase(equipmengt.getEqId())){ //eqId变了
+				String oldEqId = insList.get(0).getEqId(); //获取install表中的 eqId 用于判断 equipmengt 表中是否有数据
+				if (!ComUtil.isNull(oldEqId)) { //有数据
+					equipmentMapper.updateByPrimaryKeySelective(equipmengt);
+				} else {
+					equipmentMapper.insertSelective(equipmengt);
+				}
+			} else { //eqId没有变，前台传过来eqId为空值
+				String oldEqId = insList.get(0).getEqId();
+				if (!ComUtil.isNull(oldEqId)) { //有数据
+					equipmengt.setEqId(oldEqId);
+					equipmentMapper.updateByPrimaryKeySelective(equipmengt);
+				}
 			}
 
+			installmapper.updateByPrimaryKeySelective(install);
+			
 	    	Operation_history record = new Operation_history();
 	    	
 	    	record.setUserId(userNum);
