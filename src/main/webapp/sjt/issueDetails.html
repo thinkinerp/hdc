@@ -781,14 +781,14 @@
                             //					   		$('#ms7')[0].dataset.select = text2
                             $("#asddas").unbind('click');                             
                              $("#asddas").click(function() {
-                             /*====采集点 start====*/       
+                             /*====采集点 start====*/   
                              if(data.length>1 && sp.sp2!="")
                                 {
                                   app.select(this, 2, ms.selectcj);  
                                 }
                               else if(sp.sp2=="")
                               {app.alert("请选择商铺名称");}                          
-                              else
+                              else if(data.length==0)
                                 {app.alert("采集点为空");}
                             /*====采集点 end====*/ 
                             })
