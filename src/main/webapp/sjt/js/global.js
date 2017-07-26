@@ -277,7 +277,7 @@ var app ={
 		var format = null;
 		var quality  = format = ""
 		format =  'image/jpeg';
-		quality = 0.2; // 经测试0.9最合适
+		quality = 0.1; // 经测试0.9最合适
 		var fr = new FileReader();
 		fr.onload = function(e) {
 			var dataURL = e.target.result;
