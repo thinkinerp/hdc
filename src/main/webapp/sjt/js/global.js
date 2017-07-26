@@ -487,10 +487,10 @@ function chk_print(dyjbrand,dyjxh,dyjPort,obj)
 }
 
 function chk_equipment(){
-	if( ($("#eqTypeHard").attr("class")== 'on' || $("#eqTypeSoft").attr("class")== 'on' ) 
-			|| ($("#eqStyle").html() == "" && $("#eqStyle").html() == "未选择" )
-			|| ($("softwareVersion").html() == "未选择" &&  $("softwareVersion").html() == "")
-			|| ("" == $("#installTime").val() && "未选择" == $("#installTime").val())){
+	// if( ($("#eqTypeHard").attr("class")== 'on' || $("#eqTypeSoft").attr("class")== 'on' ) 
+	// 		|| ($("#eqStyle").html() == "" && $("#eqStyle").html() == "未选择" )
+	// 		|| ($("softwareVersion").html() == "未选择" &&  $("softwareVersion").html() == "")
+	// 		|| ("" == $("#installTime").val() && "未选择" == $("#installTime").val())){
 		  if(form_empty({code:$("#eqId").val(), which:"采集点编号"})){
 		  	 swiper2.slideTo(4, 0, true);
 		  	 $("#g-popupOk").bind("click",function(){   $("#eqId").focus();}) 
@@ -498,7 +498,7 @@ function chk_equipment(){
 		  }else{
 			  return false;
 		  }
-	}
+	// }
 }
 
 $(function(){
