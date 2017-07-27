@@ -1045,8 +1045,13 @@ var vipinfovalue;
 				 		jsonp: "callback",
 					 dataType:'jsonp',
 					 success:function(rs){
+					 	console.log("rs"+rs.length);
 						 var str = '';
 						 var i = 0 ;
+						 if(rs.length==0)
+						 {$("#vipchkbox").html("未配置会员信息");}
+						 else
+						 {	
 						 $.each(rs,function(index,item){
 						var vipinfotxt='<div class="i-choice-rowchk"><div></div><p>'+item.staName+'</p></div>';
 							 $("#vipchkbox").append(vipinfotxt);
@@ -1054,6 +1059,7 @@ var vipinfovalue;
 							 vipid="qt"+qtidx;
 							 //"#vipchkbox").find(".i-choice-rowchk").eq(index).find("div").attr("id",vipid);								 				 
 						 });
+						}
 					 },
 					 error:function(rs){
 					 }
