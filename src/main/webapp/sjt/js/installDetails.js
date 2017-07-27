@@ -258,8 +258,7 @@ var loadInstall = function(allThing){
         $('#shopPosition').html(isUndefined(allObjs.shop.shopPosition));
         $('#shopType').html(isUndefined(allObjs.shop.shopType));
         $('#shopSecType').html(isUndefined(allObjs.shop.shopSecType));
-        $('#installState').html(isUndefined(allObjs.install.installStation));
-        
+        $('#installState').html(isUndefined(allObjs.install.installStation));        
         //收银机信息
         if(undefined != allObjs.cash){
         	
@@ -268,7 +267,7 @@ var loadInstall = function(allThing){
         
         $('#cashBrand').html(isUndefined(allObjs.cash.cashBrand));
         $('#cashPort').html(isUndefined(allObjs.cash.cashPort));
-        
+      
         if( "是" == isUndefined(allObjs.cash.printerDriver)){
             $('#f').attr('class','off');
             $('#t').attr('class','on');
@@ -535,6 +534,40 @@ var submit = function() {
   // 采集点
   //验证
   m_loading.html();
+   if(form_empty({code:$('#installCode').val(), which:"安装编号"}))
+      {return;}
+    if(form_empty({code:$('#proName').html(), which:"项目名称"}))
+      {return;}
+    if(form_empty({code:$('#shopName').html(), which:"商铺名称"}))
+      {swiper2.slideTo(1, 0, true);
+        return;}
+      if(form_empty({code:$('#installState').html(), which:"安装状态"}))
+      {swiper2.slideTo(1, 0, true);
+        return;}
+        if(form_empty({code:$('#installTime').val(), which:"安装日期"}))
+        {swiper2.slideTo(4, 0, true);
+          $("#g-popupOk").bind("click",function(){ $('#installTime').focus();})  
+        return;}
+        if(chk_equipment())
+        {
+            return;          
+        }
+         if(form_empty({code:$('#priBrand').val(), which:"打印机品牌"}))
+        {swiper2.slideTo(3, 0, true);
+           $("#g-popupOk").bind("click",function(){ $('#priBrand').focus();})  
+        return;}
+         if(form_empty({code:$('#dyjxh').val(), which:"打印机型号"}))
+        {swiper2.slideTo(3, 0, true);
+          $("#g-popupOk").bind("click",function(){ $('#dyjxh').focus();})  
+        return;}
+     //验证收银机编号和打印机编号 start
+         var cashSystem_txt=$("#cashSystem").html();
+         var cashBrand_txt=$("#cashBrand").html();
+         var cashPort_txt=$("#cashPort").html();
+        if(chk_brand(cashSystem_txt,cashBrand_txt,cashPort_txt,"#cashId"))
+           {swiper2.slideTo(2, 0, true);
+            return;
+           }
   if (null != allThing && undefined !=allThing) {
 
     $.ajax({
@@ -623,34 +656,8 @@ var submit = function() {
 
 
   } else {
-	  if(form_empty({code:$('#installCode').val(), which:"安装编号"}))
-      {return;}
-    if(form_empty({code:$('#proName').html(), which:"项目名称"}))
-      {return;}
-    if(form_empty({code:$('#shopName').html(), which:"商铺名称"}))
-      {swiper2.slideTo(1, 0, true);
-        return;}
-      if(form_empty({code:$('#installState').html(), which:"安装状态"}))
-      {swiper2.slideTo(1, 0, true);
-        return;}
-        if(form_empty({code:$('#installTime').val(), which:"安装日期"}))
-        {swiper2.slideTo(4, 0, true);
-          $("#g-popupOk").bind("click",function(){ $('#installTime').focus();})  
-        return;}
-         if(form_empty({code:$('#priBrand').val(), which:"打印机品牌"}))
-        {swiper2.slideTo(3, 0, true);
-           $("#g-popupOk").bind("click",function(){ $('#priBrand').focus();})  
-        return;}
-         if(form_empty({code:$('#dyjxh').val(), which:"打印机型号"}))
-        {swiper2.slideTo(3, 0, true);
-          $("#g-popupOk").bind("click",function(){ $('#dyjxh').focus();})  
-        return;}
-     //验证收银机编号和打印机编号 start
-         var cashSystem_txt=$("#cashSystem").html();
-         var cashBrand_txt=$("#cashBrand").html();
-         var cashPort_txt=$("#cashPort").html();
-        // if(chk_brand(cashSystem_txt,cashBrand_txt,cashPort_txt,"#cashId"))
-        //   {return;}
+	 
+        
         // var priBrand_txt=$("#priBrand").val();
         //  var dyjxh_txt=$("#dyjxh").html();
         //  var dyjPort_txt=$("#printerPort").html();
@@ -834,14 +841,24 @@ var oneqTypeSelected = function(){
 	 		//jsonpCallback:"state_"+time+"_getSome",
 	 		jsonp: "callback",
 		 dataType:'jsonp',
-		 success:function(rs){
-			 
+		 success:function(rs){     
+      	 
 			 $("#eqStyle").html("");
 			 var stack = new Array();
 			 $.each(rs ,function(index,item){
 				 stack.push(item.staName);
 			 });
 			 $("#eqStyle").attr("data-select",stack.join(","));
+        $("#eqStyle").click(function() {
+        if($("#eqStyle").attr("data-select")=="")
+          {   
+           app.alert("采集点为空"); 
+          } 
+          else{ 
+            app.select(this,2,null);
+          }
+         
+        })
 		 },
 		 error:function(){
 			 
