@@ -2229,6 +2229,7 @@ textarea.placeholder {
   vertical-align: middle;
   *zoom: 1;
   margin-top: 6px;
+  color:#b94a48;
 }
 
 .control-group.success .validate-inline {
@@ -5308,3 +5309,4 @@ Datatables Plugin(in v1.3)
   background-color: #eee !important;
 }
 .databtnlist{padding-bottom:10px;}
+.page-sidebar-closed  .page-sidebar h3{display:none;}

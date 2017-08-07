@@ -453,3 +453,4 @@ table.dataTable td {
     margin-top: 0.5em;
   }
 }
+table.dataTable tbody tr td.col-chk{text-align:center;width:50px;}

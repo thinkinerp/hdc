@@ -797,17 +797,20 @@
                               {$("#asddas").html(data[0].eqId);
                                 $("#asddas").parents(".i-xiala-list").addClass("textcont")
                                 $("#asddas").unbind('click');
-                                ms.selectcj();
+                                
                                 }
                               else
                               {$("#asddas").parents(".i-xiala-list").removeClass("textcont")
                                 $("#asddas").html('未选择');
                               }
+                              ms.selectcj();
                         }
                     })
                 },
                 selectcj : function() {
                     var type = $('#asddas').html();
+                    $('#ms6').html("");
+                    $('#ms7').html("");
                     for (var i = 0; i < ms.data.length; i++) {
                         if (type == ms.data[i].eqId) {
                             $('#ms6').html(ms.data[i].eqType);
@@ -816,6 +819,20 @@
                         }
                     }
                 }
+            }
+            function valiate_submit()
+            {
+
+                    if(form_empty({code:$('#gs1').val(), which:"问题编号"}))
+                        {return;}
+                    if(form_empty({code:$('#sp1').html(), which:"项目名称"}))
+                        {return;}
+                    if(form_empty({code:$('#sp2').html(), which:"商铺名称"}))
+                        {swiper2.slideTo(1, 0, true);
+                         return;}
+                    if(form_empty({code:$('#gs4').html(), which:"问题类型"}))
+                        {swiper2.slideTo(0, 0, true);
+                         return;}  
             }
             function submit() {//新建保存                 
                 for (var i = 0; i < sp.proData.length; i++) {
@@ -860,16 +877,7 @@
                     ,
                     'problem.problemPlan' : $('#jjfa').val()	//解决方案
                 };
-                    if(form_empty({code:$('#gs1').val(), which:"问题编号"}))
-                        {return;}
-                    if(form_empty({code:$('#sp1').html(), which:"项目名称"}))
-                        {return;}
-                    if(form_empty({code:$('#sp2').html(), which:"商铺名称"}))
-                        {swiper2.slideTo(1, 0, true);
-                         return;}
-                    if(form_empty({code:$('#gs4').html(), which:"问题类型"}))
-                        {swiper2.slideTo(0, 0, true);
-                         return;}
+                valiate_submit();
                 $.when(codeUnique({
                     tableName : "problem",
                     codeField : "problem_id",
@@ -946,6 +954,7 @@
                     ,
                     'problem.problemPlan' : $('#jjfa').val()	//解决方案
                 };
+                 valiate_submit();
                 $.ajax({
                     url :domainName +  "/hdk/problem/modify",
                     //url : "/hdk/problem/modify",

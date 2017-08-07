@@ -3,7 +3,7 @@
  */
 
 loadCombobox("cashSystem", "cash_system");
-loadCombobox("cashBrand", "cash_brand");
+// loadCombobox("cashBrand", "cash_brand");
 loadCombobox("cashPort", "cash_port");
 loadCombobox("eqStyle", "equipment_type");
 loadCombobox("printerPort", "printer_port");
@@ -265,7 +265,7 @@ var loadInstall = function(allThing){
         $('#cashId').val(isUndefined(allObjs.cash.cashId));
         $('#cashSystem').html(isUndefined(allObjs.cash.cashSystem));
         
-        $('#cashBrand').html(isUndefined(allObjs.cash.cashBrand));
+        $('#cashBrand').val(isUndefined(allObjs.cash.cashBrand));
         $('#cashPort').html(isUndefined(allObjs.cash.cashPort));
       
         if( "是" == isUndefined(allObjs.cash.printerDriver)){
@@ -358,7 +358,7 @@ function loadPrinterAndCasher(surId) {
       if(undefined != rs.cash){
         $('#cashId').val(rs.cash.cashId);
         $('#cashSystem').html(rs.cash.cashSystem);
-        $('#cashBrand').html(rs.cash.cashBrand);
+        $('#cashBrand').val(rs.cash.cashBrand);
         $('#cashPort').html(rs.cash.cashPort);
 
         if (undefined == rs.cash.printerDriver || "" == rs.cash.printerDriver) {
@@ -544,14 +544,22 @@ var submit = function() {
       if(form_empty({code:$('#installState').html(), which:"安装状态"}))
       {swiper2.slideTo(1, 0, true);
         return;}
-        if(form_empty({code:$('#installTime').val(), which:"安装日期"}))
-        {swiper2.slideTo(4, 0, true);
-          $("#g-popupOk").bind("click",function(){ $('#installTime').focus();})  
-        return;}
-        if(chk_equipment())
+         if(chk_equipment())
         {
             return;          
         }
+        if(form_empty({code:$('#installState').html(), which:"安装状态"}))
+       {swiper2.slideTo(4, 0, true);
+        return;
+        }
+        if(form_empty({code:$('#eqTypeHard').html(), which:"采集接口类型"}))
+        {swiper2.slideTo(4, 0, true); 
+        return;
+         }     
+        if(form_empty({code:$('#eqStyle').html(), which:"采集方式"}))
+        {swiper2.slideTo(4, 0, true); 
+        return;
+         }   
          if(form_empty({code:$('#priBrand').val(), which:"打印机品牌"}))
         {swiper2.slideTo(3, 0, true);
            $("#g-popupOk").bind("click",function(){ $('#priBrand').focus();})  
@@ -562,7 +570,7 @@ var submit = function() {
         return;}
      //验证收银机编号和打印机编号 start
          var cashSystem_txt=$("#cashSystem").html();
-         var cashBrand_txt=$("#cashBrand").html();
+         var cashBrand_txt=$("#cashBrand").val();
          var cashPort_txt=$("#cashPort").html();
         if(chk_brand(cashSystem_txt,cashBrand_txt,cashPort_txt,"#cashId"))
            {swiper2.slideTo(2, 0, true);
@@ -600,7 +608,7 @@ var submit = function() {
           ,
         "cash.id": xgid(),
         'cash.cashId': $("#cashId").val(),
-        'cash.cashBrand': $("#cashBrand").html()
+        'cash.cashBrand': $("#cashBrand").val()
           //,'cashRegister':''
           ,
         'cash.cashSystem': $("#cashSystem").html(),
@@ -708,7 +716,7 @@ var submit = function() {
           //          ,"cash.id":allObjs.cash.id
          
         'cash.cashId': $("#cashId").val(),
-        'cash.cashBrand': $("#cashBrand").html()  ,
+        'cash.cashBrand': $("#cashBrand").val()  ,
           //,'cashRegister':''
         
         'cash.cashSystem': $("#cashSystem").html(),

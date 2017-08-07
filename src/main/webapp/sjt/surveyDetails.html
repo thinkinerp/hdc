@@ -143,7 +143,7 @@
 							</div>
 						</li>
 						<li>
-							<div class="g-importList-title">收银机端接口</div>
+							<div class="g-importList-title">收银机端接口<span class="redtip">*</span></div>
 							<div class="g-importList-content">
 								<div class="i-xiala-list">
 									<div class="on" id="syjPort" alertTitle="收银机端接口">未选择</div>
@@ -635,15 +635,19 @@
 					}
 				}
 			};
-			
-			function submit(){//提交				
-			     if(form_empty({code:$('#dyid').val(), which:"调研编号"}))
+			function valiate_submit()
+			{if(form_empty({code:$('#dyid').val(), which:"调研编号"}))
 			     	{return;}
 				 if(form_empty({code:$('#itemName').html(), which:"项目名称"}))
 				 	{return;}
 				 if(form_empty({code:$('#shopName').html(), which:"商铺名称"}))
 				 {
 				 	swiper2.slideTo(1, 0, true);
+        			return;
+        		}
+        		if(form_empty({code:$('#syjPort').html(), which:"收银机端接口"}))
+				 {
+				 	swiper2.slideTo(2, 0, true); 
         			return;
         		}
         		if(form_empty({code:$('#dyjbrand').val(), which:"打印机品牌"}))
@@ -658,6 +662,9 @@
 				 	$("#g-popupOk").bind("click",function(){ $('#dyjxh').focus();})  
         			return;
         		}
+        	}
+			function submit(){//提交				
+			     valiate_submit();
 				 //验证收银机编号和打印机编号 start
 				//  var syjSystem_txt=$("#syjSystem").html();
 				//  var syjBrand_txt=$("#syjBrand").html();
@@ -787,6 +794,7 @@ var vipinfovalue;
 			}
 			function xgsubmit(){	//修改
 				m_loading.html();
+				valiate_submit();
 				var obj={
                     'files':(JSON.stringify(imgs)),
 					'survey.proId':xg.data.survey.proId,	//项目编号
@@ -1045,7 +1053,6 @@ var vipinfovalue;
 				 		jsonp: "callback",
 					 dataType:'jsonp',
 					 success:function(rs){
-					 	console.log("rs"+rs.length);
 						 var str = '';
 						 var i = 0 ;
 						 if(rs.length==0)
