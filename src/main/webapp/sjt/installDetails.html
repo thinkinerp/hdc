@@ -15,7 +15,7 @@
         <script type="text/javascript" src="js/comUtil.js"></script> 
         <script src="js/config.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/global.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/installDetails.js" type="text/javascript" charset="utf-8"></script>
+
         <script src="js/install.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/syp_v1.js" type="text/javascript" charset="utf-8"></script> 
         <script type="text/javascript" charset="utf-8">
@@ -437,14 +437,7 @@
                 }   
             } */
             
-            $("#save").click(function(){ //保存按钮
-                app.alert("确定要保存吗？",2,submit)
-            })
-            if(undefined != params["pproName"] && "" !=params["pproName"] ){
-                $('#proName').html(params["pproName"]);
-                $('#proName').attr("class","");
-                Window.selected();
-            }
+
             /* function fullImg(index){ //图片全屏查看
                 var base = imgs[index];
                 if(base == undefined){ return; }
@@ -509,4 +502,18 @@
 
 <!-- <script src="js/buttonAway.js" type="text/javascript" charset="utf-8"></script> -->
 </body>
+<script type="text/javascript" charset="utf-8">
+	        m_loading.html();
+</script>
+        <script src="js/installDetails.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+	            $("#save").click(function(){ //保存按钮
+                app.alert("确定要保存吗？",2,submit);
+            });
+            if(undefined != params["pproName"] && "" !=params["pproName"] ){
+                $('#proName').html(params["pproName"]);
+                $('#proName').attr("class","");
+                Window.selected();
+            }
+</script>        
 </html>
