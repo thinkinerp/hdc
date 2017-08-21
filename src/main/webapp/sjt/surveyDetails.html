@@ -586,7 +586,7 @@
 			}
 			
 			var qt = {//其他
-				network:"外网",	//网络情况
+				network:"",	//网络情况
 				plug:"有",		//电源插口情况 
 				vip:"是",       //租户是否有会员系统
 				note:"是",		//是否小票
@@ -935,9 +935,11 @@ var vipinfovalue;
 					var datanetwork=data.survey.surNetwork;
 					//window.setTimeout('loadnetwork(network)',500);
 					qt.network = data.survey.surNetwork;
+
 					$("#getnetwork .i-choice-rowchk").each(function(i){
 			           var objp=$(this).find("p");
 			           var objdiv=$(this).find("div");
+			           console.log(datanetwork);
 			           if(datanetwork.indexOf(objp.html())!=-1){
 			            objdiv.addClass('on');
 			           }
@@ -1063,7 +1065,7 @@ var vipinfovalue;
 						var vipinfotxt='<div class="i-choice-rowchk"><div></div><p>'+item.staName+'</p></div>';
 							 $("#vipchkbox").append(vipinfotxt);
 							 qtidx=index+9;
-							 vipid="qt"+qtidx;
+							 vipid="chknet"+qtidx;
 							 //"#vipchkbox").find(".i-choice-rowchk").eq(index).find("div").attr("id",vipid);								 				 
 						 });
 						}
