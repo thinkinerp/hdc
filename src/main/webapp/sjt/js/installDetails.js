@@ -5,7 +5,7 @@
 loadCombobox("cashSystem", "cash_system");
 // loadCombobox("cashBrand", "cash_brand");
 loadCombobox("cashPort", "cash_port");
-loadCombobox("eqStyle", "equipment_type");
+
 loadCombobox("printerPort", "printer_port");
 loadCombobox("installState", "install");
 loadCombobox("installData", "install_data");
@@ -859,20 +859,69 @@ var oneqTypeSelected = function(){
 			 });
 			 $("#eqStyle").attr("data-select",stack.join(","));
         $("#eqStyle").click(function() {
-        if($("#eqStyle").attr("data-select")=="")
-          {   
-           app.alert("采集点为空"); 
-          } 
-          else{ 
-            app.select(this,2,null);
-          }
-         
-        })
+          eqstyle_click();
+           })
 		 },
 		 error:function(){
 			 
 		 }
 	 });
 }
-
+function eqstyle_click()
+{
+        if($("#eqStyle").attr("data-select")=="")
+          {   
+           app.alert("采集点为空"); 
+          } 
+          else{ 
+            app.select($("#eqStyle"),2,null);
+          }
+}
+ function loadCombobox_s(id , table,isAll,includeDefault){
+ // m_loading.remove();
+  m_loading.html();
+   var time = (new Date().getTime());
+   $.ajax({ 
+     url: domainName + '/hdk/state/getSome',
+     type:'get',
+     data:{
+        'ownerTable':table,
+        'time':time,
+        'isAll':isAll,
+        'parentId':$('#eqTypeHard').html()
+     },
+      //jsonpCallback:"state_"+time+"_getSome",
+      jsonp: "callback",
+     dataType:'jsonp',
+     success:function(rs){
+       var str = '';
+       var i = 0 ;
+       $.each(rs,function(index,item){
+         
+         if(0  == i){
+           i++;
+           str = str + item.staName;
+         }else{
+           str = str + ","+item.staName;
+         }
+         if(includeDefault == true || undefined == includeDefault ){
+         if(undefined!=item.isDefault&& 1==item.isDefault){
+           if($('#'+id).is('div')){
+             $('#'+id).html(item.staName);
+           }else if($('#'+id).is('input')){
+             $('#'+id).val(item.staName);
+           }
+         }
+         }
+       });
+       $('#'+id).attr("data-select",str);
+       m_loading.remove();
+       if(id=="install_getdata")
+        {getnewwork();}
+       state_getSome = null ;
+     },
+     error:function(rs){
+     }
+   });  
+ }
 

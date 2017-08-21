@@ -6,40 +6,39 @@ var imgs = [];	//2个图片都会在这个数组里
 var swiper1 = '';
 var swiper2 = '';
 var objid,gs7selarr=[],isgs7=false;
-var m_loading = {
-		html:function(){
-			var html = [];
-	        html.push("<div class='m_load'>");
-	        html.push("<div class='load2'>");
-	        html.push("<span class='loading'>");
-	    	html.push("<span class='bar1'></span>");
-	    	html.push("<span class='bar2'></span>");
-	    	html.push("<span class='bar3'></span>");
-	    	html.push("<span class='bar4'></span>");
-	    	html.push("<span class='bar5'></span>");
-	    	html.push("<span class='bar6'></span>");
-	    	html.push("<span class='bar7'></span>");
-	    	html.push("<span class='bar8'></span>");
-	    	html.push("<span class='bar9'></span>");
-	    	html.push("<span class='bar10'></span>");
-	    	html.push("<span class='bar11'></span>");
-	    	html.push("<span class='bar12'></span>");
-		    html.push("</span>");
+// var m_loading = {
+// 		html:function(){
+// 			$(".m_load").remove();
+// 			var html = [];
+// 	        html.push("<div class='m_load'>");
+// 	        html.push("<div class='load2'>");
+// 	        html.push("<span class='loading'>");
+// 	    	html.push("<span class='bar1'></span>");
+// 	    	html.push("<span class='bar2'></span>");
+// 	    	html.push("<span class='bar3'></span>");
+// 	    	html.push("<span class='bar4'></span>");
+// 	    	html.push("<span class='bar5'></span>");
+// 	    	html.push("<span class='bar6'></span>");
+// 	    	html.push("<span class='bar7'></span>");
+// 	    	html.push("<span class='bar8'></span>");
+// 	    	html.push("<span class='bar9'></span>");
+// 	    	html.push("<span class='bar10'></span>");
+// 	    	html.push("<span class='bar11'></span>");
+// 	    	html.push("<span class='bar12'></span>");
+// 		    html.push("</span>");
+// 	        html.push("</div>");
+// 	        html.push("</div>");
+// 	        $("body").append(html.join(""));
+// 	        $(".xxx").click(function(){
+// 	        	m_loading.remove();
+// 	        });
 
-	        //html.push("<span class='load_text'>加载中...</span>");
-	        html.push("</div>");
-	        html.push("</div>");
-	        $("body").append(html.join(""));
-	        $(".xxx").click(function(){
-	        	m_loading.remove();
-	        });
+// 		},
+// 		remove:function(){
+// 			$(".m_load").remove();
 
-		},
-		remove:function(){
-			$(".m_load").remove();
-
-		}
-	}
+// 		}
+// 	}
 var hasperson=false;
 /*===保存返回默认传值====*/
 
@@ -587,6 +586,7 @@ function buttonFixed()
  /*====cynthia返回 end1=====*/
  var m_loading = {
 	html:function(){
+		$(".loadingbox").remove();
 		var html = [];
         html.push("<div class='loadingbox'><img src='background/media/image/fancybox_loading.gif'></div>");
          $("body").append(html.join(""));
