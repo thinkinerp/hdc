@@ -26,10 +26,7 @@
 
 <!--<link rel="shortcut icon" href="media/image/favicon.ico" />-->
 <style>
-.page-header-fixed .page-container {
-	margin-top: 0px;
-}
-/*.dataTables_length{display:none;}*/
+
 </style>
 </head>
 
@@ -37,7 +34,9 @@
 
 <!-- BEGIN BODY -->
 <body class="page-header-fixed">
-
+<!-- BEGIN HEADER start-->
+<%@include file="header.jsp"%>
+<!-- BEGIN HEADER end-->
 
 <div class="page-container row-fluid"> 
   <!-- BEGIN SIDEBAR   左边导航 start-->
@@ -56,14 +55,7 @@
       
       <div class="row-fluid">
         <div class="span12"> 
-          
-          <!-- BEGIN STYLE CUSTOMIZER @义飞 class="logoutbox"-->
-          <div class="logoutbox">
-         <a href="/hdk/user/logout"><h2><i class="icon-key"></i>退出</h2></a> 
-          <!-- END BEGIN STYLE CUSTOMIZER -->
-          </div>
-          <h3 class="page-title"> 项目报表 <small></small> </h3>
-          
+          <h3 class="page-title"> 项目报表 <small></small> </h3>          
         </div>
       </div>
       
@@ -376,7 +368,10 @@ var oTable;
                 tmp = encodeURIComponent(tmp); 
                 window.location.href = domainName +"/hdk/api/export?reportCustomCode=REP_000002&wher="+ tmp
             }
-        });      
+        }); 
+        $("#sub_report").addClass("active");  
+        $("#sub_report .arror").addClass("open");   
+        $("#sub_report1").addClass("active");     
 		});        
 	</script> 
 <!-- END JAVASCRIPTS -->

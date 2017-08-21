@@ -5310,3 +5310,6 @@ Datatables Plugin(in v1.3)
 }
 .databtnlist{padding-bottom:10px;}
 .page-sidebar-closed  .page-sidebar h3{display:none;}
+.navbar-inverse .brand{color:#fff;padding-left:10px;}
+.header .nav > li.dropdown, .header .nav > li.dropdown > a,.header .nav > li.dropdown.user .dropdown-toggle{padding:0px 15px;line-height:42px;height:42px;
+vertical-align:middle;  }

@@ -38,11 +38,9 @@ var FormWizard = function () {
                         required: true
                     },
                     password: {
-                        minlength: 5,
                         required: true
                     },
                     rpassword: {
-                        minlength: 5,
                         required: true,
                         equalTo: "#password"
                     }

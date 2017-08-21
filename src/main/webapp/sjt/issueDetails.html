@@ -793,7 +793,8 @@
                             /*====采集点 end====*/ 
                             })
                              //只有一条商户默认第一条
-                           if(sp.sp2!="" &&data.length==1)
+                           if(!problemId_t)  
+                          { if(sp.sp2!="" &&data.length==1)
                               {$("#asddas").html(data[0].eqId);
                                 $("#asddas").parents(".i-xiala-list").addClass("textcont")
                                 $("#asddas").unbind('click');
@@ -803,6 +804,7 @@
                               {$("#asddas").parents(".i-xiala-list").removeClass("textcont")
                                 $("#asddas").html('未选择');
                               }
+                          }
                               ms.selectcj();
                         }
                     })
@@ -1032,7 +1034,7 @@
                     $("#ms3").val(data.problemEstimate);
                     $("#ms4").val(data.problemResolveUser);
                     $("#ms5").val(data.problemResloveTime);
-                     ms.init();
+                    ms.init();
                     $('#asddas').html(data.eqId);
                     xg.zhidu('asddas');
                     $("#ms6").html(data.eqStyle);
@@ -1069,6 +1071,7 @@
             }
             var proId_name="";
             var problemtestId;
+            var problemId_t;
             $(function() {
                 m_loading.html();
                  /*===保存返回 start===*/
@@ -1081,6 +1084,7 @@
                      })       
                     /*===保存返回 end===*/
                 var problemId = app.getUrlSearch("problemId");
+                problemId_t=problemId;
                 problemtestId=problemId;
                 if (problemId == null) {// 新建
                     $(".swiper-container1").find("#swiper-memo1").hide();
