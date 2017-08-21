@@ -792,13 +792,12 @@
                                 {app.alert("采集点为空");}
                             /*====采集点 end====*/ 
                             })
-                             //只有一条商户默认第一条
+                           //只有一条商户默认第一条
                            if(!problemId_t)  
                           { if(sp.sp2!="" &&data.length==1)
                               {$("#asddas").html(data[0].eqId);
                                 $("#asddas").parents(".i-xiala-list").addClass("textcont")
-                                $("#asddas").unbind('click');
-                                
+                                $("#asddas").unbind('click');                                
                                 }
                               else
                               {$("#asddas").parents(".i-xiala-list").removeClass("textcont")
@@ -826,15 +825,15 @@
             {
 
                     if(form_empty({code:$('#gs1').val(), which:"问题编号"}))
-                        {return;}
+                        {return true;}
                     if(form_empty({code:$('#sp1').html(), which:"项目名称"}))
-                        {return;}
+                        {return true;}
                     if(form_empty({code:$('#sp2').html(), which:"商铺名称"}))
                         {swiper2.slideTo(1, 0, true);
-                         return;}
+                         return true;}
                     if(form_empty({code:$('#gs4').html(), which:"问题类型"}))
                         {swiper2.slideTo(0, 0, true);
-                         return;}  
+                         return true;}  
             }
             function submit() {//新建保存                 
                 for (var i = 0; i < sp.proData.length; i++) {

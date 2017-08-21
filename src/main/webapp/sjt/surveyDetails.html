@@ -637,34 +637,35 @@
 			};
 			function valiate_submit()
 			{if(form_empty({code:$('#dyid').val(), which:"调研编号"}))
-			     	{return;}
+			     	{return true;}
 				 if(form_empty({code:$('#itemName').html(), which:"项目名称"}))
-				 	{return;}
+				 	{return true;}
 				 if(form_empty({code:$('#shopName').html(), which:"商铺名称"}))
 				 {
 				 	swiper2.slideTo(1, 0, true);
-        			return;
+        			return true;
         		}
         		if(form_empty({code:$('#syjPort').html(), which:"收银机端接口"}))
 				 {
 				 	swiper2.slideTo(2, 0, true); 
-        			return;
+        			return true;
         		}
         		if(form_empty({code:$('#dyjbrand').val(), which:"打印机品牌"}))
 				 {
 				 	swiper2.slideTo(3, 0, true);
 				 	$("#g-popupOk").bind("click",function(){ $('#dyjbrand').focus();})  
-        			return;
+        			return true;
         		}
         		if(form_empty({code:$('#dyjxh').val(), which:"打印机型号"}))
 				 {
 				 	swiper2.slideTo(3, 0, true);
 				 	$("#g-popupOk").bind("click",function(){ $('#dyjxh').focus();})  
-        			return;
+        			return true;
         		}
         	}
 			function submit(){//提交				
-			     valiate_submit();
+			     if(valiate_submit())
+			     	{return;}
 				 //验证收银机编号和打印机编号 start
 				//  var syjSystem_txt=$("#syjSystem").html();
 				//  var syjBrand_txt=$("#syjBrand").html();
@@ -794,7 +795,8 @@ var vipinfovalue;
 			}
 			function xgsubmit(){	//修改
 				m_loading.html();
-				valiate_submit();
+				if(valiate_submit())
+			     	{return;}
 				var obj={
                     'files':(JSON.stringify(imgs)),
 					'survey.proId':xg.data.survey.proId,	//项目编号
