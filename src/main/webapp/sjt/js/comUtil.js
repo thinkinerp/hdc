@@ -86,6 +86,8 @@ function codeUnique2(config){
 }
 
  function loadCombobox(id , table,isAll,includeDefault){
+ //	m_loading.remove();
+ 	m_loading.html();
 	 var time = (new Date().getTime());
 	 $.ajax({ 
 		 url: domainName + '/hdk/state/getSome',
@@ -120,6 +122,7 @@ function codeUnique2(config){
 				 }
 			 });
 			 $('#'+id).attr("data-select",str);
+			 m_loading.remove();
 			 if(id=="install_getdata")
 			 	{getnewwork();}
 			 state_getSome = null ;
@@ -132,7 +135,7 @@ function getnewwork()
          {
              var networkArr=$("#install_getdata").attr("data-select").split(",");
              for(i=0;i<networkArr.length;i++)
-             {var obj="qt"+i;
+             {var obj="chknetw"+i;
                $("#getnetwork").append('<div class="i-choice-rowchk"><div id='+obj+'  onclick="qt.selectNetwork(this)"></div><p>'+networkArr[i]+'</p></div>');
              }
 
