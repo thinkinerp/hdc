@@ -125,8 +125,6 @@ function codeUnique2(config){
 			 m_loading.remove();
 			 if(id=="install_getdata")
 			 	{getnewwork();}
-			 if(id=="eqTypeHard")
-			 {loadCombobox_s("eqStyle", "equipment_type");}
 			 state_getSome = null ;
 		 },
 		 error:function(rs){

@@ -200,9 +200,16 @@ var app ={
 				if(objid=="eqTypeHard")
 				{
 					if ($("#eqTypeHard").html()=="硬件数据通")
-		             {$("#softCodeOrVersion").html("硬件编号"); }
-		           else
-		          	{$("#softCodeOrVersion").html("软件版本"); }
+		             {$("#softCodeOrVersion").html("硬件编号");
+		         	  $("#softCodeOrVersion").parent("li").css("display","flex");	
+		              }
+		            else if ($("#eqTypeHard").html()=="软件数据通")
+		          	{
+		          		$("#softCodeOrVersion").html("软件版本");
+		          		$("#softCodeOrVersion").parent("li").css("display","flex");
+		      		}
+		          	 else
+		          	 {$("#softCodeOrVersion").parent("li").css("display","none");}
 		      }
         	},300)
         	/*===问题列表 start===*/

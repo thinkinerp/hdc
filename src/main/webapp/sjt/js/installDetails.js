@@ -792,10 +792,8 @@ var onSetupState = function() {
   $('#installStation').html($('#installState').html());
 }
 $(function(){
-
     if($("#installCode").val()=="" || $("#installCode").val()==undefined)
-      {m_loading.html();}        
-
+      {m_loading.html();}  
        /*===保存返回 start===*/
         window.SYP.saveParam (false,1);
         $("input,textarea").bind("focus",function(){
