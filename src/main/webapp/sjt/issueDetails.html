@@ -878,7 +878,8 @@
                     ,
                     'problem.problemPlan' : $('#jjfa').val()	//解决方案
                 };
-                valiate_submit();
+                if(valiate_submit())
+                    {return;}
                 $.when(codeUnique({
                     tableName : "problem",
                     codeField : "problem_id",
@@ -955,7 +956,8 @@
                     ,
                     'problem.problemPlan' : $('#jjfa').val()	//解决方案
                 };
-                 valiate_submit();
+                 if(valiate_submit())
+                    {return;}
                 $.ajax({
                     url :domainName +  "/hdk/problem/modify",
                     //url : "/hdk/problem/modify",
