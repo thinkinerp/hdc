@@ -172,8 +172,9 @@
                         <li>
                     <div class="g-importList-title">商户收银系统品牌</div>
                             <div class="g-importList-content">
-                                <div class="i-xiala-list">
-                                    <div id= "cashBrand" alertTitle="商户收银系统品牌"  data-select=""  onclick="app.select(this,2,null)" ></div>
+                                <div class="i-import">
+                                <input id="cashBrand" type="text" placeholder="请输入">
+                                    <!-- <div id= "cashBrand" alertTitle="商户收银系统品牌"  data-select=""  onclick="app.select(this,2,null)" ></div> -->
                                 </div>
                             </div>  
                         </li>
@@ -255,7 +256,7 @@
                             </div>
                         </li>
                         <li>
-                            <div class="g-importList-title">采集接口类型</div>
+                            <div class="g-importList-title">采集接口类型<span class="redtip">*</span></div>
                             <div class="g-importList-content">
                              <div class="i-xiala-list">
                                     <div id ="eqTypeHard"  data-select=""  alertTitle="采集方式" onclick="app.select(this,2,oneqTypeSelected)"></div>
@@ -273,10 +274,10 @@
                             </div>
                         </li>
                         <li>
-                            <div class="g-importList-title">采集方式</div>
+                            <div class="g-importList-title">采集方式<span class="redtip">*</span></div>
                             <div class="g-importList-content">
                                 <div class="i-xiala-list">
-                                    <div id ="eqStyle"  data-select=""  alertTitle="采集方式" ></div>
+                                    <div id ="eqStyle"  data-select=""  alertTitle="采集方式" onclick="eqstyle_click()"></div>
                                 </div>
                             </div>
                         </li>
@@ -364,6 +365,7 @@
         <script>
          loadCombobox("eqTypeHard","equipment_eq_style"); 
          loadCombobox("install_getdata",'network_state'); 
+          
          function getnewwork()
          {
              var networkArr=$("#install_getdata").attr("data-select").split(",");
@@ -502,6 +504,7 @@
 
 <!-- <script src="js/buttonAway.js" type="text/javascript" charset="utf-8"></script> -->
 </body>
+
 <script type="text/javascript" charset="utf-8">
 	        m_loading.html();
 </script>

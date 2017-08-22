@@ -1,0 +1,223 @@
+<html lang="en"><!--<![endif]--><!-- BEGIN HEAD --><head>
+<meta charset="utf-8">
+<title>修改密码</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="description">
+<meta content="" name="author">
+
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+
+<link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+<link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="media/css/style-metro.css" rel="stylesheet" type="text/css">
+<link href="media/css/style.css" rel="stylesheet" type="text/css">
+<link href="media/css/style-responsive.css" rel="stylesheet" type="text/css">
+<link href="media/css/default.css" rel="stylesheet" type="text/css" id="style_color">
+<link href="media/css/uniform.default.css" rel="stylesheet" type="text/css">
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link rel="stylesheet" type="text/css" href="datatable/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="media/css/select2_metro.css">
+<link rel="stylesheet" type="text/css" href="media/css/chosen.css">
+<!-- END PAGE LEVEL STYLES -->
+
+<!--<link rel="shortcut icon" href="media/image/favicon.ico" />-->
+<style>
+
+</style>
+</head>
+
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+<!-- BEGIN HEADER start-->
+<%@include file="header.jsp"%>
+<!-- BEGIN HEADER end-->
+<div class="page-container row-fluid"> 
+  <!-- BEGIN SIDEBAR   左边导航 start-->
+   <!--#include file="sidebar.jsp"--> 
+<%@include file="sidebar.jsp"%>
+
+  <!-- END SIDEBAR 左边导航 end-->   
+  <!-- BEGIN PAGE -->  
+  <div class="page-content">     
+    <!-- BEGIN PAGE CONTAINER-->    
+    <div class="container-fluid">       
+      <!-- BEGIN PAGE HEADER-->      
+      <div class="row-fluid">
+        <div class="span12">           
+          <!-- BEGIN STYLE CUSTOMIZER @义飞 class="logoutbox"-->
+          <h3 class="page-title">修改密码<small></small> </h3>
+          
+        </div>
+      </div>
+      <!-- END PAGE HEADER-->       
+      <!-- BEGIN PAGE CONTENT-->
+       <div class="row-fluid">
+        <div class="span12">
+
+            <div class="portlet box blue" id="form_wizard_1">
+
+              <div class="portlet-title">
+
+                <div class="caption">
+
+                  <i class="icon-reorder"></i><span class="step-title">重置密码</span>
+
+                </div>
+
+                <div class="tools hidden-phone">
+
+                  <a href="javascript:;" class="collapse"></a>
+
+                </div>
+
+              </div>
+
+              <div class="portlet-body form">
+
+                <form action="#" class="form-horizontal" id="submit_form">
+
+                  <div class="form-wizard">
+
+                    <div class="tab-content">
+
+                      <div class="alert alert-error hide">
+
+                        <button class="close" data-dismiss="alert"></button>
+
+                        You have some form errors. Please check below.
+
+                      </div>
+
+                      <div class="alert alert-success hide">
+
+                        <button class="close" data-dismiss="alert"></button>
+
+                        Your form validation is successful!
+
+                      </div>
+
+                      <div class="tab-pane active" >
+
+                        <div class="control-group">
+
+                          <label class="control-label">原密码<span class="required">*</span></label>
+
+                          <div class="controls">
+
+                            <input type="password" class="span6 m-wrap" name="oldpassword"/>
+
+                            <span class="help-inline"></span>
+
+                          </div>
+
+                        </div>
+
+                        <div class="control-group">
+
+                          <label class="control-label">新密码<span class="required">*</span></label>
+
+                          <div class="controls">
+
+                            <input type="password" class="span6 m-wrap" name="password" id="password"/>
+
+                            <span class="help-inline"></span>
+
+                          </div>
+
+                        </div>
+
+                        <div  style="margin-bottom:10px">
+
+
+                          <div class="controls">
+
+                            <input type="checkbox" class="span6 m-wrap" name="check_show" id="check_show" style="width:auto"/><label for="check_show" style="width:auto;display:inline-block;margin:3px 0 0 5px;">显示密码</label>
+
+                          </div>
+
+                        </div>
+
+                        <div class="control-group">
+
+                          <label class="control-label">确认密码<span class="required">*</span></label>
+
+                          <div class="controls">
+
+                            <input type="password" class="span6 m-wrap" name="rpassword"/>
+
+                            <span class="help-inline"></span>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <div class="form-actions clearfix">
+                        <button class="btn blue submit" type="submit" ><i class="m-icon-swapright m-icon-white"></i>确定</button>
+                        <button class="btn submit" type="submit" ><i class="icon-ban-circle icon-white"></i>取消</button>
+                    </div>
+
+                  </div>
+
+                </form>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>    
+      <!-- END PAGE CONTENT-->       
+    </div>    
+    <!-- END PAGE CONTAINER-->     
+  </div>  
+  <!-- END PAGE -->   
+</div>
+<!-- END CONTAINER --> 
+<!-- BEGIN FOOTER -->
+<div class="footer">
+  <div class="footer-inner">     
+    <!--2017 &copy; -->     
+  </div>
+  <div class="footer-tools"> <span class="go-top"> <i class="icon-angle-up"></i> </span> </div>
+</div>
+<!-- END FOOTER --> 
+<!-- Modal -->
+<!-- 模态框（Modal） -->
+
+<script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script> 
+
+<script src="datatable/js/jquery.dataTables.js" type="text/javascript"></script> 
+<script src="media/js/bootstrap.min.js" type="text/javascript"></script> 
+<script type="text/javascript" src="media/js/jquery.validate.min.js"></script>
+<script src="media/js/app.js"></script> 
+<script src="media/js/form-wizard.js"></script>
+<!-- END PAGE LEVEL SCRIPTS --> 
+<script>
+/*===datatable end====*/
+    $(document).ready(function() {   
+       App.init();
+       FormWizard.init();
+       $(".page-content").css("height",$(window).height());    
+       $("#check_show").bind("click",function(){
+        if($("#check_show").is(':checked'))
+        {$("#password").attr("type","text");}
+         else
+          {$("#password").attr("type","password");}
+       }) 
+       $("#sub_user").addClass("active");  
+       $("#sub_user .arror").addClass("open");   
+       $("#sub_pwd").addClass("active");
+    });        
+  </script> 
+<!-- END JAVASCRIPTS -->
+<!-- END BODY -->
+</body></html>
+

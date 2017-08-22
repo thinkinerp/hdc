@@ -285,10 +285,9 @@ Landscape phone to portrait tablet
     background: #1e1e1e;
   }
 }
-.databtnlist{padding-bottom:10px;clear:both;}
+.databtnlist{margin-top:10px;padding-bottom:10px;clear:both;}
 .span_chk{width:5%;float:left;}
 .searchtxt{float:left;margin-bottom:10px;height:30px;width:87%;}
-#searchbox {margin-bottom:10px;}
 #searchbox .searchtxt{float:left;width:50%;}
 .width30,.col-name{width:30%;float:left;text-align:center;line-height:30px;}
 .width20{width:20%;float:left;text-align:center;line-height:30px;}

@@ -3,9 +3,9 @@
  */
 
 loadCombobox("cashSystem", "cash_system");
-loadCombobox("cashBrand", "cash_brand");
+// loadCombobox("cashBrand", "cash_brand");
 loadCombobox("cashPort", "cash_port");
-loadCombobox("eqStyle", "equipment_type");
+
 loadCombobox("printerPort", "printer_port");
 loadCombobox("installState", "install");
 loadCombobox("installData", "install_data");
@@ -265,7 +265,7 @@ var loadInstall = function(allThing){
         $('#cashId').val(isUndefined(allObjs.cash.cashId));
         $('#cashSystem').html(isUndefined(allObjs.cash.cashSystem));
         
-        $('#cashBrand').html(isUndefined(allObjs.cash.cashBrand));
+        $('#cashBrand').val(isUndefined(allObjs.cash.cashBrand));
         $('#cashPort').html(isUndefined(allObjs.cash.cashPort));
       
         if( "是" == isUndefined(allObjs.cash.printerDriver)){
@@ -358,7 +358,7 @@ function loadPrinterAndCasher(surId) {
       if(undefined != rs.cash){
         $('#cashId').val(rs.cash.cashId);
         $('#cashSystem').html(rs.cash.cashSystem);
-        $('#cashBrand').html(rs.cash.cashBrand);
+        $('#cashBrand').val(rs.cash.cashBrand);
         $('#cashPort').html(rs.cash.cashPort);
 
         if (undefined == rs.cash.printerDriver || "" == rs.cash.printerDriver) {
@@ -544,14 +544,22 @@ var submit = function() {
       if(form_empty({code:$('#installState').html(), which:"安装状态"}))
       {swiper2.slideTo(1, 0, true);
         return;}
-        if(form_empty({code:$('#installTime').val(), which:"安装日期"}))
-        {swiper2.slideTo(4, 0, true);
-          $("#g-popupOk").bind("click",function(){ $('#installTime').focus();})  
-        return;}
-        if(chk_equipment())
+         if(chk_equipment())
         {
             return;          
         }
+        if(form_empty({code:$('#installState').html(), which:"安装状态"}))
+       {swiper2.slideTo(4, 0, true);
+        return;
+        }
+        if(form_empty({code:$('#eqTypeHard').html(), which:"采集接口类型"}))
+        {swiper2.slideTo(4, 0, true); 
+        return;
+         }     
+        if(form_empty({code:$('#eqStyle').html(), which:"采集方式"}))
+        {swiper2.slideTo(4, 0, true); 
+        return;
+         }   
          if(form_empty({code:$('#priBrand').val(), which:"打印机品牌"}))
         {swiper2.slideTo(3, 0, true);
            $("#g-popupOk").bind("click",function(){ $('#priBrand').focus();})  
@@ -562,7 +570,7 @@ var submit = function() {
         return;}
      //验证收银机编号和打印机编号 start
          var cashSystem_txt=$("#cashSystem").html();
-         var cashBrand_txt=$("#cashBrand").html();
+         var cashBrand_txt=$("#cashBrand").val();
          var cashPort_txt=$("#cashPort").html();
         if(chk_brand(cashSystem_txt,cashBrand_txt,cashPort_txt,"#cashId"))
            {swiper2.slideTo(2, 0, true);
@@ -600,7 +608,7 @@ var submit = function() {
           ,
         "cash.id": xgid(),
         'cash.cashId': $("#cashId").val(),
-        'cash.cashBrand': $("#cashBrand").html()
+        'cash.cashBrand': $("#cashBrand").val()
           //,'cashRegister':''
           ,
         'cash.cashSystem': $("#cashSystem").html(),
@@ -708,7 +716,7 @@ var submit = function() {
           //          ,"cash.id":allObjs.cash.id
          
         'cash.cashId': $("#cashId").val(),
-        'cash.cashBrand': $("#cashBrand").html()  ,
+        'cash.cashBrand': $("#cashBrand").val()  ,
           //,'cashRegister':''
         
         'cash.cashSystem': $("#cashSystem").html(),
@@ -785,6 +793,9 @@ var onSetupState = function() {
 }
 $(function(){
 
+    if($("#installCode").val()=="" || $("#installCode").val()==undefined)
+      {m_loading.html();}        
+
        /*===保存返回 start===*/
         window.SYP.saveParam (false,1);
         $("input,textarea").bind("focus",function(){
@@ -850,20 +861,69 @@ var oneqTypeSelected = function(){
 			 });
 			 $("#eqStyle").attr("data-select",stack.join(","));
         $("#eqStyle").click(function() {
-        if($("#eqStyle").attr("data-select")=="")
-          {   
-           app.alert("采集点为空"); 
-          } 
-          else{ 
-            app.select(this,2,null);
-          }
-         
-        })
+          eqstyle_click();
+           })
 		 },
 		 error:function(){
 			 
 		 }
 	 });
 }
-
+function eqstyle_click()
+{
+        if($("#eqStyle").attr("data-select")=="")
+          {   
+           app.alert("采集点为空"); 
+          } 
+          else{ 
+            app.select($("#eqStyle"),2,null);
+          }
+}
+ function loadCombobox_s(id , table,isAll,includeDefault){
+ // m_loading.remove();
+  m_loading.html();
+   var time = (new Date().getTime());
+   $.ajax({ 
+     url: domainName + '/hdk/state/getSome',
+     type:'get',
+     data:{
+        'ownerTable':table,
+        'time':time,
+        'isAll':isAll,
+        'parentId':$('#eqTypeHard').html()
+     },
+      //jsonpCallback:"state_"+time+"_getSome",
+      jsonp: "callback",
+     dataType:'jsonp',
+     success:function(rs){
+       var str = '';
+       var i = 0 ;
+       $.each(rs,function(index,item){
+         
+         if(0  == i){
+           i++;
+           str = str + item.staName;
+         }else{
+           str = str + ","+item.staName;
+         }
+         if(includeDefault == true || undefined == includeDefault ){
+         if(undefined!=item.isDefault&& 1==item.isDefault){
+           if($('#'+id).is('div')){
+             $('#'+id).html(item.staName);
+           }else if($('#'+id).is('input')){
+             $('#'+id).val(item.staName);
+           }
+         }
+         }
+       });
+       $('#'+id).attr("data-select",str);
+       m_loading.remove();
+       if(id=="install_getdata")
+        {getnewwork();}
+       state_getSome = null ;
+     },
+     error:function(rs){
+     }
+   });  
+ }
 

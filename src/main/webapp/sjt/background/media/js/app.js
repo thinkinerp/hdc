@@ -928,7 +928,7 @@ var validateform={
              $.each(rs,function(index,item){
                  var staName=item.staName;  
                  var staId =item.staId;          
-                 $("#selstatus").append('<option value="'+staName+'">'+staName+'</option>')
+                 $("#"+id).append('<option value="'+staName+'">'+staName+'</option>')
              });
             
          },
@@ -936,3 +936,86 @@ var validateform={
          }
      });    
  }
+ /*====报表 start===*/
+ $(function(){
+    $("#savesearch").bind("click",function(){
+           
+          var searcharr="";
+          var result=true;
+          $(".searchcontainer .span_chk").each(function(i){
+
+          if ($(this).find("input:checkbox").is(":checked")) {  
+            /*===验证 start===*/
+            //  var charobj= $(this).next(".searchtxt").find(".inputchar");             
+            //  if(charobj.val()!="")
+            //  {
+            //   if(!validateform.check_charnum(charobj.val()))
+            //  { result = false;  
+            //     charobj.focus();}
+            //  }
+            // var perobj=$(this).next(".searchtxt").find(".inputper");
+            // if(perobj.val()!="")
+            //  {
+            //  if(isNaN(perobj.val()) )
+            //      {result = false;  
+            //       alert("请输入数字"); 
+            //       perobj.focus();}
+            //   if(!(perobj.val()>=0 && perobj.val()<100))
+            //        {result = false;  
+            //           alert("请输入大于0小于100的数字");  
+            //           perobj.focus();
+            //      }
+            //   }
+            /*===验证 end===*/
+          if($(this).next(".searchtxt").find("input[type='text'],input[type='number'],select").size()!=0)
+              {$(this).next(".searchtxt").find("input[type='text'],input[type='number'],select").each(function(i){
+                var obj=$(this);
+                obj.attr("value",obj.val());
+              })
+                  
+              }         
+              searcharr+=$(this).next(".searchtxt").prop("outerHTML");
+           } 
+          })  
+          if(!result)  {return;}       
+          $("#searchbox").empty();          
+          $("#searchbox").append(searcharr);
+          $("#searchbox select").each(function(i){
+              $(this).val($(this).attr("value"));
+          })
+          $("#close").trigger("click");
+
+        })
+        $("#btnsearch").bind("click",function(){
+          wher=[];
+          $("#searchbox .searchtxt").each(function(i){
+            var key=$(this).attr("key");
+            var value=$(this).find("input,select").val();
+            var operator=$(this).attr("operator");
+            if(operator=="like")
+            {
+              value="%"+value+"%"
+            }
+            if(operator=="")
+            {operator=$(this).find(".sel_op").val();
+             value=$(this).find("input").val();
+            }
+            if(value!="")
+            {wher.push({"key":key,"value":value,"operator":operator}); }               
+          })
+          console.log(wher);
+           oTable.destroy();   
+           loaddata();
+
+        })
+        $("#btnclear").bind("click",function(){
+          $(".searchtxt").find("input,select").val("");
+        })
+        $("#btnset").bind("click",function(){
+           $("#myModal .searchtxt").find("input").val("");
+        })
+        /*===报表end===*/
+        
+       
+})
+/*====报表 end===*/

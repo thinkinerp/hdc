@@ -1,8 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <html lang="en"><!--<![endif]--><!-- BEGIN HEAD --><head>
 <meta charset="utf-8">
-<title>上传信息</title>
+<title>问题报表</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="description">
 <meta content="" name="author">
@@ -37,30 +35,24 @@
 <!-- BEGIN HEADER start-->
 <%@include file="header.jsp"%>
 <!-- BEGIN HEADER end-->
-
 <div class="page-container row-fluid"> 
   <!-- BEGIN SIDEBAR   左边导航 start-->
    <!--#include file="sidebar.jsp"--> 
 <%@include file="sidebar.jsp"%>
-  <!-- END SIDEBAR 左边导航 end--> 
-  
-  <!-- BEGIN PAGE -->
-  
+
+  <!-- END SIDEBAR 左边导航 end-->   
+  <!-- BEGIN PAGE -->  
   <div class="page-content">     
-    <!-- BEGIN PAGE CONTAINER-->
-    
-    <div class="container-fluid"> 
-      
-      <!-- BEGIN PAGE HEADER-->
-      
+    <!-- BEGIN PAGE CONTAINER-->    
+    <div class="container-fluid">       
+      <!-- BEGIN PAGE HEADER-->      
       <div class="row-fluid">
-        <div class="span12"> 
-          <h3 class="page-title"> 项目报表 <small></small> </h3>          
+        <div class="span12">  
+          <h3 class="page-title">问题报表<small></small> </h3>
+          
         </div>
       </div>
-      
-      <!-- END PAGE HEADER--> 
-      
+      <!-- END PAGE HEADER-->       
       <!-- BEGIN PAGE CONTENT-->
        <div class="row-fluid">
          <div id="searchbox" class="span11 offset1">
@@ -81,45 +73,34 @@
             <tr>
             <th>项目编号</th>
             <th>项目名称</th>
+            <th>门店名称</th>
             <th>项目状态</th>
-            <th>合同数量</th>
-            <th>需安装数量</th>
-            <th>已安装数量</th>
-            <th>安装率</th>
-<!--             <th>上线数量</th> -->
-<!--             <th>上线率</th> -->
-            <th>验收数量</th>
-            <th>验收率</th>
-            <th>问题数量</th>
-            <th>项目经理</th>
-            <th>客户经理</th>
-            <th>最后更新时间</th>
+            <th>问题跟进方</th>
+            <th>问题类型</th>
+            <th>跟进人</th>
+            <th>问题发生时间</th>
+            <th>问题详情</th>
+            <th>提出时间</th>
+            <th>预计完成时间</th>
+            <th>解决人</th>
+            <th>实际解决时间</th>
+            <th>解决方案</th>
             </tr>
         </thead>
           </table>
         </div>
-      </div>
-      
-      <!-- END PAGE CONTENT--> 
-      
-    </div>
-    
-    <!-- END PAGE CONTAINER--> 
-    
-  </div>
-  
-  <!-- END PAGE --> 
-  
+      </div>      
+      <!-- END PAGE CONTENT-->       
+    </div>    
+    <!-- END PAGE CONTAINER-->     
+  </div>  
+  <!-- END PAGE -->   
 </div>
-
 <!-- END CONTAINER --> 
-
 <!-- BEGIN FOOTER -->
-
 <div class="footer">
   <div class="footer-inner">     
-    <!--2017 &copy; --> 
-    
+    <!--2017 &copy; -->     
   </div>
   <div class="footer-tools"> <span class="go-top"> <i class="icon-angle-up"></i> </span> </div>
 </div>
@@ -150,15 +131,73 @@
             <div class="width20">类似于</div>
             <div class="width40"><input type="text" value=""  class="m-wrap" data-tabindex="2"></div>
             </div>
-            </div>
-            <!-- 上次更新时间 -->
+            </div>           
+            <!-- row end -->
              <div class="row">
             <span class="span_chk"><input type="checkbox"></span>
-            <div class="searchtxt" key="updated_at" operator=">">
-            <div class="badge col-name">上次更新时间</div>
+            <div class="searchtxt" key="shop_name" operator="like">
+            <div class="badge col-name">门店名称</div>
+            <div class="width20">类似于</div>
+            <div class="width40">
+            <input type="text" value="" class="m-wrap" data-tabindex="1">
+            </div>
+            </div>
+            </div>
+            <!-- row end -->
+            <div class="row">
+            <span class="span_chk"><input type="checkbox"></span>
+            <div class="searchtxt" key="problem_user" operator="like">
+            <div class="badge col-name">跟进人</div>
+            <div class="width20">类似于</div>
+            <div class="width40">
+            <input type="text" value="" class="m-wrap" data-tabindex="1">
+            </div>
+            </div>
+            </div>
+            <!-- row end -->
+            <div class="row">
+            <span class="span_chk"><input type="checkbox"></span>
+            <div class="searchtxt" key="problem_object" operator="=">
+            <div class="badge col-name">跟进方</div>
+            <div class="width20">等于</div>
+            <div class="width40">
+             <select id="sel_problemobject">
+            </select>
+            </div>
+            </div>
+            </div>
+            <!-- row end 问题跟进方没有数据-->
+            <div class="row">
+            <span class="span_chk"><input type="checkbox"></span>
+            <div class="searchtxt" key="problem_type" operator="=">
+            <div class="badge col-name">问题类型</div>
+            <div class="width20">等于</div>
+            <div class="width40">
+             <select id="sel_problemtype">
+            </select>
+            </div>
+            </div>
+            </div>
+            <!-- row end -->
+            <div class="row">
+            <span class="span_chk"><input type="checkbox"></span>
+            <div class="searchtxt" key="problem_station" operator="=">
+            <div class="badge col-name">问题状态</div>
+            <div class="width20">等于</div>
+            <div class="width40">
+             <select id="sel_problemstation">
+            </select>
+            </div>
+            </div>
+            </div>
+            <!-- row end -->
+            <div class="row">
+            <span class="span_chk"><input type="checkbox"></span>
+            <div class="searchtxt" key="problem_happen" operator="=">
+            <div class="badge col-name">发生时间</div>
             <div class="width20">大于</div>
             <div class="width40">
-            <select>
+             <select>
               <option value="一周">一周</option>
               <option value="二周" >二周</option>
               <option value="一月" >一月</option>
@@ -167,93 +206,21 @@
             </div>
             </div>
             <!-- row end -->
-             <div class="row">
+            <div class="row">
             <span class="span_chk"><input type="checkbox"></span>
-            <div class="searchtxt" key="problem_count" operator=">=">
-            <div class="badge col-name">问题数量</div>
-            <div class="width20">大于等于</div>
+            <div class="searchtxt" key="problem_estimate" operator="=">
+            <div class="badge col-name">预计完成时间</div>
+            <div class="width20">大于</div>
             <div class="width40">
-            <input type="text" value="" class="m-wrap" data-tabindex="1">
-            </div>
-            </div>
-            </div>
-            <!-- row end -->
-             <div class="row">
-            <span class="span_chk"><input type="checkbox"></span>
-            <div class="searchtxt" key="pro_station" operator="=">
-            <div class="badge col-name">项目状态</div>
-            <div class="width20">等于</div>
-            <div class="width40">
-             <select id="selstatus">
+             <select>
+              <option value="一周">一周</option>
+              <option value="二周" >二周</option>
+              <option value="一月" >一月</option>
             </select>
             </div>
             </div>
             </div>
             <!-- row end -->
-            <div class="row">
-            <span class="span_chk"><input type="checkbox"></span>
-            <div class="searchtxt" key="pro_check_per" operator="">
-            <div class="badge col-name">安装率</div>
-            <div class="width20"><select style="width:70px" class="sel_op">
-               <option value=">">大于</option>
-              <option value="<=">小于等于</option>
-           
-            </select></div>
-            <div class="width40">
-             <input type="number" min=0 max=100  style="width:88%" class="inputper"> %
-            </div>
-            </div>
-            </div>
-            <!-- row end -->           
-            <div class="row">
-            <span class="span_chk"><input type="checkbox"></span>
-            <div class="searchtxt" key="onlinne_number_per" operator="">
-            <div class="badge col-name">上线率</div>
-            <div class="width20"><select style="width:70px" class="sel_op">
-               <option value=">">大于</option>
-              <option value="<=">小于等于</option>
-           
-            </select></div>
-            <div class="width40">
-             <input type="number" min=0 max=100 style="width:88%" class="inputper"> %
-            </div>
-            </div>
-            </div>   
-            <!-- row end -->
-            <div class="row">
-            <span class="span_chk"><input type="checkbox"></span>
-            <div class="searchtxt" key="pro_already_per" operator="">
-            <div class="badge col-name">验收率</div>
-            <div class="width20"><select style="width:70px" class="sel_op">
-               <option value=">">大于</option>
-              <option value="<=">小于等于</option>
-           
-            </select></div>
-            <div class="width40">
-             <input type="number" style="width:88%" class="inputper"> %
-            </div>
-            </div>
-            </div>
-            <!-- row end -->
-            <div class="row">
-            <span class="span_chk"><input type="checkbox"></span>
-            <div class="searchtxt" key="pro_manager_pro" operator="like">
-            <div class="badge col-name">项目经理</div>
-            <div class="width20">类似于</div>
-            <div class="width40"><input type="text" value=""  class="m-wrap" data-tabindex="2"></div>
-            </div>
-            </div>
-            <!-- row end -->
-            <div class="row">
-            <span class="span_chk"><input type="checkbox"></span>
-            <div class="searchtxt" key="pro_manager_acc" operator="like">
-            <div class="badge col-name">客户经理</div>
-            <div class="width20">类似于</div>
-            <div class="width40"><input type="text" value=""  class="m-wrap" data-tabindex="2"></div>
-            </div>
-            </div>
-            <!-- row end -->
-           
             </div>
 
             <div class="modal-footer">               
@@ -273,8 +240,10 @@ var oTable;
  var wher = new Array();
   /*===datatable start====*/      
        wher=[];
-       loaddata();
-       loadCombobox('selstatus','project');    
+       loaddata();       
+       loadCombobox('sel_problemobject','problem_object'); 
+       loadCombobox('sel_problemtype','problem_type'); 
+       loadCombobox('sel_problemstation','problem_station');   
         function loaddata()
         {
        oTable = $('#attachments-table').DataTable( {
@@ -293,23 +262,18 @@ var oTable;
           columns: [
           { data: 'pro_id',name:'项目编号' },
           { data: 'pro_name',name:'项目名称'},
-          { data: 'pro_station',name:'项目状态' },
-          { data: "pro_todal",name:'合同数量',
-          orderable: false,
-          searchable: false,
-          defaultContent: ""
-          },
-          { data: 'pro_need',name:'需安装数量' },
-         { data: 'pro_already',name:'已安装数量' },
-          { data: 'pro_check_per',name:'安装率' },
-//           { data: 'online_number',name:'上线数量' },
-//           { data: 'onlinne_number_per',name:'上线率' }, 
-          { data: 'pro_check',name:'验收数量' },
-          { data: 'pro_already_per',name:'验收率' },  
-          { data: 'problem_count',name:'问题数量' },   
-          { data: 'pro_manager_pro',name:'项目经理' },  
-          { data: 'pro_manager_acc',name:'客户经理' }, 
-          { data: 'updated_at',name:'最后更新时间' }        
+          { data: 'shop_name',name:'门店名称' },
+          { data: "state",name:'项目状态'  },
+          { data: 'problem_object',name:'问题跟进方' },
+         { data: 'problem_type',name:'问题类型' },
+          { data: 'problem_user',name:'跟进人' },
+          { data: 'problem_happen',name:'问题发生时间' },
+          { data: 'problem_details',name:'问题详情' },  
+          { data: 'problem_put',name:'提出时间' },   
+          { data: 'problem_estimate',name:'预计完成时间' },  
+          { data: 'problem_resolve_user',name:'解决人' }, 
+          { data: 'problem_reslove_time',name:'实际解决时间' }, 
+          { data: 'problem_plan',name:'解决方案' }     
           ],
           ajax: {
           url:domainName+"/hdk/api/custom",
@@ -317,7 +281,7 @@ var oTable;
           dataType:'jsonp',
           contentType:'application/json',
           data:
-          {wher:JSON.stringify(wher),reportCustomCode:"REP_000002"}
+          {wher:JSON.stringify(wher),reportCustomCode:"REP_000003"}
           },
            "oLanguage": {  
             "sLengthMenu": "每页显示 _MENU_条",  
@@ -338,9 +302,9 @@ var oTable;
      //  new $.fn.dataTable.FixedColumns( oTable );
         }
         /*===datatable end====*/
-		$(document).ready(function() {   
-		   App.init();
-		   $(".page-content").css("height",$(window).height());  
+    $(document).ready(function() {   
+       App.init();
+       $(".page-content").css("height",$(window).height());  
         /*数据导出*/
         $("#exportexcel").on("click",function() {
             flag = confirm("确认下载报表? ");
@@ -366,14 +330,14 @@ var oTable;
                 });
                 tmp = JSON.stringify(wher);
                 tmp = encodeURIComponent(tmp); 
-                window.location.href = domainName +"/hdk/api/export?reportCustomCode=REP_000002&wher="+ tmp
+                window.location.href = domainName +"/hdk/api/export?reportCustomCode=REP_000003&wher="+ tmp
             }
-        }); 
+        });
         $("#sub_report").addClass("active");  
         $("#sub_report .arror").addClass("open");   
-        $("#sub_report1").addClass("active");     
-		});        
-	</script> 
+        $("#sub_report3").addClass("active");      
+    });        
+  </script> 
 <!-- END JAVASCRIPTS -->
 <!-- END BODY -->
 </body></html>
