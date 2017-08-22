@@ -24,13 +24,13 @@
 
 <!--<link rel="shortcut icon" href="media/image/favicon.ico" />-->
 <style>
-.page-header-fixed .page-container {
-	margin-top: 0px;
-}
-/*.dataTables_length{display:none;}*/
+
 </style>
 </head>
 <body>
+<!-- BEGIN HEADER start-->
+<%@include file="header.jsp"%>
+<!-- BEGIN HEADER end-->
 <div class="page-container row-fluid">
 		<!-- BEGIN SIDEBAR   左边导航 start-->
 		<!--#include file="sidebar.jsp"-->
@@ -50,12 +50,6 @@
 					<div class="span12">
 
 						<!-- BEGIN STYLE CUSTOMIZER @义飞 class="logoutbox"-->
-						<div class="logoutbox">
-							<a href="/hdk/user/logout"><h2>
-									<i class="icon-key"></i>退出
-								</h2></a>
-							<!-- END BEGIN STYLE CUSTOMIZER -->
-						</div>
 						<h3 class="page-title">
 							项目报表 <small></small>
 						</h3>

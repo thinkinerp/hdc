@@ -1,0 +1,252 @@
+<html lang="en"><!--<![endif]--><!-- BEGIN HEAD --><head>
+<meta charset="utf-8">
+<title>项目管理</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="description">
+<meta content="" name="author">
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="../media/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+<link href="../media/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="../media/css/style-metro.css" rel="stylesheet" type="text/css">
+<link href="../media/css/style.css" rel="stylesheet" type="text/css">
+<link href="../media/css/style-responsive.css" rel="stylesheet" type="text/css">
+<link href="../media/css/default.css" rel="stylesheet" type="text/css" id="style_color">
+<link href="../media/css/uniform.default.css" rel="stylesheet" type="text/css">
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link rel="stylesheet" type="text/css" href="../datatable/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="../media/css/select2_metro.css">
+<link rel="stylesheet" type="text/css" href="../media/css/chosen.css">
+<!-- END PAGE LEVEL STYLES -->
+
+<!--<link rel="shortcut icon" href="../media/image/favicon.ico" />-->
+<style>
+
+</style>
+</head>
+
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+<!-- BEGIN HEADER start-->
+<%@include file="header.jsp"%>
+<!-- BEGIN HEADER end-->
+<div class="page-container row-fluid"> 
+  <!-- BEGIN SIDEBAR   左边导航 start-->
+   <!--#include file="sidebar.jsp"--> 
+<%@include file="sidebar.jsp"%>
+
+  <!-- END SIDEBAR 左边导航 end-->   
+  <!-- BEGIN PAGE -->  
+  <div class="page-content">     
+    <!-- BEGIN PAGE CONTAINER-->    
+    <div class="container-fluid">       
+      <!-- BEGIN PAGE HEADER-->      
+      <div class="row-fluid">
+        <div class="span12"> 
+          <h3 class="page-title">项目管理<small></small> </h3>
+          <ul class="breadcrumb">
+              <li>数据管理
+                <span class="icon-angle-right"></span>
+              </li>
+              <li>项目管理
+              </li>
+            </ul>
+        </div>
+      </div>
+      <div class="row-fluid" style="margin-bottom:10px"><div class="span12">
+      <a href="newproj.html" class="btn yellow "><i class="icon-plus"></i> 新建项目</a>
+       <button type="button" class="btn red" id="btn_dis">禁用</button>
+      </div></div>
+       <div class="row-fluid">
+        <div id="searchbox" class="span11 offset1"></div>
+       </div>
+      <div class="row-fluid">
+     
+         <div class="span6 offset1 databtnlist">
+          
+          <button type="button" class="btn green " id="btnsearch">搜索</button>
+          <button type="button" class="btn red" id="btnclear">清除</button>
+          <button type="button" class="btn blue" data-toggle="modal" data-target="#myModal" id="btnset" >设置筛选条件</button>
+          </div>
+        </div>
+      <!-- END PAGE HEADER-->       
+      <!-- BEGIN PAGE CONTENT-->
+ <div class="row-fluid"> 
+        <div class="span12 datacontainer" >
+          <table id="attachments-table" class="table table-bordered table-hover table-striped" cellspacing="0" width="100%">
+ <thead>
+            <tr>
+            <th>操作</th>
+            <th>项目编号</th>
+            <th>项目名称</th>
+            <th>项目状态</th>
+            <th>项目经理</th>
+            <th>客户经理</th>
+            <th>最后更新时间</th>
+            </tr>
+        </thead>
+          </table>
+        </div>
+      </div>  
+      <!-- END PAGE CONTENT-->       
+    </div>    
+    <!-- END PAGE CONTAINER-->     
+  </div>  
+  <!-- END PAGE -->   
+</div>
+<!-- END CONTAINER --> 
+<!-- BEGIN FOOTER -->
+<div class="footer">
+  <div class="footer-inner">     
+    <!--2017 &copy; -->     
+  </div>
+  <div class="footer-tools"> <span class="go-top"> <i class="icon-angle-up"></i> </span> </div>
+</div>
+<!-- END FOOTER --> 
+<!-- Modal -->
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="myModalLabel">设置筛选条件</h4>
+            </div>
+            <div class="modal-body searchcontainer">
+
+            <div class="row">
+            <span class="span_chk"><input type="checkbox"></span>
+            <div class="searchtxt"  key="pro_id" operator="like">
+            <div class="badge col-name">项目编号</div>
+            <div class="width20">类似于</div>
+            <div class="width40"><input type="text" value="" class="inputchar" class="m-wrap onlyNumAlpha" data-tabindex="1" ></div>
+            </div>
+            </div>
+            <div class="row">
+            <span class="span_chk"><input type="checkbox"></span>
+            <div class="searchtxt" key="pro_name" operator="like">
+            <div class="badge col-name">项目名称</div>
+            <div class="width20">类似于</div>
+            <div class="width40"><input type="text" value=""  class="m-wrap" data-tabindex="2"></div>
+            </div>
+            </div>            
+            <!-- row end -->
+            <div class="row">
+            <span class="span_chk"><input type="checkbox"></span>
+            <div class="searchtxt" key="pro_manager_pro" operator="like">
+            <div class="badge col-name">项目经理</div>
+            <div class="width20">类似于</div>
+            <div class="width40"><input type="text" value=""  class="m-wrap" data-tabindex="2"></div>
+            </div>
+            </div>
+            <!-- row end -->
+            <div class="row">
+            <span class="span_chk"><input type="checkbox"></span>
+            <div class="searchtxt" key="pro_manager_acc" operator="like">
+            <div class="badge col-name">客户经理</div>
+            <div class="width20">类似于</div>
+            <div class="width40"><input type="text" value=""  class="m-wrap" data-tabindex="2"></div>
+            </div>
+            </div>
+            <!-- row end -->
+           
+            </div>
+
+            <div class="modal-footer">               
+                <button type="button" class="btn blue" id="savesearch">确定</button>
+                 <button type="button" class="btn btn-default" data-dismiss="modal" id="close">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+
+<script src="../media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+<script src="../datatable/js/jquery.dataTables.js" type="text/javascript"></script> 
+<script src="../media/js/bootstrap.min.js" type="text/javascript"></script> 
+<script type="text/javascript" src="../media/js/jquery.validate.min.js"></script>
+<script src="../media/js/app.js"></script> 
+<script src="../media/js/form-wizard.js"></script>
+<!-- END PAGE LEVEL SCRIPTS --> 
+<script>
+/*===datatable end====*/
+    var oTable;
+    var wher = new Array();
+     function loaddata()
+        {
+       oTable = $('#attachments-table').DataTable( {
+           searching:false,
+            "processing" : false,
+             fixedColumns: true,  
+             "sScrollX": "100%",
+             "sScrollY": "400px", 
+             "scrollX": true, 
+            "sScrollXInner": "150%",
+            "bScrollCollapse": true,
+           "bPaginate": true,"paging": true,  
+          // serverSide: true,
+          processing: true,
+          order: [[ 0, "asc" ]] ,
+          columns: [
+          { "sClass": "col-chk",
+               
+                 "data": "pro_id",
+                 "render": function (data, type, full, meta) {
+                     return '<input type="checkbox"  class="checkchild"  value="' + data + '" />';
+                 },
+                 "bSortable": false
+             },
+          { data: 'pro_id',name:'项目编号' },
+          { data: 'pro_name',name:'项目名称'},
+          { data: 'pro_station',name:'项目状态' },
+          
+          { data: 'pro_manager_pro',name:'项目经理' },  
+          { data: 'pro_manager_acc',name:'客户经理' }, 
+          { data: 'updated_at',name:'最后更新时间' }        
+          ],
+          ajax: {
+          url:domainName+"/hdk/api/custom",
+          type:'get',
+          dataType:'jsonp',
+          contentType:'application/json',
+          data:
+          {wher:JSON.stringify(wher),reportCustomCode:"REP_000002"}
+          },
+           "oLanguage": {  
+            "sLengthMenu": "每页显示 _MENU_条",  
+            "sZeroRecords": "没有找到符合条件的数据",  
+            "sProcessing": "",  
+            "sInfo": "当前第 _START_ - _END_ 条　共计 _TOTAL_ 条",  
+            "sInfoEmpty": "没有记录",  
+            "sInfoFiltered": "(从 _MAX_ 条记录中过滤)",  
+            "sSearch": "搜索：",  
+            "oPaginate": {  
+            "sFirst": "首页",  
+            "sPrevious": "前一页",  
+            "sNext": "后一页",  
+            "sLast": "尾页"  
+            }  
+            } 
+        });
+     //  new $.fn.dataTable.FixedColumns( oTable );
+        }
+        /*===datatable end====*/
+    $(document).ready(function() {   
+       App.init();
+       $(".page-content").css("height",$(window).height());
+      /*===datatable start====*/      
+       wher=[];
+       loaddata();
+       $('#btn_dis').click( function () {
+       $(".checkchild:checked").each(function(i){
+        console.log("test1  "+$(this).val());
+       })
+    } );  
+       
+    });        
+  </script> 
+<!-- END JAVASCRIPTS -->
+<!-- END BODY -->
+</body></html>
+

@@ -24,10 +24,7 @@
 
 <!--<link rel="shortcut icon" href="media/image/favicon.ico" />-->
 <style>
-.page-header-fixed .page-container {
-  margin-top: 0px;
-}
-/*.dataTables_length{display:none;}*/
+
 </style>
 </head>
 
@@ -35,8 +32,9 @@
 
 <!-- BEGIN BODY -->
 <body class="page-header-fixed">
-
-
+<!-- BEGIN HEADER start-->
+<%@include file="header.jsp"%>
+<!-- BEGIN HEADER end-->
 <div class="page-container row-fluid"> 
   <!-- BEGIN SIDEBAR   左边导航 start-->
    <!--#include file="sidebar.jsp"--> 
@@ -49,12 +47,7 @@
     <div class="container-fluid">       
       <!-- BEGIN PAGE HEADER-->      
       <div class="row-fluid">
-        <div class="span12">           
-          <!-- BEGIN STYLE CUSTOMIZER @义飞 class="logoutbox"-->
-          <div class="logoutbox">
-         <a href="/hdk/user/logout"><h2><i class="icon-key"></i>退出</h2></a> 
-          <!-- END BEGIN STYLE CUSTOMIZER -->
-          </div>
+        <div class="span12">  
           <h3 class="page-title">问题报表<small></small> </h3>
           
         </div>
@@ -339,7 +332,10 @@ var oTable;
                 tmp = encodeURIComponent(tmp); 
                 window.location.href = domainName +"/hdk/api/export?reportCustomCode=REP_000003&wher="+ tmp
             }
-        });       
+        });
+        $("#sub_report").addClass("active");  
+        $("#sub_report .arror").addClass("open");   
+        $("#sub_report3").addClass("active");      
     });        
   </script> 
 <!-- END JAVASCRIPTS -->

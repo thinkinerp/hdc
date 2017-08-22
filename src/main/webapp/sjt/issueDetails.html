@@ -792,17 +792,18 @@
                                 {app.alert("采集点为空");}
                             /*====采集点 end====*/ 
                             })
-                             //只有一条商户默认第一条
-                           if(sp.sp2!="" &&data.length==1)
+                           //只有一条商户默认第一条
+                           if(!problemId_t)  
+                          { if(sp.sp2!="" &&data.length==1)
                               {$("#asddas").html(data[0].eqId);
                                 $("#asddas").parents(".i-xiala-list").addClass("textcont")
-                                $("#asddas").unbind('click');
-                                
+                                $("#asddas").unbind('click');                                
                                 }
                               else
                               {$("#asddas").parents(".i-xiala-list").removeClass("textcont")
                                 $("#asddas").html('未选择');
                               }
+                          }
                               ms.selectcj();
                         }
                     })
@@ -824,15 +825,15 @@
             {
 
                     if(form_empty({code:$('#gs1').val(), which:"问题编号"}))
-                        {return;}
+                        {return true;}
                     if(form_empty({code:$('#sp1').html(), which:"项目名称"}))
-                        {return;}
+                        {return true;}
                     if(form_empty({code:$('#sp2').html(), which:"商铺名称"}))
                         {swiper2.slideTo(1, 0, true);
-                         return;}
+                         return true;}
                     if(form_empty({code:$('#gs4').html(), which:"问题类型"}))
                         {swiper2.slideTo(0, 0, true);
-                         return;}  
+                         return true;}  
             }
             function submit() {//新建保存                 
                 for (var i = 0; i < sp.proData.length; i++) {
@@ -1032,7 +1033,7 @@
                     $("#ms3").val(data.problemEstimate);
                     $("#ms4").val(data.problemResolveUser);
                     $("#ms5").val(data.problemResloveTime);
-                     ms.init();
+                    ms.init();
                     $('#asddas').html(data.eqId);
                     xg.zhidu('asddas');
                     $("#ms6").html(data.eqStyle);
@@ -1069,6 +1070,7 @@
             }
             var proId_name="";
             var problemtestId;
+            var problemId_t;
             $(function() {
                 m_loading.html();
                  /*===保存返回 start===*/
@@ -1081,6 +1083,7 @@
                      })       
                     /*===保存返回 end===*/
                 var problemId = app.getUrlSearch("problemId");
+                problemId_t=problemId;
                 problemtestId=problemId;
                 if (problemId == null) {// 新建
                     $(".swiper-container1").find("#swiper-memo1").hide();

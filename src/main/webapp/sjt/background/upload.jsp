@@ -39,9 +39,7 @@
 
 <!--<link rel="shortcut icon" href="media/image/favicon.ico" />-->
 <style>
-.page-header-fixed .page-container {
-	margin-top: 0px;
-}
+
 .btn.blue {
 	width: 100px;
 }
@@ -52,7 +50,9 @@
 
 <!-- BEGIN BODY -->
 <body class="page-header-fixed">
-
+<!-- BEGIN HEADER start-->
+<%@include file="header.jsp"%>
+<!-- BEGIN HEADER end-->
 
 <div class="page-container row-fluid"> 
   
@@ -87,12 +87,6 @@
       
       <div class="row-fluid">
         <div class="span12"> 
-          
-          <!-- BEGIN STYLE CUSTOMIZER -->
-          <div class="logoutbox">
-         <a href="/hdk/user/logout"><h2><i class="icon-key"></i>退出</h2></a> 
-          <!-- END BEGIN STYLE CUSTOMIZER -->
-          </div>
           <h3 class="page-title"> 基本信息导入 <small></small> </h3>
           
         </div>
